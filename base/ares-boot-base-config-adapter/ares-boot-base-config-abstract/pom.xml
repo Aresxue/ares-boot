@@ -7,7 +7,7 @@
   <parent>
     <artifactId>ares-boot-base-config-adapter</artifactId>
     <groupId>io.github.aresxue.boot</groupId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>ares-boot-base-config-abstract</artifactId>

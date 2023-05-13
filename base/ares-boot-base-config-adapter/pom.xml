@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-base</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-base-config-adapter</artifactId>
+  <packaging>pom</packaging>
+  <description>
+    基础配置模块，数据库连接信息、rpc框架注册中心和中间件连接信息等都在其中维护，让业务开发人员无需关心
+    Base configuration modules, database connection information, rpc framework registry
+    and middleware connection information are all maintained in it,
+    so that business developers do not need to care
+  </description>
+
+  <modules>
+    <module>ares-boot-base-config-abstract</module>
+    <module>ares-boot-base-config</module>
+    <module>ares-boot-base-config-file</module>
+  </modules>
+
+</project>

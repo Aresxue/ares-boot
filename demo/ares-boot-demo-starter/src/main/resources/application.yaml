@@ -1,0 +1,8 @@
+ares:
+  application:
+    name: ares-boot-
+
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %c#%M#%L: %msg%xEx%n"

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-base</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-base-trace-adapter</artifactId>
+  <packaging>pom</packaging>
+  <description>
+    链路追踪模块，负责全链路相关操作包括代码染色, 指令搜集等，提供全链路信息（包括tid）跨进程的能力，目前支持skywalking和arms两种实现的适配
+    Link tracking module is responsible for operations related to the whole link, including code dyeing,
+    instruction collection, etc., and provides cross-process capability of the whole link information (including tid).
+    Currently, it supports the adaptation of skywalking and arms
+  </description>
+
+  <modules>
+    <module>ares-boot-base-trace-abstract</module>
+    <module>ares-boot-base-trace</module>
+    <module>ares-boot-base-trace-arms</module>
+  </modules>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aresxue.boot.util</groupId>
+      <artifactId>ares-boot-util-common</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.skywalking</groupId>
+      <artifactId>apm-toolkit-trace</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

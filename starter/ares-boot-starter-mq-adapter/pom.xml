@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-starter</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-starter-mq-adapter</artifactId>
+  <packaging>pom</packaging>
+  <description>
+    消息队列快速使用，可自动从配置中心获取消息队列服务器集群的连接信息，提供工具类发送消息，提供注解方式消费消息，带来更舒适的编程体验，
+    提供消息发送和消费时的拦截器机制，基于base集成全链路信息（包括tid）跨线程跨线程池跨进程传递的功能
+    Message queue use quickly, can automatically obtain the connection information of the message
+    queue server cluster from the configuration center, provide tools to send messages,
+    provide annotations to consume messages, and bring more comfortable programming experience.
+    It provides the interceptor mechanism for message sending and consumption, and integrates the function of
+    full-link information (including tid) across threads, across thread pools and across processes based on base
+  </description>
+
+  <modules>
+    <module>ares-boot-starter-mq-api</module>
+    <module>ares-boot-starter-mq-abstract</module>
+    <module>ares-boot-starter-mq</module>
+    <module>ares-boot-starter-mq-kafka</module>
+  </modules>
+
+</project>

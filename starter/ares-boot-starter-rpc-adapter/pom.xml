@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-starter</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-starter-rpc-adapter</artifactId>
+  <packaging>pom</packaging>
+  <description>
+    rpc快速使用，可自动从配置中心获取注册中心、线程池、超时时间等配置，
+    在rpc调用异常时将异常封装成标准响应对象返回给调用方，并自定义rpc telnet指令供开发测试使用，
+    业务可使用提供注解进行rpc服务的消费和提供，可实现消费和提供者服务批量管理，提供泛化调用工具
+    RPC use quickly, and the underlying implementation is currently dubbo, which can
+    automatically obtain configurations such as registration center, thread pool,
+    and timeout time from the configuration center. When dubbo calls an exception,
+    it will encapsulate the exception into a standard response object and
+    return it to the caller, and customize the dubbo telnet command. For development
+    and testing, businesses can use annotations to consume and provide RPC services,
+    realize batch management of consumption and provider services, and provide generalized calling
+    tools
+  </description>
+
+  <modules>
+    <module>ares-boot-starter-rpc-api</module>
+    <module>ares-boot-starter-rpc-abstract</module>
+    <module>ares-boot-starter-rpc</module>
+  </modules>
+
+</project>

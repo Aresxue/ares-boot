@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-starter</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-starter-task-adapter</artifactId>
+  <packaging>pom</packaging>
+  <description>
+    任务快速使用，可自动从配置中心获取定时任务服务器信息，提供注解方式进行分布式任务调度，提供任务执行前后的拦截器机制，
+    基于base集成全链路信息（包括tid）跨线程跨线程池跨进程传递的功能
+    Task use quickly, can automatically obtain scheduled task server information from
+    the configuration center, and provide annotations for distributed task scheduling.
+    Provide interceptor mechanisms before and after task execution,
+    base - based integration full link information (including tid) across thread, across thread pool
+    and across process transmission function
+  </description>
+
+  <modules>
+    <module>ares-boot-starter-task-api</module>
+    <module>ares-boot-starter-task-abstract</module>
+    <module>ares-boot-starter-task</module>
+    <module>ares-boot-starter-task-schedulerx2</module>
+  </modules>
+
+</project>

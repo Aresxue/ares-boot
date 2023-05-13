@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-starter</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-starter-file-storage</artifactId>
+  <description>
+    文件服务快速使用，可自动从配置中心获取文件服务器信息，业务使用接口即可快速上传文件，适配多种云端服务器以及本地方式
+    File service use quickly, and the file server information can be automatically
+    obtained from the configuration center. The business interface can quickly upload files,
+    adapt to a variety of cloud servers and local methods
+  </description>
+
+</project>

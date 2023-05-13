@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-starter</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-starter-search-engine</artifactId>
+  <description>
+    搜索引擎快速使用，可自动从配置中心获取搜索引擎连接信息，用于从搜索引擎中检索数据，自定义了一套类sql的api，
+    基本涵盖了各种业务场景
+    The search engine can be used quickly, and the search engine connection information can be
+    automatically obtained from the configuration center to retrieve data from the search engine.
+    A set of sql-like apis are customized, which basically covers various business scenarios
+    and shields the underlying middleware
+  </description>
+
+
+</project>

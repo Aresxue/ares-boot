@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue</groupId>
+    <artifactId>ares-parent</artifactId>
+    <version>final</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>io.github.aresxue.boot</groupId>
+  <artifactId>ares-boot-dependency</artifactId>
+  <name>Ares Boot Dependency</name>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <description>
+    依赖管理和集成以及插件管理
+    Dependency management and integration and plug-in management
+  </description>
+
+  <properties>
+    <ares-boot.version>1.0.0</ares-boot.version>
+
+    <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+    <lombok.version>1.18.26</lombok.version>
+    <mapstruct.version>1.5.5.Final</mapstruct.version>
+  </properties>
+
+  <modules>
+    <module>ares-boot-base-all</module>
+    <module>ares-boot-base-dependency-management</module>
+    <module>ares-boot-dependency-management</module>
+    <module>ares-boot-self-dependency-management</module>
+    <module>ares-boot-starter-dependency-management</module>
+    <module>ares-boot-util-dependency-management</module>
+    <module>business-api-dependency-management</module>
+    <module>business-api-required</module>
+    <module>business-client-dependency-management</module>
+    <module>business-spi-dependency-management</module>
+    <module>third-dependency-management</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>${mapstruct.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <compilerArgument>-parameters</compilerArgument>
+            <!-- 一般而言，target与source是保持一致的，但是，有时候为了让程序能在其他版本的jdk中运行(对于低版本目标jdk，源代码中不能使用低版本jdk中不支持的语法)，会存在target不同于source的情况 -->
+            <!-- In general, target and source are consistent, but sometimes there are cases where target is different from source in order for the program to run in another version of the jdk (for the lower target jdk, the source code cannot use syntax not supported in the lower jdk) -->
+            <!-- 源代码使用的JDK版本 -->
+            <!-- The JDK version used for the source code -->
+            <source>${java.version}</source>
+            <!-- 需要生成的目标class文件的编译版本 -->
+            <!-- The compiled version of the target class file that needs to be generated -->
+            <target>${java.version}</target>
+            <!-- 字符集编码，防止中文乱码 -->
+            <!-- Character set encoding to prevent Chinese garbled characters -->
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <annotationProcessorPaths>
+               <path>
+                 <groupId>org.projectlombok</groupId>
+                 <artifactId>lombok</artifactId>
+                 <version>${lombok.version}</version>
+               </path>
+              <path>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+              </path>
+            </annotationProcessorPaths>
+            <!-- <verbose>true</verbose>
+             <showWarnings>true</showWarnings>-->
+            <!-- 要使compilerVersion标签生效，还需要将fork设为true，用于明确表示编译版本配置的可用 -->
+            <!-- To enable compilerVersion, fork is also set to true, which explicitly indicates that the compiled version configuration is available -->
+            <!--<fork>true</fork>-->
+            <!-- 使用指定的javac命令，例如：<executable>${JAVA_1_8_HOME}/bin/javac</executable> -->
+            <!-- Use the specified javac command, for example: <executable>${JAVA_1_8_HOME}/bin/javac</executable> -->
+            <!--<executable>path-to-javac</executable>-->
+            <!-- 指定插件将使用的编译器的版本 -->
+            <!-- Specifies the version of the compiler that the plug-in will use -->
+            <!-- <compilerVersion>1.8</compilerVersion>-->
+            <!-- 编译器使用的初始内存 -->
+            <!-- The initial memory used by the compiler -->
+            <!--<meminitial>128m</meminitial>-->
+            <!-- 编译器使用的最大内存 -->
+            <!-- Maximum memory used by the compiler -->
+            <!--  <maxmem>512m</maxmem>-->
+            <!-- 这个选项用来传递编译器自身不包含但是却支持的参数选项 -->
+            <!-- This option is used to pass arguments that are not included in the compiler itself but are supported -->
+            <!--<compilerArgument>-verbose -bootclasspath ${java.home}\lib\rt.jar</compilerArgument>-->
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+          <configuration>
+            <show>private</show>
+            <nohelp>true</nohelp>
+            <charset>${project.build.sourceEncoding}</charset>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <docencoding>${project.build.sourceEncoding}</docencoding>
+            <additionalparam>-Xdoclint:none</additionalparam>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+</project>

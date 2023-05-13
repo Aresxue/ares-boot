@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-dependency</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-self-dependency-management</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <description>
+    集成所有ares-boot自己模块的依赖管理
+    Integrated dependencies management of all ares-boot self modules
+  </description>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-base-dependency-management</artifactId>
+        <version>${ares-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-util-dependency-management</artifactId>
+        <version>${ares-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-starter-dependency-management</artifactId>
+        <version>${ares-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>business-api-dependency-management</artifactId>
+        <version>${ares-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>business-client-dependency-management</artifactId>
+        <version>${ares-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>business-spi-dependency-management</artifactId>
+        <version>${ares-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-base-all</artifactId>
+        <version>${ares-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>business-api-required</artifactId>
+        <version>${ares-boot.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

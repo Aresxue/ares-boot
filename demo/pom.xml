@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-starter-parent</artifactId>
+    <version>1.0.0</version>
+    <relativePath/>
+  </parent>
+
+  <groupId>io.github.aresxue.business</groupId>
+  <artifactId>ares-boot-demo</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <name>Ares Boot Demo</name>
+  <description>demo</description>
+
+  <properties>
+    <application.version>${project.version}</application.version>
+  </properties>
+
+
+  <modules>
+    <module>ares-boot-demo-api</module>
+    <module>ares-boot-demo-dao</module>
+    <module>ares-boot-demo-service</module>
+    <module>ares-boot-demo-starter</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.github.aresxue.business</groupId>
+        <artifactId>ares-boot-demo-api</artifactId>
+        <version>${application.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.business</groupId>
+        <artifactId>ares-boot-demo-dao</artifactId>
+        <version>${application.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.business</groupId>
+        <artifactId>ares-boot-demo-service</artifactId>
+        <version>${application.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.business</groupId>
+        <artifactId>ares-boot-demo-starter</artifactId>
+        <version>${application.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

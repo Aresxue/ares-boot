@@ -1,0 +1,19 @@
+Configuration:
+  status: warn
+  Properties:
+    Property:
+      - name: level
+        value: debug
+      - name: pattern
+        value: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %c#%M#%L: %msg%xEx%n"
+  Appenders:
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: ${pattern}
+  Loggers:
+    Root:
+      level: ${level}
+      AppenderRef:
+        - ref: CONSOLE

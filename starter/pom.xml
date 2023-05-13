@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+
+  <artifactId>ares-boot-starter</artifactId>
+  <name>Ares Boot Starter</name>
+  <packaging>pom</packaging>
+  <description>
+    开源框架和中间件快速使用, 对业务使用做适配, 在切换开源框架时无需上层应用修改
+    Open source frameworks and middleware are quickly used, adapt to business use, and do not
+    require upper-layer application modification when switching open source frameworks
+  </description>
+
+  <modules>
+    <module>ares-boot-starter-cache</module>
+    <module>ares-boot-starter-config</module>
+    <module>ares-boot-starter-datasource-related</module>
+    <module>ares-boot-starter-file-storage</module>
+    <module>ares-boot-starter-mq-adapter</module>
+    <module>ares-boot-starter-rpc-adapter</module>
+    <module>ares-boot-starter-rule-engine</module>
+    <module>ares-boot-starter-search-engine</module>
+    <module>ares-boot-starter-spring</module>
+    <module>ares-boot-starter-task-adapter</module>
+    <module>ares-boot-starter-test</module>
+    <module>ares-boot-starter-validation</module>
+    <module>ares-boot-starter-web</module>
+    <module>ares-boot-starter-workflow</module>
+  </modules>
+
+</project>

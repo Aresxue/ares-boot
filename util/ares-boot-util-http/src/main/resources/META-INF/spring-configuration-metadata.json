@@ -1,0 +1,120 @@
+{
+    "groups":
+    [
+        {
+            "name": "httpConnectionConfig",
+            "type": "cn.ares.boot.util.http.config.HttpConnectionConfig",
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig"
+        }
+    ],
+    "properties":
+    [
+        {
+            "name": "ares.http.connection.socket-timeout",
+            "description": "Socket read data timeout, that is, the timeout for obtaining response data from the server, in milliseconds ",
+            "type": "java.lang.Integer",
+            "defaultValue": 30000,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig"
+        },
+        {
+            "name": "ares.http.connection.connect-timeout",
+            "description": "The connection timeout time to the server, the http client will create an asynchronous thread to create a socket connection, and the connection timeout time of the socket is set here, in milliseconds",
+            "type": "java.lang.Integer",
+            "defaultValue": 15000,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig"
+        },
+        {
+            "name": "ares.http.connection.connection-request-timeout",
+            "description": "Get connection timeout from connect Manager, in milliseconds",
+            "type": "java.lang.Integer",
+            "defaultValue": 60000,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig"
+        },
+        {
+            "name": "ares.http.connection.retry-times",
+            "description": "Number of request retries",
+            "type": "java.lang.Integer",
+            "defaultValue": 3,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig"
+        },
+        {
+            "name": "ares.http.connection.pool.max-total",
+            "description": "The maximum number of connections in the connection pool, the default is 20",
+            "type": "java.lang.Integer",
+            "defaultValue": 200,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Pool"
+        },
+        {
+            "name": "ares.http.connection.pool.max-per-route",
+            "description": "The default maximum number of connections per route, default 2",
+            "type": "java.lang.Integer",
+            "defaultValue": 40,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Pool"
+        },
+        {
+            "name": "ares.http.connection.pool.max-route",
+            "description": "The maximum number of connections per route, which takes precedence over maxPerRoute",
+            "type": "java.lang.Integer",
+            "defaultValue": 100,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Pool"
+        },
+        {
+            "name": "ares.http.connection.pool.monitor-thread-num",
+            "description": "Monitor the number of threads in the thread pool",
+            "type": "java.lang.Integer",
+            "defaultValue": 1,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Pool"
+        },
+        {
+            "name": "ares.http.connection.pool.evictable-idle-time-millis",
+            "description": "Disconnect connections that have been idle for more than minEvictableIdleTimeMillis milliseconds.
+             The code will scroll forward 1s to ensure that the idle connection can be closed before the timeout.
+             Many servers have a default timeout of 60s, so the default timeout here is 60s",
+            "type": "java.lang.Integer",
+            "defaultValue": 60000,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Pool"
+        },
+        {
+            "name": "ares.http.connection.pool.time-between-eviction-runs-millis",
+            "description": "Check for idle connections in the connection pool once in milliseconds.
+            It needs to be less than evictable-idle-time-millis/2, otherwise the connection will not be closed in time.
+            When the default is -1, it will take the value evictable-idle-time-millis/2 - 500",
+            "type": "java.lang.Integer",
+            "defaultValue": -1,
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Pool"
+        },
+        {
+            "name": "ares.http.connection.proxy.hostname",
+            "description": "http connection proxy hostname",
+            "type": "java.lang.String",
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Proxy"
+        },
+        {
+            "name": "ares.http.connection.proxy.port",
+            "description": "http connection proxy port",
+            "type": "java.lang.Integer",
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Proxy"
+        },
+        {
+            "name": "ares.http.connection.proxy.scheme-name",
+            "description": "http connection proxy scheme name",
+            "type": "java.lang.String",
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Proxy"
+        },
+        {
+            "name": "c2f.http.connection.https.supported-protocols",
+            "description": "supported protocols when use https",
+            "type": "java.lang.String",
+            "sourceType": "com.c2f.boot.util.http.config.HttpConnectionConfig.HttpsConfig"
+        },
+        {
+            "name": "c2f.http.connection.https.noop-hostname-verifier",
+            "description": "ignore SSL certificate verification when use https",
+            "type": "java.lang.Boolean",
+            "defaultValue": false,
+            "sourceType": "com.c2f.boot.util.http.config.HttpConnectionConfig.HttpsConfig"
+        }
+    ],
+    "hints":
+    []
+}

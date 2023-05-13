@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-dependency</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>business-api-required</artifactId>
+  <name>Business Api Required</name>
+  <packaging>pom</packaging>
+  <description>
+    集成所有业务api模块需要的依赖
+    Integrated all required dependencies of business api module
+  </description>
+
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-meta</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-validation</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+
+  </dependencies>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-base-dependency-management</artifactId>
+        <version>${ares-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>third-dependency-management</artifactId>
+        <version>${ares-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

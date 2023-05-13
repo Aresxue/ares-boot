@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-base</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-base-log</artifactId>
+  <description>
+    日志模块，集成log4j2,  提供工具类可静态打印日志, 业务可import通用日志配置(中间件配置和业务基础配置)开箱即用，
+    另外还提供http接口出入参打印和rpc提供者和消费者的出入参打印(有开关可以热启动和热关闭，同时可在线修改日志级别)，
+    traceId在日志中进行输出以及普通文件日志之外的结构化日志( 供运维采集分析可视化)，提供全链路信息（包括tid）跨线程跨线程池的能力
+    Log module, integrates log4j2, provides tool classes that can print logs statically,
+    business can import common log configurations (middleware configuration
+    and business basic configuration) out of the box, and also provides http interface input
+    and output parameter printing and rpc providers and consumers. Input and output
+    parameter printing (there is a switch for hot start and hot shutdown, and the log level can be
+    modified online), traceId is output in the log and structured logs other than ordinary file logs
+    (for operation and maintenance collection and analysis visualization). The ability to provide
+    full link information (including tid) across threads across thread pools.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-trace</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-config</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-log4j2</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-dependency-management</artifactId>
+    <version>1.0.0</version>
+    <relativePath>dependency/ares-boot-dependency-management/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>ares-boot</artifactId>
+  <name>Ares Boot</name>
+  <packaging>pom</packaging>
+  <description>
+    制定Java后端的统一标准，致力于优化Java开发者的编程体验，减少重复基础功能开发，屏蔽与业务无关的事项
+    Formulate a unified standard for the Java backend, devote itself to optimizing the programming
+    experience of Java developers, reduce repetitive development of basic functions,
+    and shield matters not related to business
+  </description>
+
+  <modules>
+    <module>base</module>
+    <module>starter</module>
+    <module>util</module>
+  </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+
+</project>

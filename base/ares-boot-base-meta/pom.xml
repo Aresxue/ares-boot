@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-base</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-base-meta</artifactId>
+  <description>
+    元数据模块，包含请求基类、响应基类、分页请求基类、分页响应基类、排序字段、业务异常基类等
+    Metadata module, including request base class, response base class, paging request base class,
+    paging response base class, sorting field, business exception base class, etc.
+  </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aresxue.boot.util</groupId>
+      <artifactId>ares-boot-util-json</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>

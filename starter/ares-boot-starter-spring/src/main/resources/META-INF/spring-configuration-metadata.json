@@ -1,0 +1,29 @@
+{
+    "groups":
+    [
+        {
+            "name": "bean init warn",
+            "type": "cn.ares.boot.starter.spring.BeanInitWarnBeanPostProcessor",
+            "sourceType": "cn.ares.boot.starter.spring.BeanInitWarnBeanPostProcessor"
+        }
+    ],
+    "properties":
+    [
+        {
+            "name": "ares.spring.bean-init-warn.enable",
+            "description": "enable bean init warn",
+            "type": "java.lang.Boolean",
+            "defaultValue": false,
+            "sourceType": "cn.ares.boot.starter.spring.BeanInitWarnBeanPostProcessor"
+        },
+        {
+            "name": "ares.spring.bean-init-limit-time",
+            "description": "bean init limit time",
+            "type": "int",
+            "defaultValue": 200,
+            "sourceType": "cn.ares.boot.starter.spring.BeanInitWarnBeanPostProcessor"
+        }
+    ],
+    "hints":
+    []
+}

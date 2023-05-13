@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot.util</groupId>
+    <artifactId>ares-boot-util</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-util-common</artifactId>
+  <description>
+    通用工具模块, 只依赖jdk的工具类
+    Universal tool module, only depends on the tool class of jdk
+  </description>
+
+</project>

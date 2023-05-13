@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot-starter</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <artifactId>ares-boot-starter-datasource-related</artifactId>
+  <packaging>pom</packaging>
+  <description>
+    数据库相关，底层为mybatis plus，可自动从配置中心获取数据库连接信息，同时封装基础DO和通用字段
+    (主键、创建时间、修改时间、逻辑删除)及其自动处理（自动注入分布式id），业务中不需关心，以及可选的客户端分库分表和动态数据源方案
+    Database related, the bottom layer is mybatis plus, can automatically obtain the database connection
+    information from the configuration center, and encapsulate the basic DO and common fields
+    (primary key, creation time, modification time, logical deletion) and its automatic processing
+    (automatic injection of distributed id), business no concern, and optional client sub-database sub-table
+    and dynamic data source solutions
+  </description>
+
+  <modules>
+    <module>ares-boot-starter-datasource</module>
+    <module>ares-boot-starter-datasource-sharding</module>
+    <module>ares-boot-starter-dynamic-datasource</module>
+  </modules>
+
+</project>

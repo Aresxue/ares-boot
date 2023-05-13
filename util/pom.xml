@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.aresxue.boot</groupId>
+    <artifactId>ares-boot</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <groupId>io.github.aresxue.boot.util</groupId>
+  <artifactId>ares-boot-util</artifactId>
+  <name>Ares Boot Util</name>
+  <packaging>pom</packaging>
+  <description>
+    工具集
+    Util collection
+  </description>
+
+  <modules>
+    <module>ares-boot-util-common</module>
+    <module>ares-boot-util-crypt</module>
+    <module>ares-boot-util-http</module>
+    <module>ares-boot-util-json</module>
+    <module>ares-boot-util-mapstruct</module>
+    <module>ares-boot-util-ognl</module>
+    <module>ares-boot-util-servlet</module>
+    <module>ares-boot-util-spring</module>
+    <module>ares-boot-util-test</module>
+    <module>ares-boot-util-yaml</module>
+    <module>ares-boot-util-compress</module>
+    <module>ares-boot-util-log</module>
+  </modules>
+
+</project>

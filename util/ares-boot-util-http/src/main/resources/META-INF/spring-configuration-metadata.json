@@ -102,17 +102,17 @@
             "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.Proxy"
         },
         {
-            "name": "c2f.http.connection.https.supported-protocols",
+            "name": "ares.http.connection.https.supported-protocols",
             "description": "supported protocols when use https",
             "type": "java.lang.String",
-            "sourceType": "com.c2f.boot.util.http.config.HttpConnectionConfig.HttpsConfig"
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.HttpsConfig"
         },
         {
-            "name": "c2f.http.connection.https.noop-hostname-verifier",
+            "name": "ares.http.connection.https.noop-hostname-verifier",
             "description": "ignore SSL certificate verification when use https",
             "type": "java.lang.Boolean",
             "defaultValue": false,
-            "sourceType": "com.c2f.boot.util.http.config.HttpConnectionConfig.HttpsConfig"
+            "sourceType": "cn.ares.boot.util.http.config.HttpConnectionConfig.HttpsConfig"
         }
     ],
     "hints":

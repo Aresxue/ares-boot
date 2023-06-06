@@ -38,6 +38,10 @@ public class JsonUtilTest {
     map.put("innerMap2", null);
     map.put(null, innerMap);
     LOGGER.info(JsonUtil.toJsonString(objectMapper, map));
+
+    jsonStr = "{\"doubleValue\":\"123.00\"}";
+    person = JsonUtil.parseObject(jsonStr, Person.class);
+    LOGGER.info(JsonUtil.toJsonString(person));
   }
 
   @Test

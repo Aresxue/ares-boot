@@ -18,6 +18,9 @@ public class Person extends Father {
 
   private String genderName;
 
+  // https://stackoverflow.com/questions/74342327/jackson-parse-double-from-string-pure-number-format
+  private Double doubleValue;
+
   public String getGenderName() {
     return name;
   }

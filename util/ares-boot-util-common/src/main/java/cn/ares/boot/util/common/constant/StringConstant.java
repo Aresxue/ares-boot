@@ -32,6 +32,6 @@ public interface StringConstant {
 
   String LINE_BREAK = "\n";
 
-  String MASTER = "master";
+  String JAVA = "java";
 
 }

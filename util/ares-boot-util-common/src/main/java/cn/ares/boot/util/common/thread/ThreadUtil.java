@@ -11,6 +11,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -265,6 +267,30 @@ public class ThreadUtil {
   public static ExecutorService newCachedThreadPool(String threadNameFormat) {
     return new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60L, TimeUnit.SECONDS,
         new SynchronousQueue<>(), new NameThreadFactory().setNameFormat(threadNameFormat).build());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 创建定时任务线程池
+   * @time: 2023-06-06 15:33:13
+   * @params: [corePoolSize] 核心线程数
+   * @return: java.util.concurrent.ScheduledExecutorService 定时任务线程池
+   */
+  public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize) {
+    return new ScheduledThreadPoolExecutor(corePoolSize);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 创建定时任务线程池
+   * @time: 2023-06-06 15:33:13
+   * @params: [corePoolSize, threadNameFormat] 核心线程数，线程名称格式
+   * @return: java.util.concurrent.ScheduledExecutorService 定时任务线程池
+   */
+  public static ScheduledExecutorService newScheduledThreadPool(int corePoolSize,
+      String threadNameFormat) {
+    return new ScheduledThreadPoolExecutor(corePoolSize,
+        new NameThreadFactory().setNameFormat(threadNameFormat).build());
   }
 
   /**

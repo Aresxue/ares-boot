@@ -2,6 +2,7 @@ package cn.ares.boot.util.common;
 
 import static cn.ares.boot.util.common.ArrayUtil.EMPTY_CLASS_ARRAY;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -312,6 +313,18 @@ public class ClassUtil {
       }
     }
     return classes;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断类是否为final
+   * @description: Determines whether the class is final
+   * @time: 2023-06-02 13:07:06
+   * @params: [clazz] 类
+   * @return: boolean 是否为final
+   */
+  public static boolean isFinal(Class<?> clazz) {
+    return Modifier.isFinal(clazz.getModifiers());
   }
 
 }

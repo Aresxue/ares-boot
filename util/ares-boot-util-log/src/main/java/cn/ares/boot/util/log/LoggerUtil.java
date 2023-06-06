@@ -1,22 +1,19 @@
-package cn.ares.boot.base.log.util;
+package cn.ares.boot.util.log;
 
 import static org.slf4j.spi.LocationAwareLogger.DEBUG_INT;
 import static org.slf4j.spi.LocationAwareLogger.ERROR_INT;
 import static org.slf4j.spi.LocationAwareLogger.INFO_INT;
 import static org.slf4j.spi.LocationAwareLogger.WARN_INT;
 
-import cn.ares.boot.util.common.thread.ThreadLocalMapUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
-import org.springframework.boot.logging.DeferredLog;
 
 /**
  * @author: Ares
- * @description: Log tool, use static method to print logs, no need to define log objects in each
- * class (Deferred log method name is incorrect because the stack information of the print log
- * thread cannot be obtained after asynchronous activation)
- * @description: 日志工具，使用静态方法打印日志，无需每个类中定义日志对象（Deferred log方法名不正确因为异步启用后拿不到打印日志线程的堆栈信息）
+ * @description: 日志工具，使用静态方法打印日志，无需每个类中定义日志对象
+ * @description: The logging tool uses static methods to print logs without the need to define log
+ * objects in each class
  * @time: 2021-04-12 17:38:00
  * @version: JDK 1.8
  */
@@ -128,57 +125,6 @@ public class LoggerUtil {
     }.securityGetClazz();
   }
 
-  public static void errorDeferred(String msg) {
-    DeferredLog deferredLog = getDeferredLog();
-    if (deferredLog.isErrorEnabled()) {
-      deferredLog.error(msg);
-    }
-  }
-
-  public static void errorDeferred(String msg, Throwable e) {
-    DeferredLog deferredLog = getDeferredLog();
-    if (deferredLog.isErrorEnabled()) {
-      deferredLog.error(msg, e);
-    }
-  }
-
-  public static void warnDeferred(String msg) {
-    DeferredLog deferredLog = getDeferredLog();
-    if (deferredLog.isErrorEnabled()) {
-      deferredLog.warn(msg);
-    }
-  }
-
-  public static void infoDeferred(String msg) {
-    DeferredLog deferredLog = getDeferredLog();
-    if (deferredLog.isErrorEnabled()) {
-      deferredLog.info(msg);
-    }
-  }
-
-  public static void debugDeferred(String msg) {
-    DeferredLog deferredLog = getDeferredLog();
-    if (deferredLog.isErrorEnabled()) {
-      deferredLog.debug(msg);
-    }
-  }
-
-  public static DeferredLog getDeferredLog() {
-    // Get the class that calls the error, info, debug static classes
-    // 获取调用error，info，debug静态类的类
-    Class<?> clazz = getClazz(INVOKE_DEPTH);
-    /*
-     在SpringBoot加载的过程中 EnvironmentPostProcessor 的执行比较早; 这个时候日志系统根本就还没有初始化; 所以在此之前的日志操作都不会有效果; 使用
-     DeferredLog 缓存日志；并在合适的时机回放日志
-     */
-    DeferredLog deferredLog = ThreadLocalMapUtil.get(clazz);
-    if (null == deferredLog) {
-      deferredLog = new DeferredLog();
-      ThreadLocalMapUtil.set(clazz, deferredLog);
-    }
-    return deferredLog;
-  }
-
   /**
    * @author: Ares
    * @description: Get locationAwareLogger
@@ -187,8 +133,8 @@ public class LoggerUtil {
    * @return: org.slf4j.spi.LocationAwareLogger
    */
   private static LocationAwareLogger getLocationAwareLogger() {
+    // 获取调用error、info、warn、debug静态类的类
     // Get the class that calls the error, info, debug static classes
-    // 获取调用error，info，debug静态类的类
     Logger logger = LoggerFactory.getLogger(getClazz(INVOKE_DEPTH));
     return (LocationAwareLogger) logger;
   }

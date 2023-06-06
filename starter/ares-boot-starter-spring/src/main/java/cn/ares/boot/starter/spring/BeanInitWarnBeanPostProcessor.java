@@ -1,6 +1,6 @@
 package cn.ares.boot.starter.spring;
 
-import cn.ares.boot.base.log.util.LoggerUtil;
+import cn.ares.boot.util.log.LoggerUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;

@@ -79,6 +79,11 @@
         <version>${ares-boot.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>io.github.aresxue.boot.util</groupId>
+        <artifactId>ares-boot-util-log</artifactId>
+        <version>${ares-boot.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

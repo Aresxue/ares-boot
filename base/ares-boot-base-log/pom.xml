@@ -27,6 +27,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>io.github.aresxue.boot.util</groupId>
+      <artifactId>ares-boot-util-log</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>io.github.aresxue.boot</groupId>
       <artifactId>ares-boot-base-trace</artifactId>
     </dependency>

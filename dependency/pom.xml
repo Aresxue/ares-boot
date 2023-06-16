@@ -14,7 +14,7 @@
   <groupId>io.github.aresxue.boot</groupId>
   <artifactId>ares-boot-dependency</artifactId>
   <name>Ares Boot Dependency</name>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <description>
     依赖管理和集成以及插件管理
@@ -22,7 +22,7 @@
   </description>
 
   <properties>
-    <ares-boot.version>1.0.0-SNAPSHOT</ares-boot.version>
+    <ares-boot.version>1.0.1-SNAPSHOT</ares-boot.version>
 
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <lombok.version>1.18.26</lombok.version>

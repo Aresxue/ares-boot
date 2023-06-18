@@ -63,4 +63,6 @@ public interface SymbolConstant {
   String LEFT_BRACKET = "(";
   String RIGHT_BRACKET = ")";
 
+  String TILDE = "~";
+
 }

@@ -15,7 +15,7 @@ public class SnowFlakeIdWorker {
   /**
    * 默认开始时间截 (2021-09-06) Default start timestamp (2021-09-06)
    */
-  private static final long ARES_EPOCH = DateUtil.getMicrosecond("2021-09-06 00:00:00");
+  private static final long ARES_EPOCH = DateUtil.getMicrosecond("2021-09-06 00:00:00") / 1000;
 
   /**
    * 机器id所占的位数 The number of digits occupied by the machine id

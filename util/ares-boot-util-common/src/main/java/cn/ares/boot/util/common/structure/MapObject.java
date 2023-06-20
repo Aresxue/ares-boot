@@ -1,6 +1,7 @@
 package cn.ares.boot.util.common.structure;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -9,9 +10,24 @@ import java.util.Optional;
  * @description: Map object
  * @version: JDK 1.8
  */
-public class MapObject extends HashMap<String, Object> {
+public class MapObject<V> extends HashMap<String, V> {
 
   private static final long serialVersionUID = 8446384530352600792L;
+
+  public MapObject() {
+  }
+
+  public MapObject(int initialCapacity) {
+    super(initialCapacity);
+  }
+
+  public MapObject(int initialCapacity, float loadFactor) {
+    super(initialCapacity, loadFactor);
+  }
+
+  public MapObject(Map<? extends String, ? extends V> m) {
+    super(m);
+  }
 
   public String getString(String key) {
     return Optional.ofNullable(get(key)).map(Object::toString).orElse(null);

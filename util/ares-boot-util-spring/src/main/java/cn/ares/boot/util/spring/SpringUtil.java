@@ -62,7 +62,7 @@ import org.springframework.util.ClassUtils;
  * initialization
  * @version: JDK 1.8
  */
-@Component(value = "bootSpringUtil")
+@Component(value = "aresSpringUtil")
 @Role(value = ROLE_SUPPORT)
 public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware, BeanFactoryAware {
 
@@ -258,7 +258,8 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
   /**
    * @author: Ares
    * @description: 根据类获取名称数组（可指定是否包括非单例以及早期初始化）
-   * @description: Gets an array of names by class (you can specify whether to include non-singletons and early initialization)
+   * @description: Gets an array of names by class (you can specify whether to include
+   * non-singletons and early initialization)
    * @time: 2023-05-11 11:42:34
    * @params: [clazz, includeNonSingletons, allowEagerInit] 类，
    * @return: java.lang.String[] bean名称数组
@@ -295,7 +296,8 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
   /**
    * @author: Ares
    * @description: 注册对象到spring容器（指定构造逻辑和对象定义自定义处理）
-   * @description: Register objects into the spring container (specifying construction logic and object definition custom handling)
+   * @description: Register objects into the spring container (specifying construction logic and
+   * object definition custom handling)
    * @time: 2023-05-11 12:18:16
    * @params: [beanName, beanClass, supplier, customizers] 对象名称，对象类，构造bean的逻辑，对象定义自定义处理数组
    * @return: void
@@ -483,10 +485,12 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
   /**
    * @author: Ares
    * @description: 根据指定的扫描器、扫描报名、对象定义注册器、对象名称生成器搜索对象定义持有者
-   * @description: Find for object definitions according to the specified scanner, scan register, object definition registry, object name generator
+   * @description: Find for object definitions according to the specified scanner, scan register,
+   * object definition registry, object name generator
    * @time: 2023-05-11 12:26:04
    * @params: [scanner, packageToScan, registry, beanNameGenerator] 扫描器，要扫描的包，对象定义注册器，对象名称生成器
-   * @return: java.util.Set<org.springframework.beans.factory.config.BeanDefinitionHolder> 对象定义持有者不可重复集合
+   * @return: java.util.Set<org.springframework.beans.factory.config.BeanDefinitionHolder>
+   * 对象定义持有者不可重复集合
    */
   public static Set<BeanDefinitionHolder> findServiceBeanDefinitionHolders(
       ClassPathBeanDefinitionScanner scanner, String packageToScan, BeanDefinitionRegistry registry,
@@ -509,7 +513,8 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
   /**
    * @author: Ares
    * @description: 根据对象定义持有者和类加载器解析出类
-   * @description: The classes are resolved according to the object definition holder and the class loader
+   * @description: The classes are resolved according to the object definition holder and the class
+   * loader
    * @time: 2023-05-11 12:28:30
    * @params: [beanDefinitionHolder, classLoader] 对象定义持有者，类加载器
    * @return: java.lang.Class<?> 类
@@ -523,7 +528,8 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
   /**
    * @author: Ares
    * @description: 使用默认的类加载器从对象定义持有者中解析出类
-   * @description: The class is resolved from the object definition holder using the default class loader
+   * @description: The class is resolved from the object definition holder using the default class
+   * loader
    * @time: 2023-05-11 12:29:50
    * @params: [beanDefinitionHolder] 对象定义持有者
    * @return: java.lang.Class<?> 类

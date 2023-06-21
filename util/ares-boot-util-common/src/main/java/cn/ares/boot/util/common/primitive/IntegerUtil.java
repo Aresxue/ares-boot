@@ -1,5 +1,7 @@
 package cn.ares.boot.util.common.primitive;
 
+import cn.ares.boot.util.common.StringUtil;
+
 /**
  * @author: Ares
  * @time: 2021-1202 12:56:00 下午
@@ -26,7 +28,8 @@ public class IntegerUtil {
   /**
    * @author: Ares
    * @description: 解析对象不为空时返回整形为空返回默认值
-   * @description: When the parsing object is not empty, the return Integer is empty and the default value is returned
+   * @description: When the parsing object is not empty, the return Integer is empty and the default
+   * value is returned
    * @time: 2022-06-07 11:08:00
    * @params: [object, defaultValue] 对象，默认值
    * @return: java.lang.Integer 解析结果
@@ -52,6 +55,35 @@ public class IntegerUtil {
     } else {
       return value < Integer.MIN_VALUE ? Integer.MIN_VALUE : (int) value;
     }
+  }
+
+  /**
+   * Parses the string argument as a signed decimal integer.
+   * <p>
+   * The input may be surrounded by whitespace.
+   * </p>
+   *
+   * @param str            a {@code String} containing the {@code int} representation to parse, may be
+   *                     {@code null} or {@code ""}
+   * @param defaultValue the return value, use {@code defaultValue} if {@code str} is {@code null} or
+   *                     {@code ""}
+   * @return the integer value represented by the argument in decimal.
+   * @throws NumberFormatException if the string does not contain a parsable integer.
+   */
+  public static int parseInt(final String str, final int defaultValue) {
+    return StringUtil.isEmpty(str) ? defaultValue : Integer.parseInt(str.trim());
+  }
+
+  /**
+   * Parses the string argument as a signed decimal integer.
+   *
+   * @param str a {@code String} containing the {@code int} representation to parse, may be
+   *          {@code null} or {@code ""}
+   * @return the integer value represented by the argument in decimal.
+   * @throws NumberFormatException if the string does not contain a parsable integer.
+   */
+  public static int parseInt(final String str) {
+    return parseInt(str, 0);
   }
 
 }

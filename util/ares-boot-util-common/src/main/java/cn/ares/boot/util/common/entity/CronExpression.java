@@ -2,9 +2,11 @@ package cn.ares.boot.util.common.entity;
 
 
 import cn.ares.boot.util.common.CollectionUtil;
+import cn.ares.boot.util.common.DateUtil;
 import cn.ares.boot.util.common.MapUtil;
 import cn.ares.boot.util.common.primitive.IntegerUtil;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -142,6 +144,11 @@ public final class CronExpression {
    */
   public Date getNextValidTimeAfter(final Date date) {
     return getTimeAfter(date);
+  }
+
+  public LocalDateTime getNextValidTimeAfter(final LocalDateTime localDateTime) {
+    Date date=  DateUtil.localDateTimeToDate(localDateTime);
+    return DateUtil.dateToLocalDateTime(getTimeAfter(date));
   }
 
   /**

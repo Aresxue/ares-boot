@@ -1,8 +1,10 @@
 package cn.ares.boot.util.common;
 
 import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_WHIFFLETREE_SECOND;
+import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_WHIFFLETREE_SECOND_FORMATTER;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -33,6 +35,10 @@ public class CronExpressionUtilTest {
     list = CronExpressionUtil.queryListLastRumTime("0 0 12 ? * WED", 5,
         DATE_FORMAT_WHIFFLETREE_SECOND);
     System.out.println("每个星期三中午12点执行一次: " + list);
+
+    for (LocalDateTime time : CronExpressionUtil.queryListLastRumTime("0 0 12 ? * WED", 5)) {
+      System.out.println(DATE_FORMAT_WHIFFLETREE_SECOND_FORMATTER.format(time));
+    }
   }
 
 }

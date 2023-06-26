@@ -10,7 +10,7 @@ import java.util.Optional;
  * @description: Map object
  * @version: JDK 1.8
  */
-public class MapObject<V> extends HashMap<String, V> {
+public class MapObject extends HashMap<String, Object> {
 
   private static final long serialVersionUID = 8446384530352600792L;
 
@@ -25,8 +25,8 @@ public class MapObject<V> extends HashMap<String, V> {
     super(initialCapacity, loadFactor);
   }
 
-  public MapObject(Map<? extends String, ? extends V> m) {
-    super(m);
+  public MapObject(Map<? extends String, ? extends Object> map) {
+    super(map);
   }
 
   public String getString(String key) {
@@ -60,6 +60,11 @@ public class MapObject<V> extends HashMap<String, V> {
 
   public Float getFloat(String key) {
     return Optional.ofNullable(get(key)).map(value -> Float.parseFloat(value.toString()))
+        .orElse(null);
+  }
+
+  public Boolean getBoolean(String key) {
+    return Optional.ofNullable(get(key)).map(value -> Boolean.parseBoolean(value.toString()))
         .orElse(null);
   }
 

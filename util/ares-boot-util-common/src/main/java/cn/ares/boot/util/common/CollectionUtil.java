@@ -2,6 +2,7 @@ package cn.ares.boot.util.common;
 
 import cn.ares.boot.util.common.primitive.IntegerUtil;
 import cn.ares.boot.util.common.structure.ConcurrentHashSet;
+import cn.ares.boot.util.common.structure.SplitList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -509,6 +510,24 @@ public class CollectionUtil {
     ConcurrentHashSet<E> set = CollectionUtil.newConcurrentHashSet(elements.length);
     set.addAll(Arrays.asList(elements));
     return set;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 按指定大小切分集合为链表
+   * @description: Shred a set to a linked list at a specified size
+   * @time: 2023-06-27 20:54:55
+   * @params: [collection, size] 集合，大小
+   * @return: java.util.List<java.util.List<T>> 切分后列表
+   */
+  public static <T> List<List<T>> split(Collection<T> collection, int size) {
+    if (collection == null) {
+      throw new NullPointerException("List must not be null");
+    } else if (size <= 0) {
+      throw new IllegalArgumentException("Size must be greater than 0");
+    } else {
+      return new SplitList<>(collection, size);
+    }
   }
 
   private static class EnumerationIterator<E> implements Iterator<E> {

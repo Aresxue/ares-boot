@@ -326,27 +326,66 @@ public class ClassUtil {
   public static boolean isFinal(Class<?> clazz) {
     return Modifier.isFinal(clazz.getModifiers());
   }
+
   /**
    * @author: Ares
-   * @description: 为类数组构建描述
-   * @description: Build a description for an array of classes
+   * @description: 根据参数类型构造签名
+   * @description: Construct signatures based on parameter types
    * @time: 2023-06-27 13:15:46
    * @params: [classes] 类数组
    * @return: java.lang.String 描述
    * @return: java.lang.String description
    */
-  public static String buildDescription(Class<?>[] classes) {
-    if (ArrayUtil.isEmpty(classes)) {
+  public static String constructParameterTypeSignature(Class<?>[] classes) {
+    if(ArrayUtil.isEmpty(classes)){
       return "";
     }
-    StringBuilder descBuilder = new StringBuilder();
-    for (Class<?> parameterType : classes) {
-      if (null != parameterType) {
-        String parameterTypeName = StringUtil.replace(parameterType.getCanonicalName(), ".", "/");
-        descBuilder.append("L").append(parameterTypeName).append(";");
+
+    StringBuilder signatureBuilder = new StringBuilder();
+
+    for (Class<?> clazz : classes) {
+      signatureBuilder.append(getTypeSignature(clazz));
+    }
+
+    return signatureBuilder.toString();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取类型签名
+   * @description: Get type signature
+   * @time: 2023-06-27 13:54:21
+   * @params: [clazz] 类
+   * @return: java.lang.String 字符串标识
+   */
+  private static String getTypeSignature(Class<?> clazz) {
+    if (clazz.isArray()) {
+      return "[" + getTypeSignature(clazz.getComponentType());
+    }
+
+    if (clazz.isPrimitive()) {
+      if (clazz == void.class) {
+        return "V";
+      } else if (clazz == boolean.class) {
+        return "Z";
+      } else if (clazz == byte.class) {
+        return "B";
+      } else if (clazz == char.class) {
+        return "C";
+      } else if (clazz == short.class) {
+        return "S";
+      } else if (clazz == int.class) {
+        return "I";
+      } else if (clazz == long.class) {
+        return "J";
+      } else if (clazz == float.class) {
+        return "F";
+      } else if (clazz == double.class) {
+        return "D";
       }
     }
-    return descBuilder.toString();
+
+    return "L" + clazz.getName().replace('.', '/') + ";";
   }
 
 }

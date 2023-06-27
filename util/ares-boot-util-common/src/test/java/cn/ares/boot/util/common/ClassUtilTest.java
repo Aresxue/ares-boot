@@ -1,6 +1,7 @@
 package cn.ares.boot.util.common;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author: Ares
@@ -14,6 +15,11 @@ public class ClassUtilTest {
     int i = 0;
     // 这里出来是Integer.class, 因为是数组所以隐式地带上了一个类型装箱
     System.out.println(Arrays.toString(ClassUtil.toClass(i)));
+
+    System.out.println("dDescription: " + ClassUtil.buildDescription(null));
+    System.out.println("dDescription: " + ClassUtil.buildDescription(new Class[]{}));
+    System.out.println("dDescription: " + ClassUtil.buildDescription(new Class[]{String.class}));
+    System.out.println("dDescription: " + ClassUtil.buildDescription(new Class[]{String.class, List.class}));
   }
 
 }

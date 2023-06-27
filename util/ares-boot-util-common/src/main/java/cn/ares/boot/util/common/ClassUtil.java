@@ -330,7 +330,7 @@ public class ClassUtil {
   /**
    * @author: Ares
    * @description: 根据参数类型构造签名
-   * @description: Construct signatures based on parameter types
+   * @description: Construct signatures based on classes
    * @time: 2023-06-27 13:15:46
    * @params: [classes] 类数组
    * @return: java.lang.String 描述

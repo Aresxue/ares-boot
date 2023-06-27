@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author: Ares
  * @time: 2019-05-08 17:11:00
- * @description: class type util
+ * @description: Class type util
  * @version: JDK 1.8
  */
 public class ClassUtil {
@@ -325,6 +325,28 @@ public class ClassUtil {
    */
   public static boolean isFinal(Class<?> clazz) {
     return Modifier.isFinal(clazz.getModifiers());
+  }
+  /**
+   * @author: Ares
+   * @description: 为类数组构建描述
+   * @description: Build a description for an array of classes
+   * @time: 2023-06-27 13:15:46
+   * @params: [classes] 类数组
+   * @return: java.lang.String 描述
+   * @return: java.lang.String description
+   */
+  public static String buildDescription(Class<?>[] classes) {
+    if (ArrayUtil.isEmpty(classes)) {
+      return "";
+    }
+    StringBuilder descBuilder = new StringBuilder();
+    for (Class<?> parameterType : classes) {
+      if (null != parameterType) {
+        String parameterTypeName = StringUtil.replace(parameterType.getCanonicalName(), ".", "/");
+        descBuilder.append("L").append(parameterTypeName).append(";");
+      }
+    }
+    return descBuilder.toString();
   }
 
 }

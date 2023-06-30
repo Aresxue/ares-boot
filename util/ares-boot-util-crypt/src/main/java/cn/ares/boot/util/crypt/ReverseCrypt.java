@@ -1,11 +1,11 @@
 package cn.ares.boot.util.crypt;
 
 import static cn.ares.boot.util.common.StringUtil.isEmpty;
-import static cn.ares.boot.util.common.StringUtil.isNotEmpty;
 import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.AES256;
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
 import cn.ares.boot.util.common.ExceptionUtil;
+import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.crypt.constant.CryptAlgorithm;
 import cn.ares.boot.util.crypt.impl.Aes256;
 import cn.ares.boot.util.crypt.impl.Des;
@@ -213,7 +213,7 @@ public abstract class ReverseCrypt extends AbstractCrypt {
       for (DefaultKeyGetService defaultKeyGetService : defaultKeyGetServices) {
         try {
           publicKey = defaultKeyGetService.getDefaultPublicKey();
-          if (isNotEmpty(publicKey)) {
+          if (StringUtil.isNotEmpty(publicKey)) {
             break;
           }
         } catch (Exception ignore) {
@@ -242,7 +242,7 @@ public abstract class ReverseCrypt extends AbstractCrypt {
       for (DefaultKeyGetService defaultKeyGetService : defaultKeyGetServices) {
         try {
           privateKey = defaultKeyGetService.getDefaultPrivateKey();
-          if (isNotEmpty(privateKey)) {
+          if (StringUtil.isNotEmpty(privateKey)) {
             break;
           }
         } catch (Exception ignore) {

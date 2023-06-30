@@ -39,6 +39,66 @@ public class CollectionUtil {
 
   /**
    * @author: Ares
+   * @description: 判断多个集合全部为空
+   * @description: Determines that multiple collections are all empty
+   * @time: 2023-06-30 12:24:11
+   * @params: [collectionArr] 集合数组
+   * @return: boolean 全部为空
+   */
+  public static boolean allIsEmpty(Collection<?>... collectionArr) {
+    if (ArrayUtil.isEmpty(collectionArr)) {
+      throw new IllegalArgumentException("Collection arr is empty");
+    }
+    return Arrays.stream(collectionArr).allMatch(CollectionUtil::isEmpty);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断多个集合是否存在为空的集合
+   * @description: Determines whether there is an empty set for multiple sets
+   * @time: 2023-06-30 12:24:11
+   * @params: [collectionArr] 集合数组
+   * @return: boolean 任一为空
+   */
+  public static boolean anyIsEmpty(Collection<?>... collectionArr) {
+    if (ArrayUtil.isEmpty(collectionArr)) {
+      throw new IllegalArgumentException("Collection arr is empty");
+    }
+    return Arrays.stream(collectionArr).anyMatch(CollectionUtil::isEmpty);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断多个集合全部非空
+   * @description: Determines that multiple sets are all non-empty
+   * @time: 2023-06-30 12:24:11
+   * @params: [collectionArr] 集合数组
+   * @return: boolean 全部非空
+   */
+  public static boolean allIsNotEmpty(Collection<?>... collectionArr) {
+    if (ArrayUtil.isEmpty(collectionArr)) {
+      throw new IllegalArgumentException("Collection arr is empty");
+    }
+    return Arrays.stream(collectionArr).allMatch(CollectionUtil::isNotEmpty);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断多个集合是否存在不为空的集合
+   * @description: Determines whether multiple sets exist that are not empty
+   * @time: 2023-06-30 12:24:11
+   * @params: [collectionArr] 集合数组
+   * @return: boolean 任一非空
+   */
+  public static boolean anyIsNotEmpty(Collection<?>... collectionArr) {
+    if (ArrayUtil.isEmpty(collectionArr)) {
+      throw new IllegalArgumentException("Collection arr is empty");
+    }
+    return Arrays.stream(collectionArr).anyMatch(CollectionUtil::isNotEmpty);
+  }
+
+  /**
+   * @author: Ares
    * @description: 集合是否非空
    * @description: Collection is not empty
    * @time: 2022-06-07 17:06:43
@@ -518,7 +578,7 @@ public class CollectionUtil {
    * @description: Shred a set to a linked list at a specified size
    * @time: 2023-06-27 20:54:55
    * @params: [collection, size] 集合，大小
-   * @return: java.util.List<java.util.List<T>> 切分后列表
+   * @return: java.util.List<java.util.List < T>> 切分后列表
    */
   public static <T> List<List<T>> split(Collection<T> collection, int size) {
     if (collection == null) {

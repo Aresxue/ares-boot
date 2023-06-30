@@ -1,6 +1,5 @@
 package cn.ares.boot.util.http;
 
-import static cn.ares.boot.util.common.StringUtil.isNotEmpty;
 import static cn.ares.boot.util.common.constant.SymbolConstant.AND;
 import static cn.ares.boot.util.common.constant.SymbolConstant.COLON;
 import static cn.ares.boot.util.common.constant.SymbolConstant.EQUALS;
@@ -372,7 +371,7 @@ public class HttpClientUtil implements ApplicationContextAware {
       throws Exception {
     if (null != param) {
       String query = HttpClientUtil.encodeGetRequest(param);
-      if (isNotEmpty(query)) {
+      if (StringUtil.isNotEmpty(query)) {
         url += QUESTION_MARK + query;
       }
     }
@@ -682,7 +681,7 @@ public class HttpClientUtil implements ApplicationContextAware {
     String hostname = proxy.getHostname();
     String schemeName = proxy.getSchemeName();
     Integer port = proxy.getPort();
-    if (isNotEmpty(hostname, schemeName) && null != port) {
+    if (StringUtil.allIsNotEmpty(hostname, schemeName) && null != port) {
       httpProxy = new HttpHost(schemeName, hostname, port);
     }
     return httpProxy;

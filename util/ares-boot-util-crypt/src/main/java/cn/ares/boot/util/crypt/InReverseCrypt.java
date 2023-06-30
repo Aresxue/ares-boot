@@ -1,10 +1,10 @@
 package cn.ares.boot.util.crypt;
 
 import static cn.ares.boot.util.common.StringUtil.isEmpty;
-import static cn.ares.boot.util.common.StringUtil.isNotEmpty;
 import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.MD5;
 
 import cn.ares.boot.util.common.ExceptionUtil;
+import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.crypt.constant.CryptAlgorithm;
 import cn.ares.boot.util.crypt.impl.HMacSm3;
 import cn.ares.boot.util.crypt.impl.Md5;
@@ -147,7 +147,7 @@ public abstract class InReverseCrypt extends AbstractCrypt {
       for (DefaultSaltGetService defaultSaltGetService : defaultSaltGetServices) {
         try {
           SALT = defaultSaltGetService.getDefaultSalt();
-          if (isNotEmpty(SALT)) {
+          if (StringUtil.isNotEmpty(SALT)) {
             break;
           }
         } catch (Exception ignore) {

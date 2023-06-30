@@ -39,13 +39,11 @@ import java.util.stream.Collectors;
 public class StringUtil {
 
   /**
-   * 找不到字符串时的下标
-   * index when str not found
+   * 找不到字符串时的下标 index when str not found
    */
   private static final int INDEX_NOT_FOUND = -1;
   /**
-   * 左填充或右填充的限制
-   * limit when leftPad or rightPad
+   * 左填充或右填充的限制 limit when leftPad or rightPad
    */
   private static final int PAD_LIMIT = 8192;
 
@@ -80,6 +78,36 @@ public class StringUtil {
 
   /**
    * @author: Ares
+   * @description: 判断多个字符串全部为空
+   * @description: Judging that multiple strings all are empty
+   * @time: 2022-06-09 11:18:25
+   * @params: [strArr] 字符串数组
+   * @return: boolean 全部为空
+   */
+  public static boolean allIsEmpty(String... strArr) {
+    if (ArrayUtil.isEmpty(strArr)) {
+      throw new IllegalArgumentException("Str arr is empty");
+    }
+    return Arrays.stream(strArr).allMatch(StringUtil::isEmpty);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断多个字符串中是否存在为空的字符串
+   * @description: Determines whether there are empty strings in multiple strings
+   * @time: 2023-06-30 12:19:56
+   * @params: [strArr] 字符串数组
+   * @return: boolean 任一为空
+   */
+  public static boolean anyIsEmpty(String... strArr) {
+    if (ArrayUtil.isEmpty(strArr)) {
+      throw new IllegalArgumentException("Str arr is empty");
+    }
+    return Arrays.stream(strArr).anyMatch(StringUtil::isEmpty);
+  }
+
+  /**
+   * @author: Ares
    * @description: 判断字符串非空
    * @description: Determine str is not empty
    * @time: 2022-05-19 10:48:05
@@ -92,19 +120,32 @@ public class StringUtil {
 
   /**
    * @author: Ares
-   * @description: 判断多个字符串都非空
-   * @description: Judging that multiple strings are not empty
+   * @description: 判断多个字符串全部非空
+   * @description: Judging that multiple strings all are not empty
    * @time: 2022-06-09 11:18:25
    * @params: [strArr] 字符串数组
-   * @return: boolean 是否非空
+   * @return: boolean 全部非空
    */
-  public static boolean isNotEmpty(String... strArr) {
-    for (String str : strArr) {
-      if (isEmpty(str)) {
-        return false;
-      }
+  public static boolean allIsNotEmpty(String... strArr) {
+    if (ArrayUtil.isEmpty(strArr)) {
+      throw new IllegalArgumentException("Str arr is empty");
     }
-    return true;
+    return Arrays.stream(strArr).allMatch(StringUtil::isNotEmpty);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断多个字符串中是否存在不为空的字符串
+   * @description: Determines whether there is a non-empty string in multiple strings
+   * @time: 2023-06-30 12:18:26
+   * @params: [strArr] 字符串数组
+   * @return: boolean 任一非空
+   */
+  public static boolean anyIsNotEmpty(String... strArr) {
+    if (ArrayUtil.isEmpty(strArr)) {
+      throw new IllegalArgumentException("Str arr is empty");
+    }
+    return Arrays.stream(strArr).anyMatch(StringUtil::isNotEmpty);
   }
 
   /**

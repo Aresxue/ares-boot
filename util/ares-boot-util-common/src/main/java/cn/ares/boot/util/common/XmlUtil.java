@@ -1,8 +1,6 @@
 package cn.ares.boot.util.common;
 
 
-import static cn.ares.boot.util.common.StringUtil.isNotEmpty;
-
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -316,7 +314,7 @@ public class XmlUtil {
    */
   public static DocumentBuilderFactory createDocumentBuilderFactory() {
     final DocumentBuilderFactory factory;
-    if (isNotEmpty(DEFAULT_DOCUMENT_BUILDER_FACTORY)) {
+    if (StringUtil.isNotEmpty(DEFAULT_DOCUMENT_BUILDER_FACTORY)) {
       factory = DocumentBuilderFactory.newInstance(DEFAULT_DOCUMENT_BUILDER_FACTORY, null);
     } else {
       factory = DocumentBuilderFactory.newInstance();

@@ -3,12 +3,12 @@ package cn.ares.boot.util.json;
 import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_TIME;
 import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_WHIFFLETREE_DAY;
 import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_WHIFFLETREE_SECOND;
-import static cn.ares.boot.util.common.StringUtil.isNotEmpty;
 import static com.fasterxml.jackson.databind.MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS;
 
 import cn.ares.boot.util.common.ArrayUtil;
 import cn.ares.boot.util.common.ClassUtil;
 import cn.ares.boot.util.common.DateUtil;
+import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.json.exception.JsonException;
 import cn.ares.boot.util.json.serializer.modifier.IgnoreParentPropertiesBeanSerializerModifier;
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -585,13 +585,13 @@ public class JsonUtil {
    */
   public static void configTime(ObjectMapper objectMapper, String dateFormat,
       String localDateFormat, String localTimeFormat, String localDateTimeFormat) {
-    if (isNotEmpty(dateFormat)) {
+    if (StringUtil.isNotEmpty(dateFormat)) {
       objectMapper.setDateFormat(DateUtil.getFormat(dateFormat));
     }
 
-    boolean localDateIsNotEmpty = isNotEmpty(localDateFormat);
-    boolean localTimeIsNotEmpty = isNotEmpty(localTimeFormat);
-    boolean localDateTimeIsNotEmpty = isNotEmpty(localDateTimeFormat);
+    boolean localDateIsNotEmpty = StringUtil.isNotEmpty(localDateFormat);
+    boolean localTimeIsNotEmpty = StringUtil.isNotEmpty(localTimeFormat);
+    boolean localDateTimeIsNotEmpty = StringUtil.isNotEmpty(localDateTimeFormat);
     if (localDateIsNotEmpty || localTimeIsNotEmpty || localDateTimeIsNotEmpty) {
       JavaTimeModule javaTimeModule = new JavaTimeModule();
       if (localDateIsNotEmpty) {

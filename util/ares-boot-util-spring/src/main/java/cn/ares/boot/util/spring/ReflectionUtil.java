@@ -311,34 +311,21 @@ public class ReflectionUtil {
     Field field = findField(target, fieldName);
     return doWithHandleException(() -> {
       if (null != field) {
-        boolean accessible = field.isAccessible();
-        if (!accessible) {
+        if (!field.isAccessible()) {
           field.setAccessible(true);
         }
-        try {
-          Field modifiers = Field.class.getDeclaredField("modifiers");
-          boolean modifiersAccessible = field.isAccessible();
-          if (!modifiersAccessible) {
-            modifiers.setAccessible(true);
-          }
-          try {
-            // 去掉final修饰符
-            // remove final modifiers
-            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-            field.set(target, fieldValue);
-            // 把final修饰符恢复回来
-            // recover final modifiers
-            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-          } finally {
-            if (!accessible) {
-              modifiers.setAccessible(false);
-            }
-          }
-        } finally {
-          if (!accessible) {
-            field.setAccessible(false);
-          }
+        Field modifiers = Field.class.getDeclaredField("modifiers");
+        boolean modifiersAccessible = field.isAccessible();
+        if (!modifiersAccessible) {
+          modifiers.setAccessible(true);
         }
+        // 去掉final修饰符
+        // remove final modifiers
+        modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+        field.set(target, fieldValue);
+        // 把final修饰符恢复回来
+        // recover final modifiers
+        modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
         return true;
       }
       return false;

@@ -1359,4 +1359,26 @@ public class StringUtil {
         .nextInt(CHINESE_CHARACTER_LENGTH));
   }
 
+  /**
+   * @author: Ares
+   * @description: 从字符串中提取起始字符串和结束字符串中间的字符串
+   * @description: Gets the string between the start string and the end string from the string
+   * @time: 2023-07-05 11:13:41
+   * @params: [str, open, close] 字符串，起始字符串，结束字符串
+   * @return: java.lang.String out 出参
+   */
+  public static String substringBetween(String str, String open, String close) {
+    if (null == str || null == open || null == close) {
+      return null;
+    }
+    int start = str.indexOf(open);
+    if (start != INDEX_NOT_FOUND) {
+      int end = str.indexOf(close, start + open.length());
+      if (end != INDEX_NOT_FOUND) {
+        return str.substring(start + open.length(), end);
+      }
+    }
+    return null;
+  }
+
 }

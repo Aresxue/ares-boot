@@ -34,4 +34,6 @@ public interface StringConstant {
 
   String JAVA = "java";
 
+  String MAGIC_NUMBER = "Ares";
+
 }

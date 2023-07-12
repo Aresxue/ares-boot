@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.util.ReflectionUtils.FieldCallback;
 
 /**
  * @author: Ares
@@ -718,6 +719,104 @@ public class ReflectionUtil {
       LOGGER.warn("find method handle exception: ", e);
     }
     return invokeMethod;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 浅克隆
+   * @description: shallow clone
+   * @time: 2023-07-12 21:38:01
+   * @params: [source] 源对象
+   * @return: java.lang.Object 克隆出的对象
+   */
+  public static Object shallowClone(Object target) {
+    return shallowClone(target, true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 浅克隆
+   * @description: shallow clone
+   * @time: 2023-07-12 21:38:01
+   * @params: [source, includeSuperFields] 源对象，是否包含父类字段
+   * @return: java.lang.Object 克隆出的对象
+   */
+  public static Object shallowClone(Object source, boolean includeSuperFields) {
+    if (null == source) {
+      return null;
+    }
+    Class<?> clazz = source.getClass();
+    Object result = invokeConstructor(clazz);
+    FieldCallback fieldCallback = field -> {
+      ReflectionUtils.makeAccessible(field);
+      Object fieldValue = field.get(source);
+      if (null != fieldValue) {
+        field.set(result, fieldValue);
+      }
+    };
+    if (includeSuperFields) {
+      ReflectionUtils.doWithFields(clazz, fieldCallback);
+    } else {
+      ReflectionUtils.doWithLocalFields(clazz, fieldCallback);
+    }
+    return result;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 浅拷贝
+   * @description: shallow copy
+   * @time: 2023-07-12 21:42:18
+   * @params: [source, target ] 源对象，目标对象
+   * @return: void
+   */
+  public static void shallowCopy(Object source, Object target) {
+    shallowCopy(source, target, true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 浅拷贝
+   * @description: shallow copy
+   * @time: 2023-07-12 21:42:18
+   * @params: [source, target, includeSuperFields] 源对象，目标对象，是否包含父类字段
+   * @return: void
+   */
+  public static void shallowCopy(Object source, Object target, boolean includeSuperFields) {
+    shallowCopy(source, target, includeSuperFields, true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 浅拷贝
+   * @description: shallow copy
+   * @time: 2023-07-12 21:42:18
+   * @params: [source, target, includeSuperFields, ignoreNull] 源对象，目标对象，是否包含父类字段，是否忽略null值
+   * @return: void
+   */
+  public static void shallowCopy(Object source, Object target, boolean includeSuperFields,
+      boolean ignoreNull) {
+    if (null == target || null == source) {
+      return;
+    }
+    Class<?> clazz = target.getClass();
+    Class<?> sourceClazz = source.getClass();
+    // 不是一个类不作处理
+    if (!ClassUtil.isSameClass(clazz, sourceClazz)) {
+      return;
+    }
+    FieldCallback fieldCallback = field -> {
+      ReflectionUtils.makeAccessible(field);
+      Object fieldValue = field.get(source);
+      if (!ignoreNull || null != fieldValue) {
+        field.set(target, fieldValue);
+      }
+    };
+    if (includeSuperFields) {
+      ReflectionUtils.doWithFields(clazz, fieldCallback);
+    } else {
+      ReflectionUtils.doWithLocalFields(clazz, fieldCallback);
+    }
   }
 
   private static <V> V doWithHandleException(Callable<V> callable) {

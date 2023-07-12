@@ -18,8 +18,6 @@ import org.yaml.snakeyaml.Yaml;
  */
 public class YamlUtil {
 
-  private static final String YAML_SEPARATOR = ": ";
-
   private static final YamlConfigParse YAML_CONFIG_PARSE = new YamlConfigParse();
   private static final Yaml DEFAULT_YAML = YamlConfigParse.createYaml();
 

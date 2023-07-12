@@ -40,6 +40,8 @@ public class YamlUtilTest {
     Properties properties = new Properties();
     properties.put("name", "ares");
     properties.put("person.age", "18");
+    properties.put("report.mq.replay-report.topic", 1111);
+    properties.put("report.mq.traffic-report.topic", 2222);
     LOGGER.info("yaml content: \n{}", YamlUtil.propertiesToYaml(properties));
   }
 

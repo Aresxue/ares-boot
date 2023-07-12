@@ -1,19 +1,13 @@
 package cn.ares.boot.util.yaml;
 
-import static cn.ares.boot.util.common.constant.SymbolConstant.SPACE;
-import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
-
 import cn.ares.boot.util.common.MapUtil;
+import cn.ares.boot.util.common.PropertyUtil;
 import cn.ares.boot.util.common.StringUtil;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.StringJoiner;
 import org.yaml.snakeyaml.Yaml;
 
 /**
@@ -37,64 +31,7 @@ public class YamlUtil {
    * @return: java.lang.String 响应参数
    */
   public static String propertiesToYaml(Properties properties) {
-    Map<String, Node> nodeMap = new HashMap<>(32);
-    List<Node> nodeList = new ArrayList<>();
-    properties.stringPropertyNames().forEach(propertyName -> {
-      List<String> splitList = StringUtil.listSplit(propertyName, SPOT);
-      int length = splitList.size();
-      for (int index = 0; index < length; index++) {
-        String key = splitList.get(index);
-        Node node = nodeMap.get(key + index);
-        if (null == node) {
-          node = new Node(key, index);
-          nodeMap.put(key + index, node);
-          if (index == 0) {
-            if (length == 1) {
-              node.value = properties.getProperty(propertyName);
-            }
-            nodeList.add(node);
-          } else {
-            if (index == length - 1) {
-              node.value = properties.getProperty(propertyName);
-            }
-            int parentIndex = index - 1;
-            String parentKey = splitList.get(parentIndex);
-            Node parentNode = nodeMap.get(parentKey + parentIndex);
-            List<Node> childrenList = parentNode.childrenList;
-            if (null == childrenList || childrenList.size() == 0) {
-              childrenList = new ArrayList<>();
-              parentNode.childrenList = childrenList;
-            }
-            childrenList.add(node);
-          }
-        }
-      }
-    });
-    StringJoiner joiner = new StringJoiner(System.lineSeparator());
-    for (Node node : nodeList) {
-      writeYml(joiner, node);
-    }
-    return joiner.toString();
-  }
-
-  private static void writeYml(StringJoiner joiner, Node node) {
-    StringBuilder builder = new StringBuilder();
-    for (int index = 0; index < node.level; index++) {
-      builder.append(SPACE).append(SPACE);
-    }
-    builder.append(node.key).append(YAML_SEPARATOR);
-    String nodeValue = node.value;
-    if (null != nodeValue) {
-      builder.append(nodeValue);
-    }
-    joiner.add(builder);
-
-    List<Node> childrenList = node.childrenList;
-    if (null != childrenList && childrenList.size() > 0) {
-      for (Node childrenNode : childrenList) {
-        writeYml(joiner, childrenNode);
-      }
-    }
+    return DEFAULT_YAML.dumpAsMap(PropertyUtil.convertToNestedMap(properties));
   }
 
   /**
@@ -187,19 +124,6 @@ public class YamlUtil {
     StringWriter writer = new StringWriter();
     DEFAULT_YAML.dump(object, writer);
     return writer.toString();
-  }
-
-  private static class Node {
-
-    private final String key;
-    private final Integer level;
-    private String value;
-    private List<Node> childrenList;
-
-    public Node(String key, Integer level) {
-      this.key = key;
-      this.level = level;
-    }
   }
 
 }

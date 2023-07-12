@@ -1,5 +1,10 @@
 package cn.ares.boot.util.common;
 
+import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
+
+import cn.ares.boot.util.common.structure.MapObject;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.function.Function;
 
@@ -95,6 +100,26 @@ public class PropertyUtil {
       return null;
     }
     return function.apply(propertyValue);
+  }
+
+  public static Map<String, Object> convertToNestedMap(Properties properties) {
+    MapObject nestedMap = new MapObject();
+
+    properties.forEach((key, value) -> {
+      List<String> partList = StringUtil.listSplit(key.toString(), SPOT);
+      MapObject currentMap = nestedMap;
+
+      for (int i = 0; i < partList.size() - 1; i++) {
+        String part = partList.get(i);
+        currentMap.putIfAbsent(part, new MapObject());
+        currentMap = currentMap.getObject(part);
+      }
+
+      String lastPart = partList.get(partList.size() - 1);
+      currentMap.put(lastPart, value);
+    });
+
+    return nestedMap;
   }
 
 }

@@ -1,6 +1,9 @@
 package cn.ares.boot.util.common.primitive;
 
+import static cn.ares.boot.util.common.constant.NumberConstant.TEN_THOUSAND_BIG_INTEGER;
+
 import cn.ares.boot.util.common.StringUtil;
+import java.math.BigInteger;
 
 /**
  * @author: Ares
@@ -84,6 +87,19 @@ public class IntegerUtil {
    */
   public static int parseInt(final String str) {
     return parseInt(str, 0);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取万分比
+   * @description: Get ten thousandth rate
+   * @time: 2023-07-12 11:19:18
+   * @params: [molecule, denominator] 分子，分母
+   * @return: int 万分比
+   */
+  public static int getTenThousandthRate(long molecule, long denominator) {
+    return BigInteger.valueOf(molecule).multiply(TEN_THOUSAND_BIG_INTEGER)
+        .divide(BigInteger.valueOf(denominator)).intValue();
   }
 
 }

@@ -746,20 +746,9 @@ public class ReflectionUtil {
       return null;
     }
     Class<?> clazz = source.getClass();
-    Object result = invokeConstructor(clazz);
-    FieldCallback fieldCallback = field -> {
-      ReflectionUtils.makeAccessible(field);
-      Object fieldValue = field.get(source);
-      if (null != fieldValue) {
-        field.set(result, fieldValue);
-      }
-    };
-    if (includeSuperFields) {
-      ReflectionUtils.doWithFields(clazz, fieldCallback);
-    } else {
-      ReflectionUtils.doWithLocalFields(clazz, fieldCallback);
-    }
-    return result;
+    Object target = invokeConstructor(clazz);
+    shallowCopy(source, target, includeSuperFields);
+    return target;
   }
 
   /**
@@ -806,10 +795,13 @@ public class ReflectionUtil {
       return;
     }
     FieldCallback fieldCallback = field -> {
-      ReflectionUtils.makeAccessible(field);
-      Object fieldValue = field.get(source);
-      if (!ignoreNull || null != fieldValue) {
-        field.set(target, fieldValue);
+      // 非静态变量，都是同一个类静态变量无论如何都不需要操作
+      if (!Modifier.isStatic(field.getModifiers())) {
+        ReflectionUtils.makeAccessible(field);
+        Object fieldValue = field.get(source);
+        if (!ignoreNull || null != fieldValue) {
+          field.set(target, fieldValue);
+        }
       }
     };
     if (includeSuperFields) {

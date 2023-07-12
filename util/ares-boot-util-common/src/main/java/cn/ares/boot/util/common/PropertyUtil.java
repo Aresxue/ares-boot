@@ -102,6 +102,14 @@ public class PropertyUtil {
     return function.apply(propertyValue);
   }
 
+  /**
+   * @author: Ares
+   * @description: 将属性转为嵌套映射（以.为分隔符）
+   * @description: Convert attributes to nested mappings (to. Is delimiter)
+   * @time: 2023-07-12 16:47:50
+   * @params: [properties] 属性
+   * @return: java.util.Map<java.lang.String,java.lang.Object> 嵌套映射
+   */
   public static Map<String, Object> convertToNestedMap(Properties properties) {
     MapObject nestedMap = new MapObject();
 

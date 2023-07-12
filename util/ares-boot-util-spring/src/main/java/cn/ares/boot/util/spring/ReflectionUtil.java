@@ -185,11 +185,83 @@ public class ReflectionUtil {
     Class<?> clazz = getClass(target);
     Field field = ReflectionUtils.findField(clazz, fieldName, fieldType);
     if (null != field) {
-      if (!field.isAccessible() && accessible) {
-        field.setAccessible(true);
+      if (accessible) {
+        ReflectionUtils.makeAccessible(field);
       }
     }
     return field;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
+   * @description: Gets all the fields from the target Object (including the parent class but except
+   * Object)
+   * @time: 2023-07-12 21:02:07
+   * @params: [target] 目标对象
+   * @return: java.util.List<java.lang.reflect.Field> 字段列表
+   */
+  public static List<Field> findAllFields(Object target) {
+    return findAllFields(target, false);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
+   * @description: Gets all the fields from the target Object (including the parent class but except
+   * Object)
+   * @time: 2023-07-12 21:02:07
+   * @params: [target, accessible] 目标对象，访问限制
+   * @return: java.util.List<java.lang.reflect.Field> 字段列表
+   */
+  public static List<Field> findAllFields(Object target, boolean accessible) {
+    if (null == target) {
+      return null;
+    }
+    Class<?> clazz = getClass(target);
+    List<Field> fieldList = new ArrayList<>();
+    ReflectionUtils.doWithFields(clazz, field -> {
+      if (accessible) {
+        ReflectionUtils.makeAccessible(field);
+      }
+      fieldList.add(field);
+    });
+    return fieldList;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从目标对象中获取当前类的所有字段
+   * @description: Gets all the fields of the current class from the target object
+   * @time: 2023-07-12 21:02:07
+   * @params: [target] 目标对象
+   * @return: java.util.List<java.lang.reflect.Field> 字段列表
+   */
+  public static List<Field> findFields(Object target) {
+    return findFields(target, false);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从目标对象中获取当前类的所有字段
+   * @description: Gets all the fields of the current class from the target object
+   * @time: 2023-07-12 21:02:07
+   * @params: [target, accessible] 目标对象，访问限制
+   * @return: java.util.List<java.lang.reflect.Field> 字段列表
+   */
+  public static List<Field> findFields(Object target, boolean accessible) {
+    if (null == target) {
+      return null;
+    }
+    Class<?> clazz = getClass(target);
+    List<Field> fieldList = new ArrayList<>();
+    ReflectionUtils.doWithLocalFields(clazz, field -> {
+      if (accessible) {
+        ReflectionUtils.makeAccessible(field);
+      }
+      fieldList.add(field);
+    });
+    return fieldList;
   }
 
   /**
@@ -214,7 +286,13 @@ public class ReflectionUtil {
    * @return: T 字段值
    */
   public static <T> T getFieldValue(Field field, Object target) {
-    return doWithHandleException(() -> null == field ? null : getT(field.get(target)));
+    return doWithHandleException(() -> {
+      if (null == field) {
+        return null;
+      }
+      ReflectionUtils.makeAccessible(field);
+      return getT(field.get(target));
+    });
   }
 
   /**
@@ -311,9 +389,7 @@ public class ReflectionUtil {
     Field field = findField(target, fieldName);
     return doWithHandleException(() -> {
       if (null != field) {
-        if (!field.isAccessible()) {
-          field.setAccessible(true);
-        }
+        ReflectionUtils.makeAccessible(field);
         Field modifiers = Field.class.getDeclaredField("modifiers");
         boolean modifiersAccessible = field.isAccessible();
         if (!modifiersAccessible) {
@@ -366,8 +442,8 @@ public class ReflectionUtil {
       method = MethodUtils.getMatchingMethod(clazz, name, paramTypes);
     }
     if (null != method) {
-      if (!method.isAccessible() && accessible) {
-        method.setAccessible(true);
+      if (accessible) {
+        ReflectionUtils.makeAccessible(method);
       }
     }
     return method;
@@ -452,9 +528,7 @@ public class ReflectionUtil {
     if (null == method) {
       return null;
     }
-    if (!method.isAccessible()) {
-      method.setAccessible(true);
-    }
+    ReflectionUtils.makeAccessible(method);
     return getT(ReflectionUtils.invokeMethod(method, target, args));
   }
 
@@ -572,7 +646,7 @@ public class ReflectionUtil {
         constructor = ConstructorUtils.getMatchingAccessibleConstructor(clazz, parameterTypes);
       }
       if (accessible) {
-        constructor.setAccessible(true);
+        ReflectionUtils.makeAccessible(constructor);
       }
 
       return constructor;
@@ -634,9 +708,7 @@ public class ReflectionUtil {
     if (null == method) {
       return null;
     }
-    if (!method.isAccessible()) {
-      method.setAccessible(true);
-    }
+    ReflectionUtils.makeAccessible(method);
     InvokeMethod invokeMethod = new InvokeMethod();
     invokeMethod.setMethod(method);
     invokeMethod.setTarget(target);
@@ -682,8 +754,8 @@ public class ReflectionUtil {
   private static void makeAccessible(boolean accessible, Method[] methods) {
     if (ArrayUtil.isNotEmpty(methods)) {
       for (Method method : methods) {
-        if (!method.isAccessible() && accessible) {
-          method.setAccessible(true);
+        if (accessible) {
+          ReflectionUtils.makeAccessible(method);
         }
       }
     }

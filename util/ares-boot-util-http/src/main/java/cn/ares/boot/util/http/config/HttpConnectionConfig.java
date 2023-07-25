@@ -117,18 +117,20 @@ public class HttpConnectionConfig {
   public static class Pool {
 
     /**
-     * 连接池最大连接数, 默认20 The maximum number of connections in the connection pool, the default is 20
+     * 连接池最大连接数，默认20，框架设置为200
+     * The maximum number of connections in the connection pool, the default is 20, framework set to 200
      */
     @Value("${max-total:200}")
     private int maxTotal = 200;
     /**
-     * 每个路由默认的最大连接数, 默认2 The default maximum number of connections per route, default 2
+     * 每个路由默认的最大连接数，默认2，框架设置为40
+     * The default maximum number of connections per route, default 2, framework set to 40
      */
     @Value("${max-per-route:40}")
     private int maxPerRoute = 40;
     /**
-     * 每个路由的最大连接数,优先于maxPerRoute The maximum number of connections per route, which takes precedence
-     * over maxPerRoute
+     * 每个路由的最大连接数,优先于maxPerRoute
+     * The maximum number of connections per route, which takes precedence over maxPerRoute
      */
     @Value("${max-route:100}")
     private int maxRoute = 100;

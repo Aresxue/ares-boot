@@ -716,11 +716,11 @@ public class HttpClientUtil implements ApplicationContextAware {
     Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
         .register("http", connectionSocketFactory).register("https", socketFactory).build();
     connectionManager = new PoolingHttpClientConnectionManager(registry);
-    // 设置最大连接数, 默认20
-    // Set the maximum number of connections, the default is 20
+    // 设置最大连接数, 默认20，框架设置为200
+    // Set the maximum number of connections, the default is 20, framework set to 200
     connectionManager.setMaxTotal(httpConnectionConfig.getPool().getMaxTotal());
-    // 设置每个路由默认的最大连接数, 默认2
-    // Set the default maximum number of connections per route, default 2
+    // 设置每个路由默认的最大连接数，默认2，框架设置为40
+    // Set the default maximum number of connections per route, default 2, framework set to 40
     connectionManager.setDefaultMaxPerRoute(httpConnectionConfig.getPool().getMaxPerRoute());
   }
 

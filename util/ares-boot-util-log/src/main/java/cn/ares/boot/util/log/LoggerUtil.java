@@ -21,7 +21,7 @@ public class LoggerUtil {
 
   private static final String FQCN = LoggerUtil.class.getName();
 
-  private static final int INVOKE_DEPTH = 4;
+  private static final int INVOKE_DEPTH = 3;
 
   public static void error(String msg) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
@@ -117,12 +117,8 @@ public class LoggerUtil {
    * @params: [depth] 深度
    * @return: java.lang.Class<?> 类
    */
-  public static Class<?> getClazz(int depth) {
-    return new SecurityManager() {
-      public Class<?> securityGetClazz() {
-        return getClassContext()[depth];
-      }
-    }.securityGetClazz();
+  public static String getClazz(int depth) {
+    return Thread.currentThread().getStackTrace()[depth].getClassName();
   }
 
   /**

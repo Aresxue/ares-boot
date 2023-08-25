@@ -6,15 +6,17 @@ import org.springframework.boot.logging.DeferredLog;
 
 /**
  * @author: Ares
- * @description: Deferred日志工具，使用静态方法打印Deferred日志，无需每个类中定义日志对象（Deferred log方法名不正确因为异步启用后拿不到打印日志线程的堆栈信息）
- * @description: The Deferred logging tool uses a static method to print Deferred logs without defining log objects in each class
- * (the Deferred log method name is incorrect because the stack information for printing log threads cannot be obtained after asynchronous is enabled).
+ * @description: Deferred日志工具，使用静态方法打印Deferred日志，无需每个类中定义日志对象（Deferred
+ * log方法名不正确因为异步启用后拿不到打印日志线程的堆栈信息）
+ * @description: The Deferred logging tool uses a static method to print Deferred logs without
+ * defining log objects in each class (the Deferred log method name is incorrect because the stack
+ * information for printing log threads cannot be obtained after asynchronous is enabled).
  * @time: 2021-04-12 17:38:00
  * @version: JDK 1.8
  */
 public class DeferredLoggerUtil {
 
-  private static final int INVOKE_DEPTH = 5;
+  private static final int INVOKE_DEPTH = 4;
 
   public static void error(String msg) {
     DeferredLog deferredLog = getDeferredLog();
@@ -54,17 +56,17 @@ public class DeferredLoggerUtil {
   public static DeferredLog getDeferredLog() {
     // Get the class that calls the error, info, debug static classes
     // 获取调用error、info、warn、debug静态类的类
-    Class<?> clazz = LoggerUtil.getClazz(INVOKE_DEPTH);
+    String className = LoggerUtil.getClazz(INVOKE_DEPTH);
     /*
      在SpringBoot加载的过程中 EnvironmentPostProcessor 的执行比较早; 这个时候日志系统根本就还没有初始化; 所以在此之前的日志操作都不会有效果; 使用
      DeferredLog 缓存日志；并在合适的时机回放日志
      EnvironmentPostProcessor was executed early during SpringBoot loading; At this point the logging system has not been initialized at all; So no logging operations before that will have any effect; use
      DeferredLog Indicates deferred log. And play back the log at the right time
      */
-    DeferredLog deferredLog = ThreadLocalMapUtil.get(clazz);
+    DeferredLog deferredLog = ThreadLocalMapUtil.get(className);
     if (null == deferredLog) {
       deferredLog = new DeferredLog();
-      ThreadLocalMapUtil.set(clazz, deferredLog);
+      ThreadLocalMapUtil.set(className, deferredLog);
     }
     return deferredLog;
   }

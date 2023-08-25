@@ -3,6 +3,7 @@ package cn.ares.boot.util.spring;
 import static cn.ares.boot.util.common.StringUtil.isEmpty;
 import static cn.ares.boot.util.common.constant.StringConstant.EMPTY;
 import static cn.ares.boot.util.common.constant.SymbolConstant.COMMA;
+import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
 import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
 
 import cn.ares.boot.util.common.ArrayUtil;
@@ -199,8 +200,13 @@ public class EnvironmentUtil {
       // 将属性的key中的中划线-转为小驼峰式, 如druid.test-while-idle转为如druid.testWhileIdle
       // Convert the underline in the key of the property to a small camel case,
       // such as druid.test-while-idle, such as druid.testWhileIdle
-      newProperties.put(prefix + StringUtil.strikeToLittleCamelCase(propertyName),
-          properties.get(propertyName));
+      String newPropertyName;
+      if (propertyName.contains(MINUS)) {
+        newPropertyName = StringUtil.strikeToLittleCamelCase(propertyName);
+      } else {
+        newPropertyName = propertyName;
+      }
+      newProperties.put(prefix + newPropertyName, properties.get(propertyName));
     });
     return newProperties;
   }

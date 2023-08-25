@@ -17,9 +17,11 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -216,16 +218,34 @@ public class ReflectionUtil {
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
    */
   public static List<Field> findAllFields(Object target, boolean accessible) {
+    return findAllFields(target, accessible, false);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
+   * @description: Gets all the fields from the target Object (including the parent class but except
+   * Object)
+   * @time: 2023-07-12 21:02:07
+   * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
+   * @return: java.util.List<java.lang.reflect.Field> 字段列表
+   */
+  public static List<Field> findAllFields(Object target, boolean accessible,
+      boolean ignoreOverrideField) {
     if (null == target) {
       return null;
     }
     Class<?> clazz = getClass(target);
     List<Field> fieldList = new ArrayList<>();
+    Set<String> fieldNameSet = new HashSet<>();
     ReflectionUtils.doWithFields(clazz, field -> {
-      if (accessible) {
-        ReflectionUtils.makeAccessible(field);
+      if (!ignoreOverrideField && !fieldNameSet.contains(field.getName())) {
+        if (accessible) {
+          ReflectionUtils.makeAccessible(field);
+        }
+        fieldList.add(field);
+        fieldNameSet.add(field.getName());
       }
-      fieldList.add(field);
     });
     return fieldList;
   }

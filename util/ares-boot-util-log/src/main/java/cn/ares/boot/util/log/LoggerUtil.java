@@ -5,6 +5,10 @@ import static org.slf4j.spi.LocationAwareLogger.ERROR_INT;
 import static org.slf4j.spi.LocationAwareLogger.INFO_INT;
 import static org.slf4j.spi.LocationAwareLogger.WARN_INT;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
@@ -17,6 +21,7 @@ import org.slf4j.spi.LocationAwareLogger;
  * @time: 2021-04-12 17:38:00
  * @version: JDK 1.8
  */
+// TODO 还有堆栈分析合并
 public class LoggerUtil {
 
   private static final String FQCN = LoggerUtil.class.getName();
@@ -25,87 +30,121 @@ public class LoggerUtil {
 
   public static void error(String msg) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    locationAwareLogger.log(null, FQCN, ERROR_INT, msg, null, null);
+    if (locationAwareLogger.isErrorEnabled()) {
+      locationAwareLogger.log(null, FQCN, ERROR_INT, msg, null, null);
+    }
   }
 
-  public static void error(String msg, Object... obj) {
+  public static void error(String msg, Supplier<?>... suppliers) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    Throwable throwable = null;
-    for (Object param : obj) {
-      if (param instanceof Throwable) {
-        throwable = (Throwable) param;
-      }
+    if (locationAwareLogger.isErrorEnabled()) {
+      log(msg, locationAwareLogger, ERROR_INT, suppliers);
     }
-    locationAwareLogger.log(null, FQCN, ERROR_INT, msg, obj, throwable);
+  }
+
+  public static void error(String msg, Object... objects) {
+    LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
+    if (locationAwareLogger.isErrorEnabled()) {
+      log(msg, locationAwareLogger, ERROR_INT, objects);
+    }
   }
 
   public static void error(String msg, Throwable e) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    locationAwareLogger.log(null, FQCN, ERROR_INT, msg, null, e);
+    if (locationAwareLogger.isErrorEnabled()) {
+      locationAwareLogger.log(null, FQCN, ERROR_INT, msg, null, e);
+    }
+  }
+
+
+  public static void error(Logger logger, String msg, Supplier<?>... suppliers) {
+    if (logger.isErrorEnabled()) {
+      logger.error(msg, getLogArguments(suppliers));
+    }
   }
 
   public static void warn(String msg) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    locationAwareLogger.log(null, FQCN, WARN_INT, msg, null, null);
+    if (locationAwareLogger.isWarnEnabled()) {
+      locationAwareLogger.log(null, FQCN, WARN_INT, msg, null, null);
+    }
   }
 
 
-  public static void warn(String msg, Object... obj) {
+  public static void warn(String msg, Supplier<?>... suppliers) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    Throwable throwable = null;
-    for (Object param : obj) {
-      if (param instanceof Throwable) {
-        throwable = (Throwable) param;
-      }
+    if (locationAwareLogger.isWarnEnabled()) {
+      log(msg, locationAwareLogger, WARN_INT, suppliers);
     }
-    locationAwareLogger.log(null, FQCN, WARN_INT, msg, obj, throwable);
+  }
+
+  public static void warn(String msg, Object... objects) {
+    LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
+    if (locationAwareLogger.isWarnEnabled()) {
+      log(msg, locationAwareLogger, WARN_INT, objects);
+    }
+  }
+
+  public static void warn(Logger logger, String msg, Supplier<?>... suppliers) {
+    if (logger.isWarnEnabled()) {
+      logger.warn(msg, getLogArguments(suppliers));
+    }
   }
 
 
   public static void info(String msg) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    locationAwareLogger.log(null, FQCN, INFO_INT, msg, null, null);
+    if (locationAwareLogger.isInfoEnabled()) {
+      locationAwareLogger.log(null, FQCN, INFO_INT, msg, null, null);
+    }
   }
 
 
-  public static void info(String msg, Object... obj) {
+  public static void info(String msg, Supplier<?>... suppliers) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    locationAwareLogger.log(null, FQCN, INFO_INT, msg, obj, null);
+    if (locationAwareLogger.isInfoEnabled()) {
+      log(msg, locationAwareLogger, INFO_INT, suppliers);
+    }
   }
 
-  public static void info(Logger logger, String msg, Object... obj) {
+  public static void info(String msg, Object... objects) {
+    LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
+    if (locationAwareLogger.isInfoEnabled()) {
+      log(msg, locationAwareLogger, INFO_INT, objects);
+    }
+  }
+
+  public static void info(Logger logger, String msg, Supplier<?>... suppliers) {
     if (logger.isInfoEnabled()) {
-      logger.info(msg, obj);
-    }
-  }
-
-  public static void warn(Logger logger, String msg, Object... obj) {
-    if (logger.isWarnEnabled()) {
-      logger.warn(msg, obj);
-    }
-  }
-
-  public static void error(Logger logger, String msg, Object... obj) {
-    if (logger.isErrorEnabled()) {
-      logger.error(msg, obj);
-    }
-  }
-
-  public static void debug(Logger logger, String msg, Object... obj) {
-    if (logger.isDebugEnabled()) {
-      logger.debug(msg, obj);
+      logger.info(msg, getLogArguments(suppliers));
     }
   }
 
   public static void debug(String msg) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    locationAwareLogger.log(null, FQCN, DEBUG_INT, msg, null, null);
+    if (locationAwareLogger.isDebugEnabled()) {
+      locationAwareLogger.log(null, FQCN, DEBUG_INT, msg, null, null);
+    }
   }
 
-
-  public static void debug(String msg, Object... obj) {
+  public static void debug(String msg, Supplier<?>... suppliers) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
-    locationAwareLogger.log(null, FQCN, DEBUG_INT, msg, obj, null);
+    if (locationAwareLogger.isDebugEnabled()) {
+      log(msg, locationAwareLogger, DEBUG_INT, suppliers);
+    }
+  }
+
+  public static void debug(String msg, Object... objects) {
+    LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
+    if (locationAwareLogger.isDebugEnabled()) {
+      log(msg, locationAwareLogger, DEBUG_INT, objects);
+    }
+  }
+
+  public static void debug(Logger logger, String msg, Supplier<?>... suppliers) {
+    if (logger.isDebugEnabled()) {
+      logger.debug(msg, getLogArguments(suppliers));
+    }
   }
 
 
@@ -118,7 +157,7 @@ public class LoggerUtil {
    * @return: java.lang.Class<?> 类
    */
   public static String getClazz(int depth) {
-    return Thread.currentThread().getStackTrace()[depth].getClassName();
+    return new Throwable().getStackTrace()[depth].getClassName();
   }
 
   /**
@@ -133,6 +172,28 @@ public class LoggerUtil {
     // Get the class that calls the error, info, debug static classes
     Logger logger = LoggerFactory.getLogger(getClazz(INVOKE_DEPTH));
     return (LocationAwareLogger) logger;
+  }
+
+  private static void log(String msg, LocationAwareLogger locationAwareLogger, int logLevel,
+      Object[] objects) {
+    List<Object> paramList = new ArrayList<>();
+    Throwable throwable = null;
+    for (Object param : objects) {
+      if (param instanceof Supplier) {
+        param = ((Supplier<?>) param).get();
+      }
+      if (param instanceof Throwable) {
+        throwable = (Throwable) param;
+      } else {
+        paramList.add(param);
+      }
+    }
+    locationAwareLogger.log(null, FQCN, logLevel, msg, paramList.toArray(new Object[0]), throwable);
+  }
+
+
+  private static Object[] getLogArguments(Supplier<?>... suppliers) {
+    return Arrays.stream(suppliers).map(Supplier::get).toArray(Object[]::new);
   }
 
 }

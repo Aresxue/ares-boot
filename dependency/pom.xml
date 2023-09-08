@@ -27,6 +27,8 @@
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <lombok.version>1.18.26</lombok.version>
     <mapstruct.version>1.5.5.Final</mapstruct.version>
+
+    <spring-boot.version>2.7.11</spring-boot.version>
   </properties>
 
   <modules>
@@ -80,11 +82,11 @@
             <!-- Character set encoding to prevent Chinese garbled characters -->
             <encoding>${project.build.sourceEncoding}</encoding>
             <annotationProcessorPaths>
-               <path>
-                 <groupId>org.projectlombok</groupId>
-                 <artifactId>lombok</artifactId>
-                 <version>${lombok.version}</version>
-               </path>
+              <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+              </path>
               <path>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
@@ -148,6 +150,32 @@
               </goals>
             </execution>
           </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+          <configuration>
+            <excludeDevtools>true</excludeDevtools>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+              <configuration>
+                <layoutFactory implementation="cn.ares.turbo.loader.tools.AresTurboLayoutFactory"/>
+              </configuration>
+            </execution>
+          </executions>
+          <dependencies>
+            <dependency>
+              <groupId>io.github.aresxue</groupId>
+              <artifactId>ares-turbo-loader-tool</artifactId>
+              <version>2.0.0</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>

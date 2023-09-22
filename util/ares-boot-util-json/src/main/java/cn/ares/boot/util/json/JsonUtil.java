@@ -139,7 +139,7 @@ public class JsonUtil {
     if (null == object) {
       return null;
     }
-    if (ClassUtil.isBaseOrWrapOrString(object.getClass())) {
+    if (ClassUtil.isPrimitiveOrWrapOrString(object.getClass())) {
       return String.valueOf(object);
     }
 

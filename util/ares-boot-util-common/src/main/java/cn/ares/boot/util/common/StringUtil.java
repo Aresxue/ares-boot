@@ -1381,4 +1381,25 @@ public class StringUtil {
     return null;
   }
 
+  /**
+   * @author: Ares
+   * @description: 从源字符串的某个字符串后开始截取
+   * @time: 2023-09-22 17:00:59
+   * @params: [str, separator] 源字符串，分隔符
+   * @return: java.lang.String 结果
+   */
+  public static String substringAfter(final String str, final String separator) {
+    if (isEmpty(str)) {
+      return str;
+    }
+    if (separator == null) {
+      return EMPTY;
+    }
+    final int pos = str.indexOf(separator);
+    if (pos == INDEX_NOT_FOUND) {
+      return EMPTY;
+    }
+    return str.substring(pos + separator.length());
+  }
+
 }

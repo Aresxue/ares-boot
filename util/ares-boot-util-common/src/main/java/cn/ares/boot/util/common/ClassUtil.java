@@ -1,11 +1,17 @@
 package cn.ares.boot.util.common;
 
 import static cn.ares.boot.util.common.ArrayUtil.EMPTY_CLASS_ARRAY;
+import static cn.ares.boot.util.common.constant.SymbolConstant.LEFT_BRACKET;
+import static cn.ares.boot.util.common.constant.SymbolConstant.LEFT_SQ_BRACKET;
+import static cn.ares.boot.util.common.constant.SymbolConstant.RIGHT_BRACKET;
+import static cn.ares.boot.util.common.constant.SymbolConstant.TILDE;
 
+import cn.ares.boot.util.common.entity.MethodSpec;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: Ares
@@ -16,23 +22,59 @@ import java.util.List;
 public class ClassUtil {
 
   /**
-   * base type wrapper list
+   * Primitive type wrapper list
    */
-  private static final List<String> BASE_WRAP_TYPE_NAME_LIST = new ArrayList<>();
-  private static final List<Class<?>> BASE_WRAP_TYPE_LIST = Arrays.asList(Integer.class,
+  private static final List<String> PRIMITIVE_WRAP_TYPE_NAME_LIST = new ArrayList<>();
+  private static final List<Class<?>> PRIMITIVE_WRAP_TYPE_LIST = Arrays.asList(Integer.class,
       Double.class, Long.class, Short.class, Byte.class, Boolean.class, Character.class,
       Float.class);
   /**
-   * base type list
+   * Primitive type list
    */
-  private static final List<String> BASE_TYPE_NAME_LIST = new ArrayList<>();
-  private static final List<Class<?>> BASE_TYPE_LIST = Arrays.asList(int.class, double.class,
+  private static final List<String> PRIMITIVE_TYPE_NAME_LIST = new ArrayList<>();
+  private static final List<Class<?>> PRIMITIVE_TYPE_LIST = Arrays.asList(int.class, double.class,
       long.class, short.class, byte.class, boolean.class, char.class, float.class);
 
+  /**
+   * 基本类型签名映射 primitive type signature mapping
+   */
+  private static final Map<String, Class<?>> IDENTIFIER_TO_BASE_CLASS_MAP = MapUtil.newHashMap(16);
+  private static final Map<Class<?>, String> BASE_CLASS_TO_IDENTIFIER_MAP = MapUtil.newHashMap(16);
+  private final static String ARRAY_IDENTIFIER = LEFT_SQ_BRACKET;
 
   static {
-    BASE_TYPE_LIST.forEach(clazz -> BASE_TYPE_NAME_LIST.add(clazz.getCanonicalName()));
-    BASE_WRAP_TYPE_LIST.forEach(clazz -> BASE_WRAP_TYPE_NAME_LIST.add(clazz.getCanonicalName()));
+    PRIMITIVE_TYPE_LIST.forEach(clazz -> PRIMITIVE_TYPE_NAME_LIST.add(clazz.getCanonicalName()));
+    PRIMITIVE_WRAP_TYPE_LIST.forEach(
+        clazz -> PRIMITIVE_WRAP_TYPE_NAME_LIST.add(clazz.getCanonicalName()));
+
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(void.class, "V");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(boolean.class, "Z");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(byte.class, "B");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(char.class, "C");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(short.class, "S");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(int.class, "I");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(long.class, "J");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(float.class, "F");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(double.class, "D");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(boolean[].class, "[Z");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(byte[].class, "[B");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(char[].class, "[C");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(short[].class, "[S");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(int[].class, "[I");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(long[].class, "[J");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(float[].class, "[F");
+    BASE_CLASS_TO_IDENTIFIER_MAP.put(double[].class, "[D");
+
+    PRIMITIVE_TYPE_LIST.forEach(
+        clazz -> IDENTIFIER_TO_BASE_CLASS_MAP.put(BASE_CLASS_TO_IDENTIFIER_MAP.get(clazz), clazz));
+    IDENTIFIER_TO_BASE_CLASS_MAP.put("[Z", boolean[].class);
+    IDENTIFIER_TO_BASE_CLASS_MAP.put("[B", byte[].class);
+    IDENTIFIER_TO_BASE_CLASS_MAP.put("[C", char[].class);
+    IDENTIFIER_TO_BASE_CLASS_MAP.put("[S", short[].class);
+    IDENTIFIER_TO_BASE_CLASS_MAP.put("[I", int[].class);
+    IDENTIFIER_TO_BASE_CLASS_MAP.put("[J", long[].class);
+    IDENTIFIER_TO_BASE_CLASS_MAP.put("[F", float[].class);
+    IDENTIFIER_TO_BASE_CLASS_MAP.put("[D", double[].class);
   }
 
   /**
@@ -44,19 +86,19 @@ public class ClassUtil {
    * @return: boolean 是否为基本类型
    **/
   public static boolean isPrimitive(String className) {
-    return BASE_TYPE_NAME_LIST.contains(className);
+    return PRIMITIVE_TYPE_NAME_LIST.contains(className);
   }
 
   /**
    * @author: Ares
    * @description: 判断类名是否为基本类型包装类名
-   * @description: Determine whether the class name is a basic type wrapper class name
+   * @description: Determine whether the class name is a primitive type wrapper class name
    * @time: 2019-06-14 10:01:00
    * @params: [className] 类名
    * @return: boolean 是否为基本类型包装类名
    */
-  public static boolean isBaseWrap(String className) {
-    return BASE_WRAP_TYPE_NAME_LIST.contains(className);
+  public static boolean isPrimitiveWrap(String className) {
+    return PRIMITIVE_WRAP_TYPE_NAME_LIST.contains(className);
   }
 
   /**
@@ -67,20 +109,20 @@ public class ClassUtil {
    * @params: [clazz] 类
    * @return: boolean 是否为基本类型包装类
    */
-  public static boolean isBaseWrap(Class<?> clazz) {
-    return isBaseWrap(clazz.getCanonicalName());
+  public static boolean isPrimitiveWrap(Class<?> clazz) {
+    return isPrimitiveWrap(clazz.getCanonicalName());
   }
 
   /**
    * @author: Ares
    * @description: 判断类名是否为基本类型或其包装类名
-   * @description: Determine whether the class name is a basic type or its wrapper class name
+   * @description: Determine whether the class name is a primitive type or its wrapper class name
    * @time: 2019-06-14 10:07:00
    * @params: [className] 类名
    * @return: boolean 是否为基本类型或其包装类名
    */
-  public static boolean isBaseOrWrap(String className) {
-    return isPrimitive(className) || isBaseWrap(className);
+  public static boolean isPrimitiveOrWrap(String className) {
+    return isPrimitive(className) || isPrimitiveWrap(className);
   }
 
   /**
@@ -91,8 +133,8 @@ public class ClassUtil {
    * @params: [clazz] 类
    * @return: boolean response
    */
-  public static boolean isBaseOrWrap(Class<?> clazz) {
-    return isBaseOrWrap(clazz.getCanonicalName());
+  public static boolean isPrimitiveOrWrap(Class<?> clazz) {
+    return isPrimitiveOrWrap(clazz.getCanonicalName());
   }
 
   /**
@@ -103,8 +145,8 @@ public class ClassUtil {
    * @params: [clazz] 类
    * @return: boolean 是否为基本类型或其包装类或字符串
    */
-  public static boolean isBaseOrWrapOrString(Class<?> clazz) {
-    return isBaseOrWrap(clazz.getCanonicalName()) || isSameClass(clazz, String.class);
+  public static boolean isPrimitiveOrWrapOrString(Class<?> clazz) {
+    return isPrimitiveOrWrap(clazz.getCanonicalName()) || isSameClass(clazz, String.class);
   }
 
   /**
@@ -115,8 +157,8 @@ public class ClassUtil {
    * @params: [object] 对象
    * @return: boolean response
    */
-  public static boolean isBaseOrWrap(Object object) {
-    return null != object && isBaseOrWrap(object.getClass());
+  public static boolean isPrimitiveOrWrap(Object object) {
+    return null != object && isPrimitiveOrWrap(object.getClass());
   }
 
   /**
@@ -337,7 +379,7 @@ public class ClassUtil {
    * @return: java.lang.String description
    */
   public static String constructParameterTypeSignature(Class<?>[] classes) {
-    if(ArrayUtil.isEmpty(classes)){
+    if (ArrayUtil.isEmpty(classes)) {
       return "";
     }
 
@@ -364,28 +406,144 @@ public class ClassUtil {
     }
 
     if (clazz.isPrimitive()) {
-      if (clazz == void.class) {
-        return "V";
-      } else if (clazz == boolean.class) {
-        return "Z";
-      } else if (clazz == byte.class) {
-        return "B";
-      } else if (clazz == char.class) {
-        return "C";
-      } else if (clazz == short.class) {
-        return "S";
-      } else if (clazz == int.class) {
-        return "I";
-      } else if (clazz == long.class) {
-        return "J";
-      } else if (clazz == float.class) {
-        return "F";
-      } else if (clazz == double.class) {
-        return "D";
-      }
+      return BASE_CLASS_TO_IDENTIFIER_MAP.get(clazz);
     }
 
     return "L" + clazz.getName().replace('.', '/') + ";";
+  }
+
+
+  /**
+   * 解析方法签名（不加载类）
+   * Parse method signatures (without loading classes)
+   *
+   * @param methodDesc 方法签名
+   * @return 分离出的方法签名
+   */
+  public static MethodSpec parseIdentifier(String methodDesc) {
+    MethodSpec methodSpec = new MethodSpec();
+    String paramDesc = StringUtil.substringBetween(methodDesc, "(", ")");
+    if (StringUtil.isEmpty(methodDesc)) {
+      methodSpec.setParamIdentifiers(new String[0]);
+    } else {
+      List<String> paramIdentifierList = new ArrayList<>();
+      char[] chars = paramDesc.toCharArray();
+      StringBuilder builder = new StringBuilder();
+      for (char c : chars) {
+        switch (c) {
+          case 'Z':
+          case 'B':
+          case 'C':
+          case 'S':
+          case 'I':
+          case 'J':
+          case 'F':
+          case 'D':
+            builder.append(c);
+            if (builder.length() <= 2) {
+              paramIdentifierList.add(builder.toString());
+              builder.setLength(0);
+            }
+            break;
+          case ';':
+            builder.append(c);
+            paramIdentifierList.add(builder.toString());
+            builder.setLength(0);
+            break;
+          default:
+            builder.append(c);
+            break;
+        }
+      }
+      methodSpec.setParamIdentifiers(paramIdentifierList.toArray(new String[0]));
+    }
+    methodSpec.setReturnIdentifier(StringUtil.substringAfter(methodDesc, ")"));
+    return methodSpec;
+  }
+
+  /**
+   * 加载类数组
+   * Loaded class array
+   *
+   * @param identifiers 根据方法签名解析的标志组合
+   * @param classLoader 类加载器
+   * @return 类数组
+   * @throws ClassNotFoundException 找不到类异常
+   */
+  public static Class<?>[] loadClass(String[] identifiers, ClassLoader classLoader)
+      throws ClassNotFoundException {
+    List<Class<?>> classList = new ArrayList<>();
+    if (identifiers != null && identifiers.length > 0) {
+      for (String identifier : identifiers) {
+        classList.add(loadClass(identifier, classLoader));
+      }
+    }
+    return classList.toArray(new Class[0]);
+  }
+
+  /**
+   * 加载单个类
+   * Loading a single class
+   *
+   * @param identifier  根据方法签名解析的标志
+   * @param classLoader 类加载器
+   * @return 类数组
+   * @throws ClassNotFoundException 找不到类异常
+   */
+  public static Class<?> loadClass(String identifier, ClassLoader classLoader)
+      throws ClassNotFoundException {
+    Class<?> clazz = IDENTIFIER_TO_BASE_CLASS_MAP.get(identifier);
+    if (null != clazz) {
+      return clazz;
+    }
+    if (classLoader == null) {
+      classLoader = ClassLoader.getSystemClassLoader();
+    }
+    // 全类名查找;[可以用Class.forName去加载
+    if (identifier.startsWith(ARRAY_IDENTIFIER)) {
+      return Class.forName(toNormalClass(identifier), true, classLoader);
+    } else {
+      return classLoader.loadClass(toNormalClass(extractClassName(identifier)));
+    }
+  }
+
+  /**
+   * 提取类名
+   * Extract class name
+   *
+   * @param identifier 根据方法签名解析的标志
+   * @return 类名
+   */
+  public static String extractClassName(String identifier) {
+    return StringUtil.substringBetween(identifier, "L", ";");
+  }
+
+  /**
+   * 转换成通用类路径
+   * Convert to a generic classpath
+   *
+   * @param identifier 根据方法签名解析的标志
+   * @return 类路径
+   */
+  public static String toNormalClass(String identifier) {
+    return identifier.replace("/", ".");
+  }
+
+/**
+   * 构造方法签名
+   * Build method signature
+   *
+   * @param methodName 方法名
+   * @param paramTypeNames 参数类型
+   * @return 方法签名
+   */
+  public static String buildMethodDesc(String methodName, String paramTypeNames){
+    StringBuilder builder = new StringBuilder(methodName + TILDE + LEFT_BRACKET);
+    if (StringUtil.isNotEmpty(paramTypeNames)) {
+      builder.append(paramTypeNames);
+    }
+    builder.append(RIGHT_BRACKET);
+    return builder.toString();
   }
 
 }

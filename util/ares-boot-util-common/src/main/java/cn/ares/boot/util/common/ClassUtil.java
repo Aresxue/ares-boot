@@ -400,7 +400,7 @@ public class ClassUtil {
    * @params: [clazz] 类
    * @return: java.lang.String 字符串标识
    */
-  private static String getTypeSignature(Class<?> clazz) {
+  public static String getTypeSignature(Class<?> clazz) {
     if (clazz.isArray()) {
       return "[" + getTypeSignature(clazz.getComponentType());
     }

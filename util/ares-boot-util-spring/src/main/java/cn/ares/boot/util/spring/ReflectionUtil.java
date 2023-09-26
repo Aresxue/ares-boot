@@ -387,7 +387,7 @@ public class ReflectionUtil {
    * @return: boolean 设置结果
    */
   public static boolean setFieldValue(Object target, String name, Object fieldValue) {
-    Field field = findField(target.getClass(), name, true);
+    Field field = findField(getClass(target), name, true);
     return doWithHandleException(() -> {
       if (null != field) {
         field.set(target, fieldValue);

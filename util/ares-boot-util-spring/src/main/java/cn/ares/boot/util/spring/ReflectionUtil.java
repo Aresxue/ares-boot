@@ -237,16 +237,19 @@ public class ReflectionUtil {
     }
     Class<?> clazz = getClass(target);
     List<Field> fieldList = new ArrayList<>();
-    Set<String> fieldNameSet = new HashSet<>();
+    Set<String> fieldNameSet = ignoreOverrideField ? new HashSet<>() : Collections.emptySet();
     ReflectionUtils.doWithFields(clazz, field -> {
-      if (ignoreOverrideField && fieldNameSet.contains(field.getName())) {
-        return;
+      if (ignoreOverrideField) {
+        String fieldName = field.getName();
+        if (fieldNameSet.contains(fieldName)) {
+          return;
+        }
+        fieldNameSet.add(fieldName);
       }
       if (accessible) {
         ReflectionUtils.makeAccessible(field);
       }
       fieldList.add(field);
-      fieldNameSet.add(field.getName());
     });
     return fieldList;
   }

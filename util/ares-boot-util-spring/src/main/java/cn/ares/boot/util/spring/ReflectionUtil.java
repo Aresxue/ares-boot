@@ -239,13 +239,14 @@ public class ReflectionUtil {
     List<Field> fieldList = new ArrayList<>();
     Set<String> fieldNameSet = new HashSet<>();
     ReflectionUtils.doWithFields(clazz, field -> {
-      if (!ignoreOverrideField && !fieldNameSet.contains(field.getName())) {
-        if (accessible) {
-          ReflectionUtils.makeAccessible(field);
-        }
-        fieldList.add(field);
-        fieldNameSet.add(field.getName());
+      if (ignoreOverrideField && fieldNameSet.contains(field.getName())) {
+        return;
       }
+      if (accessible) {
+        ReflectionUtils.makeAccessible(field);
+      }
+      fieldList.add(field);
+      fieldNameSet.add(field.getName());
     });
     return fieldList;
   }

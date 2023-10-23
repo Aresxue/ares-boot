@@ -1365,7 +1365,7 @@ public class StringUtil {
    * @description: Gets the string between the start string and the end string from the string
    * @time: 2023-07-05 11:13:41
    * @params: [str, open, close] 字符串，起始字符串，结束字符串
-   * @return: java.lang.String out 出参
+   * @return: java.lang.String 结果
    */
   public static String substringBetween(String str, String open, String close) {
     if (null == str || null == open || null == close) {
@@ -1383,7 +1383,8 @@ public class StringUtil {
 
   /**
    * @author: Ares
-   * @description: 从源字符串的某个字符串后开始截取
+   * @description: 从源字符串的第一个某个字符串后开始截取
+   * @description: Intercept begins after the first string of the source string
    * @time: 2023-09-22 17:00:59
    * @params: [str, separator] 源字符串，分隔符
    * @return: java.lang.String 结果
@@ -1400,6 +1401,63 @@ public class StringUtil {
       return EMPTY;
     }
     return str.substring(pos + separator.length());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从头截取到源字符串的第一个某个字符串
+   * @description: Cut from the beginning to the first string of the source string
+   * @time: 2023-10-23 10:02:30
+   * @params: [str, separator] 源字符串，分隔符
+   * @return: java.lang.String 结果
+   */
+  public static String substringBefore(final String str, final int separator) {
+    if (isEmpty(str)) {
+      return str;
+    }
+    final int pos = str.indexOf(separator);
+    if (pos == INDEX_NOT_FOUND) {
+      return str;
+    }
+    return str.substring(0, pos);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从头截取到源字符串的最后一个某个字符串
+   * @description: Cut from the beginning to the last string of the source string
+   * @time: 2023-10-23 10:02:30
+   * @params: [str, separator] 源字符串，分隔符
+   * @return: java.lang.String 结果
+   */
+  public static String substringBeforeLast(final String str, final String separator) {
+    if (isEmpty(str) || isEmpty(separator)) {
+      return str;
+    }
+    final int pos = str.lastIndexOf(separator);
+    if (pos == INDEX_NOT_FOUND) {
+      return str;
+    }
+    return str.substring(0, pos);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从源字符串的最后一个某个字符串后向后截取
+   * @description: Cut backwards from the last of a certain string in the source string
+   * @time: 2023-10-23 10:02:30
+   * @params: [str, separator] 源字符串，分隔符
+   * @return: java.lang.String 结果
+   */
+  public static String substringAfterLast(final String str, final int separator) {
+    if (isEmpty(str)) {
+      return str;
+    }
+    final int pos = str.lastIndexOf(separator);
+    if (pos == INDEX_NOT_FOUND || pos == str.length() - 1) {
+      return EMPTY;
+    }
+    return str.substring(pos + 1);
   }
 
 }

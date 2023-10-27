@@ -235,11 +235,61 @@ public class CollectionUtil {
    * @return: T 随机元素
    */
   public static <T> T random(List<T> list) {
-    if (CollectionUtil.isEmpty(list)) {
+    if (isEmpty(list)) {
       return null;
     }
     int index = ThreadLocalRandom.current().nextInt(list.size());
     return list.get(index);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从不可重复集合中随机选取元素
+   * @description: Get random element from set
+   * @time: 2023-10-27 16:36:56
+   * @params: [set] 不可重复集合
+   * @return: T 随机元素
+   */
+  public static <T> T random(Set<T> set) {
+    if (isEmpty(set)) {
+      return null;
+    }
+    int index = ThreadLocalRandom.current().nextInt(set.size());
+    for (T t : set) {
+      if (index <= 0) {
+        return t;
+      }
+      index--;
+    }
+    return null;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取集合第一个元素
+   * @description: Get first element for collection
+   * @time: 2023-10-27 16:28:30
+   * @params: [collection] 集合
+   * @return: T 首个元素
+   */
+  public static <T> T random(Collection<T> collection) {
+    if (isEmpty(collection)) {
+      return null;
+    }
+    if (collection instanceof Set) {
+      return random((Set<T>) collection);
+    } else if (collection instanceof List) {
+      return random((List<T>) collection);
+    } else {
+      int index = ThreadLocalRandom.current().nextInt(collection.size());
+      for (T t : collection) {
+        if (index <= 0) {
+          return t;
+        }
+        index--;
+      }
+      return null;
+    }
   }
 
   /**
@@ -405,7 +455,7 @@ public class CollectionUtil {
    * @description: Get first element for set
    * @time: 2022-06-07 17:25:44
    * @params: [set]
-   * @return: T 元素
+   * @return: T 首个元素
    */
   public static <T> T firstElement(Set<T> set) {
     if (isEmpty(set)) {
@@ -415,10 +465,10 @@ public class CollectionUtil {
       return ((SortedSet<T>) set).first();
     }
 
-    Iterator<T> it = set.iterator();
+    Iterator<T> iterator = set.iterator();
     T first = null;
-    if (it.hasNext()) {
-      first = it.next();
+    if (iterator.hasNext()) {
+      first = iterator.next();
     }
     return first;
   }
@@ -429,7 +479,7 @@ public class CollectionUtil {
    * @description: Get first element for list
    * @time: 2022-06-07 17:25:44
    * @params: [list] 列表
-   * @return: T 元素
+   * @return: T 首个元素
    */
   public static <T> T firstElement(List<T> list) {
     if (isEmpty(list)) {
@@ -440,11 +490,37 @@ public class CollectionUtil {
 
   /**
    * @author: Ares
+   * @description: 获取集合第一个元素
+   * @description: Get first element for collection
+   * @time: 2023-10-27 16:28:30
+   * @params: [collection] 集合
+   * @return: T 首个元素
+   */
+  public static <T> T firstElement(Collection<T> collection) {
+    if (isEmpty(collection)) {
+      return null;
+    }
+    if (collection instanceof Set) {
+      return firstElement((Set<T>) collection);
+    } else if (collection instanceof List) {
+      return firstElement((List<T>) collection);
+    } else {
+      Iterator<T> iterator = collection.iterator();
+      T first = null;
+      if (iterator.hasNext()) {
+        first = iterator.next();
+      }
+      return first;
+    }
+  }
+
+  /**
+   * @author: Ares
    * @description: 获取set最后一个元素
    * @description: Get last element for set
    * @time: 2022-06-07 17:25:44
    * @params: [set]
-   * @return: T 元素
+   * @return: T 最后一个元素
    */
   public static <T> T lastElement(Set<T> set) {
     if (isEmpty(set)) {
@@ -469,13 +545,40 @@ public class CollectionUtil {
    * @description: Get last element for list
    * @time: 2022-06-07 17:25:44
    * @params: [list] 列表
-   * @return: T 元素
+   * @return: T 最后一个元素
    */
   public static <T> T lastElement(List<T> list) {
     if (isEmpty(list)) {
       return null;
     }
     return list.get(list.size() - 1);
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 获取集合最后一个元素
+   * @description: Get last element for collection
+   * @time: 2023-10-27 16:28:30
+   * @params: [collection] 集合
+   * @return: T 最后一个元素
+   */
+  public static <T> T lastElement(Collection<T> collection) {
+    if (isEmpty(collection)) {
+      return null;
+    }
+    if (collection instanceof Set) {
+      return lastElement((Set<T>) collection);
+    } else if (collection instanceof List) {
+      return lastElement((List<T>) collection);
+    } else {
+      Iterator<T> iterator = collection.iterator();
+      T last = null;
+      while (iterator.hasNext()) {
+        last = iterator.next();
+      }
+      return last;
+    }
   }
 
   /**
@@ -515,7 +618,7 @@ public class CollectionUtil {
    */
   @SafeVarargs
   public static <E> Set<E> asSet(E... elements) {
-    Set<E> set = CollectionUtil.newHashSet(elements.length);
+    Set<E> set = newHashSet(elements.length);
     set.addAll(Arrays.asList(elements));
     return set;
   }
@@ -567,7 +670,7 @@ public class CollectionUtil {
 
   @SafeVarargs
   public static <E> ConcurrentHashSet<E> asConcurrentHashSet(E... elements) {
-    ConcurrentHashSet<E> set = CollectionUtil.newConcurrentHashSet(elements.length);
+    ConcurrentHashSet<E> set = newConcurrentHashSet(elements.length);
     set.addAll(Arrays.asList(elements));
     return set;
   }

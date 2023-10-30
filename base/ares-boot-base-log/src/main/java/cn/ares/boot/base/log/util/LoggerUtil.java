@@ -1,8 +1,9 @@
 package cn.ares.boot.base.log.util;
 
 import cn.ares.boot.util.common.thread.ThreadLocalMapUtil;
-import cn.ares.boot.util.log.LoggerUtil;
+import cn.ares.boot.util.log.BaseLoggerUtil;
 import org.springframework.boot.logging.DeferredLog;
+import sun.reflect.Reflection;
 
 /**
  * @author: Ares
@@ -14,39 +15,37 @@ import org.springframework.boot.logging.DeferredLog;
  * @time: 2021-04-12 17:38:00
  * @version: JDK 1.8
  */
-public class DeferredLoggerUtil {
+public class LoggerUtil extends BaseLoggerUtil {
 
-  private static final int INVOKE_DEPTH = 4;
-
-  public static void error(String msg) {
+  public static void errorDeferred(String msg) {
     DeferredLog deferredLog = getDeferredLog();
     if (deferredLog.isErrorEnabled()) {
       deferredLog.error(msg);
     }
   }
 
-  public static void error(String msg, Throwable e) {
+  public static void errorDeferred(String msg, Throwable e) {
     DeferredLog deferredLog = getDeferredLog();
     if (deferredLog.isErrorEnabled()) {
       deferredLog.error(msg, e);
     }
   }
 
-  public static void warn(String msg) {
+  public static void warnDeferred(String msg) {
     DeferredLog deferredLog = getDeferredLog();
     if (deferredLog.isErrorEnabled()) {
       deferredLog.warn(msg);
     }
   }
 
-  public static void info(String msg) {
+  public static void infoDeferred(String msg) {
     DeferredLog deferredLog = getDeferredLog();
     if (deferredLog.isErrorEnabled()) {
       deferredLog.info(msg);
     }
   }
 
-  public static void debug(String msg) {
+  public static void debugDeferred(String msg) {
     DeferredLog deferredLog = getDeferredLog();
     if (deferredLog.isErrorEnabled()) {
       deferredLog.debug(msg);
@@ -56,7 +55,8 @@ public class DeferredLoggerUtil {
   public static DeferredLog getDeferredLog() {
     // Get the class that calls the error, info, debug static classes
     // 获取调用error、info、warn、debug静态类的类
-    String className = LoggerUtil.getClazz(INVOKE_DEPTH);
+    // getCallerClass的性能在7个方式中是最好的，但目前实现仅支持jdk8，后续更高jdk版本需使用其他方式
+    String className = Reflection.getCallerClass(INVOKE_DEPTH).getName();
     /*
      在SpringBoot加载的过程中 EnvironmentPostProcessor 的执行比较早; 这个时候日志系统根本就还没有初始化; 所以在此之前的日志操作都不会有效果; 使用
      DeferredLog 缓存日志；并在合适的时机回放日志

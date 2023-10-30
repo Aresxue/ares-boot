@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
+import sun.reflect.Reflection;
 
 /**
  * @author: Ares
@@ -22,11 +23,14 @@ import org.slf4j.spi.LocationAwareLogger;
  * @version: JDK 1.8
  */
 // TODO 还有堆栈分析合并
-public class LoggerUtil {
+public class BaseLoggerUtil {
 
-  private static final String FQCN = LoggerUtil.class.getName();
+  private static final String FQCN = BaseLoggerUtil.class.getName();
 
-  private static final int INVOKE_DEPTH = 3;
+  /**
+   * 这里选取堆栈深度为3，为2的时候会带来些许的性能提升，但是代码可读性没有使用getLocationAwareLogger方法更好
+   */
+  protected static final int INVOKE_DEPTH = 3;
 
   public static void error(String msg) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
@@ -147,19 +151,6 @@ public class LoggerUtil {
     }
   }
 
-
-  /**
-   * @author: Ares
-   * @description: Get the class at the specified stack depth
-   * @description: 获取指定堆栈深度的类
-   * @time: 2022-06-09 16:31:57
-   * @params: [depth] 深度
-   * @return: java.lang.Class<?> 类
-   */
-  public static String getClazz(int depth) {
-    return new Throwable().getStackTrace()[depth].getClassName();
-  }
-
   /**
    * @author: Ares
    * @description: Get locationAwareLogger
@@ -170,7 +161,8 @@ public class LoggerUtil {
   private static LocationAwareLogger getLocationAwareLogger() {
     // 获取调用error、info、warn、debug静态类的类
     // Get the class that calls the error, info, debug static classes
-    Logger logger = LoggerFactory.getLogger(getClazz(INVOKE_DEPTH));
+    // getCallerClass的性能在7个方式中是最好的，但目前实现仅支持jdk8，后续更高jdk版本需使用其他方式
+    Logger logger = LoggerFactory.getLogger(Reflection.getCallerClass(INVOKE_DEPTH));
     return (LocationAwareLogger) logger;
   }
 

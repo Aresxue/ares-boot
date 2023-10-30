@@ -1,6 +1,6 @@
 ares:
   application:
-    name: ares-boot-
+    name: ares-boot-demo
 
 
 logging:

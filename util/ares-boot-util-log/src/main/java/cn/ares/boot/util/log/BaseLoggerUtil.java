@@ -22,7 +22,6 @@ import sun.reflect.Reflection;
  * @time: 2021-04-12 17:38:00
  * @version: JDK 1.8
  */
-// TODO 还有堆栈分析合并
 public class BaseLoggerUtil {
 
   private static final String FQCN = BaseLoggerUtil.class.getName();

@@ -21,7 +21,22 @@
     <dependencies>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-starter-cache-related</artifactId>
+        <version>${ares-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-starter-cache-api</artifactId>
+        <version>${ares-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-cache</artifactId>
+        <version>${ares-boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-starter-dynamic-cache</artifactId>
         <version>${ares-boot.version}</version>
       </dependency>
 

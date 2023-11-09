@@ -21,7 +21,7 @@
   </description>
 
   <modules>
-    <module>ares-boot-starter-cache</module>
+    <module>ares-boot-starter-cache-related</module>
     <module>ares-boot-starter-config</module>
     <module>ares-boot-starter-datasource-related</module>
     <module>ares-boot-starter-file-storage</module>

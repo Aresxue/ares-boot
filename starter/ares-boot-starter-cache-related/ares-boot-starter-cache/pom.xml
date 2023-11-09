@@ -6,7 +6,7 @@
 
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>ares-boot-starter-cache-related</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
@@ -19,5 +19,12 @@
     Provides an easy to use and more powerful api, while integrating multi-level caching capabilities,
     users can realize multi-level caching capabilities through annotations, providing distributed lock implementation
   </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-starter-cache-api</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

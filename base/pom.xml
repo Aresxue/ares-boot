@@ -27,6 +27,7 @@
     <module>ares-boot-base-trace-adapter</module>
     <module>ares-boot-base-validation</module>
     <module>ares-boot-base-servlet</module>
+    <module>ares-boot-base-version</module>
   </modules>
 
 </project>

@@ -20,6 +20,13 @@
     built with Maven
   </description>
 
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-version</artifactId>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>

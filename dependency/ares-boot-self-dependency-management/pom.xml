@@ -74,6 +74,11 @@
         <artifactId>business-api-required</artifactId>
         <version>${ares-boot.version}</version>
       </dependency>
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-version</artifactId>
+        <version>${ares-boot.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

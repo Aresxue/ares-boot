@@ -160,7 +160,8 @@ public class BaseLoggerUtil {
   private static LocationAwareLogger getLocationAwareLogger() {
     // 获取调用error、info、warn、debug静态类的类
     // Get the class that calls the error, info, debug static classes
-    // getCallerClass的性能在7个方式中是最好的，但目前实现仅支持jdk8，后续更高jdk版本需使用其他方式
+    // 这里更极致的性能优化是把getLocationAwareLogger和adaptiveGetCallerClass的逻辑直接放到到各方法中（一个方法节省一层堆栈），但是这样会导致代码可读性变差
+    // A more extreme performance optimization here would be to put the getDeferredLog and adaptiveGetCallerClass logic directly into each method (saving one layer of stack per method), but this would result in less readable code
     String className = ReflectionUtil.adaptiveGetCallerClass(INVOKE_DEPTH).getName();
     Logger logger = LoggerFactory.getLogger(className);
     return (LocationAwareLogger) logger;

@@ -55,6 +55,8 @@ public class LoggerUtil extends BaseLoggerUtil {
   public static DeferredLog getDeferredLog() {
     // Get the class that calls the error, info, debug static classes
     // 获取调用error、info、warn、debug静态类的类
+    // 这里更极致的性能优化是把getDeferredLog和adaptiveGetCallerClass的逻辑直接放到到各方法中（一个方法节省一层堆栈），但是这样会导致代码可读性变差
+    // A more extreme performance optimization here would be to put the getDeferredLog and adaptiveGetCallerClass logic directly into each method (saving one layer of stack per method), but this would result in less readable code
     String className = ReflectionUtil.adaptiveGetCallerClass(INVOKE_DEPTH).getName();
 
     /*

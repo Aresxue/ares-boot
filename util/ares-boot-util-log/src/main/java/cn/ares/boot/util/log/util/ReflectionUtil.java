@@ -75,7 +75,7 @@ public class ReflectionUtil {
     if (null == GET_CALLER_CLASS_METHOD) {
       return new SecurityManager() {
         public Class<?> securityGetClazz() {
-          return getClassContext()[depth];
+          return getClassContext()[depth + 1];
         }
       }.securityGetClazz();
     } else {

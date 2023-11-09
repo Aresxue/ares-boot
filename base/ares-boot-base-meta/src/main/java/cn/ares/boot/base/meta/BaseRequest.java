@@ -9,6 +9,7 @@ import java.io.Serializable;
  * @description: 请求基类
  * @version: JDK 1.8
  */
+// TODO 考虑基类是否用接口实现这样就不用继承了
 public abstract class BaseRequest implements Serializable {
 
   private static final long serialVersionUID = -4216068195245037766L;

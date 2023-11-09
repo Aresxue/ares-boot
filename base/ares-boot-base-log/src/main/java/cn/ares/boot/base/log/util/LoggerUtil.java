@@ -2,8 +2,8 @@ package cn.ares.boot.base.log.util;
 
 import cn.ares.boot.util.common.thread.ThreadLocalMapUtil;
 import cn.ares.boot.util.log.BaseLoggerUtil;
+import cn.ares.boot.util.log.util.ReflectionUtil;
 import org.springframework.boot.logging.DeferredLog;
-import sun.reflect.Reflection;
 
 /**
  * @author: Ares
@@ -55,8 +55,8 @@ public class LoggerUtil extends BaseLoggerUtil {
   public static DeferredLog getDeferredLog() {
     // Get the class that calls the error, info, debug static classes
     // 获取调用error、info、warn、debug静态类的类
-    // getCallerClass的性能在7个方式中是最好的，但目前实现仅支持jdk8，后续更高jdk版本需使用其他方式
-    String className = Reflection.getCallerClass(INVOKE_DEPTH).getName();
+    String className = ReflectionUtil.adaptiveGetCallerClass(INVOKE_DEPTH).getName();
+
     /*
      在SpringBoot加载的过程中 EnvironmentPostProcessor 的执行比较早; 这个时候日志系统根本就还没有初始化; 所以在此之前的日志操作都不会有效果; 使用
      DeferredLog 缓存日志；并在合适的时机回放日志

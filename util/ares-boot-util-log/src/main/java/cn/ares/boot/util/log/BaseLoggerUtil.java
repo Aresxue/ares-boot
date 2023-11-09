@@ -5,6 +5,7 @@ import static org.slf4j.spi.LocationAwareLogger.ERROR_INT;
 import static org.slf4j.spi.LocationAwareLogger.INFO_INT;
 import static org.slf4j.spi.LocationAwareLogger.WARN_INT;
 
+import cn.ares.boot.util.log.util.ReflectionUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,6 @@ import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
-import sun.reflect.Reflection;
 
 /**
  * @author: Ares
@@ -27,9 +27,9 @@ public class BaseLoggerUtil {
   private static final String FQCN = BaseLoggerUtil.class.getName();
 
   /**
-   * 这里选取堆栈深度为3，为2的时候会带来些许的性能提升，但是代码可读性没有使用getLocationAwareLogger方法更好
+   * 这里选取堆栈深度为4，为3的时候会带来些许的性能提升，但是代码可读性没有使用getLocationAwareLogger方法更好
    */
-  protected static final int INVOKE_DEPTH = 3;
+  protected static final int INVOKE_DEPTH = 4;
 
   public static void error(String msg) {
     LocationAwareLogger locationAwareLogger = getLocationAwareLogger();
@@ -161,7 +161,8 @@ public class BaseLoggerUtil {
     // 获取调用error、info、warn、debug静态类的类
     // Get the class that calls the error, info, debug static classes
     // getCallerClass的性能在7个方式中是最好的，但目前实现仅支持jdk8，后续更高jdk版本需使用其他方式
-    Logger logger = LoggerFactory.getLogger(Reflection.getCallerClass(INVOKE_DEPTH));
+    String className = ReflectionUtil.adaptiveGetCallerClass(INVOKE_DEPTH).getName();
+    Logger logger = LoggerFactory.getLogger(className);
     return (LocationAwareLogger) logger;
   }
 

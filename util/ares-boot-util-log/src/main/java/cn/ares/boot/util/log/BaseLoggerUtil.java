@@ -5,7 +5,7 @@ import static org.slf4j.spi.LocationAwareLogger.ERROR_INT;
 import static org.slf4j.spi.LocationAwareLogger.INFO_INT;
 import static org.slf4j.spi.LocationAwareLogger.WARN_INT;
 
-import cn.ares.boot.util.log.util.ReflectionUtil;
+import cn.ares.boot.util.log.util.ReflectionWrapper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -162,7 +162,7 @@ public class BaseLoggerUtil {
     // Get the class that calls the error, info, debug static classes
     // 这里更极致的性能优化是把getLocationAwareLogger和adaptiveGetCallerClass的逻辑直接放到到各方法中（一个方法节省一层堆栈），但是这样会导致代码可读性变差
     // A more extreme performance optimization here would be to put the getDeferredLog and adaptiveGetCallerClass logic directly into each method (saving one layer of stack per method), but this would result in less readable code
-    String className = ReflectionUtil.adaptiveGetCallerClass(INVOKE_DEPTH).getName();
+    String className = ReflectionWrapper.adaptiveGetCallerClass(INVOKE_DEPTH).getName();
     Logger logger = LoggerFactory.getLogger(className);
     return (LocationAwareLogger) logger;
   }

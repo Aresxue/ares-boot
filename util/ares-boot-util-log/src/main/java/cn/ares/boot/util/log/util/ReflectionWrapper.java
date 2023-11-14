@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
  * @description: 只支持jdk8不考虑jdk7
  * @version: JDK 1.8
  */
-public class ReflectionUtil {
+public class ReflectionWrapper {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ReflectionUtil.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ReflectionWrapper.class);
 
   private static Method GET_CALLER_CLASS_METHOD;
 

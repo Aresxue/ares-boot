@@ -2,7 +2,7 @@ package cn.ares.boot.base.log.util;
 
 import cn.ares.boot.util.common.thread.ThreadLocalMapUtil;
 import cn.ares.boot.util.log.BaseLoggerUtil;
-import cn.ares.boot.util.log.util.ReflectionWrapper;
+import cn.ares.boot.util.log.util.SunReflectionUtil;
 import org.springframework.boot.logging.DeferredLog;
 
 /**
@@ -57,7 +57,7 @@ public class LoggerUtil extends BaseLoggerUtil {
     // 获取调用error、info、warn、debug静态类的类
     // 这里更极致的性能优化是把getDeferredLog和adaptiveGetCallerClass的逻辑直接放到到各方法中（一个方法节省一层堆栈），但是这样会导致代码可读性变差
     // A more extreme performance optimization here would be to put the getDeferredLog and adaptiveGetCallerClass logic directly into each method (saving one layer of stack per method), but this would result in less readable code
-    String className = ReflectionWrapper.adaptiveGetCallerClass(INVOKE_DEPTH).getName();
+    String className = SunReflectionUtil.adaptiveGetCallerClass(INVOKE_DEPTH).getName();
 
     /*
      在SpringBoot加载的过程中 EnvironmentPostProcessor 的执行比较早; 这个时候日志系统根本就还没有初始化; 所以在此之前的日志操作都不会有效果; 使用

@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 /**
  * @author: Ares
  * @time: 2023-10-30 19:51:33
- * @description: Reflection util
+ * @description: Sun reflection util
  * @description: 只支持jdk8不考虑jdk7
  * @version: JDK 1.8
  */
-public class ReflectionWrapper {
+public class SunReflectionUtil {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ReflectionWrapper.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SunReflectionUtil.class);
 
   private static Method GET_CALLER_CLASS_METHOD;
 

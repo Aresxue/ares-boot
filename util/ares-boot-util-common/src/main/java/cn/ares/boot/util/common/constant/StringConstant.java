@@ -36,4 +36,8 @@ public interface StringConstant {
 
   String MAGIC_NUMBER = "Ares";
 
+  String HTTPS = "https";
+  int HTTPS_DEFAULT_PORT = 443;
+  int HTTP_DEFAULT_PORT = 80;
+
 }

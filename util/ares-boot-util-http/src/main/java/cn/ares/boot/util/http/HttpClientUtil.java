@@ -18,6 +18,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPO
 import cn.ares.boot.util.common.ArrayUtil;
 import cn.ares.boot.util.common.ExceptionUtil;
 import cn.ares.boot.util.common.StringUtil;
+import cn.ares.boot.util.common.network.NetworkUtil;
 import cn.ares.boot.util.common.thread.NameThreadFactory;
 import cn.ares.boot.util.common.thread.ThreadLocalMapUtil;
 import cn.ares.boot.util.http.config.HttpConnectionConfig;
@@ -28,11 +29,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.concurrent.ConcurrentHashMap;
@@ -128,27 +129,17 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 根据请求地址获取Http请求客户端
    * @description: Get the Http request client based on the request address
    * @time: 2019-05-08 15:31:00
-   * @params: [url] 请求地址
+   * @params: [host, port] host，端口
    * @return: org.apache.http.impl.client.CloseableHttpClient
    **/
-  public static CloseableHttpClient getHttpClient(String url) {
+  public static CloseableHttpClient getHttpClient(String host, int port) {
     // 保证第一次获取Http请求客户端启动监控线程, 且只启动一次
     // Ensure that the client starts the monitor thread the first time it gets a Http request, and only once
     if (IS_START_MONITOR.compareAndSet(false, true)) {
       startMonitor();
     }
-    String hostOrIp = StringUtil.listSplit(url, "/").get(2);
-    int port = 80;
-    if (hostOrIp.contains(COLON)) {
-      List<String> splitList = StringUtil.listSplit(hostOrIp, COLON);
-      hostOrIp = splitList.get(0);
-      port = Integer.parseInt(splitList.get(1));
-    }
-    String uniqueKey = hostOrIp + COLON + port;
-    String finalHostname = hostOrIp;
-    int finalPort = port;
-    return HTTP_CLIENT_MAP.computeIfAbsent(uniqueKey,
-        client -> createHttpClient(finalHostname, finalPort));
+    String uniqueKey = host + COLON + port;
+    return HTTP_CLIENT_MAP.computeIfAbsent(uniqueKey, client -> createHttpClient(host, port));
   }
 
   /**
@@ -278,7 +269,7 @@ public class HttpClientUtil implements ApplicationContextAware {
     httpPost.setHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
     configRequest(httpPost, headers, socketTimeout, connectTimeout, connectionRequestTimeout
     );
-    return request(httpPost, url, request);
+    return request(httpPost, request);
   }
 
   /**
@@ -408,7 +399,7 @@ public class HttpClientUtil implements ApplicationContextAware {
     HttpGet httpGet = new HttpGet(url);
     httpGet.setHeader(CONTENT_TYPE, APPLICATION_FORM_URLENCODED.toString());
     configRequest(httpGet, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
-    return request(httpGet, url, null);
+    return request(httpGet, null);
   }
 
   /**
@@ -515,7 +506,7 @@ public class HttpClientUtil implements ApplicationContextAware {
     httpDelete.setHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
     configRequest(httpDelete, headers, socketTimeout, connectTimeout, connectionRequestTimeout
     );
-    return request(httpDelete, url, request);
+    return request(httpDelete, request);
   }
 
   /**
@@ -597,10 +588,11 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @params: [requestBase, url, request] 请求基类, 请求地址, 请求对象
    * @return: java.lang.String 响应结果
    **/
-  private static <T> String request(HttpUriRequestBase requestBase, String url, T request)
-      throws Exception {
+  private static <T> String request(HttpUriRequestBase requestBase, T request) throws Exception {
     setBody(requestBase, request);
-    return getHttpClient(url).execute(requestBase, HttpClientContext.create(),
+    URI uri = requestBase.getUri();
+    int port = NetworkUtil.extractPort(uri);
+    return getHttpClient(uri.getHost(), port).execute(requestBase, HttpClientContext.create(),
         new BasicHttpClientResponseHandler() {
           @Override
           public String handleResponse(ClassicHttpResponse response) throws IOException {

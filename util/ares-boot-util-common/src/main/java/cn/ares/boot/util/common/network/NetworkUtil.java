@@ -1,12 +1,17 @@
 package cn.ares.boot.util.common.network;
 
 
+import static cn.ares.boot.util.common.constant.StringConstant.HTTPS;
+import static cn.ares.boot.util.common.constant.StringConstant.HTTPS_DEFAULT_PORT;
+import static cn.ares.boot.util.common.constant.StringConstant.HTTP_DEFAULT_PORT;
 import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
 
+import cn.ares.boot.util.common.StringUtil;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.URI;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -147,6 +152,41 @@ public class NetworkUtil {
         + ((intIp & 0x00FFFFFF) >> 16) + "."
         + ((intIp & 0x0000FFFF) >> 8) + "."
         + (intIp & 0x000000FF);
+  }
+
+  /**
+   * 从给定的URI中提取主机
+   * Extract the host from the given URI.
+   *
+   * @param uri the URI to extract the host from
+   * @return the extracted host
+   */
+  public static String extractHost(URI uri) {
+    String host = uri.getHost();
+    if (StringUtil.isBlank(host)) {
+      String urlStr = uri.toString();
+      host = StringUtil.listSplit(urlStr, "/").get(0);
+    }
+    return host;
+  }
+
+  /**
+   * 从给定的URI中提取端口
+   * Extract the port from the given URI.
+   *
+   * @param uri the URI to extract the port from
+   * @return the extracted port
+   */
+  public static int extractPort(URI uri) {
+    int port = uri.getPort();
+    if (port < 0) {
+      if (HTTPS.equals(uri.getScheme())) {
+        port = HTTPS_DEFAULT_PORT;
+      } else {
+        port = HTTP_DEFAULT_PORT;
+      }
+    }
+    return port;
   }
 
 }

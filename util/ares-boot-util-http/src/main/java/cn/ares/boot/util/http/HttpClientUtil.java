@@ -28,10 +28,13 @@ import cn.ares.boot.util.json.JsonUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
@@ -70,6 +73,7 @@ import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.config.Registry;
 import org.apache.hc.core5.http.config.RegistryBuilder;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.util.TimeValue;
@@ -179,7 +183,6 @@ public class HttpClientUtil implements ApplicationContextAware {
         .build();
   }
 
-
   /**
    * @author: Ares
    * @description: 使用请求对象发起Post请求地址获取结果
@@ -189,7 +192,20 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @return: java.lang.String 响应结果
    */
   public static <T> String post(String url, T request) throws Exception {
-    return post(url, request, Collections.emptyMap());
+    return post(url, request, null);
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 使用请求对象发起Post请求地址获取结果
+   * @description: Use the request object to initiate a Post request address to get the result
+   * @time: 2022-12-28 11:40:07
+   * @params: [url, request, fileSavePath] 请求地址，请求对象，文件保存地址（可选）
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String post(String url, T request, String fileSavePath) throws Exception {
+    return post(url, request, Collections.emptyMap(), fileSavePath);
   }
 
   /**
@@ -198,11 +214,12 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: Use the request object to initiate a Post request address to get the result (wait
    * for the specified timeout)
    * @time: 2022-12-28 11:40:07
-   * @params: [url, request, socketTimeout] 请求地址，请求对象，超时时间
+   * @params: [url, request, socketTimeout] 请求地址，请求对象，超时时间）
    * @return: java.lang.String 响应结果
    */
-  public static <T> String post(String url, T request, int socketTimeout) throws Exception {
-    return post(url, request, Collections.emptyMap(), socketTimeout);
+  public static <T> String post(String url, T request, int socketTimeout)
+      throws Exception {
+    return post(url, request, Collections.emptyMap(), socketTimeout, null);
   }
 
   /**
@@ -211,12 +228,12 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: Pass in the request object and message header to initiate the Post request
    * address to get the result
    * @time: 2022-12-28 11:41:46
-   * @params: [url, request, headers] 请求地址，请求对象，消息头
+   * @params: [url, request, headers, fileSavePath] 请求地址，请求对象，消息头，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    */
-  public static <T> String post(String url, T request, Map<String, String> headers)
-      throws Exception {
-    return post(url, request, headers, config.getSocketTimeout());
+  public static <T> String post(String url, T request, Map<String, String> headers,
+      String fileSavePath) throws Exception {
+    return post(url, request, headers, config.getSocketTimeout(), fileSavePath);
   }
 
   /**
@@ -231,7 +248,23 @@ public class HttpClientUtil implements ApplicationContextAware {
   public static <T> String post(String url, T request, Map<String, String> headers,
       int socketTimeout) throws Exception {
     return post(url, request, headers, socketTimeout, config.getConnectTimeout(),
-        config.getConnectionRequestTimeout());
+        config.getConnectionRequestTimeout(), null);
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头发起Post请求地址获取结果（等待指定超时时间）
+   * @description: Pass in the request object and message header to initiate the Post request
+   * address to get the result (wait for the specified timeout)
+   * @time: 2022-12-28 11:41:46
+   * @params: [url, request, headers, socketTimeout, fileSavePath] 请求地址，请求对象，消息头，超时时间，文件保存地址（可选）
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String post(String url, T request, Map<String, String> headers,
+      int socketTimeout, String fileSavePath) throws Exception {
+    return post(url, request, headers, socketTimeout, config.getConnectTimeout(),
+        config.getConnectionRequestTimeout(), fileSavePath);
   }
 
   /**
@@ -241,14 +274,15 @@ public class HttpClientUtil implements ApplicationContextAware {
    * to get the result (waiting for the specified timeout, connection timeout, and connection
    * acquisition timeout)
    * @time: 2022-12-28 11:41:46
-   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout]
-   * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
+   * fileSavePath] 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    */
   public static <T> String post(String url, T request, Map<String, String> headers,
-      int socketTimeout, int connectTimeout, int connectionRequestTimeout) throws Exception {
+      int socketTimeout, int connectTimeout, int connectionRequestTimeout, String fileSavePath)
+      throws Exception {
     return post(url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
-        null);
+        null, fileSavePath);
   }
 
   /**
@@ -263,13 +297,12 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @return: java.lang.String 响应结果
    */
   public static <T> String post(String url, T request, Map<String, String> headers,
-      int socketTimeout, int connectTimeout, int connectionRequestTimeout, HttpHost proxy)
-      throws Exception {
+      int socketTimeout, int connectTimeout, int connectionRequestTimeout, HttpHost proxy,
+      String fileSavePath) throws Exception {
     HttpPost httpPost = new HttpPost(url);
     httpPost.setHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
-    configRequest(httpPost, headers, socketTimeout, connectTimeout, connectionRequestTimeout
-    );
-    return request(httpPost, request);
+    configRequest(httpPost, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
+    return request(httpPost, request, fileSavePath);
   }
 
   /**
@@ -281,7 +314,20 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @return: java.lang.String 响应结果
    **/
   public static String get(String url) throws Exception {
-    return get(url, Collections.emptyMap(), config.getSocketTimeout());
+    return get(url, null);
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 发起get请求地址获取结果
+   * @description: Initiate a get request address to get the result
+   * @time: 2019-05-08 15:39:00
+   * @params: [url, fileSavePath] 请求地址，文件保存地址（可选）
+   * @return: java.lang.String 响应结果
+   **/
+  public static String get(String url, String fileSavePath) throws Exception {
+    return get(url, Collections.emptyMap(), config.getSocketTimeout(), fileSavePath);
   }
 
   /**
@@ -293,7 +339,7 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @return: java.lang.String 响应结果
    **/
   public static String get(String url, int socketTimeout) throws Exception {
-    return get(url, Collections.emptyMap(), socketTimeout);
+    return get(url, Collections.emptyMap(), socketTimeout, null);
   }
 
   /**
@@ -301,11 +347,11 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 使用请求对象发起get请求地址获取结果
    * @description: Use the request object to initiate a get request address to get the result
    * @time: 2019-05-08 15:39:00
-   * @params: [url, param] 请求地址，请求参数
+   * @params: [url, param, fileSavePath] 请求地址，请求参数，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
-  public static <T> String get(String url, T param) throws Exception {
-    return get(url, param, Collections.emptyMap(), config.getSocketTimeout());
+  public static <T> String get(String url, T param, String fileSavePath) throws Exception {
+    return get(url, param, Collections.emptyMap(), config.getSocketTimeout(), fileSavePath);
   }
 
   /**
@@ -313,11 +359,12 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 使用消息头发起get请求地址获取结果
    * @description: Use the message header to initiate a get request address to get the result
    * @time: 2019-05-08 15:39:00
-   * @params: [url, param] 请求地址，消息头
+   * @params: [url, param, fileSavePath] 请求地址，消息头，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
-  public static String get(String url, Map<String, String> headers) throws Exception {
-    return get(url, headers, config.getSocketTimeout());
+  public static String get(String url, Map<String, String> headers, String fileSavePath)
+      throws Exception {
+    return get(url, headers, config.getSocketTimeout(), fileSavePath);
   }
 
 
@@ -331,7 +378,7 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @return: java.lang.String 响应结果
    **/
   public static <T> String get(String url, T param, int socketTimeout) throws Exception {
-    return get(url, param, Collections.emptyMap(), socketTimeout);
+    return get(url, param, Collections.emptyMap(), socketTimeout, null);
   }
 
   /**
@@ -340,13 +387,13 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: Use the message header to initiate a get request address to get the result (wait
    * for the timeout period)
    * @time: 2019-05-08 15:39:00
-   * @params: [url, param, socketTimeout] 请求地址，消息头，超时时间
+   * @params: [url, param, socketTimeout, fileSavePath] 请求地址，消息头，超时时间，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
-  public static String get(String url, Map<String, String> headers, int socketTimeout)
-      throws Exception {
+  public static String get(String url, Map<String, String> headers, int socketTimeout,
+      String fileSavePath) throws Exception {
     return get(url, headers, socketTimeout, config.getConnectTimeout(),
-        config.getConnectionRequestTimeout());
+        config.getConnectionRequestTimeout(), fileSavePath);
   }
 
   /**
@@ -355,18 +402,18 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: Use the request object and message header to initiate a get request address to
    * get the result (waiting for the timeout period)
    * @time: 2019-05-08 15:39:00
-   * @params: [url, param, headers, socketTimeout] 请求地址，请求对象，消息头，超时时间
+   * @params: [url, param, headers, socketTimeout, fileSavePath] 请求地址，请求对象，消息头，超时时间，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
-  public static <T> String get(String url, T param, Map<String, String> headers, int socketTimeout)
-      throws Exception {
+  public static <T> String get(String url, T param, Map<String, String> headers, int socketTimeout,
+      String fileSavePath) throws Exception {
     if (null != param) {
       String query = HttpClientUtil.encodeGetRequest(param);
       if (StringUtil.isNotEmpty(query)) {
         url += QUESTION_MARK + query;
       }
     }
-    return get(url, headers, socketTimeout);
+    return get(url, headers, socketTimeout, fileSavePath);
   }
 
   /**
@@ -375,13 +422,14 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: Use the message header to initiate a get request address to get the result
    * (waiting timeout, connection timeout, connection acquisition timeout)
    * @time: 2019-05-08 15:39:00
-   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout]
-   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, fileSavePath]
+   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
   public static String get(String url, Map<String, String> headers, int socketTimeout,
-      int connectTimeout, int connectionRequestTimeout) throws Exception {
-    return get(url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, null);
+      int connectTimeout, int connectionRequestTimeout, String fileSavePath) throws Exception {
+    return get(url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, null,
+        fileSavePath);
   }
 
   /**
@@ -390,16 +438,17 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: Use the message header to use the proxy to initiate a get request address to get
    * the result (waiting timeout, connection timeout, connection acquisition timeout)
    * @time: 2019-05-08 15:39:00
-   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy]
-   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy,
+   * fileSavePath] 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
   public static String get(String url, Map<String, String> headers, int socketTimeout,
-      int connectTimeout, int connectionRequestTimeout, HttpHost proxy) throws Exception {
+      int connectTimeout, int connectionRequestTimeout, HttpHost proxy, String fileSavePath)
+      throws Exception {
     HttpGet httpGet = new HttpGet(url);
     httpGet.setHeader(CONTENT_TYPE, APPLICATION_FORM_URLENCODED.toString());
     configRequest(httpGet, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
-    return request(httpGet, null);
+    return request(httpGet, null, fileSavePath);
   }
 
   /**
@@ -504,9 +553,8 @@ public class HttpClientUtil implements ApplicationContextAware {
       throws Exception {
     HttpDelete httpDelete = new HttpDelete(url);
     httpDelete.setHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
-    configRequest(httpDelete, headers, socketTimeout, connectTimeout, connectionRequestTimeout
-    );
-    return request(httpDelete, request);
+    configRequest(httpDelete, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
+    return request(httpDelete, request, null);
   }
 
   /**
@@ -585,10 +633,11 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 请求通用代码
    * @description: Request generic code
    * @time: 2019-05-08 15:46:00
-   * @params: [requestBase, url, request] 请求基类, 请求地址, 请求对象
+   * @params: [requestBase, url, request, fileSavePath] 请求基类，请求地址，请求对象，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
-  private static <T> String request(HttpUriRequestBase requestBase, T request) throws Exception {
+  private static <T> String request(HttpUriRequestBase requestBase, T request, String fileSavePath)
+      throws Exception {
     setBody(requestBase, request);
     URI uri = requestBase.getUri();
     int port = NetworkUtil.extractPort(uri);
@@ -596,15 +645,26 @@ public class HttpClientUtil implements ApplicationContextAware {
         new BasicHttpClientResponseHandler() {
           @Override
           public String handleResponse(ClassicHttpResponse response) throws IOException {
-            String result = super.handleResponse(response);
-            ThreadLocalMapUtil.set(HTTP_RESPONSE_HEADERS, response.getHeaders());
+            if (StringUtil.isBlank(fileSavePath)) {
+              String result = super.handleResponse(response);
+              ThreadLocalMapUtil.set(HTTP_RESPONSE_HEADERS, response.getHeaders());
 
-            int statusCode = response.getCode();
-            if (statusCode < HttpStatus.SC_OK || statusCode >= HttpStatus.SC_MULTIPLE_CHOICES) {
-              throw new RuntimeException(
-                  "Status code is " + statusCode + ", response is " + result);
+              int statusCode = response.getCode();
+              if (statusCode < HttpStatus.SC_OK || statusCode >= HttpStatus.SC_MULTIPLE_CHOICES) {
+                throw new RuntimeException(
+                    "Status code is " + statusCode + ", response is " + result);
+              }
+              return result;
+            } else {
+              // 读取数据
+              // read data
+              byte[] bytes = EntityUtils.toByteArray(response.getEntity());
+              try (OutputStream outputStream = Files.newOutputStream(Paths.get(fileSavePath))) {
+                outputStream.write(bytes);
+                outputStream.flush();
+              }
             }
-            return result;
+            return null;
           }
         });
   }

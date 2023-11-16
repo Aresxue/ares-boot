@@ -662,16 +662,16 @@ public class HttpClientUtil implements ApplicationContextAware {
         new BasicHttpClientResponseHandler() {
           @Override
           public String handleResponse(ClassicHttpResponse response) throws IOException {
-            if (StringUtil.isBlank(fileSavePath)) {
-              String result = super.handleResponse(response);
-              ThreadLocalMapUtil.set(HTTP_RESPONSE_HEADERS, response.getHeaders());
+            ThreadLocalMapUtil.set(HTTP_RESPONSE_HEADERS, response.getHeaders());
+            int statusCode = response.getCode();
+            if (statusCode < HttpStatus.SC_OK || statusCode >= HttpStatus.SC_MULTIPLE_CHOICES) {
+              throw new RuntimeException(
+                  "Status code is " + statusCode + ", response is " + super.handleResponse(
+                      response));
+            }
 
-              int statusCode = response.getCode();
-              if (statusCode < HttpStatus.SC_OK || statusCode >= HttpStatus.SC_MULTIPLE_CHOICES) {
-                throw new RuntimeException(
-                    "Status code is " + statusCode + ", response is " + result);
-              }
-              return result;
+            if (StringUtil.isBlank(fileSavePath)) {
+              return super.handleResponse(response);
             } else {
               // 读取数据
               // read data

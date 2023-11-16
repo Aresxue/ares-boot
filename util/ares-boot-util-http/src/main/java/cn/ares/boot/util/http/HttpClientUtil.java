@@ -663,19 +663,24 @@ public class HttpClientUtil implements ApplicationContextAware {
           @Override
           public String handleResponse(ClassicHttpResponse response) throws IOException {
             ThreadLocalMapUtil.set(HTTP_RESPONSE_HEADERS, response.getHeaders());
-            int statusCode = response.getCode();
-            if (statusCode < HttpStatus.SC_OK || statusCode >= HttpStatus.SC_MULTIPLE_CHOICES) {
-              throw new RuntimeException(
-                  "Status code is " + statusCode + ", response is " + super.handleResponse(
-                      response));
-            }
 
             if (StringUtil.isBlank(fileSavePath)) {
+              String result = super.handleResponse(response);
+              int statusCode = response.getCode();
+              if (statusCode < HttpStatus.SC_OK || statusCode >= HttpStatus.SC_MULTIPLE_CHOICES) {
+                throw new RuntimeException(
+                    "Status code is " + statusCode + ", response is " + result);
+              }
               return super.handleResponse(response);
             } else {
               // 读取数据
               // read data
               byte[] bytes = EntityUtils.toByteArray(response.getEntity());
+              int statusCode = response.getCode();
+              if (statusCode < HttpStatus.SC_OK || statusCode >= HttpStatus.SC_MULTIPLE_CHOICES) {
+                throw new RuntimeException(
+                    "Status code is " + statusCode + ", response is " + new String(bytes));
+              }
               FileUtil.writeByteArrayToFile(new File(fileSavePath), bytes);
             }
             return null;

@@ -1,5 +1,6 @@
 package cn.ares.boot.util.spring;
 
+import cn.ares.boot.util.common.IoUtil;
 import cn.ares.boot.util.common.StringUtil;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -13,7 +14,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.FileCopyUtils;
 
 /**
  * @author: Ares
@@ -53,7 +53,7 @@ public class SpringBootClassesExtractor {
               } else {
                 try (InputStream inputStream = jarFile.getInputStream(
                     entry); FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
-                  FileCopyUtils.copy(inputStream, fileOutputStream);
+                  IoUtil.copy(inputStream, fileOutputStream);
                 }
               }
             } catch (Exception e) {
@@ -83,7 +83,7 @@ public class SpringBootClassesExtractor {
                   String relativePath = entry.getName().replace(REPACKAGED_CLASSES_LOCATION, "");
                   if (StringUtil.isNotBlank(relativePath)) {
                     zipOutputStream.putNextEntry(new ZipEntry(relativePath));
-                    FileCopyUtils.copy(inputStream, zipOutputStream);
+                    IoUtil.copy(inputStream, zipOutputStream);
                     zipOutputStream.closeEntry();
                   }
                 }

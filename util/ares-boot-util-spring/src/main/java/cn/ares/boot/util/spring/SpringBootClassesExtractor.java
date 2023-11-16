@@ -2,6 +2,7 @@ package cn.ares.boot.util.spring;
 
 import cn.ares.boot.util.common.IoUtil;
 import cn.ares.boot.util.common.StringUtil;
+import cn.ares.boot.util.common.file.FileUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -73,6 +74,10 @@ public class SpringBootClassesExtractor {
    * @return: void
    */
   public static void extractClassesGzip(String jarPath, String classesGzPath) throws IOException {
+    File file = new File(classesGzPath);
+    if (!file.getParentFile().exists()) {
+      FileUtil.createParentDirectories(file);
+    }
     try (ZipOutputStream zipOutputStream = new ZipOutputStream(new GZIPOutputStream(
         new GZIPOutputStream(Files.newOutputStream(Paths.get(classesGzPath)))))) {
       try (JarFile jarFile = new JarFile(jarPath)) {

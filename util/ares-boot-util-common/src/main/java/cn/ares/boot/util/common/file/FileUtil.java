@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.Duration;
 import java.util.Objects;
 
 /**
@@ -14,6 +15,30 @@ import java.util.Objects;
  * @version: JDK 1.8
  */
 public class FileUtil {
+
+  /**
+   * @author: Ares
+   * @description: 文件是否存在
+   * @description: Whether the file exists
+   * @time: 2023-11-16 17:25:28
+   * @params: [filePath] 文件路径
+   * @return: boolean 是否存在
+   */
+  public static boolean exists(String filePath) {
+    return new File(filePath).exists();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 文件在指定时间内没有更新
+   * @description: The file was not updated within the specified time
+   * @time: 2023-11-16 17:27:09
+   * @params: [file, duration] 文件，时间间隔
+   * @return: boolean 是否更新
+   */
+  public static boolean notModified(File file, Duration duration) {
+    return System.currentTimeMillis() - file.lastModified() > duration.toMillis();
+  }
 
 
   /**

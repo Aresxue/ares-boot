@@ -49,12 +49,12 @@ public class SpringBootClassesExtractor {
    * @description: 提取spring boot fat jar下业务class文件输出到文件夹
    * @description: Extract the service class file from the spring boot fat jar and export it to the folder
    * @time: 2023-11-15 10:52:34
-   * @params: [jarPath, bizPackageName, classesDir] fat jar路径，业务包名，输出文件夹路径
+   * @params: [jarPath, bizPackageNameSet, classesDir] fat jar路径，业务包名，输出文件夹路径
    * @return: void
    */
-  public static void extractClasses(String jarPath, String bizPackageName, String classesDir)
+  public static void extractClasses(String jarPath, Set<String> bizPackageNameSet, String classesDir)
       throws IOException {
-    extractClasses(jarPath, bizPackageName, Collections.emptySet(), classesDir);
+    extractClasses(jarPath, bizPackageNameSet, Collections.emptySet(), classesDir);
   }
 
   /**
@@ -66,9 +66,9 @@ public class SpringBootClassesExtractor {
    * @params: fat jar路径，业务包名，排除在外的包名，输出文件夹路径
    * @return: void
    */
-  public static void extractClasses(String jarPath, String bizPackageName,
+  public static void extractClasses(String jarPath, Set<String> bizPackageNameSet,
       Set<String> excludePackageNameSet, String classesDir) throws IOException {
-    iterableClass(jarPath, bizPackageName, excludePackageNameSet,
+    iterableClass(jarPath, bizPackageNameSet, excludePackageNameSet,
         (entryName, inputStream) -> {
           File outputFile = new File(classesDir, entryName);
           try (FileOutputStream fileOutputStream = FileUtil.openOutputStream(outputFile)) {
@@ -82,12 +82,12 @@ public class SpringBootClassesExtractor {
    * @description: 提取spring boot fat jar下业务class文件并输出成gzip文件
    * @description: Extract the service class file in the spring boot fat jar and output it as a gzip file
    * @time: 2023-11-16 20:11:34
-   * @params: [jarPath, bizPackageName, classesGzPath] fat jar路径，业务包名，输出gzip文件路径
+   * @params: [jarPath, bizPackageNameSet, classesGzPath] fat jar路径，业务包名，输出gzip文件路径
    * @return: void
    */
-  public static void extractClassesGzip(String jarPath, String bizPackageName, String classesGzPath)
+  public static void extractClassesGzip(String jarPath, Set<String> bizPackageNameSet, String classesGzPath)
       throws IOException {
-    extractClassesGzip(classesGzPath, bizPackageName, Collections.emptySet(), jarPath);
+    extractClassesGzip(classesGzPath, bizPackageNameSet, Collections.emptySet(), jarPath);
   }
 
   /**
@@ -95,21 +95,21 @@ public class SpringBootClassesExtractor {
    * @description: 提取spring boot fat jar下业务class文件并输出成gzip文件
    * @description: Extract the service class file in the spring boot fat jar and output it as a gzip file
    * @time: 2023-11-16 10:11:34
-   * @params: [jarPath, bizPackageName, excludePackageNameSet, classesGzPath]
+   * @params: [jarPath, bizPackageNameSet, excludePackageNameSet, classesGzPath]
    * @params: fat jar路径，业务包名，排除在外的包名，输出gzip文件路径
    * @return: void
    */
-  public static void extractClassesGzip(String jarPath, String bizPackageName,
+  public static void extractClassesGzip(String jarPath, Set<String> bizPackageNameSet,
       Set<String> excludePackageNameSet, String classesGzPath) throws IOException {
     try (ZipOutputStream zipOutputStream = new ZipOutputStream(new GZIPOutputStream(
         new GZIPOutputStream(FileUtil.openOutputStream(new File(classesGzPath)))))) {
-      extractClassesGzip(jarPath, bizPackageName, excludePackageNameSet, zipOutputStream);
+      extractClassesGzip(jarPath, bizPackageNameSet, excludePackageNameSet, zipOutputStream);
     }
   }
 
-  private static void extractClassesGzip(String jarPath, String bizPackageName,
+  private static void extractClassesGzip(String jarPath, Set<String> bizPackageNameSet,
       Set<String> excludePackageNameSet, ZipOutputStream zipOutputStream) throws IOException {
-    iterableClass(jarPath, bizPackageName, excludePackageNameSet,
+    iterableClass(jarPath, bizPackageNameSet, excludePackageNameSet,
         (entryName, inputStream) -> {
           zipOutputStream.putNextEntry(new ZipEntry(entryName));
           IoUtil.copy(inputStream, zipOutputStream);
@@ -122,11 +122,11 @@ public class SpringBootClassesExtractor {
    * @author: Ares
    * @description: 遍历所有class（包括jar包中的）
    * @time: 2023-11-17 11:04:18
-   * @params: [jarFile, bizPackageName, excludePackageNameSet, inputStreamBiConsumer, jarConsumer]
+   * @params: [jarFile, bizPackageNameSet, excludePackageNameSet, inputStreamBiConsumer, jarConsumer]
    * @params: fat jar路径，业务包名，排除在外的包名，输入流消费者，jar消费者
    * @return: void
    */
-  public static void iterableClass(String jarPath, String bizPackageName,
+  public static void iterableClass(String jarPath, Set<String> bizPackageNameSet,
       Set<String> excludePackageNameSet,
       BiConsumerWithException<String, InputStream> inputStreamConsumer) throws IOException {
     try (JarFile jarFile = new JarFile(jarPath)) {
@@ -137,7 +137,8 @@ public class SpringBootClassesExtractor {
             // 普通jar其实用不到这段逻辑但不想做判断增加代码量无脑做一次好了
             entryName = entryName.replaceAll(REPACKAGED_CLASSES_LOCATION, "");
             String className = entryName.replaceAll("/", ".");
-            if (StringUtil.isNotBlank(className) && className.startsWith(bizPackageName)
+            if (StringUtil.isNotBlank(className)
+                && bizPackageNameSet.stream().anyMatch(className::startsWith)
                 && excludePackageNameSet.stream().noneMatch(className::startsWith)) {
               inputStreamConsumer.accept(entryName, jarFile.getInputStream(entry));
             }
@@ -146,7 +147,7 @@ public class SpringBootClassesExtractor {
             entryName = entryName.replaceAll(LIBRARY_LOCATION, "");
             InputStream inputStream = jarFile.getInputStream(entry);
             File tempJarFile = FileUtil.writeTempFile(inputStream, entryName);
-            iterableClass(tempJarFile.getAbsolutePath(), bizPackageName, excludePackageNameSet,
+            iterableClass(tempJarFile.getAbsolutePath(), bizPackageNameSet, excludePackageNameSet,
                 inputStreamConsumer);
             CompletableFuture.runAsync(tempJarFile::delete);
           }

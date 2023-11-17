@@ -40,4 +40,7 @@ public interface StringConstant {
   int HTTPS_DEFAULT_PORT = 443;
   int HTTP_DEFAULT_PORT = 80;
 
+  String CLASS_SUFFIX = ".class";
+  String JAR_SUFFIX = ".jar";
+
 }

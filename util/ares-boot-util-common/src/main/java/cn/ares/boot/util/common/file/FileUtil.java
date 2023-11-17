@@ -1,8 +1,10 @@
 package cn.ares.boot.util.common.file;
 
+import cn.ares.boot.util.common.IoUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.Duration;
 import java.util.Objects;
@@ -15,6 +17,8 @@ import java.util.Objects;
  * @version: JDK 1.8
  */
 public class FileUtil {
+
+  private static final String TEMP_PATH = System.getProperty("java.io.tmpdir");
 
   /**
    * @author: Ares
@@ -38,6 +42,23 @@ public class FileUtil {
    */
   public static boolean notModified(File file, Duration duration) {
     return System.currentTimeMillis() - file.lastModified() > duration.toMillis();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 将输入流写入临时文件
+   * @time: 2023-11-16 20:43:37
+   * @params: [inputStream, relativePath] 输入流，临时文件
+   * @return: java.io.File 临时文件
+   */
+  public static File writeTempFile(InputStream inputStream, String relativePath)
+      throws IOException {
+    File tempFile = new File(getTempDirectory(), relativePath);
+    if (!tempFile.getParentFile().exists()) {
+      createParentDirectories(tempFile);
+    }
+    copyInputStreamToFile(inputStream, tempFile);
+    return tempFile;
   }
 
 
@@ -87,6 +108,31 @@ public class FileUtil {
     try (OutputStream out = openOutputStream(file, append)) {
       out.write(data, off, len);
     }
+  }
+
+  /**
+   * Opens a {@link FileOutputStream} for the specified file, checking and creating the parent
+   * directory if it does not exist.
+   * <p>
+   * At the end of the method either the stream will be successfully opened, or an exception will
+   * have been thrown.
+   * </p>
+   * <p>
+   * The parent directory will be created if it does not exist. The file will be created if it does
+   * not exist. An exception is thrown if the file object exists but is a directory. An exception is
+   * thrown if the file exists but cannot be written to. An exception is thrown if the parent
+   * directory cannot be created.
+   * </p>
+   *
+   * @param file the file to open for output, must not be {@code null}
+   * @return a new {@link FileOutputStream} for the specified file
+   * @throws NullPointerException     if the file object is {@code null}.
+   * @throws IllegalArgumentException if the file object is a directory
+   * @throws IllegalArgumentException if the file is not writable.
+   * @throws IOException              if the directories could not be created.
+   */
+  public static FileOutputStream openOutputStream(final File file) throws IOException {
+    return openOutputStream(file, false);
   }
 
   /**
@@ -198,6 +244,65 @@ public class FileUtil {
    */
   private static File getParentFile(final File file) {
     return file == null ? null : file.getParentFile();
+  }
+
+  /**
+   * Returns a {@link File} representing the system temporary directory.
+   *
+   * @return the system temporary directory.
+   */
+  public static File getTempDirectory() {
+    return new File(TEMP_PATH);
+  }
+
+  /**
+   * Copies bytes from an {@link InputStream} {@code source} to a file {@code destination}. The
+   * directories up to {@code destination} will be created if they don't already exist.
+   * {@code destination} will be overwritten if it already exists.
+   * <p>
+   * <em>The {@code source} stream is closed.</em>
+   * </p>
+   * <p>
+   * See {@link #copyToFile(InputStream, File)} for a method that does not close the input stream.
+   * </p>
+   *
+   * @param source      the {@code InputStream} to copy bytes from, must not be {@code null}, will
+   *                    be closed
+   * @param destination the non-directory {@code File} to write bytes to (possibly overwriting),
+   *                    must not be {@code null}
+   * @throws IOException if {@code destination} is a directory
+   * @throws IOException if {@code destination} cannot be written
+   * @throws IOException if {@code destination} needs creating but can't be
+   * @throws IOException if an IO error occurs during copying
+   */
+  public static void copyInputStreamToFile(final InputStream source, final File destination)
+      throws IOException {
+    try (InputStream inputStream = source) {
+      copyToFile(inputStream, destination);
+    }
+  }
+
+  /**
+   * Copies bytes from an {@link InputStream} source to a {@link File} destination. The directories
+   * up to {@code destination} will be created if they don't already exist. {@code destination} will
+   * be overwritten if it already exists. The {@code source} stream is left open, e.g. for use with
+   * {@link java.util.zip.ZipInputStream ZipInputStream}. See
+   * {@link #copyInputStreamToFile(InputStream, File)} for a method that closes the input stream.
+   *
+   * @param inputStream the {@code InputStream} to copy bytes from, must not be {@code null}
+   * @param file        the non-directory {@code File} to write bytes to (possibly overwriting),
+   *                    must not be {@code null}
+   * @throws NullPointerException     if the InputStream is {@code null}.
+   * @throws NullPointerException     if the File is {@code null}.
+   * @throws IllegalArgumentException if the file object is a directory.
+   * @throws IllegalArgumentException if the file is not writable.
+   * @throws IOException              if the directories could not be created.
+   * @since 2.5
+   */
+  public static void copyToFile(final InputStream inputStream, final File file) throws IOException {
+    try (OutputStream out = openOutputStream(file)) {
+      IoUtil.copy(inputStream, out);
+    }
   }
 
 }

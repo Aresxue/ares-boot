@@ -671,7 +671,7 @@ public class HttpClientUtil implements ApplicationContextAware {
                 throw new RuntimeException(
                     "Status code is " + statusCode + ", response is " + result);
               }
-              return super.handleResponse(response);
+              return result;
             } else {
               // 读取数据
               // read data

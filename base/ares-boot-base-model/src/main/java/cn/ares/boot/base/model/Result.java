@@ -1,9 +1,8 @@
-package cn.ares.boot.base.meta;
+package cn.ares.boot.base.model;
 
 
-import static cn.ares.boot.base.meta.status.BaseSystemStatus.SUCCESS;
+import static cn.ares.boot.base.model.status.BaseSystemStatus.SUCCESS;
 
-import cn.ares.boot.base.meta.status.BaseSystemStatus;
 import java.io.Serializable;
 
 /**

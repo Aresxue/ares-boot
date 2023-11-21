@@ -31,7 +31,7 @@
 
     <dependency>
       <groupId>io.github.aresxue.boot</groupId>
-      <artifactId>ares-boot-base-meta</artifactId>
+      <artifactId>ares-boot-base-model</artifactId>
     </dependency>
 
     <dependency>

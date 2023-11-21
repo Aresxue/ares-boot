@@ -1,4 +1,4 @@
-package cn.ares.boot.base.meta;
+package cn.ares.boot.base.model;
 
 import java.io.Serializable;
 

@@ -22,7 +22,7 @@
   <modules>
     <module>ares-boot-base-config-adapter</module>
     <module>ares-boot-base-log</module>
-    <module>ares-boot-base-meta</module>
+    <module>ares-boot-base-model</module>
     <module>ares-boot-base-metrics</module>
     <module>ares-boot-base-trace-adapter</module>
     <module>ares-boot-base-validation</module>

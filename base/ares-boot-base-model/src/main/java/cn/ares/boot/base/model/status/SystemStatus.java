@@ -1,4 +1,4 @@
-package cn.ares.boot.base.meta.status;
+package cn.ares.boot.base.model.status;
 
 /**
  * @author: Ares

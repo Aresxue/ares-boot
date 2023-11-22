@@ -2,12 +2,16 @@ package cn.ares.boot.util.common.file;
 
 import cn.ares.boot.util.common.IoUtil;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.time.Duration;
 import java.util.Objects;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * @author: Ares
@@ -302,6 +306,40 @@ public class FileUtil {
   public static void copyToFile(final InputStream inputStream, final File file) throws IOException {
     try (OutputStream out = openOutputStream(file)) {
       IoUtil.copy(inputStream, out);
+    }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 解压gzip文件夹
+   * @description: Decompress gzip folder
+   * @time: 2023-11-22 20:51:56
+   * @params: [inputFilePath, outputFolder] gzip文件路径，输出目录
+   * @return: void
+   */
+  public static void decompressGzipFolder(String inputFilePath, String outputFolder)
+      throws IOException {
+    try (FileInputStream fileInputStream = new FileInputStream(inputFilePath);
+        GZIPInputStream gzipInputStream = new GZIPInputStream(fileInputStream);
+        ZipInputStream zipInputStream = new ZipInputStream(gzipInputStream)) {
+
+      ZipEntry zipEntry = zipInputStream.getNextEntry();
+      while (zipEntry != null) {
+        String entryName = zipEntry.getName();
+        String entryPath = outputFolder + File.separator + entryName;
+
+        if (zipEntry.isDirectory()) {
+          // 如果是文件夹，创建文件夹
+          // If it is a folder, create a folder
+          new File(entryPath).mkdirs();
+        } else {
+          // 如果是文件，创建文件并写入数据
+          // If it is a file, create the file and write the data
+          copyInputStreamToFile(zipInputStream, new File(entryPath));
+        }
+
+        zipEntry = zipInputStream.getNextEntry();
+      }
     }
   }
 

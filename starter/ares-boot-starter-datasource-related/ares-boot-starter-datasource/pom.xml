@@ -12,12 +12,12 @@
 
   <artifactId>ares-boot-starter-datasource</artifactId>
   <description>
-    数据库快速使用，底层为mybatis plus，可自动从配置中心获取数据库连接信息，同时封装基础DO和通用字段
+    数据库快速使用，底层为jpa/mybatis plus，可自动从配置中心获取数据库连接信息，同时封装基础领域对象和通用字段
     (主键、创建时间、修改时间、逻辑删除)及其自动处理（自动注入分布式id）
     Database use quickly, the bottom layer is mybatis plus, can automatically obtain
-    the database connection information from the configuration center, and encapsulate the basic DO
-    and general fields (primary key, creation time, modification time, logical deletion)
-    and its automatic processing (automatic injection of distributed ids)
+    the database connection information from the configuration center, and encapsulate the basic
+    domain object and general fields (primary key, creation time, modification time, logical
+    deletion) and its automatic processing (automatic injection of distributed ids)
   </description>
 
 </project>

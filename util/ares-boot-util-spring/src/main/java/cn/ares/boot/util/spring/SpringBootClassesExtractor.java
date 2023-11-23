@@ -33,13 +33,13 @@ public class SpringBootClassesExtractor {
   private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootClassesExtractor.class);
 
   /**
-   * spring boot fat jar下BOOT-INF/classes/下的class文件
-   * class file under BOOT-INF/classes/ in the springboot fat jar
+   * spring boot fat jar下BOOT-INF/classes/下的class文件 class file under BOOT-INF/classes/ in the
+   * springboot fat jar
    */
   private static final String REPACKAGED_CLASSES_LOCATION = "BOOT-INF/classes/";
   /**
-   * spring boot fat jar下BOOT-INF/lib/下的class文件
-   * class file under BOOT-INF/lib/ in the spring boot fat jar
+   * spring boot fat jar下BOOT-INF/lib/下的class文件 class file under BOOT-INF/lib/ in the spring boot
+   * fat jar
    */
   private static final String LIBRARY_LOCATION = "BOOT-INF/lib/";
 
@@ -47,12 +47,14 @@ public class SpringBootClassesExtractor {
   /**
    * @author: Ares
    * @description: 提取spring boot fat jar下业务class文件输出到文件夹
-   * @description: Extract the service class file from the spring boot fat jar and export it to the folder
+   * @description: Extract the service class file from the spring boot fat jar and export it to the
+   * folder
    * @time: 2023-11-15 10:52:34
    * @params: [jarPath, bizPackageNameSet, classesDir] fat jar路径，业务包名，输出文件夹路径
    * @return: void
    */
-  public static void extractClasses(String jarPath, Set<String> bizPackageNameSet, String classesDir)
+  public static void extractClasses(String jarPath, Set<String> bizPackageNameSet,
+      String classesDir)
       throws IOException {
     extractClasses(jarPath, bizPackageNameSet, Collections.emptySet(), classesDir);
   }
@@ -60,7 +62,8 @@ public class SpringBootClassesExtractor {
   /**
    * @author: Ares
    * @description: 提取spring boot fat jar下业务class文件输出到文件夹
-   * @description: Extract the service class file from the spring boot fat jar and export it to the folder
+   * @description: Extract the service class file from the spring boot fat jar and export it to the
+   * folder
    * @time: 2023-11-15 10:52:34
    * @params: [jarPath, bizPackageName, excludePackageNameSet, classesDir]
    * @params: fat jar路径，业务包名，排除在外的包名，输出文件夹路径
@@ -80,12 +83,14 @@ public class SpringBootClassesExtractor {
   /**
    * @author: Ares
    * @description: 提取spring boot fat jar下业务class文件并输出成gzip文件
-   * @description: Extract the service class file in the spring boot fat jar and output it as a gzip file
+   * @description: Extract the service class file in the spring boot fat jar and output it as a gzip
+   * file
    * @time: 2023-11-16 20:11:34
    * @params: [jarPath, bizPackageNameSet, classesGzPath] fat jar路径，业务包名，输出gzip文件路径
    * @return: void
    */
-  public static void extractClassesGzip(String jarPath, Set<String> bizPackageNameSet, String classesGzPath)
+  public static void extractClassesGzip(String jarPath, Set<String> bizPackageNameSet,
+      String classesGzPath)
       throws IOException {
     extractClassesGzip(classesGzPath, bizPackageNameSet, Collections.emptySet(), jarPath);
   }
@@ -93,7 +98,8 @@ public class SpringBootClassesExtractor {
   /**
    * @author: Ares
    * @description: 提取spring boot fat jar下业务class文件并输出成gzip文件
-   * @description: Extract the service class file in the spring boot fat jar and output it as a gzip file
+   * @description: Extract the service class file in the spring boot fat jar and output it as a gzip
+   * file
    * @time: 2023-11-16 10:11:34
    * @params: [jarPath, bizPackageNameSet, excludePackageNameSet, classesGzPath]
    * @params: fat jar路径，业务包名，排除在外的包名，输出gzip文件路径
@@ -101,8 +107,9 @@ public class SpringBootClassesExtractor {
    */
   public static void extractClassesGzip(String jarPath, Set<String> bizPackageNameSet,
       Set<String> excludePackageNameSet, String classesGzPath) throws IOException {
-    try (ZipOutputStream zipOutputStream = new ZipOutputStream(new GZIPOutputStream(
-        new GZIPOutputStream(FileUtil.openOutputStream(new File(classesGzPath)))))) {
+    try (FileOutputStream fos = FileUtil.openOutputStream(new File(classesGzPath));
+        GZIPOutputStream gos = new GZIPOutputStream(fos);
+        ZipOutputStream zipOutputStream = new ZipOutputStream(gos)) {
       extractClassesGzip(jarPath, bizPackageNameSet, excludePackageNameSet, zipOutputStream);
     }
   }
@@ -111,7 +118,8 @@ public class SpringBootClassesExtractor {
       Set<String> excludePackageNameSet, ZipOutputStream zipOutputStream) throws IOException {
     iterableClass(jarPath, bizPackageNameSet, excludePackageNameSet,
         (entryName, inputStream) -> {
-          zipOutputStream.putNextEntry(new ZipEntry(entryName));
+          ZipEntry zipEntry = new ZipEntry(entryName);
+          zipOutputStream.putNextEntry(zipEntry);
           IoUtil.copy(inputStream, zipOutputStream);
           zipOutputStream.closeEntry();
         });
@@ -122,7 +130,8 @@ public class SpringBootClassesExtractor {
    * @author: Ares
    * @description: 遍历所有class（包括jar包中的）
    * @time: 2023-11-17 11:04:18
-   * @params: [jarFile, bizPackageNameSet, excludePackageNameSet, inputStreamBiConsumer, jarConsumer]
+   * @params: [jarFile, bizPackageNameSet, excludePackageNameSet, inputStreamBiConsumer,
+   * jarConsumer]
    * @params: fat jar路径，业务包名，排除在外的包名，输入流消费者，jar消费者
    * @return: void
    */

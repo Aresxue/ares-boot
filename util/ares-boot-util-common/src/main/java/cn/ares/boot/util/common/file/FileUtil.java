@@ -301,7 +301,6 @@ public class FileUtil {
    * @throws IllegalArgumentException if the file object is a directory.
    * @throws IllegalArgumentException if the file is not writable.
    * @throws IOException              if the directories could not be created.
-   * @since 2.5
    */
   public static void copyToFile(final InputStream inputStream, final File file) throws IOException {
     try (OutputStream out = openOutputStream(file)) {

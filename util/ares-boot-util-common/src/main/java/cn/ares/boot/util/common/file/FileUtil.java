@@ -326,15 +326,23 @@ public class FileUtil {
       while (zipEntry != null) {
         String entryName = zipEntry.getName();
         String entryPath = outputFolder + File.separator + entryName;
+        File targetFile =  new File(entryPath);
 
         if (zipEntry.isDirectory()) {
           // 如果是文件夹，创建文件夹
           // If it is a folder, create a folder
-          new File(entryPath).mkdirs();
+          targetFile.mkdirs();
         } else {
           // 如果是文件，创建文件并写入数据
           // If it is a file, create the file and write the data
-          copyInputStreamToFile(zipInputStream, new File(entryPath));
+          targetFile.getParentFile().mkdirs();
+          try (FileOutputStream fileOutputStream = new FileOutputStream(targetFile);) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = zipInputStream.read(buffer)) != -1) {
+              fileOutputStream.write(buffer, 0, bytesRead);
+            }
+          }
         }
 
         zipEntry = zipInputStream.getNextEntry();

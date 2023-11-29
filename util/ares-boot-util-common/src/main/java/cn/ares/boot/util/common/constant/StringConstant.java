@@ -44,4 +44,6 @@ public interface StringConstant {
   String CLASS_SUFFIX = ".class";
   String JAR_SUFFIX = ".jar";
 
+  String NULL = "null";
+
 }

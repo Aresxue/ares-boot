@@ -1,6 +1,7 @@
 package cn.ares.boot.util.common;
 
 import cn.ares.boot.util.common.primitive.ByteUtil;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -49,6 +50,17 @@ public class Md5Util {
    */
   public static String md5Hex(String value, String encode) {
     return ExceptionUtil.get(() -> md5Hex(value.getBytes(encode)));
+  }
+
+  /**
+   * Calculate MD5 hex string with encode charset.
+   *
+   * @param value   value
+   * @param charset charset of input
+   * @return MD5 hex string of input
+   */
+  public static String md5Hex(String value, Charset charset) {
+    return ExceptionUtil.get(() -> md5Hex(value.getBytes(charset)));
   }
 
 

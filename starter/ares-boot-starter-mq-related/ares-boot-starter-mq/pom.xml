@@ -6,15 +6,21 @@
 
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
-    <artifactId>ares-boot-starter-cache-related</artifactId>
+    <artifactId>ares-boot-starter-mq-related</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-cache-api</artifactId>
-
+  <artifactId>ares-boot-starter-mq</artifactId>
   <description>
-    缓存快速使用操作
-    Cache quick use api
+    默认实现，当前为rocketmq
+    Default implementation, currently rocketmq
   </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-starter-mq-abstract</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

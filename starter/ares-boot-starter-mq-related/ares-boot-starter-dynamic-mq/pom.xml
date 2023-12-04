@@ -6,17 +6,14 @@
 
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
-    <artifactId>ares-boot-starter-mq-adapter</artifactId>
+    <artifactId>ares-boot-starter-mq-related</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-mq-abstract</artifactId>
-
-  <dependencies>
-    <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
-      <artifactId>ares-boot-starter-mq-api</artifactId>
-    </dependency>
-  </dependencies>
+  <artifactId>ares-boot-starter-dynamic-mq</artifactId>
+  <description>
+    多个消息队列服务端，包含声明式和编程式路由
+    Multiple message queue server, including declarative and programmatic routing
+  </description>
 
 </project>

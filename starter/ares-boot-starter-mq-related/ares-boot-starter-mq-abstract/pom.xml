@@ -6,20 +6,16 @@
 
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
-    <artifactId>ares-boot-starter-mq-adapter</artifactId>
+    <artifactId>ares-boot-starter-mq-related</artifactId>
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-mq</artifactId>
-  <description>
-    默认实现，当前为rocketmq
-    Default implementation, currently rocketmq
-  </description>
+  <artifactId>ares-boot-starter-mq-abstract</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>io.github.aresxue.boot</groupId>
-      <artifactId>ares-boot-starter-mq-abstract</artifactId>
+      <artifactId>ares-boot-starter-mq-api</artifactId>
     </dependency>
   </dependencies>
 

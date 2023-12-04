@@ -25,7 +25,7 @@
     <module>ares-boot-starter-config</module>
     <module>ares-boot-starter-datasource-related</module>
     <module>ares-boot-starter-file-storage</module>
-    <module>ares-boot-starter-mq-adapter</module>
+    <module>ares-boot-starter-mq-related</module>
     <module>ares-boot-starter-rpc-adapter</module>
     <module>ares-boot-starter-rule-engine</module>
     <module>ares-boot-starter-search-engine</module>

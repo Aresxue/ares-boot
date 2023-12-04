@@ -10,7 +10,7 @@
     <version>1.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-mq-adapter</artifactId>
+  <artifactId>ares-boot-starter-mq-related</artifactId>
   <packaging>pom</packaging>
   <description>
     消息队列快速使用，可自动从配置中心获取消息队列服务器集群的连接信息，提供工具类发送消息，提供注解方式消费消息，带来更舒适的编程体验，
@@ -27,6 +27,7 @@
     <module>ares-boot-starter-mq-abstract</module>
     <module>ares-boot-starter-mq</module>
     <module>ares-boot-starter-mq-kafka</module>
+    <module>ares-boot-starter-dynamic-mq</module>
   </modules>
 
 </project>

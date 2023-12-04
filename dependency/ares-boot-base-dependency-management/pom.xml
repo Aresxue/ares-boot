@@ -96,6 +96,12 @@
         <artifactId>ares-boot-base-version</artifactId>
         <version>${ares-boot.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>io.github.aresxue.boot</groupId>
+        <artifactId>ares-boot-base-dynamic-route</artifactId>
+        <version>${ares-boot.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

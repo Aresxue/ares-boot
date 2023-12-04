@@ -15,4 +15,7 @@ public interface NumberConstant {
 
   BigInteger TEN_THOUSAND_BIG_INTEGER = BigInteger.valueOf(TEN_THOUSAND);
 
+  int ONE = 1;
+  int ZERO = 0;
+
 }

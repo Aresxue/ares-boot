@@ -46,6 +46,7 @@ public class DateUtil {
   public static final String DATE_FORMAT_SECOND = "yyyyMMddHHmmss";
   public static final String DATE_FORMAT_MILLIS = "yyyyMMddHHmmssSSS";
   public static final String DATE_FORMAT_DAY = "yyyyMMdd";
+  public static final String DATE_FORMAT_SPOT_DAY = "yyyy.MM.dd";
   public static final String DATE_FORMAT_MONTH = "yyyyMM";
   public static final String DATE_FORMAT_WHIFFLETREE_MILLIS = "yyyy-MM-dd HH:mm:ss.SSS";
   public static final String DATE_FORMAT_WHIFFLETREE_MICRO = "yyyy-MM-dd HH:mm:ss.SSSSSS";
@@ -85,6 +86,8 @@ public class DateUtil {
       DATE_FORMAT_SECOND);
   public static final DateTimeFormatter DATE_FORMAT_MILLIS_FORMATTER = DateTimeFormatter.ofPattern(
       DATE_FORMAT_MILLIS);
+  public static final DateTimeFormatter DATE_FORMAT_SPOT_DAY_FORMATTER = DateTimeFormatter.ofPattern(
+      DATE_FORMAT_SPOT_DAY);
 
 
   /**

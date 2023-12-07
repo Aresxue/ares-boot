@@ -1,11 +1,18 @@
 package cn.ares.boot.util.common;
 
+import static cn.ares.boot.util.common.constant.StringConstant.JAVA;
+import static cn.ares.boot.util.common.constant.StringConstant.SUN;
+
 import cn.ares.boot.util.common.function.RunnableWithException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.UndeclaredThrowableException;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 
 /**
  * @author: Ares
@@ -14,6 +21,11 @@ import java.util.concurrent.Callable;
  * @version: JDK 1.8
  */
 public class ExceptionUtil {
+
+  /**
+   * jdk包名不可重复集合
+   */
+  public static final Set<String> JDK_PACKAGE_NAME_SET = CollectionUtil.asSet(JAVA, SUN);
 
   /**
    * @author: Ares
@@ -223,6 +235,84 @@ public class ExceptionUtil {
     if (!condition) {
       throw new RuntimeException(message);
     }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 迭代异常并做指定处理
+   * @description: Iterate over the exception and do the assignment processing
+   * @time: 2023-12-07 14:46:08
+   * @params: [throwable, consumer] 待迭代异常，异常处理
+   * @return: void
+   */
+  public static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer) {
+    if (null == throwable) {
+      return;
+    }
+    // 循环引用检测Set
+    // Loop reference detection Set
+    Set<Throwable> circularReferenceDetectSet = Collections.newSetFromMap(new IdentityHashMap<>());
+    circularReferenceDetectSet.add(throwable);
+
+    iterableThrowable(throwable, consumer, circularReferenceDetectSet, false);
+  }
+
+  private static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer,
+      Set<Throwable> circularReferenceDetectSet, boolean detect) {
+    if (detect && circularReferenceDetectSet.contains(throwable)) {
+      return;
+    }
+    circularReferenceDetectSet.add(throwable);
+
+    consumer.accept(throwable);
+
+    Throwable[] suppressedExceptions = throwable.getSuppressed();
+    for (Throwable suppressed : suppressedExceptions) {
+      iterableThrowable(suppressed, consumer, circularReferenceDetectSet, true);
+    }
+
+    Throwable cause = throwable.getCause();
+    if (null != cause) {
+      iterableThrowable(cause, consumer, circularReferenceDetectSet, true);
+    }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 为异常生成身份标识（还原字节码改写导致的类名和方法名变更）
+   * @description: Generate identifiers for exceptions (undo class and method name changes caused by bytecode rewriting)
+   * @time: 2023-11-30 15:47:52
+   * @params: [throwable] 异常
+   * @return: java.lang.String 异常标识
+   */
+  public static String identity(Throwable throwable) {
+    if (null == throwable) {
+      return null;
+    }
+    StringBuilder stringBuilder = new StringBuilder();
+
+    iterableThrowable(throwable, tempThrowable -> {
+      stringBuilder.append(tempThrowable);
+      StackTraceElement[] stackTraceElements = tempThrowable.getStackTrace();
+      if (ArrayUtil.isNotEmpty(stackTraceElements)) {
+        for (StackTraceElement stackTraceElement : stackTraceElements) {
+          if (isConcern(stackTraceElement)) {
+            stringBuilder.append(ClassUtil.getOriginClassName(stackTraceElement.getClassName()));
+            stringBuilder.append(ClassUtil.getOriginMethodName(stackTraceElement.getMethodName()));
+            stringBuilder.append(stackTraceElement.getFileName());
+            stringBuilder.append(stackTraceElement.getLineNumber());
+          }
+        }
+      }
+    });
+
+    return stringBuilder.toString();
+  }
+
+  private static boolean isConcern(StackTraceElement stackTrace) {
+    // 排除jdk的类和sun包下的类（值得一提的是由于反射会被优化会导致堆栈变化成sun.reflect.GeneratedMethodAccessor）
+    return JDK_PACKAGE_NAME_SET.stream()
+        .noneMatch(packageName -> stackTrace.getClassName().startsWith(packageName));
   }
 
   private static <E extends RuntimeException> void validWrapperException(Class<E> wrapperException,

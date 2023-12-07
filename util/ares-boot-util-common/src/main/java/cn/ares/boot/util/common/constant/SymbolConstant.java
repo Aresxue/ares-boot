@@ -59,6 +59,7 @@ public interface SymbolConstant {
 
   String AT = "@";
   String DOLLAR = "$";
+  String DOUBLE_DOLLAR = "$$";
 
   String LEFT_BRACKET = "(";
   String RIGHT_BRACKET = ")";

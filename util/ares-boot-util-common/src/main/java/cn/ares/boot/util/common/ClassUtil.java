@@ -1,6 +1,8 @@
 package cn.ares.boot.util.common;
 
 import static cn.ares.boot.util.common.ArrayUtil.EMPTY_CLASS_ARRAY;
+import static cn.ares.boot.util.common.constant.SymbolConstant.DOLLAR;
+import static cn.ares.boot.util.common.constant.SymbolConstant.DOUBLE_DOLLAR;
 import static cn.ares.boot.util.common.constant.SymbolConstant.LEFT_BRACKET;
 import static cn.ares.boot.util.common.constant.SymbolConstant.LEFT_SQ_BRACKET;
 import static cn.ares.boot.util.common.constant.SymbolConstant.RIGHT_BRACKET;
@@ -10,6 +12,7 @@ import cn.ares.boot.util.common.entity.MethodSpec;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +23,8 @@ import java.util.Map;
  * @version: JDK 1.8
  */
 public class ClassUtil {
+
+  private static final String JDK_PROXY_CLASS_NAME = "com.sun.proxy.$Proxy";
 
   /**
    * Primitive type wrapper list
@@ -544,6 +549,283 @@ public class ClassUtil {
     }
     builder.append(RIGHT_BRACKET);
     return builder.toString();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是java.lang包下的类
+   * @description: Whether both classes are classes in the java.lang package
+   * @time: 2023-12-07 14:26:39 
+   * @params: [leftClass, rightClass] 左类，右类 
+   * @return: boolean 是否都是java.lang包下的类
+   */
+  public static boolean isBothJavaLang(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return isJavaLang(leftClass) && isJavaLang(rightClass);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是java.math包下的类
+   * @description: Whether both classes are classes in the java.math package
+   * @time: 2023-12-07 14:26:39 
+   * @params: [leftClass, rightClass] 左类，右类 
+   * @return: boolean 是否都是java.math包下的类
+   */
+  public static boolean isBothJavaMath(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return isJavaMath(leftClass) && isJavaMath(rightClass);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是java.time包下的类
+   * @description: Whether both classes are classes in the java.time package
+   * @time: 2023-12-07 14:26:39 
+   * @params: [leftClass, rightClass] 左类，右类 
+   * @return: boolean 是否都是java.time包下的类
+   */
+  public static boolean isBothJavaTime(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return isJavaTime(leftClass) && isJavaTime(rightClass);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是java.util包下的类
+   * @description: Whether both classes are classes in the java.util package
+   * @time: 2023-12-07 14:26:39 
+   * @params: [leftClass, rightClass] 左类，右类 
+   * @return: boolean 是否都是java.util包下的类
+   */
+  public static boolean isBothJavaUtil(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return isJavaUtil(leftClass) && isJavaUtil(rightClass);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是基本类型
+   * @description: Whether both classes are primitive types
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
+   * @return: boolean 是否都是基本类型
+   */
+  public static boolean isBasicType(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return leftClass.isPrimitive() && rightClass.isPrimitive();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是Map类型
+   * @description: Whether both classes are Map types
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
+   * @return: boolean 是否都是Map类型
+   */
+  public static boolean isMap(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return Map.class.isAssignableFrom(leftClass) && Map.class.isAssignableFrom(rightClass);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是数组类型
+   * @description: Whether both classes are array types
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
+   * @return: boolean 是否都是数组类型
+   */
+  public static boolean isArray(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return leftClass.isArray() && rightClass.isArray();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是集合类型
+   * @description: Whether both classes are collection types
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
+   * @return: boolean 是否都是集合类型
+   */
+  public static boolean isCollection(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return Collection.class.isAssignableFrom(leftClass) && Collection.class.isAssignableFrom(rightClass);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 两个类是否都是原生的jdk类型
+   * @description: Whether both classes are native jdk types
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
+   * @return: boolean 是否都是原生的jdk类型
+   */
+  public static boolean isOriginJdkType(Class<?> leftClass, Class<?> rightClass) {
+    if (null == leftClass || null == rightClass) {
+      return false;
+    }
+    return null == leftClass.getClassLoader() && null == rightClass.getClassLoader();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 类是否是指定包下的
+   * @description: Whether the class belongs to the specified package
+   * @time: 2023-12-07 14:26:39
+   * @params: [clazz, packagePrefix] 类，包名前缀
+   * @return: boolean 是否是指定包下的
+   */
+  public static boolean isSamePackagePrefix(Class<?> clazz, String packagePrefix) {
+    if (null == clazz) {
+      return false;
+    }
+    String canonicalName = clazz.getCanonicalName();
+    return null != canonicalName && canonicalName.startsWith(packagePrefix);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 类是否是java.lang包下的
+   * @description: Whether the class is in the java.lang package
+   * @time: 2023-12-07 14:32:53
+   * @params: [clazz] 类
+   * @return: boolean 是否是java.lang包下的
+   */
+  public static boolean isJavaLang(Class<?> clazz) {
+    if (null == clazz) {
+      return false;
+    }
+    return isSamePackagePrefix(clazz, "java.lang");
+  }
+
+  /**
+   * @author: Ares
+   * @description: 类是否是java.time包下的
+   * @description: Whether the class is in the java.time package
+   * @time: 2023-12-07 14:32:53
+   * @params: [clazz] 类
+   * @return: boolean 是否是java.time包下的
+   */
+  public static boolean isJavaTime(Class<?> clazz) {
+    if (null == clazz) {
+      return false;
+    }
+    return isSamePackagePrefix(clazz, "java.time");
+  }
+
+  /**
+   * @author: Ares
+   * @description: 类是否是java.math包下的
+   * @description: Whether the class is in the java.math package
+   * @time: 2023-12-07 14:32:53
+   * @params: [clazz] 类
+   * @return: boolean 是否是java.math包下的
+   */
+  public static boolean isJavaMath(Class<?> clazz) {
+    if (null == clazz) {
+      return false;
+    }
+    return isSamePackagePrefix(clazz, "java.math");
+  }
+
+  /**
+   * @author: Ares
+   * @description: 类是否是java.util包下的
+   * @description: Whether the class is in the java.util package
+   * @time: 2023-12-07 14:32:53
+   * @params: [clazz] 类
+   * @return: boolean 是否是java.util包下的
+   */
+  public static boolean isJavaUtil(Class<?> clazz) {
+    if (null == clazz) {
+      return false;
+    }
+    return isSamePackagePrefix(clazz, "java.util");
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取原始的类名(代理类会解析出原始类名)
+   * @description: Get the original class name (the proxy class resolves the original class name)
+   * @time: 2023-12-07 14:41:45
+   * @params: [className] 类名
+   * @return: java.lang.String 原始类名
+   */
+  public static String getOriginClassName(String className) {
+    if (StringUtil.isEmpty(className)) {
+      return className;
+    }
+    // jdk代理类去掉数字
+    // jdk proxy classes remove numbers
+    if (className.startsWith(JDK_PROXY_CLASS_NAME)) {
+      return JDK_PROXY_CLASS_NAME;
+    }
+
+    // 代码类去除$$及以后
+    // Code class removed $$and later
+    int index = className.indexOf(DOUBLE_DOLLAR);
+    if (index > 0) {
+      className = className.substring(0, index);
+    }
+    // 再按照$去除，这种可能是字节码工具生成的代理类
+    // Then remove by $, this may be the bytecode tool generated proxy class
+    index = className.indexOf(DOLLAR);
+    if (index > 0) {
+      className = className.substring(0, index);
+    }
+    return className;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 是否是jdk代理类名
+   * @description: Whether it is a jdk proxy class name
+   * @time: 2023-12-07 14:43:46
+   * @params: [className] 类名
+   * @return: boolean 是否是jdk代理类名
+   */
+  public static boolean isJdkProxyClass(String className) {
+    return className.startsWith(JDK_PROXY_CLASS_NAME);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取原始的方法名(代理方法会解析出代理方法)
+   * @description: Get the original method name (the proxy method resolves the proxy method)
+   * @time: 2023-12-07 14:41:45
+   * @params: [methodName] 方法名
+   * @return: java.lang.String 原始方法名
+   */
+  public static String getOriginMethodName(String methodName) {
+    if (StringUtil.isEmpty(methodName)) {
+      return methodName;
+    }
+    // 按照$去除，这种可能是字节码工具生成的代理方法
+    // Removed by $, this may be a proxy method generated by the bytecode tool
+    int index = methodName.indexOf(DOLLAR);
+    if (index > 0) {
+      methodName = methodName.substring(0, index);
+    }
+    return methodName;
   }
 
 }

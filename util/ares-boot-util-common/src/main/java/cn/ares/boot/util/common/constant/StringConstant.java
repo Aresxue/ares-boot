@@ -33,6 +33,7 @@ public interface StringConstant {
   String LINE_BREAK = "\n";
 
   String JAVA = "java";
+  String SUN = "sun";
   String JAVA_FILE_SUFFIX = ".java";
 
   String MAGIC_NUMBER = "Ares";

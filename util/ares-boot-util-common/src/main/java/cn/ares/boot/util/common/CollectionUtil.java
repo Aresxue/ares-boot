@@ -389,9 +389,7 @@ public class CollectionUtil {
     if (null == elements) {
       throw new NullPointerException();
     }
-    LinkedList<E> list = new LinkedList<>();
-    Collections.addAll(list, elements);
-    return list;
+    return new LinkedList<>(Arrays.asList(elements));
   }
 
   /**
@@ -703,6 +701,9 @@ public class CollectionUtil {
    * @return: java.util.Set<E> out 出参
    */
   public static <E> LinkedHashSet<E> asLinkedHashSet(E... elements) {
+    if (null == elements) {
+      throw new NullPointerException();
+    }
     return new LinkedHashSet<>(Arrays.asList(elements));
   }
 
@@ -714,7 +715,23 @@ public class CollectionUtil {
    * @params: [collection, elements] 集合，元素数组
    * @return: java.util.Set<E> 新不可重复集合
    */
+  @Deprecated
   public static <E> Set<E> asHashSet(Collection<E> collection, E... elements) {
+    return asSet(collection, elements);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 将集合元素添加到不可重复集合中组合成新不可重复集合
+   * @description: Compose a new collection by adding elements to a non-repeatable collection
+   * @time: 2023-12-07 13:28:21
+   * @params: [collection, elements] 集合，元素数组
+   * @return: java.util.Set<E> 新不可重复集合
+   */
+  public static <E> Set<E> asSet(Collection<E> collection, E... elements) {
+    if (isEmpty(collection)) {
+      return asSet(elements);
+    }
     Set<E> newSet = new HashSet<>(collection);
     if (ArrayUtil.isNotEmpty(elements)) {
       newSet.addAll(Arrays.asList(elements));

@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -300,11 +301,47 @@ public class CollectionUtil {
    * @params: [oldList, elements] 老的集合，元素数组
    * @return: java.util.List<E> 新的集合
    */
+  @Deprecated
   public static <E> List<E> newList(List<E> oldList, E... elements) {
-    if (ArrayUtil.isNotEmpty(elements)) {
-      Collections.addAll(oldList, elements);
+    return asList(oldList, elements);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 将老的集合和元素数组组合成新的链表
+   * @description: Combines an old collection and an array of elements into a new list
+   * @time: 2023-12-07 11:43:37
+   * @params: [collection, elements] 集合，元素数组
+   * @return: java.util.List<E> 新的集合
+   */
+  public static <E> List<E> asList(Collection<E> collection, E... elements) {
+    if (isEmpty(collection)) {
+      return asList(elements);
     }
-    return oldList;
+    ArrayList<E> list = new ArrayList<>(collection);
+    if (ArrayUtil.isNotEmpty(elements)) {
+      Collections.addAll(list, elements);
+    }
+    return list;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 将老的集合和元素数组组合成新的非线性链表
+   * @description: Combines an old collection and an array of elements into a new LinkedList
+   * @time: 2023-12-07 11:43:37
+   * @params: [oldList, elements] 老的集合，元素数组
+   * @return: java.util.List<E> 新的集合
+   */
+  public static <E> LinkedList<E> asLinkedList(Collection<E> collection, E... elements) {
+    if (isEmpty(collection)) {
+      return asLinkedList(elements);
+    }
+    LinkedList<E> list = new LinkedList<>(collection);
+    if (ArrayUtil.isNotEmpty(elements)) {
+      Collections.addAll(list, elements);
+    }
+    return list;
   }
 
   /**
@@ -322,6 +359,37 @@ public class CollectionUtil {
     }
     int arraySize = elements.length;
     ArrayList<E> list = new ArrayList<>(suitableCapacity(arraySize));
+    Collections.addAll(list, elements);
+    return list;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 元素数组转为链表
+   * @description: Convert element array to list
+   * @time: 2023-12-07 17:18:38
+   * @params: [elements] 元素数组
+   * @return: java.util.List<E>
+   */
+  @SafeVarargs
+  public static <E> List<E> asList(E... elements) {
+    return newArrayList(elements);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 元素数组转为非线性链表
+   * @description: Convert element array to linked list
+   * @time: 2023-12-07 17:18:38
+   * @params: [elements] 元素数组
+   * @return: java.util.LinkedList<E>
+   */
+  @SafeVarargs
+  public static <E> LinkedList<E> asLinkedList(E... elements) {
+    if (null == elements) {
+      throw new NullPointerException();
+    }
+    LinkedList<E> list = new LinkedList<>();
     Collections.addAll(list, elements);
     return list;
   }
@@ -618,6 +686,9 @@ public class CollectionUtil {
    */
   @SafeVarargs
   public static <E> Set<E> asSet(E... elements) {
+    if (null == elements) {
+      throw new NullPointerException();
+    }
     Set<E> set = newHashSet(elements.length);
     set.addAll(Arrays.asList(elements));
     return set;
@@ -637,14 +708,14 @@ public class CollectionUtil {
 
   /**
    * @author: Ares
-   * @description: 将元素添加到不可重复集合中组合成新集合
+   * @description: 将集合元素添加到不可重复集合中组合成新集合
    * @description: Compose a new collection by adding elements to a non-repeatable collection
    * @time: 2023-05-08 13:28:21
-   * @params: [set, elements] 不可重复集合，元素数组
+   * @params: [collection, elements] 集合，元素数组
    * @return: java.util.Set<E> 新不可重复集合
    */
-  public static <E> Set<E> asHashSet(Set<E> set, E... elements) {
-    Set<E> newSet = new HashSet<>(set);
+  public static <E> Set<E> asHashSet(Collection<E> collection, E... elements) {
+    Set<E> newSet = new HashSet<>(collection);
     if (ArrayUtil.isNotEmpty(elements)) {
       newSet.addAll(Arrays.asList(elements));
     }
@@ -653,15 +724,15 @@ public class CollectionUtil {
 
   /**
    * @author: Ares
-   * @description: 将元素添加到有序不可重复集合中组合成新集合
+   * @description: 将集合元素添加到有序不可重复集合中组合成新集合
    * @description: Compose a new collection by adding elements to an ordered non-repeatable
    * collection
    * @time: 2023-05-08 13:29:07
-   * @params: [set, elements] 不可重复集合，元素数组
+   * @params: [collection, elements] 集合，元素数组
    * @return: java.util.Set<E> 新不可重复集合
    */
-  public static <E> LinkedHashSet<E> asLinkedHashSet(Set<E> set, E... elements) {
-    LinkedHashSet<E> newSet = new LinkedHashSet<>(set);
+  public static <E> LinkedHashSet<E> asLinkedHashSet(Collection<E> collection, E... elements) {
+    LinkedHashSet<E> newSet = new LinkedHashSet<>(collection);
     if (ArrayUtil.isNotEmpty(elements)) {
       Collections.addAll(newSet, elements);
     }

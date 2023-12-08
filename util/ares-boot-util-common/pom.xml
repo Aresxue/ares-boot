@@ -15,5 +15,11 @@
     通用工具模块, 只依赖jdk的工具类
     Universal tool module, only depends on the tool class of jdk
   </description>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-core</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

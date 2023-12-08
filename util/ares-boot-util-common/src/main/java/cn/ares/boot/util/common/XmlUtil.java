@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,14 +25,22 @@ import org.xml.sax.InputSource;
  */
 public class XmlUtil {
 
+
   public static final String INVALID_REGEX = "[\\x00-\\x08\\x0b-\\x0c\\x0e-\\x1f]";
 
   private static final String DEFAULT_DOCUMENT_BUILDER_FACTORY = "com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl";
 
   private static boolean namespaceAware = true;
 
-  synchronized public static void setNamespaceAware(boolean isNamespaceAware) {
-    namespaceAware = isNamespaceAware;
+  private static final Lock lock = new ReentrantLock();
+
+  public static void setNamespaceAware(boolean isNamespaceAware) {
+    lock.lock();
+    try {
+      XmlUtil.namespaceAware = isNamespaceAware;
+    } finally {
+      lock.unlock();
+    }
   }
 
   /**

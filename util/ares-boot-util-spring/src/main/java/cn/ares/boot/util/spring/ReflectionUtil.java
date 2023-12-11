@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
@@ -198,8 +199,7 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
-   * @description: Gets all the fields from the target Object (including the parent class but except
-   * Object)
+   * @description: Gets all the fields from the target Object (including the parent class but except Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target] 目标对象
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -211,8 +211,7 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
-   * @description: Gets all the fields from the target Object (including the parent class but except
-   * Object)
+   * @description: Gets all the fields from the target Object (including the parent class but except Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target, accessible] 目标对象，访问限制
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -224,14 +223,39 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
-   * @description: Gets all the fields from the target Object (including the parent class but except
-   * Object)
+   * @description: Gets all the fields from the target Object (including the parent class but except Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
    */
   public static List<Field> findAllFields(Object target, boolean accessible,
       boolean ignoreOverrideField) {
+    return findAllFields(target, accessible, ignoreOverrideField, field -> true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从目标对象中获取所有的非synthetic字段（包括父类但除了Object）
+   * @description: Gets all non-synthetic fields from the target Object (including the parent class but except Object)
+   * @time: 2023-12-12 21:02:07
+   * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
+   * @return: java.util.List<java.lang.reflect.Field> 字段列表
+   */
+  public static List<Field> findAllFieldsNotSynthetic(Object target, boolean accessible,
+      boolean ignoreOverrideField) {
+    return findAllFields(target, accessible, ignoreOverrideField, field -> !field.isSynthetic());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 从目标对象中获取所有通过筛选的字段（包括父类但除了Object）
+   * @description: Gets all fields that pass the filter from the target Object (including the parent class but except Object)
+   * @time: 2023-07-12 21:02:07
+   * @params: [target, accessible, ignoreOverrideField, predicate] 目标对象，访问限制，忽略重写字段（保留子类），字段筛选
+   * @return: java.util.List<java.lang.reflect.Field> 字段列表
+   */
+  public static List<Field> findAllFields(Object target, boolean accessible,
+      boolean ignoreOverrideField, Predicate<Field> predicate) {
     if (null == target) {
       return null;
     }
@@ -239,17 +263,19 @@ public class ReflectionUtil {
     List<Field> fieldList = new ArrayList<>();
     Set<String> fieldNameSet = ignoreOverrideField ? new HashSet<>() : Collections.emptySet();
     ReflectionUtils.doWithFields(clazz, field -> {
-      if (ignoreOverrideField) {
-        String fieldName = field.getName();
-        if (fieldNameSet.contains(fieldName)) {
-          return;
+      if (predicate.test(field)) {
+        if (ignoreOverrideField) {
+          String fieldName = field.getName();
+          if (fieldNameSet.contains(fieldName)) {
+            return;
+          }
+          fieldNameSet.add(fieldName);
         }
-        fieldNameSet.add(fieldName);
+        if (accessible) {
+          ReflectionUtils.makeAccessible(field);
+        }
+        fieldList.add(field);
       }
-      if (accessible) {
-        ReflectionUtils.makeAccessible(field);
-      }
-      fieldList.add(field);
     });
     return fieldList;
   }

@@ -3,6 +3,7 @@ package cn.ares.boot.util.common;
 import static cn.ares.boot.util.common.constant.StringConstant.JAVA;
 import static cn.ares.boot.util.common.constant.StringConstant.SUN;
 
+import cn.ares.boot.util.common.exception.CheckedExceptionWrapper;
 import cn.ares.boot.util.common.function.RunnableWithException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -54,7 +55,8 @@ public class ExceptionUtil {
     Throwable throwable = runtimeException.getCause();
     if (null == throwable) {
       return runtimeException;
-    } else if (throwable instanceof RuntimeException) {
+    } else if (ClassUtil.isSameClass(RuntimeException.class, throwable.getClass())
+        || throwable instanceof CheckedExceptionWrapper) {
       return getOriginException((RuntimeException) throwable);
     } else {
       return throwable;
@@ -153,7 +155,7 @@ public class ExceptionUtil {
         runtimeException.initCause(e);
         throw runtimeException;
       } catch (Exception ex) {
-        throw new RuntimeException(e);
+        throw new CheckedExceptionWrapper(e);
       }
     }
   }
@@ -216,8 +218,8 @@ public class ExceptionUtil {
           RuntimeException runtimeException = wrapperException.newInstance();
           runtimeException.initCause(e);
           throw runtimeException;
-        } catch (Exception ex) {
-          throw new RuntimeException(e);
+        } catch (Throwable ex) {
+          throw new CheckedExceptionWrapper(e);
         }
       }
     }
@@ -318,7 +320,7 @@ public class ExceptionUtil {
   private static <E extends RuntimeException> void validWrapperException(Class<E> wrapperException,
       Exception e) {
     if (null == wrapperException) {
-      throw new RuntimeException(e);
+      throw new CheckedExceptionWrapper(e);
     }
   }
 

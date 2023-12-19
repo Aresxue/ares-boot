@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
-    <version>${revision}</version>
+    <version>${sha1}</version>
   </parent>
 
   <artifactId>ares-boot-base-dependency-management</artifactId>
@@ -22,85 +22,85 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-model</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-config-adapter</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-config-abstract</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-config</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-config-file</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-log</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-metrics</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-trace-adapter</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-trace-abstract</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-trace</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-trace-arms</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-validation</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-servlet</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-version</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-dynamic-route</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

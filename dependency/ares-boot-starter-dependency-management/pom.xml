@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
-    <version>${revision}</version>
+    <version>${sha1}</version>
   </parent>
 
   <artifactId>ares-boot-starter-dependency-management</artifactId>
@@ -22,165 +22,165 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-cache-related</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-cache-api</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-cache</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-dynamic-cache</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-config</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-datasource-related</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-datasource</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-datasource-sharding</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-dynamic-datasource</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-file-storage</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-mq-adapter</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-mq-api</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-mq-abstract</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-mq</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-rpc-adapter</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-rpc-api</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-rpc-abstract</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-rpc</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-rule-engine</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-search-engine</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-spring</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-task-adapter</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-task-api</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-task-abstract</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-task</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-task-schedulerx2</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-test</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-validation</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-web</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-workflow</artifactId>
-        <version>${revision}</version>
+        <version>${sha1}</version>
       </dependency>
 
     </dependencies>

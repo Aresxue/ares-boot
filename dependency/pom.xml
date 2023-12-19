@@ -14,7 +14,7 @@
   <groupId>io.github.aresxue.boot</groupId>
   <artifactId>ares-boot-dependency</artifactId>
   <name>Ares Boot Dependency</name>
-  <version>${revision}</version>
+  <version>${sha1}</version>
   <packaging>pom</packaging>
   <description>
     依赖管理和集成以及插件管理
@@ -22,7 +22,8 @@
   </description>
 
   <properties>
-    <revision>1.0.1-SNAPSHOT</revision>
+    <!-- 本来想用revision但业务可能也会定义一个revision属性从而导致框架的依赖版本不对，这里占用一个sha1关键字留下revision给业务使用 -->
+    <sha1>1.0.1-SNAPSHOT</sha1>
 
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>

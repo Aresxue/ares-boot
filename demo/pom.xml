@@ -13,13 +13,13 @@
 
   <groupId>io.github.aresxue.business</groupId>
   <artifactId>ares-boot-demo</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
   <name>Ares Boot Demo</name>
   <description>demo</description>
 
   <properties>
-    <application.version>${project.version}</application.version>
+    <revision>1.0.1-SNAPSHOT</revision>
   </properties>
 
 
@@ -35,22 +35,22 @@
       <dependency>
         <groupId>io.github.aresxue.business</groupId>
         <artifactId>ares-boot-demo-api</artifactId>
-        <version>${application.version}</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.business</groupId>
         <artifactId>ares-boot-demo-dao</artifactId>
-        <version>${application.version}</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.business</groupId>
         <artifactId>ares-boot-demo-service</artifactId>
-        <version>${application.version}</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.business</groupId>
         <artifactId>ares-boot-demo-starter</artifactId>
-        <version>${application.version}</version>
+        <version>${project.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

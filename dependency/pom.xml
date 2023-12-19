@@ -7,14 +7,14 @@
   <parent>
     <groupId>io.github.aresxue</groupId>
     <artifactId>ares-parent</artifactId>
-    <version>final</version>
+    <version>release</version>
     <relativePath/>
   </parent>
 
   <groupId>io.github.aresxue.boot</groupId>
   <artifactId>ares-boot-dependency</artifactId>
   <name>Ares Boot Dependency</name>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
   <description>
     依赖管理和集成以及插件管理
@@ -22,9 +22,10 @@
   </description>
 
   <properties>
-    <ares-boot.version>1.0.1-SNAPSHOT</ares-boot.version>
+    <revision>1.0.1-SNAPSHOT</revision>
 
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+    <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
     <lombok.version>1.18.26</lombok.version>
     <mapstruct.version>1.5.5.Final</mapstruct.version>
 
@@ -177,8 +178,47 @@
             </dependency>
           </dependencies>
         </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <version>${flatten-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>flatten</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>flatten</goal>
+              </goals>
+              <configuration>
+                <!-- 避免IDE将 .flattened-pom.xml 自动识别为功能模块 -->
+                <!-- Prevents the IDE from automatically recognizing.flattened-pom.xml as a functional module -->
+                <updatePomFile>true</updatePomFile>
+                <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                <pomElements>
+                  <parent>expand</parent>
+                  <distributionManagement>remove</distributionManagement>
+                  <repositories>remove</repositories>
+                </pomElements>
+              </configuration>
+            </execution>
+            <execution>
+              <id>flatten-clean</id>
+              <phase>clean</phase>
+              <goals>
+                <goal>clean</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 
 </project>

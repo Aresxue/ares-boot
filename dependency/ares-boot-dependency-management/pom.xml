@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>ares-boot-dependency-management</artifactId>
@@ -22,7 +22,7 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-self-dependency-management</artifactId>
-        <version>${ares-boot.version}</version>
+        <version>${revision}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -30,7 +30,7 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>third-dependency-management</artifactId>
-        <version>${ares-boot.version}</version>
+        <version>${revision}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

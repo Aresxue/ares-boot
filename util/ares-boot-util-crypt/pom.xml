@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.boot.util</groupId>
     <artifactId>ares-boot-util</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>ares-boot-util-crypt</artifactId>

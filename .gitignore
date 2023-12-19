@@ -211,3 +211,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+# flatten-maven-plugin
+.flattened-pom.xml

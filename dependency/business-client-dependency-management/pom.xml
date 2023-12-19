@@ -7,11 +7,10 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
-    <version>${sha1}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>business-client-dependency-management</artifactId>
-  <version>${sha1}</version>
   <packaging>pom</packaging>
   <description>
     管理所有业务client模块的依赖

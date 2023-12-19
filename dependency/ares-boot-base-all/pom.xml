@@ -7,12 +7,11 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
-    <version>${sha1}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>ares-boot-base-all</artifactId>
   <name>Ares Boot Base All</name>
-  <packaging>pom</packaging>
   <description>
     集成所有base模块的依赖
     Integrated all dependencies of ares-boot-base modules
@@ -53,6 +52,16 @@
       <groupId>io.github.aresxue.boot</groupId>
       <artifactId>ares-boot-base-dynamic-route</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-servlet</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-version</artifactId>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
@@ -60,7 +69,7 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

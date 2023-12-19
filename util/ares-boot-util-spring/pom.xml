@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.boot.util</groupId>
     <artifactId>ares-boot-util</artifactId>
-    <version>${sha1}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>ares-boot-util-spring</artifactId>

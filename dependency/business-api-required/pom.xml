@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
-    <version>${sha1}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>business-api-required</artifactId>
@@ -41,14 +41,14 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>third-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <artifactId>ares-boot-base-config-adapter</artifactId>
     <groupId>io.github.aresxue.boot</groupId>
-    <version>${sha1}</version>
+    <artifactId>ares-boot-base-config-adapter</artifactId>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>ares-boot-base-config-abstract</artifactId>

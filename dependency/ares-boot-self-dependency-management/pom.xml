@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
-    <version>${sha1}</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>ares-boot-self-dependency-management</artifactId>
@@ -22,21 +22,21 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-util-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-starter-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -44,21 +44,21 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>business-api-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>business-client-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>business-spi-dependency-management</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -66,17 +66,17 @@
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-base-all</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>business-api-required</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
         <artifactId>ares-boot-version</artifactId>
-        <version>${sha1}</version>
+        <version>${boot.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

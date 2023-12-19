@@ -26,7 +26,7 @@ public class YamlUtilTest {
     Detail detail = new Detail();
     detail.setDetailName("xuebing");
     detail.setAge(18);
-    detail.setMoney(100000000L);
+    detail.setMoney(100_000_000L);
     detail.setSpecialDetailName("xuebing520");
     person.setDetail(detail);
     String yaml = YamlUtil.objectToYaml(person);
@@ -40,8 +40,8 @@ public class YamlUtilTest {
     Properties properties = new Properties();
     properties.put("name", "ares");
     properties.put("person.age", "18");
-    properties.put("report.mq.replay-report.topic", 1111);
-    properties.put("report.mq.traffic-report.topic", 2222);
+    properties.put("mq.replay-report.topic", 1);
+    properties.put("mq.traffic-report.topic", 2);
     LOGGER.info("yaml content: \n{}", YamlUtil.propertiesToYaml(properties));
   }
 

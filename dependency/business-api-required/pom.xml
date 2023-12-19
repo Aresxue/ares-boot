@@ -12,7 +12,6 @@
 
   <artifactId>business-api-required</artifactId>
   <name>Business Api Required</name>
-  <packaging>pom</packaging>
   <description>
     集成所有业务api模块需要的依赖
     Integrated all required dependencies of business api module

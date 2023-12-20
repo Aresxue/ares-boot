@@ -1,8 +1,11 @@
 package cn.ares.boot.util.spring;
 
+import static org.apache.commons.lang3.ArrayUtils.EMPTY_METHOD_ARRAY;
+
 import cn.ares.boot.util.common.ArrayUtil;
 import cn.ares.boot.util.common.ClassUtil;
 import cn.ares.boot.util.common.CollectionUtil;
+import cn.ares.boot.util.common.MapUtil;
 import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.common.entity.InvokeMethod;
 import cn.ares.boot.util.common.function.SerializableFunction;
@@ -17,6 +20,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -27,10 +31,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
-import org.apache.commons.lang3.reflect.MethodUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
+import org.springframework.util.ConcurrentReferenceHashMap;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.ReflectionUtils.FieldCallback;
 
@@ -44,6 +50,7 @@ import org.springframework.util.ReflectionUtils.FieldCallback;
 public class ReflectionUtil {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ReflectionUtil.class);
+
   private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
   private static final String GET_METHOD = "get";
   private static final String IS_METHOD = "is";
@@ -54,6 +61,23 @@ public class ReflectionUtil {
    * field cache
    */
   private static final Map<SerializableFunction<?, ?>, Field> FIELD_CACHE = new ConcurrentHashMap<>();
+  /**
+   * Cache for {@link Class#getDeclaredFields()}, allowing for fast iteration.
+   * 改自org.springframework.util.ReflectionUtils#declaredFieldsCache
+   * 原有的value是数组导致随着字段增加性能会下降这里改成hashMap时间复杂度为O(1)但会使用更多的内存 To change the
+   * org.springframework.util.ReflectionUtils#declaredFieldsCache The original value is an array,
+   * which degrades performance as fields are added. Here we change the time complexity to hashMap
+   * to O(1), but it uses more memory
+   */
+  private static final Map<Class<?>, Map<String, List<Field>>> DECLARED_FIELD_MAP_CACHE = new ConcurrentReferenceHashMap<>(
+      256);
+  /**
+   * Cache for {@link Class#getDeclaredMethods()} plus equivalent default methods from Java 8 based
+   * interfaces, allowing for fast iteration.
+   * 改自org.springframework.util.ReflectionUtils#declaredMethodsCache
+   */
+  private static final Map<Class<?>, Map<String, List<Method>>> DECLARED_METHOD_MAP_CACHE = new ConcurrentReferenceHashMap<>(
+      256);
 
   /*
    * @author: Ares
@@ -64,7 +88,7 @@ public class ReflectionUtil {
    * @return: java.lang.String 方法引用的名称
    */
   public static String getFieldName(SerializableFunction<?, ?> function) {
-    Field field = ReflectionUtil.getField(function);
+    Field field = getField(function);
     if (null == field) {
       throw new RuntimeException("Function's field node found");
     }
@@ -187,11 +211,9 @@ public class ReflectionUtil {
       return null;
     }
     Class<?> clazz = getClass(target);
-    Field field = ReflectionUtils.findField(clazz, fieldName, fieldType);
-    if (null != field) {
-      if (accessible) {
-        ReflectionUtils.makeAccessible(field);
-      }
+    Field field = findFieldInner(clazz, fieldName, fieldType);
+    if (accessible && null != field) {
+      makeAccessible(field);
     }
     return field;
   }
@@ -272,7 +294,7 @@ public class ReflectionUtil {
           fieldNameSet.add(fieldName);
         }
         if (accessible) {
-          ReflectionUtils.makeAccessible(field);
+          makeAccessible(field);
         }
         fieldList.add(field);
       }
@@ -308,7 +330,7 @@ public class ReflectionUtil {
     List<Field> fieldList = new ArrayList<>();
     ReflectionUtils.doWithLocalFields(clazz, field -> {
       if (accessible) {
-        ReflectionUtils.makeAccessible(field);
+        makeAccessible(field);
       }
       fieldList.add(field);
     });
@@ -330,7 +352,7 @@ public class ReflectionUtil {
 
   /**
    * @author: Ares
-   * @description: 根据字段和目标对象获取字段值
+   * @description: 根据字段和目标对象获取字段值 开销较低
    * @description: Gets the field value based on the field and the target object
    * @time: 2023-05-11 15:15:54
    * @params: [field, target] 字段，目标对象
@@ -341,7 +363,6 @@ public class ReflectionUtil {
       if (null == field) {
         return null;
       }
-      ReflectionUtils.makeAccessible(field);
       return getT(field.get(target));
     });
   }
@@ -404,7 +425,10 @@ public class ReflectionUtil {
       return Collections.emptyList();
     }
 
-    return fieldList.stream().map(field -> getFieldValue(field, target))
+    return fieldList.stream().map(field -> {
+          makeAccessible(field);
+          return getFieldValue(field, target);
+        })
         .collect(Collectors.toList());
   }
 
@@ -418,6 +442,17 @@ public class ReflectionUtil {
    */
   public static boolean setFieldValue(Object target, String name, Object fieldValue) {
     Field field = findField(getClass(target), name, true);
+    return setFieldValue(field, target, fieldValue);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 设置目标对象的字段为指定的值 开销较低
+   * @time: 2023-12-20 21:31:59
+   * @params: [field, target, fieldValue] 字段，目标对象，字段值
+   * @return: boolean 设置结果
+   */
+  public static boolean setFieldValue(Field field, Object target, Object fieldValue) {
     return doWithHandleException(() -> {
       if (null != field) {
         field.set(target, fieldValue);
@@ -440,7 +475,7 @@ public class ReflectionUtil {
     Field field = findField(target, fieldName);
     return doWithHandleException(() -> {
       if (null != field) {
-        ReflectionUtils.makeAccessible(field);
+        makeAccessible(field);
         Field modifiers = Field.class.getDeclaredField("modifiers");
         boolean modifiersAccessible = field.isAccessible();
         if (!modifiersAccessible) {
@@ -474,28 +509,21 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从类中获取方法（以指定名称、访问限制、参数类型数组）
-   * @description: Get a method from a class (to specify name, access restrictions, array of
+   * @description: Get a method from a class (to specify methodName, access restrictions, array of
    * parameter types)
    * @time: 2023-05-08 17:34:01
    * @params: [target, methodName, accessible, paramTypes] 目标对象，方法名，访问限制，参数类型数组
    * @return: java.lang.reflect.Method 方法
    */
-  public static Method findMethod(Object target, String name, boolean accessible,
+  public static Method findMethod(Object target, String methodName, boolean accessible,
       Class<?>... paramTypes) {
     if (null == target) {
       return null;
     }
     Class<?> clazz = getClass(target);
-    Method method = ReflectionUtils.findMethod(clazz, name, paramTypes);
-    if (null == method) {
-      // 触发兜底，避免带有基本类型的方法无法找到
-      // Trigger the bottom pocket to avoid methods with basic types that cannot be found
-      method = MethodUtils.getMatchingMethod(clazz, name, paramTypes);
-    }
-    if (null != method) {
-      if (accessible) {
-        ReflectionUtils.makeAccessible(method);
-      }
+    Method method = findMethodInner(clazz, methodName, paramTypes);
+    if (accessible && null != method) {
+      makeAccessible(method);
     }
     return method;
   }
@@ -523,9 +551,21 @@ public class ReflectionUtil {
    * @return: java.lang.reflect.Method[] 方法数组
    */
   public static Method[] getDeclaredMethods(Class<?> clazz, boolean accessible) {
-    Method[] methods = ReflectionUtils.getDeclaredMethods(clazz);
-    makeAccessible(accessible, methods);
-    return methods;
+    Map<String, List<Method>> methodMap = getDeclaredMethodMap(clazz, true);
+    if (CollectionUtil.isEmpty(methodMap.values())) {
+      return EMPTY_METHOD_ARRAY;
+    } else {
+      List<Method> totalMethodList = new ArrayList<>();
+      for (List<Method> methodList : methodMap.values()) {
+        totalMethodList.addAll(methodList);
+      }
+      if (accessible) {
+        for (Method method : totalMethodList) {
+          makeAccessible(method);
+        }
+      }
+      return totalMethodList.toArray(new Method[0]);
+    }
   }
 
   /**
@@ -549,8 +589,10 @@ public class ReflectionUtil {
    * @return: java.lang.reflect.Method[] 方法数组
    */
   public static Method[] getAllDeclaredMethods(Class<?> clazz, boolean accessible) {
-    Method[] methods = ReflectionUtils.getAllDeclaredMethods(clazz);
-    makeAccessible(accessible, methods);
+    Method[] methods = ReflectionUtils.getDeclaredMethods(clazz);
+    if (accessible) {
+      makeAccessible(methods);
+    }
     return methods;
   }
 
@@ -568,7 +610,7 @@ public class ReflectionUtil {
 
   /**
    * @author: Ares
-   * @description: 使用参数数组调用目标对象的方法获取指定对象
+   * @description: 使用参数数组调用目标对象的方法获取指定对象 开销较低
    * @description: Gets the specified object by calling the target object's methods using an array
    * of arguments
    * @time: 2023-05-11 16:16:34
@@ -579,22 +621,20 @@ public class ReflectionUtil {
     if (null == method) {
       return null;
     }
-    ReflectionUtils.makeAccessible(method);
     return getT(ReflectionUtils.invokeMethod(method, target, args));
   }
 
   /**
    * @author: Ares
    * @description: 用参数数组调用对象指定方法名的方法获取指定对象
-   * @description: Gets the specified object by calling the method named by the object with an array
-   * of arguments object
+   * @description: Gets the specified object by calling the method named by the object with an array of arguments object
    * @time: 2023-05-11 16:16:04
    * @params: [target, methodName, args] 目标对象，方法名，参数数组
    * @return: T 调用结果
    */
   public static <T> T invokeMethod(Object target, String methodName, Object... args) {
     Class<?>[] parameterTypes = ClassUtil.toClass(args);
-    Method method = findMethod(target, methodName, parameterTypes);
+    Method method = findMethod(target, methodName, true, parameterTypes);
     return invokeMethod(method, target, args);
   }
 
@@ -624,7 +664,7 @@ public class ReflectionUtil {
     if (null == invokeMethod) {
       return null;
     }
-    return ReflectionUtil.invokeMethod(invokeMethod.getMethodHandle(), invokeMethod.getMethod(),
+    return invokeMethod(invokeMethod.getMethodHandle(), invokeMethod.getMethod(),
         invokeMethod.getTarget(), args);
   }
 
@@ -696,8 +736,8 @@ public class ReflectionUtil {
       } catch (NoSuchMethodException e) {
         constructor = ConstructorUtils.getMatchingAccessibleConstructor(clazz, parameterTypes);
       }
-      if (accessible) {
-        ReflectionUtils.makeAccessible(constructor);
+      if (accessible && null != constructor) {
+        makeAccessible(constructor);
       }
 
       return constructor;
@@ -715,7 +755,7 @@ public class ReflectionUtil {
   public static <T> T invokeConstructor(String clazzName, Object... args)
       throws ClassNotFoundException {
     Class<?> clazz = Class.forName(clazzName);
-    return getT(invokeConstructor(clazz, args));
+    return invokeConstructor(clazz, args);
   }
 
   /**
@@ -726,10 +766,25 @@ public class ReflectionUtil {
    * @params: [clazz, args] 类， 参数
    * @return: T 对象
    */
-  public static <T> T invokeConstructor(Class<T> clazz, Object... args) {
+  public static <T> T invokeConstructor(Class<?> clazz, Object... args) {
+    Constructor<T> constructor = findConstructor(clazz, true, args);
+    return invokeConstructor(constructor, args);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 根据构造器和参数构造对象 开销较低
+   * @description: Constructs objects based on constructors and parameters
+   * @time: 2023-12-20 21:38:50
+   * @params: [constructor, args] 构造器，参数
+   * @return: T 构造出的对象
+   */
+  public static <T> T invokeConstructor(Constructor<?> constructor, Object... args) {
     return doWithHandleException(() -> {
-      Constructor<T> constructor = findConstructor(clazz, true, args);
-      return constructor.newInstance(args);
+      if (null == constructor) {
+        return null;
+      }
+      return getT(constructor.newInstance(args));
     });
   }
 
@@ -743,7 +798,7 @@ public class ReflectionUtil {
    */
   public static InvokeMethod buildInvokeMethod(Object target, String methodName, Object... args) {
     Class<?>[] parameterTypes = getClasses(args);
-    Method method = ReflectionUtil.findMethod(target, methodName, parameterTypes);
+    Method method = findMethod(target, methodName, parameterTypes);
     return buildInvokeMethod(method, target);
   }
 
@@ -759,7 +814,7 @@ public class ReflectionUtil {
     if (null == method) {
       return null;
     }
-    ReflectionUtils.makeAccessible(method);
+    makeAccessible(method);
     InvokeMethod invokeMethod = new InvokeMethod();
     invokeMethod.setMethod(method);
     invokeMethod.setTarget(target);
@@ -847,7 +902,7 @@ public class ReflectionUtil {
     FieldCallback fieldCallback = field -> {
       // 非静态变量，都是同一个类静态变量无论如何都不需要操作
       if (!Modifier.isStatic(field.getModifiers())) {
-        ReflectionUtils.makeAccessible(field);
+        makeAccessible(field);
         Object fieldValue = field.get(source);
         if (!ignoreNull || null != fieldValue) {
           field.set(target, fieldValue);
@@ -892,14 +947,235 @@ public class ReflectionUtil {
     return null == result ? null : (T) result;
   }
 
-  private static void makeAccessible(boolean accessible, Method[] methods) {
+  /**
+   * @author: Ares
+   * @description: 修改方法访问符为true
+   * @description: Change the methods accessible to true
+   * @time: 2023-12-20 20:40:57
+   * @params: [methods] 方法数组
+   * @return: void
+   */
+  public static void makeAccessible(Method... methods) {
     if (ArrayUtil.isNotEmpty(methods)) {
       for (Method method : methods) {
-        if (accessible) {
-          ReflectionUtils.makeAccessible(method);
+        makeAccessible(method);
+      }
+    }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 修改方法访问符为true
+   * @description: Change the method accessible to true
+   * @time: 2023-12-20 20:40:57
+   * @params: [method] 方法
+   * @return: void
+   */
+  public static void makeAccessible(Method method) {
+    // 改自org.springframework.util.ReflectionUtils.makeAccessible(java.lang.reflect.Method) 将isAccessible的判断提前 相对比原来性能有大幅提升
+    if (!method.isAccessible() && (!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(
+        method.getDeclaringClass().getModifiers()))) {
+      method.setAccessible(true);
+    }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 修改字段访问符为true
+   * @description: Change the fields accessible to true
+   * @time: 2023-12-20 20:40:57
+   * @params: [fields] 字段数组
+   * @return: void
+   */
+  public static void makeAccessible(Field... fields) {
+    if (ArrayUtil.isNotEmpty(fields)) {
+      for (Field field : fields) {
+        makeAccessible(field);
+      }
+    }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 修改字段访问符为true
+   * @description: Change the field accessible to true
+   * @time: 2023-12-20 20:40:57
+   * @params: [field] 字段
+   * @return: void
+   */
+  public static void makeAccessible(Field field) {
+    // 改自org.springframework.util.ReflectionUtils.makeAccessible(java.lang.reflect.Field) 将isAccessible的判断提前 相对比原来性能有大幅提升
+    if (!field.isAccessible() && (!Modifier.isPublic(field.getModifiers()) ||
+        !Modifier.isPublic(field.getDeclaringClass().getModifiers()) ||
+        Modifier.isFinal(field.getModifiers()))) {
+      field.setAccessible(true);
+    }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 修改构造器访问符为true
+   * @description: Change the constructors accessible to true
+   * @time: 2023-12-20 20:40:57
+   * @params: [constructors] 构造器数组
+   * @return: void
+   */
+  public static void makeAccessible(Constructor<?>... constructors) {
+    if (ArrayUtil.isNotEmpty(constructors)) {
+      for (Constructor<?> constructor : constructors) {
+        makeAccessible(constructor);
+      }
+    }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 修改构造器访问符为true
+   * @description: Change the constructor accessible to true
+   * @time: 2023-12-20 20:40:57
+   * @params: [constructor] 构造器数组
+   * @return: void
+   */
+  public static void makeAccessible(Constructor<?> constructor) {
+    // 改自org.springframework.util.ReflectionUtils.makeAccessible(java.lang.reflect.Constructor) 将isAccessible的判断提前 相对比原来性能有大幅提升
+    if (!constructor.isAccessible() && (!Modifier.isPublic(constructor.getModifiers()) ||
+        !Modifier.isPublic(constructor.getDeclaringClass().getModifiers()))) {
+      constructor.setAccessible(true);
+    }
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 查找字段 相比于反射自身的开销，查找字段的开销很高
+   * @description: Finding a field is expensive compared to the overhead of reflecting itself
+   * @time: 2023-12-20 22:40:58
+   * @params: [clazz, fieldName, fieldType] 类，字段名，字段类型
+   * @return: java.lang.reflect.Field 字段
+   */
+  @Nullable
+  private static Field findFieldInner(Class<?> clazz, String fieldName, Class<?> fieldType) {
+    Class<?> searchType = clazz;
+    while (Object.class != searchType && searchType != null) {
+      List<Field> fieldList = getDeclaredFieldMap(searchType).get(fieldName);
+      if (CollectionUtil.isNotEmpty(fieldList)) {
+        if (null == fieldType) {
+          return fieldList.get(0);
+        }
+      } else {
+        for (Field field : fieldList) {
+          if (fieldType == field.getType()) {
+            return field;
+          }
+        }
+      }
+      searchType = searchType.getSuperclass();
+    }
+    return null;
+  }
+
+  private static Map<String, List<Field>> getDeclaredFieldMap(Class<?> clazz) {
+    Map<String, List<Field>> result = DECLARED_FIELD_MAP_CACHE.get(clazz);
+    if (result == null) {
+      try {
+        Field[] declaredFields = clazz.getDeclaredFields();
+        result = Arrays.stream(declaredFields).collect(Collectors.groupingBy(Field::getName));
+        DECLARED_FIELD_MAP_CACHE.put(clazz, MapUtil.isEmpty(result) ? Collections.emptyMap() : result);
+      } catch (Throwable ex) {
+        throw new IllegalStateException("Failed to introspect Class [" + clazz.getName() +
+            "] from ClassLoader [" + clazz.getClassLoader() + "]", ex);
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 查找方法 相比于反射自身的开销，查找方法的开销很高
+   * @description: The search method is expensive compared to the cost of reflecting itself
+   * @time: 2023-12-20 22:39:17
+   * @params: [clazz, methodName, paramTypes] 类，方法名，参数类型
+   * @return: java.lang.reflect.Method 方法
+   */
+  @Nullable
+  private static Method findMethodInner(Class<?> clazz, String methodName, Class<?>... paramTypes) {
+    Assert.notNull(methodName, "Method name must not be null");
+    Class<?> searchType = clazz;
+    while (searchType != null) {
+      Map<String, List<Method>> methodMap;
+      // 这里逻辑从org.springframework.util.ReflectionUtils.findMethod(Class<?>, String, Class<?>...)复制而来，后续思考为什么这么做如果可以的话接口的method也可以缓存
+      if (searchType.isInterface()) {
+        for (Method method : searchType.getMethods()) {
+          if (methodName.equals(method.getName()) && (paramTypes == null || hasSameParams(method,
+              paramTypes))) {
+            return method;
+          }
+        }
+      } else {
+        methodMap = getDeclaredMethodMap(searchType, false);
+        List<Method> methodList = methodMap.getOrDefault(methodName, Collections.emptyList());
+        for (Method method : methodList) {
+          if (paramTypes == null || hasSameParams(method, paramTypes)) {
+            return method;
+          }
+        }
+      }
+      searchType = searchType.getSuperclass();
+    }
+    return null;
+  }
+
+  private static boolean hasSameParams(Method method, Class<?>[] paramTypes) {
+    return paramTypes.length == method.getParameterCount()
+        && org.apache.commons.lang3.ClassUtils.isAssignable(paramTypes, method.getParameterTypes(),
+        true);
+  }
+
+  private static Map<String, List<Method>> getDeclaredMethodMap(Class<?> clazz, boolean defensive) {
+    Assert.notNull(clazz, "Class must not be null");
+    Map<String, List<Method>> result = DECLARED_METHOD_MAP_CACHE.get(clazz);
+    if (result == null) {
+      try {
+        Method[] declaredMethods = clazz.getDeclaredMethods();
+        List<Method> defaultMethods = findConcreteMethodsOnInterfaces(clazz);
+        if (defaultMethods != null) {
+          result = MapUtil.newHashMap(declaredMethods.length + defaultMethods.size());
+          for (Method declaredMethod : declaredMethods) {
+            result.computeIfAbsent(declaredMethod.getName(), key -> new ArrayList<>(1))
+                .add(declaredMethod);
+          }
+          for (Method defaultMethod : defaultMethods) {
+            result.computeIfAbsent(defaultMethod.getName(), key -> new ArrayList<>(1))
+                .add(defaultMethod);
+          }
+        } else {
+          result = Arrays.stream(declaredMethods).collect(Collectors.groupingBy(Method::getName));
+        }
+        DECLARED_METHOD_MAP_CACHE.put(clazz,
+            (MapUtil.isEmpty(result) ? Collections.emptyMap() : result));
+      } catch (Throwable ex) {
+        throw new IllegalStateException(
+            "Failed to introspect Class [" + clazz.getName() + "] from ClassLoader ["
+                + clazz.getClassLoader() + "]", ex);
+      }
+    }
+    return (MapUtil.isEmpty(result) || !defensive) ? result : new HashMap<>(result);
+  }
+
+  @Nullable
+  private static List<Method> findConcreteMethodsOnInterfaces(Class<?> clazz) {
+    List<Method> result = null;
+    for (Class<?> ifc : clazz.getInterfaces()) {
+      for (Method ifcMethod : ifc.getMethods()) {
+        if (!Modifier.isAbstract(ifcMethod.getModifiers())) {
+          if (result == null) {
+            result = new ArrayList<>();
+          }
+          result.add(ifcMethod);
         }
       }
     }
+    return result;
   }
 
 }

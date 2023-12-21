@@ -49,6 +49,9 @@ public class ReflectionUtilTest {
 
   @Test
   public void testMethod() {
+    // test when method is not exist
+    Method noExistMethod  = ReflectionUtil.findMethod(ReflectionEntity.class, "noExist");
+
     // findMethod test
     Method method = ReflectionUtil.findMethod(ReflectionEntity.class, "sayHello");
     Method accessibleMethod = ReflectionUtil.findMethod(ReflectionEntity.class, "sayHello", true);

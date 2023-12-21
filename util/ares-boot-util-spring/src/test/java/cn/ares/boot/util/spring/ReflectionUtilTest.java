@@ -25,6 +25,10 @@ public class ReflectionUtilTest {
   public void testField() {
     User user = new User();
     user.setId(1L);
+
+    // test when field is not exist
+    String noExist = ReflectionUtil.getFieldValue(user, "noExist");
+
     // findField test
     Field fieldFromClass = ReflectionUtil.findField(User.class, "id");
     Field fieldFromObject = ReflectionUtil.findField(user, "id");

@@ -1058,7 +1058,7 @@ public class ReflectionUtil {
     Class<?> searchType = clazz;
     while (Object.class != searchType && searchType != null) {
       List<Field> fieldList = getDeclaredFieldMap(searchType).get(fieldName);
-      if (CollectionUtil.isNotEmpty(fieldList)) {
+      if (CollectionUtil.isEmpty(fieldList)) {
         if (null == fieldType) {
           return fieldList.get(0);
         }

@@ -23,6 +23,7 @@
     <module>ares-boot-base-trace-abstract</module>
     <module>ares-boot-base-trace</module>
     <module>ares-boot-base-trace-arms</module>
+    <module>ares-boot-base-trace-pinpoint</module>
   </modules>
 
   <dependencies>

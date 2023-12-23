@@ -12,6 +12,7 @@ import cn.ares.boot.util.common.function.SerializableFunction;
 import java.beans.Introspector;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.invoke.SerializedLambda;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -221,7 +222,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
-   * @description: Gets all the fields from the target Object (including the parent class but except Object)
+   * @description: Gets all the fields from the target Object (including the parent class but except
+   * Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target] 目标对象
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -233,7 +235,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
-   * @description: Gets all the fields from the target Object (including the parent class but except Object)
+   * @description: Gets all the fields from the target Object (including the parent class but except
+   * Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target, accessible] 目标对象，访问限制
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -245,7 +248,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
-   * @description: Gets all the fields from the target Object (including the parent class but except Object)
+   * @description: Gets all the fields from the target Object (including the parent class but except
+   * Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -258,7 +262,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的非synthetic字段（包括父类但除了Object）
-   * @description: Gets all non-synthetic fields from the target Object (including the parent class but except Object)
+   * @description: Gets all non-synthetic fields from the target Object (including the parent class
+   * but except Object)
    * @time: 2023-12-12 21:02:07
    * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -271,7 +276,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有通过筛选的字段（包括父类但除了Object）
-   * @description: Gets all fields that pass the filter from the target Object (including the parent class but except Object)
+   * @description: Gets all fields that pass the filter from the target Object (including the parent
+   * class but except Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target, accessible, ignoreOverrideField, predicate] 目标对象，访问限制，忽略重写字段（保留子类），字段筛选
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -605,7 +611,19 @@ public class ReflectionUtil {
    * @return: java.lang.invoke.MethodHandle 方法句柄
    */
   public static MethodHandle findMethodHandle(Method method) throws IllegalAccessException {
-    return LOOKUP.unreflect(method);
+    MethodHandle methodHandle = LOOKUP.unreflect(method);
+    List<Class<?>> classList = new ArrayList<>(method.getParameterCount() + 1);
+    for (int i = 0; i < method.getParameterCount(); i++) {
+      classList.add(Object.class);
+    }
+    if (Modifier.isStatic(method.getModifiers())) {
+      methodHandle = methodHandle.asType(MethodType.methodType(Object.class, classList));
+    } else {
+      classList.add(Object.class);
+      methodHandle = methodHandle.asType(MethodType.methodType(Object.class, classList));
+    }
+
+    return methodHandle;
   }
 
   /**
@@ -627,7 +645,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 用参数数组调用对象指定方法名的方法获取指定对象
-   * @description: Gets the specified object by calling the method named by the object with an array of arguments object
+   * @description: Gets the specified object by calling the method named by the object with an array
+   * of arguments object
    * @time: 2023-05-11 16:16:04
    * @params: [target, methodName, args] 目标对象，方法名，参数数组
    * @return: T 调用结果
@@ -1079,7 +1098,8 @@ public class ReflectionUtil {
       try {
         Field[] declaredFields = clazz.getDeclaredFields();
         result = Arrays.stream(declaredFields).collect(Collectors.groupingBy(Field::getName));
-        DECLARED_FIELD_MAP_CACHE.put(clazz, MapUtil.isEmpty(result) ? Collections.emptyMap() : result);
+        DECLARED_FIELD_MAP_CACHE.put(clazz,
+            MapUtil.isEmpty(result) ? Collections.emptyMap() : result);
       } catch (Throwable ex) {
         throw new IllegalStateException("Failed to introspect Class [" + clazz.getName() +
             "] from ClassLoader [" + clazz.getClassLoader() + "]", ex);

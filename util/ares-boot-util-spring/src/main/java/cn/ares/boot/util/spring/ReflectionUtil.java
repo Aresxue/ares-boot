@@ -8,12 +8,14 @@ import cn.ares.boot.util.common.CollectionUtil;
 import cn.ares.boot.util.common.MapUtil;
 import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.common.entity.InvokeMethod;
+import cn.ares.boot.util.common.exception.CheckedExceptionWrapper;
 import cn.ares.boot.util.common.function.SerializableFunction;
 import java.beans.Introspector;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.invoke.SerializedLambda;
+import java.lang.invoke.WrongMethodTypeException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -79,6 +81,12 @@ public class ReflectionUtil {
    */
   private static final Map<Class<?>, Map<String, List<Method>>> DECLARED_METHOD_MAP_CACHE = new ConcurrentReferenceHashMap<>(
       256);
+  /**
+   * 方法句柄参数长度上限，超过该个数将不会使用方法句柄，按照JVM的规范方法句柄调用的方法最多不能超过255（JVM方法是256）
+   * @see java.lang.invoke.MethodType#MAX_JVM_ARITY
+   * Upper limit of the length of a method handle parameter. If this number is exceeded, the method handle will not be usedThe maximum number of methods called according to the JVM's specification method handle cannot exceed 255 (JVM method is 256).
+   */
+  private static final int METHOD_HANDLE_ARGS_LENGTH_UPPER = 10;
 
   /*
    * @author: Ares
@@ -616,13 +624,14 @@ public class ReflectionUtil {
     for (int i = 0; i < method.getParameterCount(); i++) {
       classList.add(Object.class);
     }
+    MethodType methodType;
     if (Modifier.isStatic(method.getModifiers())) {
-      methodHandle = methodHandle.asType(MethodType.methodType(Object.class, classList));
+      methodType = MethodType.methodType(Object.class, classList);
     } else {
       classList.add(Object.class);
-      methodHandle = methodHandle.asType(MethodType.methodType(Object.class, classList));
+      methodType = MethodType.methodType(Object.class, classList);
     }
-
+    methodHandle = methodHandle.asType(methodType);
     return methodHandle;
   }
 
@@ -701,19 +710,61 @@ public class ReflectionUtil {
     return getT(doWithHandleException(() -> {
       if (null != methodHandle) {
         try {
-          List<Object> paramList = new ArrayList<>();
-          if (null != target && !(target instanceof Class)) {
-            paramList.add(target);
+          if (null == target || target instanceof Class) {
+            if (ArrayUtil.isEmpty(args)) {
+              return methodHandle.invokeExact();
+            } else if (args.length == 1) {
+              return methodHandle.invokeExact(args[0]);
+            } else if (args.length == 2) {
+              return methodHandle.invokeExact(args[0], args[1]);
+            } else if (args.length == 3) {
+              return methodHandle.invokeExact(args[0], args[1], args[2]);
+            } else if (args.length == 4) {
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3]);
+            } else if (args.length == 5) {
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4]);
+            } else if (args.length == 6) {
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5]);
+            } else if (args.length == 7) {
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+            } else if (args.length == 9) {
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
+            } else if (args.length == METHOD_HANDLE_ARGS_LENGTH_UPPER) {
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
+            }
+          } else {
+            if (ArrayUtil.isEmpty(args)) {
+              return methodHandle.invokeExact(target);
+            } else if (args.length == 1) {
+              return methodHandle.invokeExact(target, args[0]);
+            } else if (args.length == 2) {
+              return methodHandle.invokeExact(target, args[0], args[1]);
+            } else if (args.length == 3) {
+              return methodHandle.invokeExact(target, args[0], args[1], args[2]);
+            } else if (args.length == 4) {
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3]);
+            } else if (args.length == 5) {
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4]);
+            } else if (args.length == 6) {
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4], args[5]);
+            } else if (args.length == 7) {
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+            } else if (args.length == 9) {
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
+            } else if (args.length == METHOD_HANDLE_ARGS_LENGTH_UPPER) {
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
+            }
           }
-          paramList.addAll(Arrays.asList(args));
-          return methodHandle.invokeWithArguments(paramList);
-        } catch (Throwable e) {
-          // 异常阻断Error允许向下执行
-          // Exception blocking Error allows downward execution
-          if (e instanceof Exception) {
-            throw (Exception) e;
+        } catch (Throwable t) {
+          if (t instanceof WrongMethodTypeException) {
+            // 发生错误方法类型异常做告警不阻断
+            // An error occurs. Method Type Abnormal Alarms are not blocked
+            LOGGER.warn("method handle invoke fail: ", t);
+          } else if (t instanceof Error) {
+            throw new CheckedExceptionWrapper(t);
+          } else if (t instanceof Exception) {
+            throw (Exception) t;
           }
-          LOGGER.warn("method handle invoke fail: ", e);
         }
       }
       if (null == method) {

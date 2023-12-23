@@ -604,8 +604,8 @@ public class ReflectionUtil {
    * @params: [method] 方法
    * @return: java.lang.invoke.MethodHandle 方法句柄
    */
-  public static MethodHandle findMethodHandle(Method method) {
-    return doWithHandleException(() -> LOOKUP.unreflect(method));
+  public static MethodHandle findMethodHandle(Method method) throws IllegalAccessException {
+    return LOOKUP.unreflect(method);
   }
 
   /**

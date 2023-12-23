@@ -26,6 +26,7 @@
     <module>starter</module>
     <module>util</module>
     <module>version</module>
+    <module>benchmark</module>
   </modules>
 
   <build>

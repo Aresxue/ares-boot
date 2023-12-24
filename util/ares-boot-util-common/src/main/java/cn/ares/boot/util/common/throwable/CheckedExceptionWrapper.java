@@ -1,4 +1,4 @@
-package cn.ares.boot.util.common.exception;
+package cn.ares.boot.util.common.throwable;
 
 /**
  * @author: Ares
@@ -8,6 +8,8 @@ package cn.ares.boot.util.common.exception;
  * @version: JDK 1.8
  */
 public class CheckedExceptionWrapper extends RuntimeException {
+
+  private static final long serialVersionUID = -8092405346958033084L;
 
   public CheckedExceptionWrapper() {
   }

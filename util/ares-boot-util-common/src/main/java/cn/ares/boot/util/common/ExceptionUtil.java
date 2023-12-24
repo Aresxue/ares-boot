@@ -3,7 +3,7 @@ package cn.ares.boot.util.common;
 import static cn.ares.boot.util.common.constant.StringConstant.JAVA;
 import static cn.ares.boot.util.common.constant.StringConstant.SUN;
 
-import cn.ares.boot.util.common.exception.CheckedExceptionWrapper;
+import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import cn.ares.boot.util.common.function.RunnableWithException;
 import java.io.PrintWriter;
 import java.io.StringWriter;

@@ -1,4 +1,4 @@
-package cn.ares.boot.util.common.exception;
+package cn.ares.boot.util.common.throwable;
 
 import cn.ares.boot.util.common.ClassUtil;
 

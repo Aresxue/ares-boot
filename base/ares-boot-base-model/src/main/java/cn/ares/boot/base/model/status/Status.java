@@ -4,6 +4,7 @@ package cn.ares.boot.base.model.status;
  * @author: Ares
  * @time: 2022-06-10 15:46:46
  * @description: 状态
+ * @description: Status
  * @version: JDK 1.8
  */
 public interface Status {

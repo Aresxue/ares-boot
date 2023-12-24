@@ -4,6 +4,7 @@ package cn.ares.boot.base.model.status;
  * @author: Ares
  * @time: 2022-06-10 15:54:53
  * @description: 基础系统状态
+ * @description: Base system status
  * @version: JDK 1.8
  */
 public enum BaseSystemStatus implements SystemStatus {

@@ -1,4 +1,4 @@
-package cn.ares.boot.util.common.exception;
+package cn.ares.boot.util.common.throwable;
 
 /**
  * @author: Ares

@@ -108,7 +108,15 @@ public class MapUtil {
     return new LinkedHashMap<>(capacity(expectedSize));
   }
 
-  protected static int capacity(int expectedSize) {
+  /**
+   * @author: Ares
+   * @description: 根据期望的容量为映射选取合适的容量
+   * @description: Choose the appropriate capacity for the mapping based on the desired capacity
+   * @time: 2023-12-25 17:25:59
+   * @params: [expectedSize] 期望的元素容量
+   * @return: int 合适的容量
+   */
+  public static int capacity(int expectedSize) {
     if (expectedSize < 3) {
       checkNonNegative(expectedSize, "expectedSize");
       return expectedSize + 1;

@@ -8,8 +8,8 @@ package cn.ares.boot.util.common.function;
  * @version: JDK 1.8
  */
 @FunctionalInterface
-public interface FourConsumerWithException<T, U, K, E> {
+public interface FourConsumerWithException<T, U, V, W> {
 
-  void accept(T t, U u, K k, E e) throws Exception;
+  void accept(T t, U u, V v, W w) throws Exception;
 
 }

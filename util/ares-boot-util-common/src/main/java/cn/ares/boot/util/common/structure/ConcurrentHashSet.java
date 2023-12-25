@@ -1,5 +1,6 @@
 package cn.ares.boot.util.common.structure;
 
+import cn.ares.boot.util.common.MapUtil;
 import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.ConcurrentModificationException;
@@ -28,7 +29,7 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
   }
 
   public ConcurrentHashSet(int initialCapacity) {
-    map = new ConcurrentHashMap<>(initialCapacity);
+    map = new ConcurrentHashMap<>(MapUtil.capacity(initialCapacity));
   }
 
   /**

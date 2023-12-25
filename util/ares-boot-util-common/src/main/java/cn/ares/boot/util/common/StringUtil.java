@@ -934,6 +934,18 @@ public class StringUtil {
 
   /**
    * @author: Ares
+   * @description: 使用空格右填充到指定长度
+   * @description: Right pad with spaces to specified length
+   * @time: 2023-12-25 11:21:51
+   * @params: [str, size] 字符串，长度
+   * @return: java.lang.String 填充后字符串
+   */
+  public static String rightPad(final String str, final int size) {
+    return rightPad(str, size, ' ');
+  }
+
+  /**
+   * @author: Ares
    * @description: 使用指定字符右填充到指定长度
    * @description: Right pad with pad char to specified length
    * @time: 2022-05-05 11:12:27

@@ -9,7 +9,9 @@ import cn.ares.boot.util.common.InvokeUtil;
 import cn.ares.boot.util.common.MapUtil;
 import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.common.entity.InvokeMethod;
+import cn.ares.boot.util.common.function.FourFunction;
 import cn.ares.boot.util.common.function.SerializableFunction;
+import cn.ares.boot.util.common.function.ThirdFunction;
 import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import java.beans.Introspector;
 import java.lang.invoke.MethodHandle;
@@ -30,6 +32,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
@@ -537,6 +541,26 @@ public class ReflectionUtil {
   public static MethodHandle findMethodHandle(Object target, String methodName,
       Class<?>... paramTypes) {
     return InvokeUtil.findMethodHandle(findMethod(target, methodName, true, paramTypes));
+  }
+
+  public static <T, R> Function<T, R> generateFunction(Object target, String methodName,
+      Class<?>... paramTypes) {
+    return InvokeUtil.generateFunction(findMethod(target, methodName, true, paramTypes));
+  }
+
+  public static <T, U, R> BiFunction<T, U, R> generateBiFunction(Object target, String methodName,
+      Class<?>... paramTypes) {
+    return InvokeUtil.generateBiFunction(findMethod(target, methodName, true, paramTypes));
+  }
+
+  public static <T, U, V, R> ThirdFunction<T, U, V, R> generateThirdFunction(Object target, String methodName,
+      Class<?>... paramTypes) {
+    return InvokeUtil.generateThirdFunction(findMethod(target, methodName, true, paramTypes));
+  }
+
+  public static <T, U, V, W, R> FourFunction<T, U, V, W, R> generateFourFunction(Object target,
+      String methodName, Class<?>... paramTypes) {
+    return InvokeUtil.generateFourFunction(findMethod(target, methodName, true, paramTypes));
   }
 
 

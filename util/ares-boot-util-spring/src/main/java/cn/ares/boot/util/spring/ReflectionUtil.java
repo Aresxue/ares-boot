@@ -9,8 +9,8 @@ import cn.ares.boot.util.common.InvokeUtil;
 import cn.ares.boot.util.common.MapUtil;
 import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.common.entity.InvokeMethod;
-import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import cn.ares.boot.util.common.function.SerializableFunction;
+import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import java.beans.Introspector;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.SerializedLambda;
@@ -532,6 +532,11 @@ public class ReflectionUtil {
       makeAccessible(method);
     }
     return method;
+  }
+
+  public static MethodHandle findMethodHandle(Object target, String methodName,
+      Class<?>... paramTypes) {
+    return InvokeUtil.findMethodHandle(findMethod(target, methodName, true, paramTypes));
   }
 
 

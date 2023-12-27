@@ -32,7 +32,7 @@ public class InvokeUtil {
    * @params: [method] 方法
    * @return: java.lang.invoke.MethodHandle 方法句柄
    */
-  public static MethodHandle findMethodHandle(Method method) throws IllegalAccessException {
+  public static MethodHandle findMethodHandle(Method method) {
     return findMethodHandle(method, true);
   }
 
@@ -44,9 +44,12 @@ public class InvokeUtil {
    * @params: [method, generic] 方法，是否将所有类型转为Object
    * @return: java.lang.invoke.MethodHandle 方法句柄
    */
-  public static MethodHandle findMethodHandle(Method method, boolean generic)
-      throws IllegalAccessException {
-    MethodHandle methodHandle = MethodHandleUtil.getLookup(method, false).unreflect(method);
+  public static MethodHandle findMethodHandle(Method method, boolean generic) {
+    if (null == method) {
+      return null;
+    }
+    MethodHandle methodHandle = ExceptionUtil.get(
+        () -> MethodHandleUtil.getLookup(method, false).unreflect(method));
     if (generic) {
       methodHandle = methodHandle.asType(methodHandle.type().generic());
     }

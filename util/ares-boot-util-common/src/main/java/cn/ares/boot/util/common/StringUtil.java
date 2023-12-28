@@ -631,8 +631,24 @@ public class StringUtil {
    * @return: java.lang.String 解析结果
    */
   public static String parseSteamToString(InputStream inputStream) {
+    return parseSteamToString(inputStream, true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 解析输入流为字符串（可指定为空时是否抛出异常）
+   * @description: Parse input stream as string(Can specify whether to throw an exception when empty)
+   * @time: 2023-12-28 15:07:35
+   * @params: [inputStream, throwEx] 输入流，是否抛出异常
+   * @return: java.lang.String 解析结果
+   */
+  public static String parseSteamToString(InputStream inputStream, boolean throwEx) {
     if (null == inputStream) {
-      throw new IllegalArgumentException("InputStream is null");
+      if (throwEx) {
+        throw new IllegalArgumentException("InputStream is null");
+      } else {
+        return null;
+      }
     }
     return new BufferedReader(new InputStreamReader(inputStream))
         .lines().parallel().collect(Collectors.joining(System.lineSeparator()));
@@ -647,8 +663,24 @@ public class StringUtil {
    * @return: java.io.InputStream 输入流
    */
   public static InputStream parseStringToStream(String content, Charset charset) {
+    return parseStringToStream(content, charset, true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 以指定编码解析字符串为输入流（可指定为空时是否抛出异常）
+   * @description: Parse the input stream as a string with the specified encoding(Can specify whether to throw an exception when empty)
+   * @time: 2023-12-28 15:16:08
+   * @params: [content, charset, throwEx] 内容，编码，是否抛出异常
+   * @return: java.io.InputStream 输入流
+   */
+  public static InputStream parseStringToStream(String content, Charset charset, boolean throwEx) {
     if (isEmpty(content)) {
-      throw new IllegalArgumentException("Content is empty");
+      if (throwEx) {
+        throw new IllegalArgumentException("Content is empty");
+      } else {
+        return null;
+      }
     }
     return new ByteArrayInputStream(content.getBytes(charset));
   }

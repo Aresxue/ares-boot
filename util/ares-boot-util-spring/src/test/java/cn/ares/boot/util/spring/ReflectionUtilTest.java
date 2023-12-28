@@ -50,7 +50,7 @@ public class ReflectionUtilTest {
   @Test
   public void testMethod() {
     // test when method is not exist
-    Method noExistMethod  = ReflectionUtil.findMethod(ReflectionEntity.class, "noExist");
+    Method noExistMethod = ReflectionUtil.findMethod(ReflectionEntity.class, "noExist");
 
     // findMethod test
     Method method = ReflectionUtil.findMethod(ReflectionEntity.class, "sayHello");
@@ -112,16 +112,16 @@ public class ReflectionUtilTest {
 
   @Test
   public void testConstructor() throws ClassNotFoundException {
-    Constructor<User> constructor = ReflectionUtil.findConstructor(User.class);
-    Constructor<User> constructorFromObject = ReflectionUtil.findConstructor(new User());
+    Constructor<User> constructor = ReflectionUtil.findConstructor(User.class, true);
+    Constructor<User> constructorFromObject = ReflectionUtil.findConstructor(new User(), true);
     LOGGER.info("{}, {}", constructor, constructorFromObject);
     Assert.isTrue(constructor.equals(constructorFromObject), "构造器不一致");
 
-    constructorFromObject = ReflectionUtil.findConstructor(new User(), String.class, Long.class,
-        String.class);
+    constructorFromObject = ReflectionUtil.findConstructor(new User(), true, String.class,
+        Long.class, String.class);
     LOGGER.info("{}", constructorFromObject);
 
-    User user = ReflectionUtil.invokeConstructor(User.class);
+    User user = ReflectionUtil.invokeConstructor(User.class, true);
     LOGGER.info("{}", user);
     User userFromName = ReflectionUtil.invokeConstructor("cn.ares.boot.util.spring.entity.User");
     LOGGER.info("{}", userFromName);

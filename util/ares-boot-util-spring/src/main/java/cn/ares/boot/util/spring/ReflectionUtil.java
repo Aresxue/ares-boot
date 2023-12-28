@@ -769,18 +769,6 @@ public class ReflectionUtil {
 
   /**
    * @author: Ares
-   * @description: 根据参数数组获取类的构造器
-   * @description: Gets the constructor of a class from an array of arguments
-   * @time: 2023-05-11 17:47:27
-   * @params: [target, args] 目标对象，参数数组
-   * @return: java.lang.reflect.Constructor<T> 构造器
-   */
-  public static <T> Constructor<T> findConstructor(Object target, Object... args) {
-    return findConstructor(target, false, args);
-  }
-
-  /**
-   * @author: Ares
    * @description: 根据访问限制和参数数组获取目标对象（可能是类）的构造器
    * @description: Gets the constructor of the target object (possibly a class) based on access restrictions and an array of arguments
    * @time: 2023-05-11 17:47:27

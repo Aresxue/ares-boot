@@ -50,9 +50,19 @@ public class BooleanUtil {
     if (null == object) {
       return false;
     }
-    return parseBoolean(object.toString());
+    return Boolean.parseBoolean(object.toString());
   }
 
+  /**
+   * @author: Ares
+   * @description: 是否为false
+   * @time: 2023-12-30 20:30:36
+   * @params: [object] 对象
+   * @return: boolean 是否为false
+   */
+  public static boolean isFalse(Object object) {
+    return !isTrue(object);
+  }
   /**
    * @author: Ares
    * @description: 比较两个boolean值是否一致

@@ -41,6 +41,20 @@ public class BooleanUtil {
 
   /**
    * @author: Ares
+   * @description: 是否为true
+   * @time: 2023-12-30 17:27:40
+   * @params: [object] 对象
+   * @return: boolean 是否为true
+   */
+  public static boolean isTrue(Object object) {
+    if (null == object) {
+      return false;
+    }
+    return parseBoolean(object.toString());
+  }
+
+  /**
+   * @author: Ares
    * @description: 比较两个boolean值是否一致
    * @description: Compares two {@code boolean} values
    * @time: 2022-06-08 10:24:20

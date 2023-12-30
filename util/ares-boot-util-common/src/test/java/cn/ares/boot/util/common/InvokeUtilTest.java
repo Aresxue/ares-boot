@@ -2,8 +2,9 @@ package cn.ares.boot.util.common;
 
 import cn.ares.boot.util.common.entity.CronExpression;
 import cn.ares.boot.util.common.structure.MapObject;
+import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Method;
-import java.text.ParseException;
+import java.util.TimeZone;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -15,8 +16,7 @@ import java.util.function.Function;
  */
 public class InvokeUtilTest {
 
-  public static void main(String[] args)
-      throws NoSuchMethodException, ParseException, NoSuchFieldException {
+  public static void main(String[] args) throws Throwable {
     Method method = CronExpression.class.getDeclaredMethod("getCronExpression");
     Function<CronExpression, String> virtualMethodFunction = InvokeUtil.generateFunction(method);
     CronExpression cronExpression = new CronExpression("0 0 0 * * ?");
@@ -36,6 +36,10 @@ public class InvokeUtilTest {
     method = StringUtil.class.getDeclaredMethod("atoi", String.class);
     Function<String, Integer> statucMethodFunction = InvokeUtil.generateFunction(method);
     System.out.println(statucMethodFunction.apply("123"));
+
+    method = CronExpression.class.getDeclaredMethod("setTimeZone", TimeZone.class);
+    MethodHandle methodHandle = InvokeUtil.findMethodHandle(method);
+    methodHandle.invokeExact((Object) cronExpression, (Object) TimeZone.getDefault());
   }
 
 }

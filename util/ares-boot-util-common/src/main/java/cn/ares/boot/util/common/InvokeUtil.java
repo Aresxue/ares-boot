@@ -51,7 +51,12 @@ public class InvokeUtil {
     MethodHandle methodHandle = ExceptionUtil.get(
         () -> MethodHandleUtil.getLookup(method, false).unreflect(method));
     if (generic) {
-      methodHandle = methodHandle.asType(methodHandle.type().generic());
+      Class<?> returnType = method.getReturnType();
+      MethodType methodType = methodHandle.type().generic();
+      if (void.class == returnType || Void.class == returnType) {
+        methodType = methodType.changeReturnType(returnType);
+      }
+      methodHandle = methodHandle.asType(methodType);
     }
     return methodHandle;
   }
@@ -77,7 +82,7 @@ public class InvokeUtil {
    * @description: Generates two incoming function dynamically based on the method
    * @time: 2023-12-25 19:40:25
    * @params: [method] 方法
-   * @return: java.util.function.BiFunction<T,U,R> 两个入参的函数
+   * @return: java.util.function.BiFunction<T, U, R> 两个入参的函数
    */
   public static <T, U, R> BiFunction<T, U, R> generateBiFunction(Method method) {
     return generateFunction(method, () -> {

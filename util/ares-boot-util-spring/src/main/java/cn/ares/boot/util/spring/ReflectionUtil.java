@@ -777,6 +777,9 @@ public class ReflectionUtil {
    */
   public static <T> Constructor<T> findConstructor(Object target, boolean accessible,
       Object... args) {
+    if (null == target) {
+      return null;
+    }
     return doWithHandleException(() -> {
       Class<?>[] parameterTypes = getClasses(args);
       Class<T> clazz = getClass(target);

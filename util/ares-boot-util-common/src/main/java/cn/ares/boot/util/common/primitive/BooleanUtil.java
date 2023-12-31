@@ -55,6 +55,28 @@ public class BooleanUtil {
 
   /**
    * @author: Ares
+   * @description: 是否是true
+   * @time: 2024-12-31 13:37:30
+   * @params: [booleanValue] 布尔值包装对象
+   * @return: boolean
+   */
+  public static boolean isTrue(Boolean booleanWrap) {
+    return null != booleanWrap && booleanWrap;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 是否是false
+   * @time: 2024-12-31 13:37:30
+   * @params: [booleanValue] 布尔值包装对象
+   * @return: boolean
+   */
+  public static boolean isFalse(Boolean booleanWrap) {
+    return null == booleanWrap || !booleanWrap;
+  }
+
+  /**
+   * @author: Ares
    * @description: 是否为false
    * @time: 2023-12-30 20:30:36
    * @params: [object] 对象

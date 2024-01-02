@@ -477,13 +477,16 @@ public class ClassUtil {
    */
   public static Class<?>[] loadClass(String[] identifiers, ClassLoader classLoader)
       throws ClassNotFoundException {
-    List<Class<?>> classList = new ArrayList<>();
-    if (identifiers != null && identifiers.length > 0) {
-      for (String identifier : identifiers) {
-        classList.add(loadClass(identifier, classLoader));
+    Class<?>[] classes;
+    if (ArrayUtil.isEmpty(identifiers)) {
+      classes = new Class[0];
+    } else {
+      classes = new Class[identifiers.length];
+      for (int i = 0; i < identifiers.length; i++) {
+        classes[i] = loadClass(identifiers[i], classLoader);
       }
     }
-    return classList.toArray(new Class[0]);
+    return classes;
   }
 
   /**

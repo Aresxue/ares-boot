@@ -34,7 +34,8 @@ class MethodHandleUtil {
         internal.setAccessible(true);
         TRUSTED_LOOKUP = (MethodHandles.Lookup) internal.get(null);
         internal.setAccessible(isAccessible);
-      } catch (Throwable ignored) {
+      } catch (Throwable t) {
+        t.printStackTrace();
       }
     }
   }

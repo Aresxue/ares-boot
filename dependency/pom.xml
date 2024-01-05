@@ -22,26 +22,25 @@
   </description>
 
   <properties>
-    <revision>1.0.1</revision>
+    <revision>1.0.2</revision>
     <boot.version>${revision}</boot.version>
 
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
     <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
     <lombok.version>1.18.26</lombok.version>
     <mapstruct.version>1.5.5.Final</mapstruct.version>
+    <ares-turbo-loader-tool.version>2.2.1</ares-turbo-loader-tool.version>
 
-    <spring-boot.version>2.7.17</spring-boot.version>
+    <spring-boot.version>2.7.18</spring-boot.version>
   </properties>
 
   <modules>
-    <module>ares-boot-base-all</module>
     <module>ares-boot-base-dependency-management</module>
     <module>ares-boot-dependency-management</module>
     <module>ares-boot-self-dependency-management</module>
     <module>ares-boot-starter-dependency-management</module>
     <module>ares-boot-util-dependency-management</module>
     <module>business-api-dependency-management</module>
-    <module>business-api-required</module>
     <module>business-client-dependency-management</module>
     <module>business-spi-dependency-management</module>
     <module>third-dependency-management</module>
@@ -175,7 +174,7 @@
             <dependency>
               <groupId>io.github.aresxue</groupId>
               <artifactId>ares-turbo-loader-tool</artifactId>
-              <version>2.2.0</version>
+              <version>${ares-turbo-loader-tool.version}</version>
             </dependency>
           </dependencies>
         </plugin>

@@ -12,17 +12,24 @@
 
   <artifactId>ares-boot-demo-dao</artifactId>
 
-  <dependencies>
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
 
+  <dependencies>
     <dependency>
       <groupId>io.github.aresxue.business</groupId>
       <artifactId>ares-boot-demo-api</artifactId>
     </dependency>
+
     <dependency>
       <groupId>io.github.aresxue.boot</groupId>
       <artifactId>business-api-required</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-all</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

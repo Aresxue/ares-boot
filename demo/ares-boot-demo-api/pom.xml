@@ -13,13 +13,11 @@
   <artifactId>ares-boot-demo-api</artifactId>
 
   <dependencies>
-
     <dependency>
       <groupId>io.github.aresxue.boot</groupId>
       <artifactId>business-api-required</artifactId>
       <scope>provided</scope>
     </dependency>
-
   </dependencies>
 
 </project>

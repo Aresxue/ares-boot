@@ -12,8 +12,11 @@
 
   <artifactId>ares-boot-demo-service</artifactId>
 
-  <dependencies>
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
 
+  <dependencies>
     <dependency>
       <groupId>io.github.aresxue.business</groupId>
       <artifactId>ares-boot-demo-dao</artifactId>
@@ -27,7 +30,6 @@
       <groupId>io.github.aresxue.boot.util</groupId>
       <artifactId>ares-boot-util-http</artifactId>
     </dependency>
-
   </dependencies>
 
 </project>

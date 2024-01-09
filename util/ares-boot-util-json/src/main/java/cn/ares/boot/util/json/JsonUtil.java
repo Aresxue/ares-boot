@@ -215,6 +215,7 @@ public class JsonUtil {
    * @params: [json, rawType, ownerType] json string, raw class, owner class
    * @return: T java object
    */
+  @SuppressWarnings("unchecked")
   public static <OWNER, RAW> OWNER toJavaObject(String json, Class<OWNER> rawType,
       Class<RAW> ownerType) {
     JavaType javaType = DEFAULT_JSON_MAPPER.getTypeFactory()

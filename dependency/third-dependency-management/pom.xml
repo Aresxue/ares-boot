@@ -29,6 +29,7 @@
     <snakeyaml.version>2.0</snakeyaml.version>
     <jackson-dataformat-yaml.version>2.15.0</jackson-dataformat-yaml.version>
     <commons-compress.version>1.25.0</commons-compress.version>
+    <podam.version>8.0.1.RELEASE</podam.version>
   </properties>
 
   <dependencyManagement>
@@ -120,6 +121,12 @@
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-compress</artifactId>
         <version>${commons-compress.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>uk.co.jemos.podam</groupId>
+        <artifactId>podam</artifactId>
+        <version>${podam.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

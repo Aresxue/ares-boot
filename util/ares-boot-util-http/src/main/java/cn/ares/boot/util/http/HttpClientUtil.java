@@ -45,6 +45,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.net.ssl.HostnameVerifier;
+import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.hc.client5.http.HttpRequestRetryStrategy;
 import org.apache.hc.client5.http.HttpRoute;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
@@ -68,8 +69,10 @@ import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.client5.http.ssl.SSLConnectionSocketFactory;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.config.Registry;
 import org.apache.hc.core5.http.config.RegistryBuilder;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
@@ -684,6 +687,26 @@ public class HttpClientUtil implements ApplicationContextAware {
               FileUtil.writeByteArrayToFile(new File(fileSavePath), bytes);
             }
             return null;
+          }
+
+          @SuppressWarnings("see")
+          /**
+           * @see EntityUtils#DEFAULT_CHARSET
+           */
+          @Override
+          public String handleEntity(final HttpEntity entity) throws IOException {
+            try {
+              String contentEncoding = entity.getContentEncoding();
+              if (StringUtil.isEmpty(contentEncoding)) {
+                // EntityUtils默认是ISO-8859-1编码，这里如果发现不存在编码则使用应用的默认编码
+                // EntityUtils defaults to ISO-8859-1 encoding, where the application's default encoding is used if no encoding is found
+                return EntityUtils.toString(entity, Charset.defaultCharset());
+              } else {
+                return EntityUtils.toString(entity);
+              }
+            } catch (final ParseException ex) {
+              throw new ClientProtocolException(ex);
+            }
           }
         });
   }

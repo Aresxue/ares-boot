@@ -78,8 +78,8 @@ public class LoggerBuilder {
         }
         default:
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception exception) {
+      exception.printStackTrace();
       for (String loggerName : loggerNames) {
         loggerMap.put(loggerName, loggerFactory.getLogger(loggerName));
       }

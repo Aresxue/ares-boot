@@ -119,8 +119,8 @@ public class NetworkUtil {
       // 取最后一个
       // Get the last
       return ipList.get(ipList.size() - 1);
-    } catch (SocketException e) {
-      e.printStackTrace();
+    } catch (SocketException socketException) {
+      socketException.printStackTrace();
     }
     return DEFAULT_LOCALHOST;
   }

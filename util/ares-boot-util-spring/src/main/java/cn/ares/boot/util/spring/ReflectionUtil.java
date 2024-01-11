@@ -83,6 +83,7 @@ public class ReflectionUtil {
    */
   private static final Map<Class<?>, Map<String, List<Method>>> DECLARED_METHOD_MAP_CACHE = new ConcurrentReferenceHashMap<>(
       256);
+  @SuppressWarnings("unchecked")
   /**
    * 方法句柄参数长度上限，超过该个数将不会使用方法句柄，按照JVM的规范方法句柄调用的方法最多不能超过255（JVM方法是256）
    * @see java.lang.invoke.MethodType#MAX_JVM_ARITY
@@ -996,6 +997,7 @@ public class ReflectionUtil {
     return parameterTypes;
   }
 
+  @SuppressWarnings("unchecked")
   private static <T> T getT(Object result) {
     return null == result ? null : (T) result;
   }

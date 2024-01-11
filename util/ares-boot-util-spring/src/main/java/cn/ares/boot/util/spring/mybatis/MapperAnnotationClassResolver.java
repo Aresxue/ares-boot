@@ -48,8 +48,8 @@ public class MapperAnnotationClassResolver {
         mapperInterfaceField = proxyClass.getDeclaredField("mapperInterface");
         mapperInterfaceField.setAccessible(true);
         mpEnabled = true;
-      } catch (NoSuchFieldException e) {
-        e.printStackTrace();
+      } catch (NoSuchFieldException exception) {
+        exception.printStackTrace();
       }
     }
   }

@@ -191,8 +191,9 @@ public class ExpandObject implements Serializable {
    * @params: [key] 键
    * @return: T
    */
+  @SuppressWarnings("unchecked")
   public <T> T getObject(String key) {
-    return (T) Optional.ofNullable(get(key)).orElse(null);
+    return (T) get(key);
   }
 
 

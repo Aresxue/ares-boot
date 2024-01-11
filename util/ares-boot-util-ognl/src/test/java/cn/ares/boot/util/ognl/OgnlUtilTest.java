@@ -22,8 +22,8 @@ public class OgnlUtilTest {
     String parseResult = null;
     try {
       parseResult = OgnlUtil.parse(expressionText, "#{", "'", "}", "'", map);
-    } catch (OgnlException e) {
-      e.printStackTrace();
+    } catch (OgnlException ognlException) {
+      ognlException.printStackTrace();
     }
     System.out.println("parse result: " + parseResult);
     Assert.isTrue(null != parseResult && parseResult.contains("good"), "解析失败");

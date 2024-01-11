@@ -68,8 +68,9 @@ public class MapObject extends HashMap<String, Object> {
         .orElse(null);
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T getObject(String key) {
-    return (T) Optional.ofNullable(get(key)).orElse(null);
+    return (T) get(key);
   }
 
 }

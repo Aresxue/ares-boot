@@ -17,6 +17,12 @@ public class MapUtilTest {
     sourceMap.put("test", null);
     sourceMap.put(null, "value");
     System.out.println(MapUtil.trimValue(sourceMap));
+
+    Map<String, String> map = MapUtil.newMap("name", "ares", "test", null, null, "value");
+    System.out.println(map);
+    System.out.println(map.get(null));
+    map.put(null, "null");
+    System.out.println(map.get(null));
   }
 
 }

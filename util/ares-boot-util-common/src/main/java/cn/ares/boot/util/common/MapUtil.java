@@ -61,6 +61,26 @@ public class MapUtil {
 
   /**
    * @author: Ares
+   * @description: 根据入参构建一个新映射
+   * @description: Build a new mapping based on the input
+   * @time: 2024-01-11 14:03:14
+   * @params: [args] 参数
+   * @return: java.util.Map<K, V> 映射
+   */
+  @SuppressWarnings("unchecked")
+  public static <K, V> Map<K, V> newMap(Object... args) {
+    if (ArrayUtil.isEmpty(args)) {
+      return Collections.emptyMap();
+    }
+    Map<K, V> map = new HashMap<>(capacity(args.length));
+    for (int i = 0; i < args.length / 2; i = i + 2) {
+      map.put((K) args[i], (V) args[i + 1]);
+    }
+    return map;
+  }
+
+  /**
+   * @author: Ares
    * @description: 以默认的元素个数创建HashMap
    * @description: New HashMap with default size
    * @time: 2022-06-07 16:54:01

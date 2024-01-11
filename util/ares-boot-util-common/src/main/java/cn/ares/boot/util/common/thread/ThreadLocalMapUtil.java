@@ -19,6 +19,7 @@ public class ThreadLocalMapUtil {
     return THREAD_LOCAL_MAP.get();
   }
 
+  @SuppressWarnings("unchecked")
   public static <T> T get(Object key) {
     Map<Object, Object> map = THREAD_LOCAL_MAP.get();
     if (MapUtil.isEmpty(map)) {
@@ -27,6 +28,7 @@ public class ThreadLocalMapUtil {
     return (T) map.get(key);
   }
 
+  @SuppressWarnings("unchecked")
   public static <T> T get(Object key, T defaultValue) {
     Map<Object, Object> map = THREAD_LOCAL_MAP.get();
     if (map == null) {
@@ -57,6 +59,7 @@ public class ThreadLocalMapUtil {
     THREAD_LOCAL_MAP.remove();
   }
 
+  @SuppressWarnings("unchecked")
   public static <T> T remove(String key) {
     Map<Object, Object> map = THREAD_LOCAL_MAP.get();
     if (map == null) {
@@ -92,6 +95,7 @@ public class ThreadLocalMapUtil {
    * @params: [prefix] 前缀
    * @return: java.util.Map<java.lang.Object, T>
    */
+  @SuppressWarnings("unchecked")
   public static <T> Map<Object, T> fetchValuesByPrefix(String prefix) {
     Map<Object, T> values = new HashMap<>();
     if (prefix == null) {

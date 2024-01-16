@@ -22,6 +22,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>io.github.aresxue.boot.util</groupId>
+      <artifactId>ares-boot-util-common</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

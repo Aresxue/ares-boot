@@ -28,29 +28,20 @@ public class AresApplication {
     EXTENSION_SERVICE_LIST.sort(Comparator.comparingInt((AresApplicationExtensionService::getOrder)));
   }
 
-  public static void run(Class<?> primarySource, String[] args,
-      AfterRunCallback... callbacks) {
+  public static void run(Class<?> primarySource, String[] args, Runnable... afterRunnableArr) {
     for (AresApplicationExtensionService extensionService : EXTENSION_SERVICE_LIST) {
       extensionService.handleBeforeRun(primarySource, args);
     }
 
     SpringApplication.run(primarySource, args);
     // Handle after run
-    for (AfterRunCallback callback : callbacks) {
-      callback.apply();
+    for (Runnable runnable : afterRunnableArr) {
+      runnable.run();
     }
 
     for (int i = EXTENSION_SERVICE_LIST.size() - 1; i >= 0; i--) {
       EXTENSION_SERVICE_LIST.get(i).handleAfterRun(primarySource, args);
     }
-
-  }
-
-
-  @FunctionalInterface
-  public interface AfterRunCallback {
-
-    void apply();
   }
 
 }

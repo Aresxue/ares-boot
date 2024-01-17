@@ -1,6 +1,7 @@
 package cn.ares.boot.util.crypt;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author: Ares
@@ -90,16 +91,11 @@ public class ReverseCryptUtil {
         () -> reverseCrypt.signatureVerify(srcData, targetData));
   }
 
-  private static <T> T doReverseCrypt(ReverseCryptCallBack<T> cryptCallBack) {
+  private static <T> T doReverseCrypt(Supplier<T> reverseCryptSupplier) {
     if (null == reverseCrypt) {
       reverseCrypt = ReverseCrypt.getInstance();
     }
-    return cryptCallBack.doReverseCrypt();
-  }
-
-  private interface ReverseCryptCallBack<T> {
-
-    T doReverseCrypt();
+    return reverseCryptSupplier.get();
   }
 
 }

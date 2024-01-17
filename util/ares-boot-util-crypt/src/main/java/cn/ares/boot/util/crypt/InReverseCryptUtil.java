@@ -1,5 +1,8 @@
 package cn.ares.boot.util.crypt;
 
+import java.util.function.Supplier;
+import java.util.zip.CRC32;
+
 /**
  * @author: Ares
  * @time: 2021-12-23 21:08:52
@@ -63,16 +66,41 @@ public class InReverseCryptUtil {
         () -> inReverseCrypt.signatureVerify(srcData, targetData));
   }
 
-  private static <T> T doInReverseCrypt(InReverseCryptCallBack<T> cryptCallBack) {
+  private static <T> T doInReverseCrypt(Supplier<T> inReverseCryptSupplier) {
     if (null == inReverseCrypt) {
       inReverseCrypt = InReverseCrypt.getInstance();
     }
-    return cryptCallBack.doInReverseCrypt();
+    return inReverseCryptSupplier.get();
   }
 
-  private interface InReverseCryptCallBack<T> {
+  /**
+   * @author: Ares
+   * @description: 计算字节数组的校验和
+   * @description: Calculate the checksum of a byte array
+   * @time: 2024-01-17 17:09:40
+   * @params: [byteArr] 字节数组
+   * @return: int 校验和
+   */
+  public static int crc32(byte[] byteArr) {
+    if (byteArr != null) {
+      return crc32(byteArr, 0, byteArr.length);
+    }
 
-    T doInReverseCrypt();
+    return 0;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 计算字节数组的校验和
+   * @description: Calculate the checksum of a byte array
+   * @time: 2024-01-17 17:09:40
+   * @params: [byteArr, offset, length] 字节数组，偏移量，长度
+   * @return: int 校验和
+   */
+  public static int crc32(byte[] byteArr, int offset, int length) {
+    CRC32 crc32 = new CRC32();
+    crc32.update(byteArr, offset, length);
+    return (int) (crc32.getValue() & 0x7FFFFFFF);
   }
 
 }

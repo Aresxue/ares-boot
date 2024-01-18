@@ -12,7 +12,7 @@
   </parent>
 
   <artifactId>ares-boot</artifactId>
-  <name>Ares Boot</name>
+  <name>Ares Boot ${project.version}</name>
   <packaging>pom</packaging>
   <description>
     制定Java后端的统一标准，致力于优化Java开发者的编程体验，减少重复基础功能开发，屏蔽与业务无关的事项

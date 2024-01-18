@@ -7,6 +7,7 @@ import static cn.ares.boot.util.common.constant.StringConstant.HTTP_DEFAULT_PORT
 import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
 
 import cn.ares.boot.util.common.StringUtil;
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -16,6 +17,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author: Ares
@@ -25,6 +27,8 @@ import java.util.List;
  * @version: JDK 1.8
  */
 public class NetworkUtil {
+
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(NetworkUtil.class);
 
   /**
    * 默认的localhost
@@ -120,7 +124,7 @@ public class NetworkUtil {
       // Get the last
       return ipList.get(ipList.size() - 1);
     } catch (SocketException socketException) {
-      socketException.printStackTrace();
+      JdkLoggerUtil.warn(LOGGER, "get local host address fail: ", socketException);
     }
     return DEFAULT_LOCALHOST;
   }

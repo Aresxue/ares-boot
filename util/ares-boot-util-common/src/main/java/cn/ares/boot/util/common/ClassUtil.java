@@ -11,10 +11,10 @@ import static cn.ares.boot.util.common.constant.SymbolConstant.TILDE;
 import cn.ares.boot.util.common.entity.MethodSpec;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author: Ares
@@ -26,19 +26,19 @@ public class ClassUtil {
 
   private static final String JDK_PROXY_CLASS_NAME = "com.sun.proxy.$Proxy";
 
+  private static final Map<Class<?>, Class<?>> PRIMITIVE_WRAP_TYPE_MAP = MapUtil.newLinkedHashMap(
+      int.class, Integer.class, double.class, Double.class, long.class, Long.class, short.class,
+      Short.class, byte.class, Byte.class, boolean.class, Boolean.class, char.class,
+      Character.class, float.class, Float.class, void.class, Void.class);
+  private static final Map<Class<?>, Class<?>> WRAP_PRIMITIVE_TYPE_MAP = MapUtil.newHashMap(9);
   /**
    * Primitive type wrapper list
    */
-  private static final List<String> PRIMITIVE_WRAP_TYPE_NAME_LIST = new ArrayList<>();
-  private static final List<Class<?>> PRIMITIVE_WRAP_TYPE_LIST = Arrays.asList(Integer.class,
-      Double.class, Long.class, Short.class, Byte.class, Boolean.class, Character.class,
-      Float.class);
+  private static final Set<String> PRIMITIVE_WRAP_TYPE_NAME_LIST = CollectionUtil.newHashSet(9);
   /**
    * Primitive type list
    */
-  private static final List<String> PRIMITIVE_TYPE_NAME_LIST = new ArrayList<>();
-  private static final List<Class<?>> PRIMITIVE_TYPE_LIST = Arrays.asList(int.class, double.class,
-      long.class, short.class, byte.class, boolean.class, char.class, float.class);
+  private static final Set<String> PRIMITIVE_TYPE_NAME_LIST = CollectionUtil.newHashSet(9);
 
   /**
    * 基本类型签名映射 primitive type signature mapping
@@ -48,9 +48,11 @@ public class ClassUtil {
   private final static String ARRAY_IDENTIFIER = LEFT_SQ_BRACKET;
 
   static {
-    PRIMITIVE_TYPE_LIST.forEach(clazz -> PRIMITIVE_TYPE_NAME_LIST.add(clazz.getCanonicalName()));
-    PRIMITIVE_WRAP_TYPE_LIST.forEach(
-        clazz -> PRIMITIVE_WRAP_TYPE_NAME_LIST.add(clazz.getCanonicalName()));
+    PRIMITIVE_WRAP_TYPE_MAP.forEach((primitive, wrap) -> {
+      PRIMITIVE_TYPE_NAME_LIST.add(primitive.getCanonicalName());
+      PRIMITIVE_WRAP_TYPE_NAME_LIST.add(wrap.getCanonicalName());
+      WRAP_PRIMITIVE_TYPE_MAP.put(wrap, primitive);
+    });
 
     BASE_CLASS_TO_IDENTIFIER_MAP.put(void.class, "V");
     BASE_CLASS_TO_IDENTIFIER_MAP.put(boolean.class, "Z");
@@ -70,7 +72,7 @@ public class ClassUtil {
     BASE_CLASS_TO_IDENTIFIER_MAP.put(float[].class, "[F");
     BASE_CLASS_TO_IDENTIFIER_MAP.put(double[].class, "[D");
 
-    PRIMITIVE_TYPE_LIST.forEach(
+    PRIMITIVE_WRAP_TYPE_MAP.keySet().forEach(
         clazz -> IDENTIFIER_TO_BASE_CLASS_MAP.put(BASE_CLASS_TO_IDENTIFIER_MAP.get(clazz), clazz));
     IDENTIFIER_TO_BASE_CLASS_MAP.put("[Z", boolean[].class);
     IDENTIFIER_TO_BASE_CLASS_MAP.put("[B", byte[].class);
@@ -419,8 +421,7 @@ public class ClassUtil {
 
 
   /**
-   * 解析方法签名（不加载类）
-   * Parse method signatures (without loading classes)
+   * 解析方法签名（不加载类） Parse method signatures (without loading classes)
    *
    * @param methodDesc 方法签名
    * @return 分离出的方法签名
@@ -467,8 +468,7 @@ public class ClassUtil {
   }
 
   /**
-   * 加载类数组
-   * Loaded class array
+   * 加载类数组 Loaded class array
    *
    * @param identifiers 根据方法签名解析的标志组合
    * @param classLoader 类加载器
@@ -490,8 +490,7 @@ public class ClassUtil {
   }
 
   /**
-   * 加载单个类
-   * Loading a single class
+   * 加载单个类 Loading a single class
    *
    * @param identifier  根据方法签名解析的标志
    * @param classLoader 类加载器
@@ -516,8 +515,7 @@ public class ClassUtil {
   }
 
   /**
-   * 提取类名
-   * Extract class name
+   * 提取类名 Extract class name
    *
    * @param identifier 根据方法签名解析的标志
    * @return 类名
@@ -527,8 +525,7 @@ public class ClassUtil {
   }
 
   /**
-   * 转换成通用类路径
-   * Convert to a generic classpath
+   * 转换成通用类路径 Convert to a generic classpath
    *
    * @param identifier 根据方法签名解析的标志
    * @return 类路径
@@ -537,15 +534,14 @@ public class ClassUtil {
     return identifier.replace("/", ".");
   }
 
-/**
-   * 构造方法签名
-   * Build method signature
+  /**
+   * 构造方法签名 Build method signature
    *
-   * @param methodName 方法名
+   * @param methodName     方法名
    * @param paramTypeNames 参数类型
    * @return 方法签名
    */
-  public static String buildMethodDesc(String methodName, String paramTypeNames){
+  public static String buildMethodDesc(String methodName, String paramTypeNames) {
     StringBuilder builder = new StringBuilder(methodName + TILDE + LEFT_BRACKET);
     if (StringUtil.isNotEmpty(paramTypeNames)) {
       builder.append(paramTypeNames);
@@ -558,8 +554,8 @@ public class ClassUtil {
    * @author: Ares
    * @description: 两个类是否都是java.lang包下的类
    * @description: Whether both classes are classes in the java.lang package
-   * @time: 2023-12-07 14:26:39 
-   * @params: [leftClass, rightClass] 左类，右类 
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
    * @return: boolean 是否都是java.lang包下的类
    */
   public static boolean isBothJavaLang(Class<?> leftClass, Class<?> rightClass) {
@@ -573,8 +569,8 @@ public class ClassUtil {
    * @author: Ares
    * @description: 两个类是否都是java.math包下的类
    * @description: Whether both classes are classes in the java.math package
-   * @time: 2023-12-07 14:26:39 
-   * @params: [leftClass, rightClass] 左类，右类 
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
    * @return: boolean 是否都是java.math包下的类
    */
   public static boolean isBothJavaMath(Class<?> leftClass, Class<?> rightClass) {
@@ -588,8 +584,8 @@ public class ClassUtil {
    * @author: Ares
    * @description: 两个类是否都是java.time包下的类
    * @description: Whether both classes are classes in the java.time package
-   * @time: 2023-12-07 14:26:39 
-   * @params: [leftClass, rightClass] 左类，右类 
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
    * @return: boolean 是否都是java.time包下的类
    */
   public static boolean isBothJavaTime(Class<?> leftClass, Class<?> rightClass) {
@@ -603,8 +599,8 @@ public class ClassUtil {
    * @author: Ares
    * @description: 两个类是否都是java.util包下的类
    * @description: Whether both classes are classes in the java.util package
-   * @time: 2023-12-07 14:26:39 
-   * @params: [leftClass, rightClass] 左类，右类 
+   * @time: 2023-12-07 14:26:39
+   * @params: [leftClass, rightClass] 左类，右类
    * @return: boolean 是否都是java.util包下的类
    */
   public static boolean isBothJavaUtil(Class<?> leftClass, Class<?> rightClass) {
@@ -671,7 +667,8 @@ public class ClassUtil {
     if (null == leftClass || null == rightClass) {
       return false;
     }
-    return Collection.class.isAssignableFrom(leftClass) && Collection.class.isAssignableFrom(rightClass);
+    return Collection.class.isAssignableFrom(leftClass) && Collection.class.isAssignableFrom(
+        rightClass);
   }
 
   /**
@@ -829,6 +826,257 @@ public class ClassUtil {
       methodName = methodName.substring(0, index);
     }
     return methodName;
+  }
+
+  /**
+   * <p>Converts the specified primitive Class object to its corresponding
+   * wrapper Class object.</p>
+   *
+   * <p>NOTE: this method handles {@code void.class},
+   * returning {@code void.class}.</p>
+   *
+   * @param clazz the class to convert, may be null
+   * @return the wrapper class for {@code cls} or {@code cls} if {@code cls} is not a primitive.
+   * {@code null} if null input.
+   */
+  public static Class<?> primitiveToWrap(final Class<?> clazz) {
+    Class<?> convertedClass = clazz;
+    if (clazz != null && clazz.isPrimitive()) {
+      convertedClass = PRIMITIVE_WRAP_TYPE_MAP.get(clazz);
+    }
+    return convertedClass;
+  }
+
+  /**
+   * <p>Create an array of primitive type from an array of wrapper types.
+   *
+   * <p>This method returns {@code null} for a {@code null} input array.
+   *
+   * @param array an array of wrapper object
+   * @return an array of the corresponding primitive type, or the original array
+   */
+  public static Object toPrimitive(final Object array) {
+    if (array == null) {
+      return null;
+    }
+    final Class<?> componentType = array.getClass().getComponentType();
+    final Class<?> primitive = wrapToPrimitive(componentType);
+    if (boolean.class.equals(primitive)) {
+      return toPrimitive(array);
+    }
+    if (char.class.equals(primitive)) {
+      return toPrimitive(array);
+    }
+    if (byte.class.equals(primitive)) {
+      return toPrimitive(array);
+    }
+    if (int.class.equals(primitive)) {
+      return toPrimitive(array);
+    }
+    if (long.class.equals(primitive)) {
+      return toPrimitive(array);
+    }
+    if (short.class.equals(primitive)) {
+      return toPrimitive(array);
+    }
+    if (double.class.equals(primitive)) {
+      return toPrimitive(array);
+    }
+    if (float.class.equals(primitive)) {
+      return toPrimitive(array);
+    }
+    return array;
+  }
+
+  /**
+   * <p>Converts the specified wrapper class to its corresponding primitive
+   * class.</p>
+   *
+   * <p>This method is the counter part of {@code primitiveToWrapper()}.
+   * If the passed in class is a wrapper class for a primitive type, this primitive type will be
+   * returned (e.g. {@code int.class} for {@code Integer.class}). For other classes, or if the
+   * parameter is
+   * <b>null</b>, the return value is <b>null</b>.</p>
+   *
+   * @param clazz the class to convert, may be <b>null</b>
+   * @return the corresponding primitive type if {@code clazz} is a wrapper class, <b>null</b>
+   * otherwise
+   * @see #primitiveToWrap(Class)
+   */
+  public static Class<?> wrapToPrimitive(final Class<?> clazz) {
+    return WRAP_PRIMITIVE_TYPE_MAP.get(clazz);
+  }
+
+  /**
+   * <p>Checks if an array of Classes can be assigned to another array of Classes.</p>
+   *
+   * <p>This method calls {@link #isAssignable(Class, Class) isAssignable} for each
+   * Class pair in the input arrays. It can be used to check if a set of arguments (the first
+   * parameter) are suitably compatible with a set of method parameter types (the second
+   * parameter).</p>
+   *
+   * <p>Unlike the {@link Class#isAssignableFrom(java.lang.Class)} method, this
+   * method takes into account widenings of primitive classes and {@code null}s.</p>
+   *
+   * <p>Primitive widenings allow an int to be assigned to a {@code long},
+   * {@code float} or {@code double}. This method returns the correct result for these cases.</p>
+   *
+   * <p>{@code Null} may be assigned to any reference type. This method will
+   * return {@code true} if {@code null} is passed in and the toClass is non-primitive.</p>
+   *
+   * <p>Specifically, this method tests whether the type represented by the
+   * specified {@code Class} parameter can be converted to the type represented by this
+   * {@code Class} object via an identity conversion widening primitive or widening reference
+   * conversion. See
+   * <em><a href="http://docs.oracle.com/javase/specs/">The Java Language Specification</a></em>,
+   * sections 5.1.1, 5.1.2 and 5.1.4 for details.</p>
+   *
+   * @param classArray   the array of Classes to check, may be {@code null}
+   * @param toClassArray the array of Classes to try to assign into, may be {@code null}
+   * @param autoboxing   whether to use implicit autoboxing/unboxing between primitives and
+   *                     wrappers
+   * @return {@code true} if assignment possible
+   */
+  public static boolean isAssignable(Class<?>[] classArray, Class<?>[] toClassArray,
+      final boolean autoboxing) {
+    if (!ArrayUtil.isSameLength(classArray, toClassArray)) {
+      return false;
+    }
+    if (classArray == null) {
+      classArray = EMPTY_CLASS_ARRAY;
+    }
+    if (toClassArray == null) {
+      toClassArray = EMPTY_CLASS_ARRAY;
+    }
+    for (int i = 0; i < classArray.length; i++) {
+      if (!isAssignable(classArray[i], toClassArray[i], autoboxing)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * <p>Checks if one {@code Class} can be assigned to a variable of
+   * another {@code Class}.</p>
+   *
+   * <p>Unlike the {@link Class#isAssignableFrom(java.lang.Class)} method,
+   * this method takes into account widenings of primitive classes and {@code null}s.</p>
+   *
+   * <p>Primitive widenings allow an int to be assigned to a long, float or
+   * double. This method returns the correct result for these cases.</p>
+   *
+   * <p>{@code Null} may be assigned to any reference type. This method
+   * will return {@code true} if {@code null} is passed in and the toClass is non-primitive.</p>
+   *
+   * <p>Specifically, this method tests whether the type represented by the
+   * specified {@code Class} parameter can be converted to the type represented by this
+   * {@code Class} object via an identity conversion widening primitive or widening reference
+   * conversion. See
+   * <em><a href="http://docs.oracle.com/javase/specs/">The Java Language Specification</a></em>,
+   * sections 5.1.1, 5.1.2 and 5.1.4 for details.</p>
+   *
+   * <p><strong>Since Lang 3.0,</strong> this method will default behavior for
+   * calculating assignability between primitive and wrapper types <em>corresponding to the running
+   * Java version</em>; i.e. autoboxing will be the default behavior in VMs running Java versions
+   * &gt; 1.5.</p>
+   *
+   * @param cls     the Class to check, may be null
+   * @param toClass the Class to try to assign into, returns false if null
+   * @return {@code true} if assignment possible
+   */
+  public static boolean isAssignable(final Class<?> cls, final Class<?> toClass) {
+    return isAssignable(cls, toClass, true);
+  }
+
+  /**
+   * <p>Checks if one {@code Class} can be assigned to a variable of
+   * another {@code Class}.</p>
+   *
+   * <p>Unlike the {@link Class#isAssignableFrom(java.lang.Class)} method,
+   * this method takes into account widenings of primitive classes and {@code null}s.</p>
+   *
+   * <p>Primitive widenings allow an int to be assigned to a long, float or
+   * double. This method returns the correct result for these cases.</p>
+   *
+   * <p>{@code Null} may be assigned to any reference type. This method
+   * will return {@code true} if {@code null} is passed in and the toClass is non-primitive.</p>
+   *
+   * <p>Specifically, this method tests whether the type represented by the
+   * specified {@code Class} parameter can be converted to the type represented by this
+   * {@code Class} object via an identity conversion widening primitive or widening reference
+   * conversion. See
+   * <em><a href="http://docs.oracle.com/javase/specs/">The Java Language Specification</a></em>,
+   * sections 5.1.1, 5.1.2 and 5.1.4 for details.</p>
+   *
+   * @param clazz      the Class to check, may be null
+   * @param toClass    the Class to try to assign into, returns false if null
+   * @param autoboxing whether to use implicit autoboxing/unboxing between primitives and wrappers
+   * @return {@code true} if assignment possible
+   */
+  public static boolean isAssignable(Class<?> clazz, final Class<?> toClass,
+      final boolean autoboxing) {
+    if (toClass == null) {
+      return false;
+    }
+    // have to check for null, as isAssignableFrom doesn't
+    if (clazz == null) {
+      return !toClass.isPrimitive();
+    }
+    // autoboxing:
+    if (autoboxing) {
+      if (clazz.isPrimitive() && !toClass.isPrimitive()) {
+        clazz = primitiveToWrap(clazz);
+        if (clazz == null) {
+          return false;
+        }
+      }
+      if (toClass.isPrimitive() && !clazz.isPrimitive()) {
+        clazz = wrapToPrimitive(clazz);
+        if (clazz == null) {
+          return false;
+        }
+      }
+    }
+    if (clazz.equals(toClass)) {
+      return true;
+    }
+    if (clazz.isPrimitive()) {
+      if (!toClass.isPrimitive()) {
+        return false;
+      }
+      if (int.class.equals(clazz)) {
+        return long.class.equals(toClass) || float.class.equals(toClass) || double.class.equals(
+            toClass);
+      }
+      if (long.class.equals(clazz)) {
+        return float.class.equals(toClass) || double.class.equals(toClass);
+      }
+      if (boolean.class.equals(clazz)) {
+        return false;
+      }
+      if (double.class.equals(clazz)) {
+        return false;
+      }
+      if (float.class.equals(clazz)) {
+        return double.class.equals(toClass);
+      }
+      if (char.class.equals(clazz)) {
+        return int.class.equals(toClass) || long.class.equals(toClass) || float.class.equals(
+            toClass) || double.class.equals(toClass);
+      }
+      if (short.class.equals(clazz)) {
+        return int.class.equals(toClass) || long.class.equals(toClass) || float.class.equals(
+            toClass) || double.class.equals(toClass);
+      }
+      if (byte.class.equals(clazz)) {
+        return short.class.equals(toClass) || int.class.equals(toClass) || long.class.equals(
+            toClass) || float.class.equals(toClass) || double.class.equals(toClass);
+      }
+      // should never get here
+      return false;
+    }
+    return toClass.isAssignableFrom(clazz);
   }
 
 }

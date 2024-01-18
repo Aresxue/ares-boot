@@ -1,5 +1,6 @@
 package cn.ares.boot.util.log.builder;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import cn.ares.boot.util.log.constant.LoggerType;
 import java.net.URI;
 import java.net.URL;
@@ -19,6 +20,9 @@ import org.slf4j.LoggerFactory;
  * @version: JDK 1.8
  */
 public class LoggerBuilder {
+
+  private static final java.util.logging.Logger LOGGER = JdkLoggerUtil.getLogger(
+      LoggerBuilder.class);
 
   public static Map<String, Logger> buildLogger(String logConfigDir, String... loggerNames) {
     if (null == loggerNames || loggerNames.length == 0) {
@@ -79,7 +83,7 @@ public class LoggerBuilder {
         default:
       }
     } catch (Exception exception) {
-      exception.printStackTrace();
+      JdkLoggerUtil.warn(LOGGER, "build logger fail: ", exception);
       for (String loggerName : loggerNames) {
         loggerMap.put(loggerName, loggerFactory.getLogger(loggerName));
       }

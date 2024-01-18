@@ -1,5 +1,6 @@
 package cn.ares.boot.util.spring.mybatis;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
@@ -9,6 +10,7 @@ import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.core.BridgeMethodResolver;
 import org.springframework.core.MethodClassKey;
@@ -24,6 +26,8 @@ import org.springframework.util.ClassUtils;
  * @version: JDK 1.8
  */
 public class MapperAnnotationClassResolver {
+
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(MapperAnnotationClassResolver.class);
 
   private static boolean mpEnabled = false;
 
@@ -49,7 +53,7 @@ public class MapperAnnotationClassResolver {
         mapperInterfaceField.setAccessible(true);
         mpEnabled = true;
       } catch (NoSuchFieldException exception) {
-        exception.printStackTrace();
+        JdkLoggerUtil.warn(LOGGER, "get mapper interface field fail: ", exception);
       }
     }
   }

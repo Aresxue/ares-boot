@@ -213,4 +213,57 @@ public class ArrayUtil {
     return Array.getLength(array);
   }
 
+  /**
+   * <p>Defensive programming technique to change a {@code null}
+   * reference to an empty one.
+   *
+   * <p>This method returns an empty array for a {@code null} input array.
+   *
+   * <p>As a memory optimizing technique an empty array passed in will be overridden with
+   * the empty {@code public static} references in this class.
+   *
+   * @param array the array to check for {@code null} or empty
+   * @return the same array, {@code public static} empty array if {@code null} or empty input
+   */
+  public static Class<?>[] nullToEmpty(final Class<?>[] array) {
+    if (isEmpty(array)) {
+      return EMPTY_CLASS_ARRAY;
+    }
+    return array;
+  }
+
+  /**
+   * <p>Defensive programming technique to change a {@code null}
+   * reference to an empty one.
+   *
+   * <p>This method returns an empty array for a {@code null} input array.
+   *
+   * <p>As a memory optimizing technique an empty array passed in will be overridden with
+   * the empty {@code public static} references in this class.
+   *
+   * @param array the array to check for {@code null} or empty
+   * @return the same array, {@code public static} empty array if {@code null} or empty input
+   */
+  public static Object[] nullToEmpty(final Object[] array) {
+    if (isEmpty(array)) {
+      return EMPTY_OBJECT_ARRAY;
+    }
+    return array;
+  }
+
+  /**
+   * <p>Checks whether two arrays are the same length, treating
+   * {@code null} arrays as length {@code 0}.
+   *
+   * <p>Any multidimensional aspects of the arrays are ignored.
+   *
+   * @param array1 the first array, may be {@code null}
+   * @param array2 the second array, may be {@code null}
+   * @return {@code true} if length of arrays matches, treating
+   *  {@code null} as an empty array
+   */
+  public static boolean isSameLength(final Object[] array1, final Object[] array2) {
+    return getLength(array1) == getLength(array2);
+  }
+
 }

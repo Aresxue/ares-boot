@@ -1,5 +1,6 @@
 package cn.ares.boot.util.common;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.AccessibleObject;
@@ -7,6 +8,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.logging.Logger;
 
 /**
  * @author: Ares
@@ -15,6 +17,8 @@ import java.lang.reflect.Modifier;
  * @version: JDK 1.8
  */
 class MethodHandleUtil {
+
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(MethodHandleUtil.class);
 
   private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
   private static MethodHandles.Lookup TRUSTED_LOOKUP = null;
@@ -35,7 +39,7 @@ class MethodHandleUtil {
         TRUSTED_LOOKUP = (MethodHandles.Lookup) internal.get(null);
         internal.setAccessible(isAccessible);
       } catch (Throwable t) {
-        t.printStackTrace();
+        JdkLoggerUtil.warn(LOGGER, "get trusted lookup fail: ", t);
       }
     }
   }

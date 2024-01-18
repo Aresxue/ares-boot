@@ -1,7 +1,9 @@
 package cn.ares.boot.util.common;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 
 /**
  * @author: Ares
@@ -11,19 +13,21 @@ import java.util.Set;
  */
 public class CollectionUtilTest {
 
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(CollectionUtilTest.class);
+
   public static void main(String[] args) {
     List<Integer> list = CollectionUtil.asList(1, 2);
-    System.out.println(list);
-    System.out.println(CollectionUtil.asList(list, 2, 3));
-    System.out.println(CollectionUtil.asList(null, 2, 3));
+    JdkLoggerUtil.info(LOGGER, list);
+    JdkLoggerUtil.info(LOGGER, CollectionUtil.asList(list, 2, 3));
+    JdkLoggerUtil.info(LOGGER, CollectionUtil.asList(null, 2, 3));
 
     Set<Integer> set = CollectionUtil.asSet(1, 2);
-    System.out.println(set);
-    System.out.println(CollectionUtil.asHashSet(set, 2, 3));
-    System.out.println(CollectionUtil.asHashSet(null, 2, 3));
+    JdkLoggerUtil.info(LOGGER, set);
+    JdkLoggerUtil.info(LOGGER, CollectionUtil.asLinkedHashSet(set, 2, 3));
+    JdkLoggerUtil.info(LOGGER, String.valueOf(CollectionUtil.asLinkedHashSet(null, 2, 3)));
 
-    System.out.println(CollectionUtil.asSet(set, 2, 3));
-    System.out.println(CollectionUtil.asSet(null, 2, 3));
+    JdkLoggerUtil.info(LOGGER, CollectionUtil.asSet(set, 2, 3));
+    JdkLoggerUtil.info(LOGGER, CollectionUtil.asSet(null, 2, 3));
   }
 
 }

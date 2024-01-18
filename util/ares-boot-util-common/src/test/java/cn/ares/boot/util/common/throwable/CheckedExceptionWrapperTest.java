@@ -1,6 +1,8 @@
 package cn.ares.boot.util.common.throwable;
 
 import cn.ares.boot.util.common.ClassUtil;
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
+import java.util.logging.Logger;
 
 /**
  * @author: Ares
@@ -10,11 +12,14 @@ import cn.ares.boot.util.common.ClassUtil;
  */
 public class CheckedExceptionWrapperTest {
 
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(CheckedExceptionWrapperTest.class);
+
   public static void main(String[] args) {
     CheckedExceptionWrapper checkedExceptionWrapper = new CheckedExceptionWrapper();
-    System.out.println(checkedExceptionWrapper instanceof RuntimeException);
-    System.out.println(RuntimeException.class.isInstance(checkedExceptionWrapper));
-    System.out.println(ClassUtil.isSameClass(RuntimeException.class, checkedExceptionWrapper.getClass()));
+    JdkLoggerUtil.info(LOGGER, checkedExceptionWrapper instanceof RuntimeException);
+    JdkLoggerUtil.info(LOGGER, RuntimeException.class.isInstance(checkedExceptionWrapper));
+    JdkLoggerUtil.info(LOGGER,
+        ClassUtil.isSameClass(RuntimeException.class, checkedExceptionWrapper.getClass()));
   }
 
 }

@@ -4,6 +4,7 @@ import cn.ares.boot.util.common.primitive.ByteUtil;
 import cn.ares.boot.util.common.primitive.IntegerUtil;
 import cn.ares.boot.util.common.primitive.LongUtil;
 import cn.ares.boot.util.common.primitive.ShortUtil;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -62,18 +63,58 @@ public class MapUtil {
   /**
    * @author: Ares
    * @description: 根据入参构建一个新映射
-   * @description: Build a new mapping based on the input
-   * @time: 2024-01-11 14:03:14
+   * @description: Build a new map based on the input
+   * @time: 2024-01-18 14:03:14
    * @params: [args] 参数
    * @return: java.util.Map<K, V> 映射
    */
-  @SuppressWarnings("unchecked")
   public static <K, V> Map<K, V> newMap(Object... args) {
+    return newMap(null, args);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 根据入参构建一个新的有序映射
+   * @description: Build a new  linked map based on the input
+   * @time: 2024-01-18 14:03:14
+   * @params: [args] 参数
+   * @return: java.util.Map<K, V> 映射
+   */
+  public static <K, V> Map<K, V> newLinkedHashMap(Object... args) {
+    return newMap(LinkedHashMap.class, args);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 根据映射实现类型和入参构建一个新映射
+   * @description: Build a new map based on the input
+   * @time: 2024-01-11 14:03:14
+   * @params: [mapImplClass, args] 映射实现实现类，参数
+   * @return: java.util.Map<K, V> 映射
+   */
+  @SuppressWarnings("unchecked")
+  public static <M, K, V> Map<K, V> newMap(Class<M> mapImplClass, Object... args) {
     if (ArrayUtil.isEmpty(args)) {
       return Collections.emptyMap();
     }
-    Map<K, V> map = new HashMap<>(capacity(args.length));
-    for (int i = 0; i < args.length / 2; i = i + 2) {
+    int capacityLength = capacity(args.length);
+    Map<K, V> map;
+    if (null == mapImplClass) {
+      map = new HashMap<>(capacityLength);
+    } else {
+      map = ExceptionUtil.get(() -> {
+        Constructor<?>[] constructors = mapImplClass.getConstructors();
+        for (Constructor<?> constructor : constructors) {
+          if (constructor.getParameterTypes().length == 1
+              && int.class == constructor.getParameterTypes()[0]) {
+            return (Map<K, V>) constructor.newInstance(capacityLength);
+          }
+        }
+        return (Map<K, V>) constructors[0].newInstance();
+      });
+    }
+
+    for (int i = 0; i < args.length -1; i = i + 2) {
       map.put((K) args[i], (V) args[i + 1]);
     }
     return map;

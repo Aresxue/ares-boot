@@ -749,6 +749,9 @@ public class CollectionUtil {
    * @return: java.util.Set<E> 新不可重复集合
    */
   public static <E> LinkedHashSet<E> asLinkedHashSet(Collection<E> collection, E... elements) {
+    if (null == collection) {
+      return asLinkedHashSet(elements);
+    }
     LinkedHashSet<E> newSet = new LinkedHashSet<>(collection);
     if (ArrayUtil.isNotEmpty(elements)) {
       Collections.addAll(newSet, elements);

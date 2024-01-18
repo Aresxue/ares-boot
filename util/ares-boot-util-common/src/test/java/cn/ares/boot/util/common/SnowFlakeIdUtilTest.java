@@ -1,5 +1,8 @@
 package cn.ares.boot.util.common;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
+import java.util.logging.Logger;
+
 /**
  * @author: Ares
  * @time: 2023-06-19 14:07:11
@@ -8,8 +11,10 @@ package cn.ares.boot.util.common;
  */
 public class SnowFlakeIdUtilTest {
 
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(SnowFlakeIdUtilTest.class);
+
   public static void main(String[] args) {
-    System.out.println("generate id: " + SnowFlakeIdUtil.nextIdByCacheWhenClockMoved());
+    LOGGER.info("generate id: " + SnowFlakeIdUtil.nextIdByCacheWhenClockMoved());
   }
 
 }

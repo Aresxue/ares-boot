@@ -1,6 +1,8 @@
 package cn.ares.boot.util.common.thread;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
+import java.util.logging.Logger;
 
 /**
  * @author: Ares
@@ -10,9 +12,11 @@ import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
  */
 public class ThreadUtilTest {
 
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(ThreadUtilTest.class);
+
   public static void main(String[] args) {
-    System.out.println("largeThreadCount: " + ThreadUtil.getLargeThreadCount());
-    System.out.println("suitableThreadCount: " + ThreadUtil.getSuitableThreadCount());
+    LOGGER.info("largeThreadCount: " + ThreadUtil.getLargeThreadCount());
+    LOGGER.info("suitableThreadCount: " + ThreadUtil.getSuitableThreadCount());
     ThreadUtil.getExecutorService("Test-Case-Repeat-Thread-%d", -1,
         100_000, new CallerRunsPolicy());
   }

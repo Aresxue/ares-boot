@@ -1,7 +1,9 @@
 package cn.ares.boot.util.common;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @author: Ares
@@ -11,18 +13,21 @@ import java.util.Map;
  */
 public class MapUtilTest {
 
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(MapUtilTest.class);
+
   public static void main(String[] args) {
     Map<String, String> sourceMap = new HashMap<>();
     sourceMap.put("name", "ares");
     sourceMap.put("test", null);
     sourceMap.put(null, "value");
-    System.out.println(MapUtil.trimValue(sourceMap));
+    JdkLoggerUtil.info(LOGGER, MapUtil.trimValue(sourceMap));
 
-    Map<String, String> map = MapUtil.newMap("name", "ares", "test", null, null, "value");
-    System.out.println(map);
-    System.out.println(map.get(null));
+    Map<String, String> map = MapUtil.newLinkedHashMap("name", "ares", "name1", "ares1", "name2",
+        "ares2", "test", null, null, "value", "1");
+    JdkLoggerUtil.info(LOGGER, map);
+    JdkLoggerUtil.info(LOGGER, map.get(null));
     map.put(null, "null");
-    System.out.println(map.get(null));
+    JdkLoggerUtil.info(LOGGER, map.get(null));
   }
 
 }

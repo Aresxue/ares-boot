@@ -1,5 +1,8 @@
 package cn.ares.boot.util.common;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
+import java.util.logging.Logger;
+
 /**
  * @author: Ares
  * @time: 2022-12-19 16:12:30
@@ -8,9 +11,11 @@ package cn.ares.boot.util.common;
  */
 public class DateUtilTest {
 
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(DateUtilTest.class);
+
   public static void main(String[] args) {
-    System.out.println(DateUtil.timestampToLocalDateTime(System.currentTimeMillis()));
-    System.out.println(DateUtil.timestampToLocalDateTimeWithMilli(System.currentTimeMillis()));
+    JdkLoggerUtil.info(LOGGER, DateUtil.timestampToLocalDateTime(System.currentTimeMillis()));
+    JdkLoggerUtil.info(LOGGER, DateUtil.timestampToLocalDateTimeWithMilli(System.currentTimeMillis()));
   }
 
 }

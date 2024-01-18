@@ -1,7 +1,9 @@
 package cn.ares.boot.util.ognl;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 import ognl.OgnlException;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
@@ -14,6 +16,8 @@ import org.springframework.util.Assert;
  */
 public class OgnlUtilTest {
 
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(OgnlUtilTest.class);
+
   @Test
   public void testParse() {
     String expressionText = "ognl util test is #{result}";
@@ -23,9 +27,9 @@ public class OgnlUtilTest {
     try {
       parseResult = OgnlUtil.parse(expressionText, "#{", "'", "}", "'", map);
     } catch (OgnlException ognlException) {
-      ognlException.printStackTrace();
+      JdkLoggerUtil.warn(LOGGER, "parse error: ", ognlException);
     }
-    System.out.println("parse result: " + parseResult);
+    LOGGER.info("parse result: " + parseResult);
     Assert.isTrue(null != parseResult && parseResult.contains("good"), "解析失败");
   }
 

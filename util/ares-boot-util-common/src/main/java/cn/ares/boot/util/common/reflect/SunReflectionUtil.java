@@ -1,8 +1,9 @@
-package cn.ares.boot.util.log.util;
+package cn.ares.boot.util.common.reflect;
 
+import cn.ares.boot.util.common.log.JdkLoggerUtil;
+import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import java.lang.reflect.Method;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.logging.Logger;
 
 /**
  * @author: Ares
@@ -13,11 +14,12 @@ import org.slf4j.LoggerFactory;
  */
 public class SunReflectionUtil {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SunReflectionUtil.class);
+  private static final Logger LOGGER = Logger.getLogger(SunReflectionUtil.class.getName());
 
   private static Method GET_CALLER_CLASS_METHOD;
 
   static {
+    JdkLoggerUtil.configFormatter(LOGGER);
     try {
       Class<?> sunReflectionClass = Class.forName("sun.reflect.Reflection");
       GET_CALLER_CLASS_METHOD = sunReflectionClass.getDeclaredMethod("getCallerClass", int.class);
@@ -53,8 +55,8 @@ public class SunReflectionUtil {
     }
     try {
       return (Class<?>) GET_CALLER_CLASS_METHOD.invoke(null, depth);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    } catch (Exception exception) {
+      throw new CheckedExceptionWrapper(exception);
     }
   }
 
@@ -81,8 +83,8 @@ public class SunReflectionUtil {
     } else {
       try {
         return (Class<?>) GET_CALLER_CLASS_METHOD.invoke(null, depth);
-      } catch (Exception e) {
-        throw new RuntimeException(e);
+      } catch (Exception exception) {
+        throw new CheckedExceptionWrapper(exception);
       }
     }
   }

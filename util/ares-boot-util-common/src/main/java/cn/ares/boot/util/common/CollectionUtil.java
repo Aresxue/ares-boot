@@ -300,6 +300,7 @@ public class CollectionUtil {
    * @time: 2023-05-08 11:43:37
    * @params: [oldList, elements] 老的集合，元素数组
    * @return: java.util.List<E> 新的集合
+   * @see CollectionUtil#asList(Collection, Object[])
    */
   @Deprecated
   public static <E> List<E> newList(List<E> oldList, E... elements) {
@@ -749,7 +750,7 @@ public class CollectionUtil {
    * @return: java.util.Set<E> 新不可重复集合
    */
   public static <E> LinkedHashSet<E> asLinkedHashSet(Collection<E> collection, E... elements) {
-    if (null == collection) {
+    if (isEmpty(collection)) {
       return asLinkedHashSet(elements);
     }
     LinkedHashSet<E> newSet = new LinkedHashSet<>(collection);

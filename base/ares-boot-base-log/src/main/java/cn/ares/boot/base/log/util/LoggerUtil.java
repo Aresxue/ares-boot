@@ -2,7 +2,7 @@ package cn.ares.boot.base.log.util;
 
 import cn.ares.boot.util.common.thread.ThreadLocalMapUtil;
 import cn.ares.boot.util.log.BaseLoggerUtil;
-import cn.ares.boot.util.log.util.SunReflectionUtil;
+import cn.ares.boot.util.common.reflect.SunReflectionUtil;
 import org.springframework.boot.logging.DeferredLog;
 
 /**

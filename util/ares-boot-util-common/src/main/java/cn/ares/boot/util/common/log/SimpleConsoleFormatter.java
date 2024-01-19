@@ -4,6 +4,7 @@ import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_WHIFFLETREE_MILLIS;
 
 import cn.ares.boot.util.common.DateUtil;
 import cn.ares.boot.util.common.ExceptionUtil;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
@@ -23,12 +24,23 @@ class SimpleConsoleFormatter extends Formatter {
 
     Date date = new Date(record.getMillis());
     builder.append(DateUtil.getFormat(DATE_FORMAT_WHIFFLETREE_MILLIS).format(date))
-        .append(" ").append("[").append(record.getThreadID()).append("]")
-        .append(" ").append(record.getLevel())
-        .append(" ").append(record.getSourceClassName())
-        .append("#").append(record.getSourceMethodName())
-        .append("#").append(record.getSequenceNumber())
-        .append(": ").append(record.getMessage());
+        .append(" ").append("[").append(Thread.currentThread().getName())
+        .append("-").append(record.getThreadID()).append("]")
+        .append(" ").append(record.getLevel());
+
+    String loggerName = record.getLoggerName();
+    StackTraceElement stackTraceElement = Arrays.stream(new Throwable().getStackTrace())
+        .filter(stackTrace -> stackTrace.getClassName().equals(loggerName)).findFirst()
+        .orElse(null);
+    if (null == stackTraceElement) {
+      builder.append(" ").append(loggerName);
+    } else {
+      builder.append(" ").append(stackTraceElement.getClassName())
+          .append("#").append(stackTraceElement.getMethodName())
+          .append("#").append(stackTraceElement.getLineNumber());
+    }
+
+    builder.append(": ").append(record.getMessage());
     Throwable throwable = record.getThrown();
     if (null != throwable) {
       builder.append(ExceptionUtil.toString(throwable));

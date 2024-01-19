@@ -164,8 +164,8 @@ public class ReflectionUtil {
 
       // 第4步  Spring 中的反射工具类获取Class中定义的Field
       field = findField(aClass, fieldName, true);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    } catch (Exception exception) {
+      throw new CheckedExceptionWrapper(exception);
     }
     if (null != field) {
       return field;

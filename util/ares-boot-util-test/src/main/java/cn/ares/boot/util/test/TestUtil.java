@@ -1,5 +1,7 @@
 package cn.ares.boot.util.test;
 
+import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
+
 /**
  * @author: Ares
  * @time: 2023-05-04 14:56:47
@@ -19,8 +21,8 @@ public class TestUtil {
   public static void await() {
     try {
       Thread.sleep(Integer.MAX_VALUE);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
+    } catch (InterruptedException interruptedException) {
+      throw new CheckedExceptionWrapper(interruptedException);
     }
   }
 

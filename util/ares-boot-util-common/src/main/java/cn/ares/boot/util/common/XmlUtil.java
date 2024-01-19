@@ -1,6 +1,7 @@
 package cn.ares.boot.util.common;
 
 
+import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -293,8 +294,8 @@ public class XmlUtil {
     final DocumentBuilder builder = createDocumentBuilder();
     try {
       return builder.parse(source);
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    } catch (Exception exception) {
+      throw new CheckedExceptionWrapper(exception);
     }
   }
 
@@ -309,8 +310,8 @@ public class XmlUtil {
     DocumentBuilder builder;
     try {
       builder = createDocumentBuilderFactory().newDocumentBuilder();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    } catch (Exception exception) {
+      throw new CheckedExceptionWrapper(exception);
     }
     return builder;
   }

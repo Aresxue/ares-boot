@@ -1,6 +1,7 @@
 package cn.ares.boot.util.spring;
 
 import cn.ares.boot.util.common.CollectionUtil;
+import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -172,8 +173,8 @@ public class BeanCopyUtil {
       TARGET target = copyProperties(source, targetClass);
       biConsumer.accept(source, target);
       return target;
-    } catch (Exception e) {
-      throw new RuntimeException(e);
+    } catch (Exception exception) {
+      throw new CheckedExceptionWrapper(exception);
     }
   }
 

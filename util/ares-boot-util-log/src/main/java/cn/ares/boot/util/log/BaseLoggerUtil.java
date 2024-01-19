@@ -5,7 +5,7 @@ import static org.slf4j.spi.LocationAwareLogger.ERROR_INT;
 import static org.slf4j.spi.LocationAwareLogger.INFO_INT;
 import static org.slf4j.spi.LocationAwareLogger.WARN_INT;
 
-import cn.ares.boot.util.log.util.SunReflectionUtil;
+import cn.ares.boot.util.common.reflect.SunReflectionUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

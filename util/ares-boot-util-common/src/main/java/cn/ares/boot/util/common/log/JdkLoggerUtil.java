@@ -14,8 +14,6 @@ import java.util.logging.Logger;
  */
 public class JdkLoggerUtil {
 
-  private static final Logger LOGGER = Logger.getLogger(JdkLoggerUtil.class.getCanonicalName());
-
   /**
    * @author: Ares
    * @description: 获取jdk日志对象

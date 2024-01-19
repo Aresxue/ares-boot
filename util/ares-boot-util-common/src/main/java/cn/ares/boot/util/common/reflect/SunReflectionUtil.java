@@ -14,18 +14,18 @@ import java.util.logging.Logger;
  */
 public class SunReflectionUtil {
 
-  private static final Logger LOGGER = Logger.getLogger(SunReflectionUtil.class.getName());
+  private static final Logger LOGGER = JdkLoggerUtil.getLogger(SunReflectionUtil.class);
 
   private static Method GET_CALLER_CLASS_METHOD;
 
   static {
-    JdkLoggerUtil.configFormatter(LOGGER);
     try {
       Class<?> sunReflectionClass = Class.forName("sun.reflect.Reflection");
       GET_CALLER_CLASS_METHOD = sunReflectionClass.getDeclaredMethod("getCallerClass", int.class);
-    } catch (ClassNotFoundException | NoSuchMethodException | LinkageError e) {
-      LOGGER.info(
-          "sun.reflect.Reflection#getCallerClass is not found, maybe jdk version is higher than 1.8");
+    } catch (Throwable throwable) {
+      JdkLoggerUtil.warn(LOGGER,
+          "sun.reflect.Reflection#getCallerClass is not found, maybe jdk version is higher than 1.8, throwable: ",
+          throwable);
     }
   }
 

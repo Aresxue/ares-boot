@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue</groupId>
-    <artifactId>ares-parent</artifactId>
-    <version>release</version>
+    <artifactId>c2f-parent</artifactId>
+    <groupId>com.c2f</groupId>
+    <version>2.0.0</version>
     <relativePath/>
   </parent>
 
@@ -22,6 +22,16 @@
   </description>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+    <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+    <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+
     <revision>1.0.3-SNAPSHOT</revision>
     <boot.version>${revision}</boot.version>
 

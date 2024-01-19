@@ -30,6 +30,7 @@
     <jackson-dataformat-yaml.version>2.15.0</jackson-dataformat-yaml.version>
     <commons-compress.version>1.25.0</commons-compress.version>
     <podam.version>8.0.1.RELEASE</podam.version>
+    <arthas.version>3.7.2</arthas.version>
   </properties>
 
   <dependencyManagement>
@@ -127,6 +128,17 @@
         <groupId>uk.co.jemos.podam</groupId>
         <artifactId>podam</artifactId>
         <version>${podam.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.taobao.arthas</groupId>
+        <artifactId>arthas-vmtool</artifactId>
+        <version>${arthas.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.taobao.arthas</groupId>
+        <artifactId>arthas-spring-boot-starter</artifactId>
+        <version>${arthas.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -183,9 +183,18 @@ public class ClassUtil {
     if (null == clazz || null == otherClass) {
       return false;
     }
-    return clazz.isAssignableFrom(otherClass) && otherClass.isAssignableFrom(clazz)
-        && clazz.getCanonicalName().equals(otherClass.getCanonicalName())
-        && clazz.getClassLoader() == otherClass.getClassLoader();
+    if (!(clazz.isAssignableFrom(otherClass) && otherClass.isAssignableFrom(clazz))) {
+      return false;
+    }
+    if (clazz.getClassLoader() != otherClass.getClassLoader()) {
+      return false;
+    }
+    String className = clazz.getCanonicalName();
+    if (null == className) {
+      return null == otherClass.getCanonicalName();
+    } else {
+      return className.equals(otherClass.getCanonicalName());
+    }
   }
 
   /**

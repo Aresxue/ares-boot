@@ -229,44 +229,6 @@ public class CollectionUtil {
 
   /**
    * @author: Ares
-   * @description: 从列表中随机选取元素
-   * @description: Get random element from list
-   * @time: 2022-06-07 17:17:34
-   * @params: [list] 列表
-   * @return: T 随机元素
-   */
-  public static <T> T random(List<T> list) {
-    if (isEmpty(list)) {
-      return null;
-    }
-    int index = ThreadLocalRandom.current().nextInt(list.size());
-    return list.get(index);
-  }
-
-  /**
-   * @author: Ares
-   * @description: 从不可重复集合中随机选取元素
-   * @description: Get random element from set
-   * @time: 2023-10-27 16:36:56
-   * @params: [set] 不可重复集合
-   * @return: T 随机元素
-   */
-  public static <T> T random(Set<T> set) {
-    if (isEmpty(set)) {
-      return null;
-    }
-    int index = ThreadLocalRandom.current().nextInt(set.size());
-    for (T t : set) {
-      if (index <= 0) {
-        return t;
-      }
-      index--;
-    }
-    return null;
-  }
-
-  /**
-   * @author: Ares
    * @description: 获取集合第一个元素
    * @description: Get first element for collection
    * @time: 2023-10-27 16:28:30
@@ -277,11 +239,17 @@ public class CollectionUtil {
     if (isEmpty(collection)) {
       return null;
     }
-    if (collection instanceof Set) {
-      return random((Set<T>) collection);
-    } else if (collection instanceof List) {
-      return random((List<T>) collection);
+    if (collection instanceof List) {
+      List<T> list = (List<T>) collection;
+      if (list.size() == 1) {
+        return list.get(0);
+      }
+      int index = ThreadLocalRandom.current().nextInt(list.size());
+      return list.get(index);
     } else {
+      if (collection.size() == 1) {
+        return new ArrayList<>(collection).get(0);
+      }
       int index = ThreadLocalRandom.current().nextInt(collection.size());
       for (T t : collection) {
         if (index <= 0) {

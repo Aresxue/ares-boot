@@ -183,18 +183,9 @@ public class ClassUtil {
     if (null == clazz || null == otherClass) {
       return false;
     }
-    if (!(clazz.isAssignableFrom(otherClass) && otherClass.isAssignableFrom(clazz))) {
-      return false;
-    }
-    if (clazz.getClassLoader() != otherClass.getClassLoader()) {
-      return false;
-    }
-    String className = clazz.getCanonicalName();
-    if (null == className) {
-      return null == otherClass.getCanonicalName();
-    } else {
-      return className.equals(otherClass.getCanonicalName());
-    }
+    return clazz.isAssignableFrom(otherClass) && otherClass.isAssignableFrom(clazz)
+        && clazz.getName().equals(otherClass.getName())
+        && clazz.getClassLoader() == otherClass.getClassLoader();
   }
 
   /**
@@ -316,7 +307,7 @@ public class ClassUtil {
     }
     List<String> paramTypes = new ArrayList<>();
     for (Class<?> clazz : parameterTypes) {
-      paramTypes.add(clazz.getCanonicalName());
+      paramTypes.add(clazz.getName());
     }
     return paramTypes.toArray(new String[0]);
   }

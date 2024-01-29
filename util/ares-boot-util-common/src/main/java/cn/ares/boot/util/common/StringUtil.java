@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
@@ -1642,6 +1643,26 @@ public class StringUtil {
       return shortestStrLen;
     }
     return firstDiff;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 返回第一个非空值
+   * @description: Returns the first non-null value
+   * @time: 2024-01-29 10:20:47
+   * @params: [values] 值数组
+   * @return: java.util.Optional<T> 结果
+   */
+  @SafeVarargs
+  public static <T> Optional<T> coalesce(T... values) {
+    if (ArrayUtil.isNotEmpty(values)) {
+      for (T value : values) {
+        if (null != value) {
+          return Optional.of(value);
+        }
+      }
+    }
+    return Optional.empty();
   }
 
 }

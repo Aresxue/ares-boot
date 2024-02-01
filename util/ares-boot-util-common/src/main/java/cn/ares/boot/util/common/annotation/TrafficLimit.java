@@ -69,4 +69,10 @@ public @interface TrafficLimit {
    */
   ScriptLang expressionLang() default GROOVY;
 
+  /**
+   * 限流是否针对单个客户端
+   * Whether the current limit is for a single client
+   */
+  boolean perClient() default false;
+
 }

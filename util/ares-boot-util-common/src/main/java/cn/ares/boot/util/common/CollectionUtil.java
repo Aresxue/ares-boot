@@ -327,9 +327,21 @@ public class CollectionUtil {
       throw new NullPointerException();
     }
     int arraySize = elements.length;
-    ArrayList<E> list = new ArrayList<>(suitableCapacity(arraySize));
+    ArrayList<E> list = newArrayList(arraySize);
     Collections.addAll(list, elements);
     return list;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 以指定的元素大小创建数组链表
+   * @description: Create an array linked list with the specified element size
+   * @time: 2024-03-25 13:00:41
+   * @params: [arraySize] 数组大小
+   * @return: java.util.ArrayList<E> 数组链表
+   */
+  public static <E> ArrayList<E> newArrayList(int arraySize) {
+    return new ArrayList<>(suitableCapacity(arraySize));
   }
 
   /**

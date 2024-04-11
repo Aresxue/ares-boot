@@ -325,6 +325,24 @@ public class ExceptionUtil {
     return stringBuilder.toString();
   }
 
+  /**
+   * @author: Ares
+   * @description: 获取最深层次的异常原因
+   * @description: Get the deepest cause
+   * @time: 2024-04-11 14:12:45
+   * @params: [throwable] 可抛出的异常
+   * @return: java.lang.Throwable 最深层次的异常原因
+   */
+  public static Throwable getDeepestCause(Throwable throwable) {
+    if (null == throwable) {
+      return null;
+    }
+    while (null != throwable.getCause()) {
+      throwable = throwable.getCause();
+    }
+    return throwable;
+  }
+
   private static boolean isConcern(StackTraceElement stackTrace) {
     // 排除jdk的类和sun包下的类（值得一提的是由于反射会被优化会导致堆栈变化成sun.reflect.GeneratedMethodAccessor）
     return JDK_PACKAGE_NAME_SET.stream()

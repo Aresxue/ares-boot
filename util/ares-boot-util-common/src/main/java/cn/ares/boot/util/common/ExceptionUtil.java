@@ -3,8 +3,8 @@ package cn.ares.boot.util.common;
 import static cn.ares.boot.util.common.constant.StringConstant.JAVA;
 import static cn.ares.boot.util.common.constant.StringConstant.SUN;
 
-import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import cn.ares.boot.util.common.function.RunnableWithException;
+import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -241,13 +241,25 @@ public class ExceptionUtil {
 
   /**
    * @author: Ares
-   * @description: 迭代异常并做指定处理
-   * @description: Iterate over the exception and do the assignment processing
+   * @description: 迭代异常并做指定处理（处理抑制异常）
+   * @description: Iterate over the exception and do the assignment processing(handle suppressedExceptions)）
    * @time: 2023-12-07 14:46:08
    * @params: [throwable, consumer] 待迭代异常，异常处理
    * @return: void
    */
   public static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer) {
+    iterableThrowable(throwable, consumer, true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 迭代异常并做指定处理（可指定是否处理抑制异常）
+   * @description: Iterate over the exception and do the assignment processing(Can specify whether to handle suppressedExceptions)
+   * @time: 2023-12-07 14:46:08
+   * @params: [throwable, consumer, handleSuppressed] 待迭代异常，异常处理, 是否处理抑制异常
+   * @return: void
+   */
+  public static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer, boolean handleSuppressed) {
     if (null == throwable) {
       return;
     }
@@ -256,11 +268,11 @@ public class ExceptionUtil {
     Set<Throwable> circularReferenceDetectSet = Collections.newSetFromMap(new IdentityHashMap<>());
     circularReferenceDetectSet.add(throwable);
 
-    iterableThrowable(throwable, consumer, circularReferenceDetectSet, false);
+    iterableThrowable(throwable, consumer, circularReferenceDetectSet, false, handleSuppressed);
   }
 
   private static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer,
-      Set<Throwable> circularReferenceDetectSet, boolean detect) {
+      Set<Throwable> circularReferenceDetectSet, boolean detect, boolean handleSuppressed) {
     if (detect && circularReferenceDetectSet.contains(throwable)) {
       return;
     }
@@ -268,14 +280,16 @@ public class ExceptionUtil {
 
     consumer.accept(throwable);
 
-    Throwable[] suppressedExceptions = throwable.getSuppressed();
-    for (Throwable suppressed : suppressedExceptions) {
-      iterableThrowable(suppressed, consumer, circularReferenceDetectSet, true);
+    if (handleSuppressed) {
+      Throwable[] suppressedExceptions = throwable.getSuppressed();
+      for (Throwable suppressed : suppressedExceptions) {
+        iterableThrowable(suppressed, consumer, circularReferenceDetectSet, true, handleSuppressed);
+      }
     }
 
     Throwable cause = throwable.getCause();
     if (null != cause) {
-      iterableThrowable(cause, consumer, circularReferenceDetectSet, true);
+      iterableThrowable(cause, consumer, circularReferenceDetectSet, true, handleSuppressed);
     }
   }
 

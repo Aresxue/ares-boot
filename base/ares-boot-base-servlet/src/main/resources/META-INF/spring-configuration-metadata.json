@@ -1,0 +1,22 @@
+{
+    "groups":
+    [
+        {
+            "name": "http servlet repeatable enabled",
+            "type": "cn.ares.boot.base.servlet.filter.RepeatableHttpServletFilter",
+            "sourceType": "cn.ares.boot.base.servlet.filter.RepeatableHttpServletFilter"
+        }
+    ],
+    "properties":
+    [
+        {
+            "name": "ares.servlet.repeatable-http-servlet.enabled",
+            "description": "http servlet repeatable enabled",
+            "type": "java.lang.Boolean",
+            "defaultValue": true,
+            "sourceType": "cn.ares.boot.base.servlet.filter.RepeatableHttpServletFilter"
+        }
+    ],
+    "hints":
+    []
+}

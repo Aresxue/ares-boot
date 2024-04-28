@@ -40,7 +40,8 @@ import org.springframework.stereotype.Component;
 @Role(value = ROLE_INFRASTRUCTURE)
 public class RepeatableHttpServletFilter implements Filter {
 
-  public static final String FILE_CONTENT_TYPE_SET_EXPRESSION = "${ares.servlet.file.content-types:multipart/form-data,image/bmp,image/gif,image/jpeg,image/png,image/svg+xml,image/tiff,image/webp}";
+  private static final String FILE_CONTENT_TYPES = "multipart/form-data,image/bmp,image/gif,image/jpeg,image/png,image/svg+xml,image/tiff,image/webp";
+  public static final String FILE_CONTENT_TYPE_SET_EXPRESSION = "${ares.servlet.file.content-types:" + FILE_CONTENT_TYPES + "}";
 
   /**
    * File Content-Type set 文件文本类型不可重复集合

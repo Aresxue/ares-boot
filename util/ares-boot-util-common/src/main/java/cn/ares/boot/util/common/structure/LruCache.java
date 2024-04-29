@@ -15,8 +15,10 @@ public class LruCache<K, V> extends LinkedHashMap<K, V> {
 
   private static final long serialVersionUID = -8336395808351083625L;
 
+  private static final int DEFAULT_BUCKET_LENGTH = 1024;
   private static final float DEFAULT_LOAD_FACTOR = 0.75f;
-  private static final int DEFAULT_MAX_CAPACITY = 1000;
+  private static final int DEFAULT_MAX_CAPACITY =
+      Float.valueOf(DEFAULT_BUCKET_LENGTH * DEFAULT_LOAD_FACTOR).intValue() - 1;
   private static final ReentrantReadWriteLock READ_WRITE_LOCK = new ReentrantReadWriteLock();
   private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
   private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
@@ -28,7 +30,7 @@ public class LruCache<K, V> extends LinkedHashMap<K, V> {
   }
 
   public LruCache(int maxCapacity) {
-    super(16, DEFAULT_LOAD_FACTOR, true);
+    super(DEFAULT_BUCKET_LENGTH, DEFAULT_LOAD_FACTOR, true);
     this.maxCapacity = maxCapacity;
   }
 

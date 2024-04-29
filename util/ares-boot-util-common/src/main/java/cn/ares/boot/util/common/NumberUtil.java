@@ -1803,4 +1803,26 @@ public class NumberUtil {
     return FLOATING_POINT_NUMBER_PATTERN.matcher(str).matches();
   }
 
+  /**
+   * @author: Ares
+   * @description: 是否为偶数
+   * @time: 2024-04-29 12:25:14
+   * @params: [number] 数字
+   * @return: boolean 是否为偶数
+   */
+  public static boolean isEven(int number) {
+    return number % 2 == 0;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 是否为奇数
+   * @time: 2024-04-29 12:25:14
+   * @params: [number] 数字
+   * @return: boolean 是否为奇数
+   */
+  public static boolean isOdd(int number) {
+    return number % 2 != 0;
+  }
+
 }

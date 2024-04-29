@@ -130,4 +130,35 @@ public class PropertyUtil {
     return nestedMap;
   }
 
+  /**
+   * @author: Ares
+   * @description: 创建属性（不校验入参长度）
+   * @description: Create new properties(Do not verify input parameter length)
+   * @time: 2024-04-29 12:29:56
+   * @params: [args] 参数
+   * @return: java.util.Properties 属性
+   */
+  public static Properties newProperties(Object... args) {
+    return newProperties(false, args);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 创建属性（是否校验入参长度）
+   * @description: Create new properties(Whether to verify the input parameter length)
+   * @time: 2024-04-29 12:29:56
+   * @params: [checkLength, args] 是否校验入参长度，参数
+   * @return: java.util.Properties 属性
+   */
+  public static Properties newProperties(boolean checkLength, Object... args) {
+    if (checkLength && ArrayUtil.isOddLength(args)) {
+      throw new IllegalArgumentException("Args length must be even");
+    }
+    Properties properties = new Properties();
+    for (int i = 0; i < args.length - 1; i = i + 2) {
+      properties.put(args[i], args[i + 1]);
+    }
+    return properties;
+  }
+
 }

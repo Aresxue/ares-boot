@@ -62,25 +62,52 @@ public class MapUtil {
 
   /**
    * @author: Ares
-   * @description: 根据入参构建一个新映射
-   * @description: Build a new map based on the input
+   * @description: 根据入参构建一个新映射（不校验入参长度）
+   * @description: Build a new map based on the input(Do not verify input parameter length)
    * @time: 2024-01-18 14:03:14
    * @params: [args] 参数
    * @return: java.util.Map<K, V> 映射
    */
   public static <K, V> Map<K, V> newMap(Object... args) {
+    return newMap(false, args);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 根据入参构建一个新映射（是否校验入参长度）
+   * @description: Build a new map based on the input(Whether to verify the input parameter length)
+   * @time: 2024-01-18 14:03:14
+   * @params: [checkLength, args] 是否校验入参长度，参数
+   * @return: java.util.Map<K, V> 映射
+   */
+  public static <K, V> Map<K, V> newMap(boolean checkLength, Object... args) {
+    if (checkLength && ArrayUtil.isOddLength(args)) {
+      throw new IllegalArgumentException("Args length must be even");
+    }
     return newMap(null, args);
   }
 
   /**
    * @author: Ares
-   * @description: 根据入参构建一个新的有序映射
-   * @description: Build a new  linked map based on the input
+   * @description: 根据入参构建一个新的有序映射（不校验入参长度）
+   * @description: Build a new linked map based on the input(Do not verify input parameter length)
    * @time: 2024-01-18 14:03:14
    * @params: [args] 参数
    * @return: java.util.Map<K, V> 映射
    */
   public static <K, V> Map<K, V> newLinkedHashMap(Object... args) {
+    return newLinkedHashMap(false, args);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 根据入参构建一个新的有序映射（是否校验入参长度）
+   * @description: Build a new  linked map based on the input(Whether to verify the input parameter length)
+   * @time: 2024-01-18 14:03:14
+   * @params: [checkLength, args] 是否校验入参长度，参数
+   * @return: java.util.Map<K, V> 映射
+   */
+  public static <K, V> Map<K, V> newLinkedHashMap(boolean checkLength, Object... args) {
     return newMap(LinkedHashMap.class, args);
   }
 

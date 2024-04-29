@@ -266,4 +266,16 @@ public class ArrayUtil {
     return getLength(array1) == getLength(array2);
   }
 
+  /**
+   * @author: Ares
+   * @description: 数组长度是否为奇数个
+   * @description: Is the array length an odd number
+   * @time: 2024-04-29 12:26:05
+   * @params: [array] 数组
+   * @return: boolean 数组长度为奇数个
+   */
+  public static boolean isOddLength(Object[] array) {
+    return isNotEmpty(array) && NumberUtil.isOdd(array.length);
+  }
+
 }

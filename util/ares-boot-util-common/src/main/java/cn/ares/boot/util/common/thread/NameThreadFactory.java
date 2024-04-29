@@ -49,7 +49,7 @@ public final class NameThreadFactory {
 
 
   public NameThreadFactory setThreadFactory(ThreadFactory backingThreadFactory) {
-    this.backingThreadFactory = (ThreadFactory) checkNotNull(backingThreadFactory);
+    this.backingThreadFactory = checkNotNull(backingThreadFactory);
     return this;
   }
 

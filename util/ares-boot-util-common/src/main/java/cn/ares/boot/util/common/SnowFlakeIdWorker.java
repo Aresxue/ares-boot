@@ -4,6 +4,7 @@ import cn.ares.boot.util.common.network.NetworkUtil;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -58,7 +59,8 @@ public class SnowFlakeIdWorker {
    * 时间截向左移22位(5+5+12)
    * Shift the time cut to the left by 22 bits (5+5+12)
    */
-  private static final long TIMESTAMP_LEFT_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS + DATA_CENTER_ID_BITS;
+  private static final long TIMESTAMP_LEFT_SHIFT =
+      SEQUENCE_BITS + WORKER_ID_BITS + DATA_CENTER_ID_BITS;
   /**
    * 生成序列的掩码，这里为4095(0b111111111111=0xfff=4095)
    * Mask of the generated sequence, here 4095 (0b111111111111=0xfff=4095)
@@ -70,6 +72,11 @@ public class SnowFlakeIdWorker {
    */
   private static final int DEFAULT_SEQUENCE_CACHE_SIZE = 2000;
   /**
+   * 默认毫秒内序列起始值
+   * Sequence default start offset
+   */
+  protected static final long DEFAULT_SEQUENCE_START_OFFSET = 0L;
+  /**
    * 工作机器ID(0~31)
    * Work machine ID (0~31)
    */
@@ -80,7 +87,8 @@ public class SnowFlakeIdWorker {
    */
   private final long dataCenterId;
   /**
-   * 时间起点 start timestamp
+   * 时间起点
+   * Start timestamp
    */
   private final long epoch;
   /**
@@ -89,16 +97,24 @@ public class SnowFlakeIdWorker {
    */
   private final long[] sequenceCache;
   /**
-   * 毫秒内序列(0~4095) Sequence within milliseconds (0~4095)
+   * 毫秒内序列(0~4095)
+   * Sequence within milliseconds (0~4095)
    */
   private long sequence = 0L;
   /**
-   * 上次生成ID的时间截 The last time the ID was generated
+   * 上次生成ID的时间截
+   * The last time the ID was generated
    */
   private long lastTimestamp = -1L;
 
   private final Lock nextIdLock = new ReentrantLock();
   private final Lock nextIdByCacheWhenClockMovedLock = new ReentrantLock();
+  /**
+   * 毫秒内序列起始值（主要解决可以处理主键取余的数据倾斜问题）
+   * The starting value of the sequence within milliseconds (mainly solves the problem of data skew that can handle the remainder of the primary key)
+   */
+  private long sequenceStartOffset = DEFAULT_SEQUENCE_START_OFFSET;
+
   /**
    * 构造函数 Constructor
    */
@@ -201,13 +217,14 @@ public class SnowFlakeIdWorker {
         if (this.sequence == 0) {
           // 阻塞到下一个毫秒,获得新的时间戳
           // Block until the next millisecond, get a new timestamp
+          sequence = getSequenceStartOffset();
           timestamp = tilNextMillis(lastTimestamp);
         }
         // 时间戳改变，毫秒内序列重置
       }
       // Timestamp changed, sequence reset in milliseconds
       else {
-        this.sequence = 0L;
+        this.sequence = getSequenceStartOffset();
       }
 
       // 上次生成ID的时间截
@@ -274,13 +291,14 @@ public class SnowFlakeIdWorker {
         this.sequence = (this.sequence + 1) & SEQUENCE_MASK;
         // Exceed the max sequence, we wait the next second to generate id
         if (this.sequence == 0) {
+          sequence = getSequenceStartOffset();
           timestamp = tilNextMillis(this.lastTimestamp);
           index = (int) (timestamp % sequenceCacheSize);
         }
       } else {
         // 时间大于上一次的时间戳没有发生回拨，序列从0开始
         // No callback occurs when the time is greater than the last timestamp, and the sequence starts from 0
-        this.sequence = 0L;
+        this.sequence = getSequenceStartOffset();
       }
       // 缓存序列且更新上一次的时间戳
       // Cache the sequence and update the last timestamp
@@ -311,8 +329,7 @@ public class SnowFlakeIdWorker {
   }
 
   /**
-   * 阻塞到下一个毫秒，直到获得新的时间戳
-   * Block until the next millisecond until a new timestamp is obtained
+   * 阻塞到下一个毫秒，直到获得新的时间戳 Block until the next millisecond until a new timestamp is obtained
    *
    * @param lastTimestamp 上次生成ID的时间截
    * @return 当前时间戳
@@ -326,8 +343,7 @@ public class SnowFlakeIdWorker {
   }
 
   /**
-   * 返回以毫秒为单位的当前时间
-   * Returns the current time in milliseconds
+   * 返回以毫秒为单位的当前时间 Returns the current time in milliseconds
    *
    * @return 当前时间(毫秒)
    */
@@ -353,5 +369,17 @@ public class SnowFlakeIdWorker {
       return result;
     }
   }
+
+  public void sequenceStartOffset(long sequenceStartOffset) {
+    this.sequenceStartOffset = sequenceStartOffset;
+  }
+
+  public long getSequenceStartOffset() {
+    if (0L == sequenceStartOffset) {
+      return 0L;
+    }
+    return ThreadLocalRandom.current().nextLong(sequenceStartOffset);
+  }
+
 
 }

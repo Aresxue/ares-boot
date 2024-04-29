@@ -1,6 +1,10 @@
 package cn.ares.boot.util.common;
 
 
+import static cn.ares.boot.util.common.SnowFlakeIdWorker.DEFAULT_SEQUENCE_START_OFFSET;
+
+import java.util.Map;
+
 /**
  * @author: Ares
  * @time: 2021-05-13 10:14:00
@@ -9,7 +13,7 @@ package cn.ares.boot.util.common;
  */
 public class SnowFlakeIdUtil {
 
-  private static final SnowFlakeIdWorker SNOWFLAKE_ID_WORKER = new SnowFlakeIdWorker();
+  private static final Map<Long, SnowFlakeIdWorker> SNOWFLAKE_ID_WORKER_CACHE = MapUtil.newConcurrentMap();
 
   /**
    * @author: Ares
@@ -20,7 +24,20 @@ public class SnowFlakeIdUtil {
    * @return: long 分布式标识
    */
   public static long nextId() {
-    return SNOWFLAKE_ID_WORKER.nextId();
+    return nextId(DEFAULT_SEQUENCE_START_OFFSET);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 取分布式标识 (该方法是线程安全的)
+   * @description: Get the distributed identity (this method is thread-safe)
+   * @time: 2024-04-29 19:41:30
+   * @params: [sequenceStartOffset] 毫秒内序列起始值
+   * @return: long 分布式标识
+   */
+  public static long nextId(long sequenceStartOffset) {
+    SnowFlakeIdWorker snowFlakeIdWorker = getSnowFlakeIdWorker(sequenceStartOffset);
+    return snowFlakeIdWorker.nextId();
   }
 
   /**
@@ -38,14 +55,35 @@ public class SnowFlakeIdUtil {
   /**
    * @author: Ares
    * @description: 兼容短暂时钟回拨的获取分布式标识的方式 (该方法是线程安全的)
-   * @description: A way to obtain distributed identities that is compatible with short clock
-   * backticks (the method is thread-safe)
+   * @description: A way to obtain distributed identities that is compatible with short clock backticks (the method is thread-safe)
    * @time: 2023-05-08 13:09:45
    * @params: []
    * @return: long 分布式标识
    */
   public static long nextIdByCacheWhenClockMoved() {
-    return SNOWFLAKE_ID_WORKER.nextIdByCacheWhenClockMoved();
+    return nextIdByCacheWhenClockMoved(DEFAULT_SEQUENCE_START_OFFSET);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 兼容短暂时钟回拨的获取分布式标识的方式 (该方法是线程安全的)
+   * @description: A way to obtain distributed identities that is compatible with short clock backticks (the method is thread-safe)
+   * @time: 2024-04-29 19:42:51
+   * @params: [sequenceStartOffset] 毫秒内序列起始值
+   * @return: long 分布式标识
+   */
+  public static long nextIdByCacheWhenClockMoved(long sequenceStartOffset) {
+    SnowFlakeIdWorker snowFlakeIdWorker = getSnowFlakeIdWorker(sequenceStartOffset);
+    return snowFlakeIdWorker.nextIdByCacheWhenClockMoved();
+  }
+
+  private static SnowFlakeIdWorker getSnowFlakeIdWorker(long sequenceStartOffset) {
+    return SNOWFLAKE_ID_WORKER_CACHE.computeIfAbsent(
+        sequenceStartOffset, value -> {
+          SnowFlakeIdWorker worker = new SnowFlakeIdWorker();
+          worker.sequenceStartOffset(sequenceStartOffset);
+          return worker;
+        });
   }
 
   /**

@@ -21,7 +21,7 @@ public class LruCache<K, V> extends LinkedHashMap<K, V> {
   private static final Lock READ_LOCK = READ_WRITE_LOCK.readLock();
   private static final Lock WRITE_LOCK = READ_WRITE_LOCK.writeLock();
 
-  private volatile int maxCapacity;
+  private final int maxCapacity;
 
   public LruCache() {
     this(DEFAULT_MAX_CAPACITY);
@@ -99,10 +99,6 @@ public class LruCache<K, V> extends LinkedHashMap<K, V> {
 
   public int getMaxCapacity() {
     return maxCapacity;
-  }
-
-  public void setMaxCapacity(int maxCapacity) {
-    this.maxCapacity = maxCapacity;
   }
 
 }

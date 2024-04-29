@@ -1,6 +1,7 @@
 package cn.ares.boot.util.common.structure;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -32,7 +33,7 @@ public class LruCache<K, V> extends LinkedHashMap<K, V> {
   }
 
   @Override
-  protected boolean removeEldestEntry(java.util.Map.Entry<K, V> eldest) {
+  protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
     return size() > maxCapacity;
   }
 

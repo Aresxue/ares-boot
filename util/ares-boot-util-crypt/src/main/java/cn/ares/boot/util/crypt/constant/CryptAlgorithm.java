@@ -1,6 +1,8 @@
 package cn.ares.boot.util.crypt.constant;
 
-import java.util.Arrays;
+import cn.ares.boot.util.common.MapUtil;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author: Ares
@@ -22,6 +24,14 @@ public enum CryptAlgorithm {
   RSA("rsa", true),
   HMAC_SM3("hmac-sm3", false);
 
+  private static final Map<String, CryptAlgorithm> CACHED = MapUtil.newMap(values().length);
+
+  static {
+    for (CryptAlgorithm algorithm : values()) {
+      CACHED.put(algorithm.getName(), algorithm);
+    }
+  }
+
   private final String name;
   private final boolean reverse;
 
@@ -39,9 +49,8 @@ public enum CryptAlgorithm {
   }
 
   public static CryptAlgorithm getCryptAlgorithm(String cryptAlgorithmName) {
-    return Arrays.stream(CryptAlgorithm.values()).filter(i ->
-            i.getName().equals(cryptAlgorithmName)).findFirst()
-        .orElseThrow(() -> new RuntimeException(cryptAlgorithmName + " not cn.ares.boot.util.crypt.impl"));
+    return Optional.ofNullable(CACHED.get(cryptAlgorithmName))
+        .orElseThrow(() -> new RuntimeException(cryptAlgorithmName + " not impl"));
   }
 
 }

@@ -1,6 +1,7 @@
 package cn.ares.boot.util.log.constant;
 
-import java.util.Arrays;
+import cn.ares.boot.util.common.MapUtil;
+import java.util.Map;
 
 /**
  * @author: Ares
@@ -16,6 +17,14 @@ public enum LoggerType {
   LOG4j("log4j.xml", "org.slf4j.impl.Log4jLoggerFactory"),
   LOG4j2("log4j2.xml", "org.apache.logging.slf4j.Log4jLoggerFactory"),
   LOGBACK("logback.xml", "ch.qos.logback.classic.LoggerContext");
+
+  private static final Map<String, LoggerType> CACHED = MapUtil.newMap(values().length);
+
+  static {
+    for (LoggerType loggerType : values()) {
+      CACHED.put(loggerType.getConfigFileName(), loggerType);
+    }
+  }
 
   private final String configFileName;
   private final String loggerFactoryClassName;
@@ -34,10 +43,7 @@ public enum LoggerType {
   }
 
   public static LoggerType getLoggerType(String loggerFactoryClassName) {
-    return Arrays.stream(LoggerType.values())
-        .filter(
-            loggerType -> loggerFactoryClassName.equals(loggerType.getLoggerFactory()))
-        .findFirst().orElse(LOGBACK);
+    return CACHED.getOrDefault(loggerFactoryClassName, LOGBACK);
   }
 
 }

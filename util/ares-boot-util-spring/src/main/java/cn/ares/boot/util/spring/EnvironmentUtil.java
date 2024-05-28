@@ -1,6 +1,5 @@
 package cn.ares.boot.util.spring;
 
-import static cn.ares.boot.util.common.StringUtil.isEmpty;
 import static cn.ares.boot.util.common.constant.StringConstant.EMPTY;
 import static cn.ares.boot.util.common.constant.SymbolConstant.COMMA;
 import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
@@ -119,7 +118,7 @@ public class EnvironmentUtil {
   public static void addSpringExclude(Environment environment, Properties config,
       String excludeClassNames) {
     String exclude = environment.getProperty(SPRING_AUTOCONFIGURE_EXCLUDE);
-    if (isEmpty(exclude)) {
+    if (StringUtil.isEmpty(exclude)) {
       config.put(SPRING_AUTOCONFIGURE_EXCLUDE, excludeClassNames);
     } else {
       System.setProperty(SPRING_AUTOCONFIGURE_EXCLUDE, exclude + COMMA + excludeClassNames);

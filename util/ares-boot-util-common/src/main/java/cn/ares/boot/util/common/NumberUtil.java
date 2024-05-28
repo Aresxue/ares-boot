@@ -1,6 +1,5 @@
 package cn.ares.boot.util.common;
 
-import static cn.ares.boot.util.common.StringUtil.isEmpty;
 import static cn.ares.boot.util.common.constant.CommonConstant.FLOATING_POINT_NUMBER_PATTERN;
 
 import java.lang.reflect.Array;
@@ -1566,7 +1565,7 @@ public class NumberUtil {
    * @since 3.5
    */
   public static boolean isCreatable(final String str) {
-    if (isEmpty(str)) {
+    if (StringUtil.isEmpty(str)) {
       return false;
     }
     final char[] chars = str.toCharArray();
@@ -1696,7 +1695,7 @@ public class NumberUtil {
    * @return {@code true} if the string is a parsable number.
    */
   public static boolean isParsable(final String str) {
-    if (isEmpty(str)) {
+    if (StringUtil.isEmpty(str)) {
       return false;
     }
     if (str.charAt(str.length() - 1) == '.') {

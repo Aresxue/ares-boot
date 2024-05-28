@@ -1,6 +1,5 @@
 package cn.ares.boot.util.crypt;
 
-import static cn.ares.boot.util.common.StringUtil.isEmpty;
 import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.AES256;
 import static java.nio.charset.StandardCharsets.US_ASCII;
 
@@ -219,7 +218,7 @@ public abstract class ReverseCrypt extends AbstractCrypt {
         } catch (Exception ignore) {
         }
       }
-      if (isEmpty(publicKey)) {
+      if (StringUtil.isEmpty(publicKey)) {
         throw new RuntimeException(
             "Get default publicKey don't found available cn.ares.boot.util.crypt.impl");
       }
@@ -248,7 +247,7 @@ public abstract class ReverseCrypt extends AbstractCrypt {
         } catch (Exception ignore) {
         }
       }
-      if (isEmpty(privateKey)) {
+      if (StringUtil.isEmpty(privateKey)) {
         throw new RuntimeException(
             "Get default privateKey don't found available cn.ares.boot.util.crypt.impl");
       }

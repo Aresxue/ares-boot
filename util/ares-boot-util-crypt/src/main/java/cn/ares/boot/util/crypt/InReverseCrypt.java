@@ -1,6 +1,5 @@
 package cn.ares.boot.util.crypt;
 
-import static cn.ares.boot.util.common.StringUtil.isEmpty;
 import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.MD5;
 
 import cn.ares.boot.util.common.ExceptionUtil;
@@ -153,7 +152,7 @@ public abstract class InReverseCrypt extends AbstractCrypt {
         } catch (Exception ignore) {
         }
       }
-      if (isEmpty(SALT)) {
+      if (StringUtil.isEmpty(SALT)) {
         throw new RuntimeException(
             "Get default salt don't found available cn.ares.boot.util.crypt.impl");
       }

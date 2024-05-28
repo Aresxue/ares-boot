@@ -247,7 +247,7 @@ public abstract class ReverseCrypt extends AbstractCrypt {
         } catch (Exception ignore) {
         }
       }
-      if (isEmpty(privateKey)) {
+      if (StringUtil.isEmpty(privateKey)) {
         throw new RuntimeException(
             "Get default privateKey don't found available cn.ares.boot.util.crypt.impl");
       }

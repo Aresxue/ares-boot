@@ -1695,7 +1695,7 @@ public class NumberUtil {
    * @return {@code true} if the string is a parsable number.
    */
   public static boolean isParsable(final String str) {
-    if (isEmpty(str)) {
+    if (StringUtil.isEmpty(str)) {
       return false;
     }
     if (str.charAt(str.length() - 1) == '.') {

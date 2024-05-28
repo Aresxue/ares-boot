@@ -564,7 +564,7 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
    */
   public static Class<?> resolveClass(BeanDefinition beanDefinition) {
     String beanClassName = beanDefinition.getBeanClassName();
-    if (isEmpty(beanClassName)) {
+    if (StringUtil.isEmpty(beanClassName)) {
       return null;
     }
     return ClassUtils.resolveClassName(beanClassName, classLoader);

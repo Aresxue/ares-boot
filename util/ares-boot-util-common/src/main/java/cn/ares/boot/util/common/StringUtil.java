@@ -62,23 +62,6 @@ public class StringUtil {
 
   /**
    * @author: Ares
-   * @description: 判断多个字符串都为空
-   * @description: Judging that multiple strings are empty
-   * @time: 2022-06-09 11:18:25
-   * @params: [strArr] 字符串数组
-   * @return: boolean 是否为空
-   */
-  public static boolean isEmpty(String... strArr) {
-    for (String str : strArr) {
-      if (isNotEmpty(str)) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  /**
-   * @author: Ares
    * @description: 判断多个字符串全部为空
    * @description: Judging that multiple strings all are empty
    * @time: 2022-06-09 11:18:25

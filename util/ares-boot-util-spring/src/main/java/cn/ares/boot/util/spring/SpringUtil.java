@@ -1,7 +1,6 @@
 package cn.ares.boot.util.spring;
 
 
-import static cn.ares.boot.util.common.StringUtil.isEmpty;
 import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPORT;
 import static org.springframework.context.annotation.AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR;
@@ -549,7 +548,7 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
    */
   public static Class<?> resolveClass(BeanDefinition beanDefinition, ClassLoader classLoader) {
     String beanClassName = beanDefinition.getBeanClassName();
-    if (isEmpty(beanClassName)) {
+    if (StringUtil.isEmpty(beanClassName)) {
       return null;
     }
     return ClassUtils.resolveClassName(beanClassName, classLoader);

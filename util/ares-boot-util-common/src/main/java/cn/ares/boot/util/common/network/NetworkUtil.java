@@ -159,8 +159,7 @@ public class NetworkUtil {
   }
 
   /**
-   * 从给定的URI中提取主机
-   * Extract the host from the given URI.
+   * 从给定的URI中提取主机 Extract the host from the given URI.
    *
    * @param uri the URI to extract the host from
    * @return the extracted host
@@ -175,8 +174,7 @@ public class NetworkUtil {
   }
 
   /**
-   * 从给定的URI中提取端口
-   * Extract the port from the given URI.
+   * 从给定的URI中提取端口 Extract the port from the given URI.
    *
    * @param uri the URI to extract the port from
    * @return the extracted port
@@ -191,6 +189,30 @@ public class NetworkUtil {
       }
     }
     return port;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 返回ip的16进制
+   * @description: Returns the hexadecimal value of the IP address
+   * @time: 2024-05-31 15:52:36
+   * @params: [ip] in 入参
+   * @return: java.lang.String out 出参
+   */
+  public static String hexIp(String ip) {
+    List<String> itemList = StringUtil.listSplit(ip, ".");
+    byte[] bytes = new byte[4];
+
+    for (int i = 0; i < 4; i++) {
+      bytes[i] = (byte) Integer.parseInt(itemList.get(i));
+    }
+
+    StringBuilder ipBuilder = new StringBuilder(bytes.length / 2);
+    for (byte b : bytes) {
+      ipBuilder.append(Integer.toHexString((b >> 4) & 0x0F));
+      ipBuilder.append(Integer.toHexString(b & 0x0F));
+    }
+    return ipBuilder.toString();
   }
 
 }

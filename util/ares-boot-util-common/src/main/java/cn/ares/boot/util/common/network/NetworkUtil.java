@@ -17,6 +17,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.logging.Logger;
 
 /**
@@ -213,6 +214,41 @@ public class NetworkUtil {
       ipBuilder.append(Integer.toHexString(b & 0x0F));
     }
     return ipBuilder.toString();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 还原16机制ip
+   * @description: Restore hex ip
+   * @time: 2024-06-02 15:20:45
+   * @params: [hexIp] 16机制ip
+   * @return: java.lang.String 还原ip
+   */
+  public static String restoreHexIp(String hexIp) {
+    if (hexIp == null || hexIp.length() != 8) {
+      throw new IllegalArgumentException("Invalid hex IP format. Expected 8 hex characters.");
+    }
+
+    // 初始化IP的各个部分
+    int[] ipParts = new int[4];
+
+    // 遍历每两个十六进制字符
+    for (int i = 0, index = 0; i < hexIp.length(); i += 2, index++) {
+      // 提取两个字符并转换为字节（0-255的整数）
+      int highNibble = Character.digit(hexIp.charAt(i), 16);
+      int lowNibble = Character.digit(hexIp.charAt(i + 1), 16);
+      // 合并为一个字节
+      int byteValue = (highNibble << 4) | lowNibble;
+      // 将字节值存入IP的对应部分
+      ipParts[index] = byteValue;
+    }
+
+    StringJoiner ipJoiner = new StringJoiner(".");
+    for (int part : ipParts) {
+      ipJoiner.add(String.valueOf(part));
+    }
+
+    return ipJoiner.toString();
   }
 
 }

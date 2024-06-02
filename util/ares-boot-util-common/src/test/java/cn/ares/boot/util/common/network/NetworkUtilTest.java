@@ -14,7 +14,9 @@ public class NetworkUtilTest {
   private static final Logger LOGGER = JdkLoggerUtil.getLogger(NetworkUtilTest.class);
 
   public static void main(String[] args) {
-    JdkLoggerUtil.info(LOGGER, "current ip hex str: " + NetworkUtil.hexIp("127.0.0.1"));
+    String hexIp = NetworkUtil.hexIp("127.0.0.1");
+    JdkLoggerUtil.info(LOGGER, "current ip hex str: " + hexIp);
+    JdkLoggerUtil.info(LOGGER, "current ip str: " + NetworkUtil.restoreHexIp(hexIp));
   }
 
 }

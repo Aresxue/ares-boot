@@ -13,7 +13,7 @@
 
   <groupId>io.github.aresxue.business</groupId>
   <artifactId>ares-boot-demo</artifactId>
-  <version>${revision}</version>
+  <version>1.0.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Ares Boot Demo</name>
   <description>demo</description>

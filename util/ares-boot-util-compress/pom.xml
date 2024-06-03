@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.boot.util</groupId>
     <artifactId>ares-boot-util</artifactId>
-    <version>${revision}</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
 
   <artifactId>ares-boot-util-compress</artifactId>

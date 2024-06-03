@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue.business</groupId>
     <artifactId>ares-boot-demo</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>${revision}</version>
   </parent>
 
   <artifactId>ares-boot-demo-service</artifactId>

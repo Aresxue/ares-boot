@@ -332,7 +332,7 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @return: java.lang.String 响应结果
    **/
   public static String get(String url) throws Exception {
-    return get(url, null);
+    return get(url, "");
   }
 
 
@@ -371,6 +371,17 @@ public class HttpClientUtil implements ApplicationContextAware {
    **/
   public static <T> String get(String url, T param, String fileSavePath) throws Exception {
     return get(url, param, Collections.emptyMap(), config.getSocketTimeout(), fileSavePath);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起get请求地址获取结果
+   * @time: 2024-06-12 14:12:09
+   * @params: [url, headers] 请求地址，消息头
+   * @return: java.lang.String 响应结果
+   */
+  public static String get(String url, Map<String, String> headers) throws Exception {
+    return get(url, headers, null);
   }
 
   /**

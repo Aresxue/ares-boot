@@ -376,12 +376,25 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用消息头发起get请求地址获取结果
+   * @description: Use the message header to initiate a get request address to obtain the result
    * @time: 2024-06-12 14:12:09
    * @params: [url, headers] 请求地址，消息头
    * @return: java.lang.String 响应结果
    */
   public static String get(String url, Map<String, String> headers) throws Exception {
-    return get(url, headers, null);
+    return get(url, headers, "");
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起get请求地址获取结果
+   * @description: Use the message header to initiate a get request address to obtain the result
+   * @time: 2024-06-12 23:18:04
+   * @params: [url, param, headers] 请求地址，入参，消息头
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String get(String url, T param, Map<String, String> headers) throws Exception {
+    return get(url, param, headers, config.getSocketTimeout(), null);
   }
 
   /**

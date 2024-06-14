@@ -100,7 +100,17 @@
         <artifactId>httpclient5</artifactId>
         <version>${httpclient5.version}</version>
       </dependency>
-
+      <dependency>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5</artifactId>
+        <version>${httpclient5.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents.core5</groupId>
+        <artifactId>httpcore5-h2</artifactId>
+        <version>${httpclient5.version}</version>
+      </dependency>
+      
       <dependency>
         <groupId>org.apache.skywalking</groupId>
         <artifactId>apm-toolkit-trace</artifactId>

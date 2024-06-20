@@ -1,6 +1,7 @@
 package cn.ares.boot.util.common;
 
 import cn.ares.boot.util.common.log.JdkLoggerUtil;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
@@ -17,6 +18,7 @@ public class StringUtilTest {
     LOGGER.info(StringUtil.getCommonPrefix(null));
     LOGGER.info(StringUtil.getCommonPrefix("ares", "ar"));
     LOGGER.info(StringUtil.getCommonPrefix("cn/ares", "cn/ares/boot"));
+    LOGGER.info(StringUtil.join("/", Arrays.asList("cn.ares.business.Service", "method")));
   }
 
 }

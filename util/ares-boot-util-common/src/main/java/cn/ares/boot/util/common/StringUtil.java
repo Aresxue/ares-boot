@@ -621,7 +621,8 @@ public class StringUtil {
   /**
    * @author: Ares
    * @description: 解析输入流为字符串（可指定为空时是否抛出异常）
-   * @description: Parse input stream as string(Can specify whether to throw an exception when empty)
+   * @description: Parse input stream as string(Can specify whether to throw an exception when
+   * empty)
    * @time: 2023-12-28 15:07:35
    * @params: [inputStream, throwEx] 输入流，是否抛出异常
    * @return: java.lang.String 解析结果
@@ -653,7 +654,8 @@ public class StringUtil {
   /**
    * @author: Ares
    * @description: 以指定编码解析字符串为输入流（可指定为空时是否抛出异常）
-   * @description: Parse the input stream as a string with the specified encoding(Can specify whether to throw an exception when empty)
+   * @description: Parse the input stream as a string with the specified encoding(Can specify
+   * whether to throw an exception when empty)
    * @time: 2023-12-28 15:16:08
    * @params: [content, charset, throwEx] 内容，编码，是否抛出异常
    * @return: java.io.InputStream 输入流
@@ -1025,6 +1027,43 @@ public class StringUtil {
       }
     }
     return sb.toString();
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 使用分割符连接字符串列表
+   * @description: Concatenate string list using delimiter
+   * @time: 2024-06-19 21:39:14
+   * @params: [delimiter, stringList] 分隔符，字符串列表
+   * @return: java.lang.String 连接后字符串
+   */
+  public static String join(String delimiter, final List<String> stringList) {
+    if (CollectionUtil.isEmpty(stringList)) {
+      return null;
+    }
+    if (stringList.size() == 1) {
+      return stringList.get(0);
+    }
+    int length = stringList.size() - 1;
+    for (final String str : stringList) {
+      if (str == null) {
+        continue;
+      }
+      length += str.length();
+    }
+    final StringBuilder builder = new StringBuilder(length);
+    if (stringList.get(0) != null) {
+      builder.append(stringList.get(0));
+    }
+    for (int i = 1; i < stringList.size(); ++i) {
+      if (!isEmpty(stringList.get(i))) {
+        builder.append(delimiter).append(stringList.get(i));
+      } else {
+        builder.append(delimiter);
+      }
+    }
+    return builder.toString();
   }
 
   /**

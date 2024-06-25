@@ -59,6 +59,7 @@
             <artifactId>spring-boot-starter-logging</artifactId>
           </exclusion>
         </exclusions>
+        <version>${spring-boot.version}</version>
       </dependency>
 
       <dependency>

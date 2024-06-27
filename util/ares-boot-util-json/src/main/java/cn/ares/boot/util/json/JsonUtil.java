@@ -1,8 +1,8 @@
 package cn.ares.boot.util.json;
 
-import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_TIME;
+import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_TIME_MILLIS;
 import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_WHIFFLETREE_DAY;
-import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_WHIFFLETREE_SECOND;
+import static cn.ares.boot.util.common.DateUtil.DATE_FORMAT_WHIFFLETREE_MILLIS;
 import static com.fasterxml.jackson.databind.MapperFeature.IGNORE_DUPLICATE_MODULE_REGISTRATIONS;
 
 import cn.ares.boot.util.common.ArrayUtil;
@@ -520,8 +520,8 @@ public class JsonUtil {
       jsonMapper.setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
     }
 
-    configTime(jsonMapper, DATE_FORMAT_WHIFFLETREE_SECOND, DATE_FORMAT_WHIFFLETREE_DAY,
-        DATE_FORMAT_TIME, DATE_FORMAT_WHIFFLETREE_SECOND);
+    configTime(jsonMapper, DATE_FORMAT_WHIFFLETREE_MILLIS, DATE_FORMAT_WHIFFLETREE_DAY,
+        DATE_FORMAT_TIME_MILLIS, DATE_FORMAT_WHIFFLETREE_MILLIS);
 
     // 加入自定义bean序列化修改
     jsonMapper.setSerializerFactory(jsonMapper.getSerializerFactory()

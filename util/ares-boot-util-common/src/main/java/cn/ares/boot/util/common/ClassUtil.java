@@ -380,12 +380,25 @@ public class ClassUtil {
    * @author: Ares
    * @description: 根据参数类型构造签名
    * @description: Construct signatures based on classes
-   * @time: 2023-06-27 13:15:46
+   * @time: 2024-06-27 13:15:46
    * @params: [classes] 类数组
    * @return: java.lang.String 描述
    * @return: java.lang.String description
    */
   public static String constructParameterTypeSignature(Class<?>[] classes) {
+    return ClassUtil.constructParameterTypeSignature(classes, true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 根据参数类型构造签名
+   * @description: Construct signatures based on classes
+   * @time: 2023-06-27 13:15:46
+   * @params: [classes, nullPlaceholder] 类数组，null值占位
+   * @return: java.lang.String 描述
+   * @return: java.lang.String description
+   */
+  public static String constructParameterTypeSignature(Class<?>[] classes, boolean nullPlaceholder) {
     if (ArrayUtil.isEmpty(classes)) {
       return "";
     }
@@ -393,7 +406,13 @@ public class ClassUtil {
     StringBuilder signatureBuilder = new StringBuilder();
 
     for (Class<?> clazz : classes) {
-      signatureBuilder.append(getTypeSignature(clazz));
+      if (null == clazz) {
+        if (nullPlaceholder) {
+          signatureBuilder.append(";");
+        }
+      } else {
+        signatureBuilder.append(getTypeSignature(clazz));
+      }
     }
 
     return signatureBuilder.toString();

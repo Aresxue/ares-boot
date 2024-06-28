@@ -533,6 +533,10 @@ public class JsonUtil {
 //    filterProvider.addFilter("table",
 //        SimpleBeanPropertyFilter.filterOutAllExcept(Sets.newHashSet("field")));
 //    jsonMapper.setFilterProvider(filterProvider);
+    disableIgnoreDuplicateModuleRegistrations(jsonMapper);
+    jsonMapper.registerModule(new Jdk8Module());
+    jsonMapper.registerModule(new ParameterNamesModule());
+    enableIgnoreDuplicateModuleRegistrations(jsonMapper);
 
     return jsonMapper;
   }
@@ -617,8 +621,6 @@ public class JsonUtil {
       }
       disableIgnoreDuplicateModuleRegistrations(objectMapper);
       objectMapper.registerModule(javaTimeModule);
-      objectMapper.registerModule(new Jdk8Module());
-      objectMapper.registerModule(new ParameterNamesModule());
       enableIgnoreDuplicateModuleRegistrations(objectMapper);
     }
   }

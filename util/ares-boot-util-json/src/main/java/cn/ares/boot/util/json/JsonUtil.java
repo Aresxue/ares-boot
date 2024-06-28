@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -615,6 +616,7 @@ public class JsonUtil {
       }
       disableIgnoreDuplicateModuleRegistrations(objectMapper);
       objectMapper.registerModule(javaTimeModule);
+      objectMapper.registerModule(new Jdk8Module());
       enableIgnoreDuplicateModuleRegistrations(objectMapper);
     }
   }

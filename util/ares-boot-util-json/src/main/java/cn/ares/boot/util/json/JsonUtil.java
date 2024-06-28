@@ -32,6 +32,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
@@ -617,6 +618,7 @@ public class JsonUtil {
       disableIgnoreDuplicateModuleRegistrations(objectMapper);
       objectMapper.registerModule(javaTimeModule);
       objectMapper.registerModule(new Jdk8Module());
+      objectMapper.registerModule(new ParameterNamesModule());
       enableIgnoreDuplicateModuleRegistrations(objectMapper);
     }
   }

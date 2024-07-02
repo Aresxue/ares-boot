@@ -1,0 +1,2 @@
+cn.ares.boot.starter.datasource.config.DataSourceEnvironmentPostProcessor
+cn.ares.boot.starter.datasource.config.BootDataSourceAutoConfiguration

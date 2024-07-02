@@ -108,7 +108,7 @@ public class PropertyUtil {
    * @description: Convert attributes to nested mappings (to. Is delimiter)
    * @time: 2023-07-12 16:47:50
    * @params: [properties] 属性
-   * @return: java.util.Map<java.lang.String,java.lang.Object> 嵌套映射
+   * @return: java.util.Map<java.lang.String, java.lang.Object> 嵌套映射
    */
   public static Map<String, Object> convertToNestedMap(Properties properties) {
     MapObject nestedMap = new MapObject();
@@ -159,6 +159,34 @@ public class PropertyUtil {
       properties.put(args[i], args[i + 1]);
     }
     return properties;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取系统属性
+   * @description: Get system property
+   * @time: 2024-07-02 17:54:36
+   * @params: [key] 键
+   * @return: java.lang.String 值
+   */
+  public static String getSystemProperty(String key) {
+    return System.getProperty(key);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取系统属性（不存在时取默认值）
+   * @description: Get system property (takes the default value if it does not exist)
+   * @time: 2024-07-02 17:55:15
+   * @params: [key, defaultValue] 键，默认值
+   * @return: java.lang.String 值
+   */
+  public static String getSystemProperty(String key, String defaultValue) {
+    String propValue = System.getProperty(key);
+    if (StringUtil.isBlank(propValue)) {
+      propValue = defaultValue;
+    }
+    return propValue;
   }
 
 }

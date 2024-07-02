@@ -31,4 +31,11 @@
     <module>ares-boot-base-dynamic-route</module>
   </modules>
 
+  <dependencies>
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-version</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>

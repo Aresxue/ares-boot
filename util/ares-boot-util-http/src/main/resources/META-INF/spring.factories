@@ -1,3 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.ares.boot.util.http.HttpClientUtil
-
-

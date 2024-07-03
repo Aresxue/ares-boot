@@ -19,6 +19,8 @@ public class StringUtilTest {
     LOGGER.info(StringUtil.getCommonPrefix("ares", "ar"));
     LOGGER.info(StringUtil.getCommonPrefix("cn/ares", "cn/ares/boot"));
     LOGGER.info(StringUtil.join("/", Arrays.asList("cn.ares.business.Service", "method")));
+    LOGGER.info("not alphabet and number result: " + StringUtil.notAlphabetAndNumber("ares"));
+    LOGGER.info("not alphabet and number result: " + StringUtil.notAlphabetAndNumber("ares-520"));
   }
 
 }

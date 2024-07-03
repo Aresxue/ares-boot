@@ -4,6 +4,7 @@ package cn.ares.boot.util.common;
 import static cn.ares.boot.util.common.constant.CommonConstant.CHINESE_CHARACTER_LENGTH;
 import static cn.ares.boot.util.common.constant.CommonConstant.CHINESE_CHARACTER_START;
 import static cn.ares.boot.util.common.constant.CommonConstant.FORMAT_PATTERN;
+import static cn.ares.boot.util.common.constant.CommonConstant.NOT_ALPHABET_AND_NUMBER_PATTERN;
 import static cn.ares.boot.util.common.constant.StringConstant.EMPTY;
 import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
 import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS_CHAR;
@@ -1244,11 +1245,24 @@ public class StringUtil {
    * @description: 是否包含占位符，例如%s，%d
    * @description: Whether to include placeholders, such as %s,%d
    * @time: 2022-06-07 16:12:56
-   * @params: [message] 信息
+   * @params: [str] 字符串
    * @return: boolean 是否包含占位符
    */
-  public static boolean isFormat(String message) {
-    Matcher matcher = FORMAT_PATTERN.matcher(message);
+  public static boolean isFormat(String str) {
+    Matcher matcher = FORMAT_PATTERN.matcher(str);
+    return matcher.find();
+  }
+
+  /**
+   * @author: Ares
+   * @description: 校验字符串是否不全是字母和数字
+   * @description: Check if the string is not all letters and numbers
+   * @time: 2024-07-03 17:53:41
+   * @params: [str] 字符串
+   * @return: boolean 是否不全是字母和数字
+   */
+  public static boolean notAlphabetAndNumber(String str) {
+    Matcher matcher = NOT_ALPHABET_AND_NUMBER_PATTERN.matcher(str);
     return matcher.find();
   }
 

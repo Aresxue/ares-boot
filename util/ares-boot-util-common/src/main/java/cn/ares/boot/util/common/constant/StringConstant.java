@@ -22,6 +22,12 @@ public interface StringConstant {
   String FLOATING_POINT_NUMBER_FORMAT = "^[-\\+]?[.\\d]*$";
 
   /**
+   * 不是字母和数字的正则表达式
+   * Not a regular expression of letters and numbers
+   */
+  String NOT_ALPHABET_AND_NUMBER_REGEX = ".*[^a-zA-Z0-9].*";
+
+  /**
    * email format 邮箱格式
    */
   String EMAIL_FORMAT = "^([a-z0-9A-Z]+[-|.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";

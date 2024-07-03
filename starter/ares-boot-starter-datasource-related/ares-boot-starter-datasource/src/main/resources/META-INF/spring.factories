@@ -1,0 +1,1 @@
+org.springframework.boot.env.EnvironmentPostProcessor=cn.ares.boot.starter.datasource.config.DataSourceEnvironmentPostProcessor

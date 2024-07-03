@@ -2,6 +2,7 @@ package cn.ares.boot.util.common.constant;
 
 import static cn.ares.boot.util.common.constant.StringConstant.FLOATING_POINT_NUMBER_FORMAT;
 import static cn.ares.boot.util.common.constant.StringConstant.FORMAT_SPECIFIER;
+import static cn.ares.boot.util.common.constant.StringConstant.NOT_ALPHABET_AND_NUMBER_REGEX;
 
 import java.util.regex.Pattern;
 
@@ -16,6 +17,8 @@ public interface CommonConstant {
   Pattern FORMAT_PATTERN = Pattern.compile(FORMAT_SPECIFIER);
 
   Pattern FLOATING_POINT_NUMBER_PATTERN = Pattern.compile(FLOATING_POINT_NUMBER_FORMAT);
+
+  Pattern NOT_ALPHABET_AND_NUMBER_PATTERN = Pattern.compile(NOT_ALPHABET_AND_NUMBER_REGEX);
 
   /**
    * false with byte type

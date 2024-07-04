@@ -22,7 +22,6 @@
   </description>
 
   <properties>
-    <revision>1.0.3-SNAPSHOT</revision>
     <boot.version>1.0.3-SNAPSHOT</boot.version>
 
     <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>

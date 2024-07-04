@@ -57,6 +57,8 @@ public class BootRedissonConfiguration {
    */
   @Value("${ares.application.cache.redisson.read-mode:SLAVE}")
   private String readMode;
+  @Value("${ares.application.cache.redisson.check-sentinels-list:true}")
+  private boolean checkSentinelsList;
 
   @Bean(destroyMethod = "shutdown")
   @ConditionalOnMissingBean(RedissonClient.class)
@@ -96,7 +98,8 @@ public class BootRedissonConfiguration {
           .setMasterConnectionMinimumIdleSize(minIdle)
           .setMasterConnectionPoolSize(maxActive)
           .setPingConnectionInterval(pingConnectionInterval)
-          .setReadMode(ReadMode.valueOf(readMode));
+          .setReadMode(ReadMode.valueOf(readMode))
+          .setCheckSentinelsList(checkSentinelsList);
     } else if (null != cluster) {
       config.useClusterServers()
           .addNodeAddress(convert(cluster.getNodes()))

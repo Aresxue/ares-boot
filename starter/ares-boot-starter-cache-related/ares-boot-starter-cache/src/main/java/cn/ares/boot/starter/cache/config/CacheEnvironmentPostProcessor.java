@@ -1,6 +1,10 @@
 package cn.ares.boot.starter.cache.config;
 
+import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_ENABLE;
+import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_POOL_PREFIX;
+import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_PREFIX;
 import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_REDISSON_ENABLE;
+import static cn.ares.boot.starter.cache.constant.CacheConstant.SPRING_REDIS;
 import static cn.ares.boot.util.common.constant.MiddlewareType.CACHE;
 import static cn.ares.boot.util.common.constant.StringConstant.TRUE;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE;
@@ -15,7 +19,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Role;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -30,8 +33,7 @@ import org.springframework.core.env.PropertiesPropertySource;
  * @version: JDK 1.8
  */
 @Configuration
-@ConditionalOnProperty(name = "ares.application.cache.enabled", havingValue = TRUE, matchIfMissing = true)
-@Import(value = {CacheSerializerConfiguration.class, CacheManagerConfiguration.class})
+@ConditionalOnProperty(name = APPLICATION_CACHE_ENABLE, havingValue = TRUE, matchIfMissing = true)
 @Order(Ordered.LOWEST_PRECEDENCE - 10_000)
 @Role(value = ROLE_INFRASTRUCTURE)
 public class CacheEnvironmentPostProcessor implements EnvironmentPostProcessor {
@@ -42,11 +44,23 @@ public class CacheEnvironmentPostProcessor implements EnvironmentPostProcessor {
   public void postProcessEnvironment(ConfigurableEnvironment environment,
       SpringApplication application) {
     if (PROCESSED.compareAndSet(false, true)) {
-      Properties cacheConfig = new Properties();
+      Properties cacheConfig = EnvironmentUtil.getPropertiesByPrefix(environment,
+          APPLICATION_CACHE_PREFIX);
       // 如果redisson非开启禁用RedissonAutoConfiguration
       if (BooleanUtil.isFalse(environment.getProperty(APPLICATION_CACHE_REDISSON_ENABLE, TRUE))) {
         EnvironmentUtil.addSpringExclude(environment, cacheConfig, RedissonAutoConfiguration.class);
       }
+
+      // 替换前缀供spring使用
+      Properties replaceConfig = EnvironmentUtil.replacePropertiesPrefix(cacheConfig,
+          APPLICATION_CACHE_PREFIX, SPRING_REDIS);
+      cacheConfig.putAll(replaceConfig);
+      // 替换连接池配置默认使用lettuce
+      String impl = environment.getProperty(APPLICATION_CACHE_PREFIX + "impl", "lettuce");
+      Properties replacePoolConfig = EnvironmentUtil.replacePropertiesPrefix(cacheConfig,
+          APPLICATION_CACHE_POOL_PREFIX, SPRING_REDIS + impl + ".pool");
+      cacheConfig.putAll(replacePoolConfig);
+
       environment.getPropertySources()
           .addFirst(new PropertiesPropertySource(CACHE.getName(), cacheConfig));
       LoggerUtil.infoDeferred("cache config load success");

@@ -37,6 +37,7 @@ import org.springframework.context.annotation.Bean;
 @ConditionalOnProperty(name = APPLICATION_CACHE_REDISSON_ENABLE, havingValue = TRUE, matchIfMissing = true)
 @ConditionalOnClass(RedissonAutoConfiguration.class)
 @AutoConfigureBefore(RedissonAutoConfiguration.class)
+// TODO 兼容所有Redisson配置
 public class BootRedissonConfiguration {
 
   private static final String REDIS_PROTOCOL_PREFIX = "redis://";

@@ -27,6 +27,13 @@
             "sourceType": "cn.ares.boot.starter.cache.config.CacheEnvironmentPostProcessor"
         },
         {
+            "name": "ares.application.cache.redisson.enabled",
+            "description": "application cache redisson enabled",
+            "type": "java.lang.Boolean",
+            "defaultValue": true,
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheEnvironmentPostProcessor"
+        },
+        {
             "name": "ares.application.cache.manager.enabled",
             "description": "application cache manager enabled",
             "type": "java.lang.Boolean",

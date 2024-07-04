@@ -14,6 +14,10 @@ public interface CacheConstant {
    */
   String APPLICATION_CACHE_PREFIX = "ares.application.cache.";
   /**
+   * 缓存模块总开关
+   */
+  String APPLICATION_CACHE_ENABLE = APPLICATION_CACHE_PREFIX + "enabled";
+  /**
    * Redisson功能开关
    */
   String APPLICATION_CACHE_REDISSON_ENABLE = APPLICATION_CACHE_PREFIX + "redisson.enabled";
@@ -25,5 +29,11 @@ public interface CacheConstant {
    * 缓存序列化功能开关
    */
   String APPLICATION_CACHE_SERIALIZER_ENABLE = APPLICATION_CACHE_PREFIX + "serializer.enabled";
+  /**
+   * 缓存连接池前缀
+   */
+  String APPLICATION_CACHE_POOL_PREFIX = APPLICATION_CACHE_PREFIX + "pool";
+
+  String SPRING_REDIS = "spring.redis.";
 
 }

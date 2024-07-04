@@ -40,7 +40,8 @@
     <!-- druid版本测试时使用以下版本的mysql和oracle驱动 -->
     <druid.version>1.2.23</druid.version>
     <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
-    <ojdbc8.version>ojdbc8</ojdbc8.version>
+    <ojdbc8.version>19.3.0.0</ojdbc8.version>
+    <redisson.version>3.18.0</redisson.version>
   </properties>
 
   <dependencyManagement>
@@ -212,6 +213,17 @@
         <groupId>com.oracle.ojdbc</groupId>
         <artifactId>ojdbc8</artifactId>
         <version>${ojdbc8.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson-spring-boot-starter</artifactId>
+        <version>${redisson.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson</artifactId>
+        <version>${redisson.version}</version>
       </dependency>
 
     </dependencies>

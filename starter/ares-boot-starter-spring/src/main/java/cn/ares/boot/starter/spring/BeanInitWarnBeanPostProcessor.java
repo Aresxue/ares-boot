@@ -14,7 +14,7 @@ import org.springframework.lang.NonNull;
  * @description: bean初始化耗时超过一定时间告警
  * @version: JDK 1.8
  */
-@ConditionalOnProperty(name = "ares.spring.bean-init-warn.enable", havingValue = "true")
+@ConditionalOnProperty(name = "ares.spring.bean-init-warn.enabled", havingValue = "true")
 public class BeanInitWarnBeanPostProcessor implements BeanPostProcessor {
 
   private Long startTime;

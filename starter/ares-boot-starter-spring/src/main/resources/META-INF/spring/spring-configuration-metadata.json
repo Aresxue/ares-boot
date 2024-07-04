@@ -10,7 +10,7 @@
     "properties":
     [
         {
-            "name": "ares.spring.bean-init-warn.enable",
+            "name": "ares.spring.bean-init-warn.enabled",
             "description": "enable bean init warn",
             "type": "java.lang.Boolean",
             "defaultValue": false,

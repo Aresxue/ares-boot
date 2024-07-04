@@ -1,0 +1,36 @@
+{
+    "groups":
+    [
+        {
+            "name": "dataSource configuration",
+            "type": "cn.ares.boot.starter.datasource.config.BootDataSourceConfiguration",
+            "sourceType": "cn.ares.boot.starter.datasource.config.BootDataSourceConfiguration"
+        }
+    ],
+    "properties":
+    [
+        {
+            "name": "ares.application.datasource.local-date-time.format",
+            "description": "use this format when value is LocalDateTime",
+            "type": "java.lang.String",
+            "defaultValue": "yyyy-MM-dd HH:mm:ss.SSS",
+            "sourceType": "cn.ares.boot.starter.datasource.config.BootDataSourceConfiguration"
+        },
+        {
+            "name": "ares.application.datasource.local-date.format",
+            "description": "use this format when value is LocalDate",
+            "type": "java.lang.String",
+            "defaultValue": "yyyy-MM-dd",
+            "sourceType": "cn.ares.boot.starter.datasource.config.BootDataSourceConfiguration"
+        },
+        {
+            "name": "ares.application.datasource.local-time.format",
+            "description": "use this format when value is LocalDateTime",
+            "type": "java.lang.String",
+            "defaultValue": "HH:mm:ss.SSS",
+            "sourceType": "cn.ares.boot.starter.datasource.config.BootDataSourceConfiguration"
+        }
+    ],
+    "hints":
+    []
+}

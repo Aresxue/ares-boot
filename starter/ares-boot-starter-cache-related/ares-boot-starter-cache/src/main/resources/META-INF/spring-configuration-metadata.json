@@ -1,0 +1,95 @@
+{
+    "groups":
+    [
+        {
+            "name": "cache environment processor",
+            "type": "cn.ares.boot.starter.cache.config.CacheEnvironmentPostProcessor",
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheEnvironmentPostProcessor"
+        },
+        {
+            "name": "cache manager configuration",
+            "type": "cn.ares.boot.starter.cache.config.CacheManagerConfiguration",
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheManagerConfiguration"
+        },
+        {
+            "name": "cache serializer configuration",
+            "type": "cn.ares.boot.starter.cache.config.CacheSerializerConfiguration",
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheSerializerConfiguration"
+        }
+    ],
+    "properties":
+    [
+        {
+            "name": "ares.application.cache.enabled",
+            "description": "application cache enabled",
+            "type": "java.lang.Boolean",
+            "defaultValue": true,
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheEnvironmentPostProcessor"
+        },
+        {
+            "name": "ares.application.cache.manager.enabled",
+            "description": "application cache manager enabled",
+            "type": "java.lang.Boolean",
+            "defaultValue": true,
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheManagerConfiguration"
+        },
+        {
+            "name": "ares.application.cache.manager.ttl",
+            "description": "application cache manager ttl",
+            "type": "java.lang.Long",
+            "defaultValue": 259200000,
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheManagerConfiguration"
+        },
+        {
+            "name": "ares.application.cache.manager.max-idle-time",
+            "description": "application cache manager max idle time",
+            "type": "java.lang.Long",
+            "defaultValue": 1800000,
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheManagerConfiguration"
+        },
+        {
+            "name": "ares.application.cache.manager.max-size",
+            "description": "application cache manager max size",
+            "type": "java.lang.Integer",
+            "defaultValue": null,
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheManagerConfiguration"
+        },
+        {
+            "name": "ares.application.cache.serializer.enabled",
+            "description": "application cache serializer enabled",
+            "type": "java.lang.Boolean",
+            "defaultValue": true,
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheSerializerConfiguration"
+        },
+        {
+            "name": "ares.application.cache.serializer.date.format",
+            "description": "application cache serializer date format",
+            "type": "java.lang.String",
+            "defaultValue": "yyyy-MM-dd HH:mm:ss.SSS",
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheSerializerConfiguration"
+        },
+        {
+            "name": "ares.application.cache.serializer.local-date.format",
+            "description": "application cache serializer local date format",
+            "type": "java.lang.String",
+            "defaultValue": "yyyy-MM-dd",
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheSerializerConfiguration"
+        },
+        {
+            "name": "ares.application.cache.serializer.local-time.format",
+            "description": "application cache serializer local time format",
+            "type": "java.lang.String",
+            "defaultValue": "HH:mm:ss.SSS",
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheSerializerConfiguration"
+        },
+        {
+            "name": "ares.application.cache.serializer.local-date-time.format",
+            "description": "application cache serializer local date time format",
+            "type": "java.lang.String",
+            "defaultValue": "yyyy-MM-dd HH:mm:ss.SSS",
+            "sourceType": "cn.ares.boot.starter.cache.config.CacheSerializerConfiguration"
+        }
+    ],
+    "hints":
+    []
+}

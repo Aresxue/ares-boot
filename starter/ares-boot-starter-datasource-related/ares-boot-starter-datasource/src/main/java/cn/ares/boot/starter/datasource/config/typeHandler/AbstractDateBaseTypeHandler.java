@@ -1,5 +1,6 @@
 package cn.ares.boot.starter.datasource.config.typeHandler;
 
+import cn.ares.boot.util.common.StringUtil;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,6 +40,9 @@ public abstract class AbstractDateBaseTypeHandler<T extends TemporalAccessor> ex
   public T getNullableResult(ResultSet resultSet, String columnName)
       throws SQLException {
     String columnValue = resultSet.getString(columnName);
+    if (StringUtil.isEmpty(columnValue)) {
+      return null;
+    }
     return parseColumnValue(columnValue, formatter);
   }
 
@@ -46,6 +50,9 @@ public abstract class AbstractDateBaseTypeHandler<T extends TemporalAccessor> ex
   public T getNullableResult(ResultSet resultSet, int columnIndex)
       throws SQLException {
     String columnValue = resultSet.getString(columnIndex);
+    if (StringUtil.isEmpty(columnValue)) {
+      return null;
+    }
     return parseColumnValue(columnValue, formatter);
   }
 
@@ -53,6 +60,9 @@ public abstract class AbstractDateBaseTypeHandler<T extends TemporalAccessor> ex
   public T getNullableResult(CallableStatement statement, int columnIndex)
       throws SQLException {
     String columnValue = statement.getString(columnIndex);
+    if (StringUtil.isEmpty(columnValue)) {
+      return null;
+    }
     return parseColumnValue(columnValue, formatter);
   }
 

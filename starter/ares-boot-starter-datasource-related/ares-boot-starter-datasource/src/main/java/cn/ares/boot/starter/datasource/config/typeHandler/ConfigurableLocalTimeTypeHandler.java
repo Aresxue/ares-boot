@@ -1,5 +1,6 @@
 package cn.ares.boot.starter.datasource.config.typeHandler;
 
+import cn.ares.boot.util.common.DateUtil;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import org.apache.ibatis.type.MappedTypes;
@@ -20,7 +21,11 @@ public class ConfigurableLocalTimeTypeHandler extends AbstractDateBaseTypeHandle
 
   @Override
   public LocalTime parseColumnValue(String columnValue, DateTimeFormatter formatter) {
-    return LocalTime.parse(columnValue, formatter);
+    try {
+      return LocalTime.parse(columnValue, formatter);
+    } catch (Exception exception) {
+      return DateUtil.getDefaultLocalTime(columnValue);
+    }
   }
 
 }

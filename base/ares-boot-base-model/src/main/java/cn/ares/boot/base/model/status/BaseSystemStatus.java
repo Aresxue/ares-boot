@@ -13,7 +13,15 @@ public enum BaseSystemStatus implements SystemStatus {
    * categories (00 means system related), 6~8 digits represent the specific situation
    * 0~3位为应用标识（从1000~9999），4~5位为异常大类（00表示系统相关），6~8位表示具体情况
    */
-  SUCCESS(1000_00_200, "");
+  SUCCESS(1000_00_200, ""),
+  NOT_LOGIN(1000_00_401, "Not login"),
+  TOO_MANY_REQUESTS(1000_00_429, "Too many requests"),
+  UNKNOWN_ERROR(1000_00_500, "Unknown error"),
+  COMMON_FAIL(1000_00_510, "%s"),
+  PARAM_VALID_EXCEPTION(1000_00_600, "Param valid exception"),
+  PARAM_BIND_EXCEPTION(1000_00_601, "Param bind exception"),
+  PARAM_PARSE_EXCEPTION(1000_00_602, "Param parse exception"),
+  ;
 
   private final int code;
   private final String message;

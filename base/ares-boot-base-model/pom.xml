@@ -12,7 +12,7 @@
 
   <artifactId>ares-boot-base-model</artifactId>
   <description>
-    元数据模块，包含请求基类、响应基类、分页请求基类、分页响应基类、排序字段、业务异常基类等
+    基础模型模块，包含请求基类、响应基类、分页请求基类、分页响应基类、排序字段、业务异常基类等
     Metadata module, including request base class, response base class, paging request base class,
     paging response base class, sorting field, business exception base class, etc.
   </description>
@@ -22,6 +22,12 @@
       <groupId>io.github.aresxue.boot.util</groupId>
       <artifactId>ares-boot-util-json</artifactId>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.aresxue.boot.util</groupId>
+      <artifactId>ares-boot-util-test</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 

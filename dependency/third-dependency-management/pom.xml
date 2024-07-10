@@ -42,6 +42,8 @@
     <mysql-connector-j.version>8.0.33</mysql-connector-j.version>
     <ojdbc8.version>19.3.0.0</ojdbc8.version>
     <redisson.version>3.18.0</redisson.version>
+    <!-- spring-boot-starter-actuator2.7.18依赖1.9.17的micrometer -->
+    <micrometer.version>1.9.17</micrometer.version>
   </properties>
 
   <dependencyManagement>
@@ -224,6 +226,17 @@
         <groupId>org.redisson</groupId>
         <artifactId>redisson</artifactId>
         <version>${redisson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-registry-prometheus</artifactId>
+        <version>${micrometer.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-registry-jmx</artifactId>
+        <version>${micrometer.version}</version>
       </dependency>
 
     </dependencies>

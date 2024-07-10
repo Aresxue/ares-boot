@@ -13,7 +13,24 @@
   <artifactId>ares-boot-base-metrics</artifactId>
   <description>
     监控模块，包含健康检查以及metrics监控(如prometheus)及其通用化配置
-    Monitoring module, including health check and metrics monitoring (such as prometheus) and its generalized configuration
+    Monitoring module, including health check and metrics monitoring (such as prometheus) and its
+    generalized configuration
   </description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-jmx</artifactId>
+    </dependency>
+  </dependencies>
 
 </project>

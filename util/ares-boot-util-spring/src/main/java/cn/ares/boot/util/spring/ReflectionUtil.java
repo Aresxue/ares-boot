@@ -259,7 +259,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的字段（包括父类但除了Object）
-   * @description: Gets all the fields from the target Object (including the parent class but except Object)
+   * @description: Gets all the fields from the target Object (including the parent class but except
+   * Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -272,7 +273,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有的非synthetic字段（包括父类但除了Object）
-   * @description: Gets all non-synthetic fields from the target Object (including the parent class but except Object)
+   * @description: Gets all non-synthetic fields from the target Object (including the parent class
+   * but except Object)
    * @time: 2023-12-12 21:02:07
    * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -285,7 +287,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 从目标对象中获取所有通过筛选的字段（包括父类但除了Object）
-   * @description: Gets all fields that pass the filter from the target Object (including the parent class but except Object)
+   * @description: Gets all fields that pass the filter from the target Object (including the parent
+   * class but except Object)
    * @time: 2023-07-12 21:02:07
    * @params: [target, accessible, ignoreOverrideField, predicate] 目标对象，访问限制，忽略重写字段（保留子类），字段筛选
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
@@ -384,7 +387,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 根据字段名称数组获取目标对象的字段值列表（不忽略null值）
-   * @description: Gets a list of field values for the target object from the field name array (null values are not ignored)
+   * @description: Gets a list of field values for the target object from the field name array (null
+   * values are not ignored)
    * @time: 2023-05-11 15:39:53
    * @params: [target, skipNull, fieldNames] 目标对象，是否跳过null，字段名称数组
    * @return: java.util.List<java.lang.Object> 字段值列表
@@ -396,7 +400,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 根据字段名称数组获取目标对象的字段值列表（指定是否跳过null）
-   * @description: Gets a list of field values for the target object from the field name array (Specifies whether null is skipped)
+   * @description: Gets a list of field values for the target object from the field name array
+   * (Specifies whether null is skipped)
    * @time: 2023-05-11 15:39:53
    * @params: [target, skipNull, fieldNames] 目标对象，是否跳过null，字段名称数组
    * @return: java.util.List<java.lang.Object> 字段值列表
@@ -419,7 +424,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 获取目标对象除了指定字段名称数组外的字段值列表
-   * @description: Gets a list of field values for the target object in addition to the specified array of field names
+   * @description: Gets a list of field values for the target object in addition to the specified
+   * array of field names
    * @time: 2023-05-11 15:44:03
    * @params: [target, excludeFieldNames] 目标对象，排除的字段名称数组
    * @return: java.util.List<java.lang.Object> 字段值列表
@@ -486,19 +492,26 @@ public class ReflectionUtil {
     Field field = findField(target, fieldName);
     return doWithHandleException(() -> {
       if (null != field) {
+        boolean fieldAccessible = field.isAccessible();
         makeAccessible(field);
-        Field modifiers = Field.class.getDeclaredField("modifiers");
-        boolean modifiersAccessible = field.isAccessible();
-        if (!modifiersAccessible) {
-          modifiers.setAccessible(true);
+        try {
+          Field modifiers = Field.class.getDeclaredField("modifiers");
+          boolean modifiersAccessible = modifiers.isAccessible();
+          makeAccessible(modifiers);
+          try {
+            // 去掉final修饰符
+            // remove final modifiers
+            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+            field.set(target, fieldValue);
+            // 把final修饰符恢复回来
+            // recover final modifiers
+            modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+          } finally {
+            modifiers.setAccessible(modifiersAccessible);
+          }
+        } finally {
+          field.setAccessible(fieldAccessible);
         }
-        // 去掉final修饰符
-        // remove final modifiers
-        modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-        field.set(target, fieldValue);
-        // 把final修饰符恢复回来
-        // recover final modifiers
-        modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
         return true;
       }
       return false;
@@ -554,7 +567,8 @@ public class ReflectionUtil {
     return InvokeUtil.generateBiFunction(findMethod(target, methodName, true, paramTypes));
   }
 
-  public static <T, U, V, R> ThirdFunction<T, U, V, R> generateThirdFunction(Object target, String methodName,
+  public static <T, U, V, R> ThirdFunction<T, U, V, R> generateThirdFunction(Object target,
+      String methodName,
       Class<?>... paramTypes) {
     return InvokeUtil.generateThirdFunction(findMethod(target, methodName, true, paramTypes));
   }
@@ -580,7 +594,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 获取类声明的所有方法（从缓存中可指定访问限制）
-   * @description: Gets all methods declared by a class (access restrictions can be specified from the cache)
+   * @description: Gets all methods declared by a class (access restrictions can be specified from
+   * the cache)
    * @time: 2023-05-08 17:40:17
    * @params: [clazz, accessible] 类，访问限制
    * @return: java.lang.reflect.Method[] 方法数组
@@ -635,7 +650,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 使用参数数组调用目标对象的方法获取指定对象 开销较低
-   * @description: Gets the specified object by calling the target object's methods using an array of arguments
+   * @description: Gets the specified object by calling the target object's methods using an array
+   * of arguments
    * @time: 2023-05-11 16:16:34
    * @params: [method, target, args] 方法，目标对象，参数数组
    * @return: T 调用结果
@@ -650,7 +666,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 用参数数组调用对象指定方法名的方法获取指定对象
-   * @description: Gets the specified object by calling the method named by the object with an array of arguments
+   * @description: Gets the specified object by calling the method named by the object with an array
+   * of arguments
    * @time: 2023-05-11 16:16:04
    * @params: [target, methodName, args] 目标对象，方法名，参数数组
    * @return: T 调用结果
@@ -664,7 +681,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 用参数数组调用对象指定方法名的方法获取可空对象
-   * @description: Gets a nullable object using a method whose name is specified by the argument array call object
+   * @description: Gets a nullable object using a method whose name is specified by the argument
+   * array call object
    * @time: 2023-05-11 16:22:48
    * @params: [target, methodName, args] 目标对象，方法名，参数数组
    * @return: java.util.Optional<T> 可空对象
@@ -720,11 +738,14 @@ public class ReflectionUtil {
             } else if (args.length == 6) {
               return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5]);
             } else if (args.length == 7) {
-              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5],
+                  args[6]);
             } else if (args.length == 9) {
-              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5],
+                  args[6], args[7], args[8]);
             } else if (args.length == METHOD_HANDLE_ARGS_LENGTH_UPPER) {
-              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
+              return methodHandle.invokeExact(args[0], args[1], args[2], args[3], args[4], args[5],
+                  args[6], args[7], args[8], args[9]);
             }
           } else {
             if (ArrayUtil.isEmpty(args)) {
@@ -740,13 +761,17 @@ public class ReflectionUtil {
             } else if (args.length == 5) {
               return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4]);
             } else if (args.length == 6) {
-              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4], args[5]);
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4],
+                  args[5]);
             } else if (args.length == 7) {
-              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4],
+                  args[5], args[6]);
             } else if (args.length == 9) {
-              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4],
+                  args[5], args[6], args[7], args[8]);
             } else if (args.length == METHOD_HANDLE_ARGS_LENGTH_UPPER) {
-              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
+              return methodHandle.invokeExact(target, args[0], args[1], args[2], args[3], args[4],
+                  args[5], args[6], args[7], args[8], args[9]);
             }
           }
         } catch (Throwable t) {
@@ -771,7 +796,8 @@ public class ReflectionUtil {
   /**
    * @author: Ares
    * @description: 根据访问限制和参数数组获取目标对象（可能是类）的构造器
-   * @description: Gets the constructor of the target object (possibly a class) based on access restrictions and an array of arguments
+   * @description: Gets the constructor of the target object (possibly a class) based on access
+   * restrictions and an array of arguments
    * @time: 2023-05-11 17:47:27
    * @params: [target, accessible, args] 目标对象，访问限制，参数数组
    * @return: java.lang.reflect.Constructor<T> 构造器

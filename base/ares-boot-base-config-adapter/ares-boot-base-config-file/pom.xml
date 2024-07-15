@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue.boot</groupId>
+    <groupId>com.xiaohongshu.boot</groupId>
     <artifactId>ares-boot-base-config-adapter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
@@ -14,7 +14,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-config-abstract</artifactId>
     </dependency>
   </dependencies>

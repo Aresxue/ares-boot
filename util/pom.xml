@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue.boot</groupId>
+    <groupId>com.xiaohongshu.boot</groupId>
     <artifactId>ares-boot</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <groupId>io.github.aresxue.boot.util</groupId>
+  <groupId>com.xiaohongshu.boot.util</groupId>
   <artifactId>ares-boot-util</artifactId>
   <name>Ares Boot Util</name>
   <packaging>pom</packaging>

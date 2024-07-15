@@ -11,7 +11,7 @@
     <relativePath/>
   </parent>
 
-  <groupId>io.github.aresxue.boot</groupId>
+  <groupId>com.xiaohongshu.boot</groupId>
   <artifactId>ares-boot-dependency</artifactId>
   <name>Ares Boot Dependency</name>
   <version>1.0.3-SNAPSHOT</version>

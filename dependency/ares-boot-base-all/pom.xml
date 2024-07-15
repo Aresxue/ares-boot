@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue.boot</groupId>
+    <groupId>com.xiaohongshu.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
@@ -19,47 +19,47 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-config</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-log</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-model</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-metrics</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-trace</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-validation</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-dynamic-route</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-servlet</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-version</artifactId>
     </dependency>
   </dependencies>
@@ -67,7 +67,7 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>ares-boot-base-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>

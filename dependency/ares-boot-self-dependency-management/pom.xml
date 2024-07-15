@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue.boot</groupId>
+    <groupId>com.xiaohongshu.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
@@ -20,21 +20,21 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>ares-boot-base-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>ares-boot-util-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>ares-boot-starter-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
@@ -42,21 +42,21 @@
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>business-api-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>business-client-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>business-spi-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
@@ -64,17 +64,17 @@
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>ares-boot-base-all</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>business-api-required</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>ares-boot-version</artifactId>
         <version>${boot.version}</version>
       </dependency>

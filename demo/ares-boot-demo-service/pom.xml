@@ -23,11 +23,11 @@
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-starter-spring</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.github.aresxue.boot.util</groupId>
+      <groupId>com.xiaohongshu.boot.util</groupId>
       <artifactId>ares-boot-util-http</artifactId>
     </dependency>
   </dependencies>

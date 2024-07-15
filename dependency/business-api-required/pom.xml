@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue.boot</groupId>
+    <groupId>com.xiaohongshu.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
@@ -20,11 +20,11 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-model</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-validation</artifactId>
     </dependency>
 
@@ -39,14 +39,14 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>ares-boot-base-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>io.github.aresxue.boot</groupId>
+        <groupId>com.xiaohongshu.boot</groupId>
         <artifactId>third-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>

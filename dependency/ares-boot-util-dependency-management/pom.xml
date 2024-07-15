@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue.boot</groupId>
+    <groupId>com.xiaohongshu.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
@@ -20,67 +20,67 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-common</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-crypt</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-http</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-json</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-mapstruct</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-ognl</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-servlet</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-spring</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-test</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-yaml</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>io.github.aresxue.boot.util</groupId>
+        <groupId>com.xiaohongshu.boot.util</groupId>
         <artifactId>ares-boot-util-log</artifactId>
         <version>${boot.version}</version>
       </dependency>

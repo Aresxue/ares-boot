@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue.boot</groupId>
+    <groupId>com.xiaohongshu.boot</groupId>
     <artifactId>ares-boot-dependency-management</artifactId>
     <version>1.0.3-SNAPSHOT</version>
     <relativePath>../../dependency/ares-boot-dependency-management/pom.xml</relativePath>
@@ -22,7 +22,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-version</artifactId>
     </dependency>
   </dependencies>

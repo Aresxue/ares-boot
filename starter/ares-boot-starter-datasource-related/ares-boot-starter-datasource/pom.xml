@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.github.aresxue.boot</groupId>
+    <groupId>com.xiaohongshu.boot</groupId>
     <artifactId>ares-boot-starter-datasource-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
@@ -22,19 +22,19 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-base-log</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.github.aresxue.boot.util</groupId>
+      <groupId>com.xiaohongshu.boot.util</groupId>
       <artifactId>ares-boot-util-spring</artifactId>
     </dependency>
    <!-- <dependency>
-      <groupId>io.github.aresxue.boot.util</groupId>
+      <groupId>com.xiaohongshu.boot.util</groupId>
       <artifactId>ares-boot-util-mapstruct</artifactId>
     </dependency>-->
     <dependency>
-      <groupId>io.github.aresxue.boot.util</groupId>
+      <groupId>com.xiaohongshu.boot.util</groupId>
       <artifactId>ares-boot-util-test</artifactId>
       <scope>test</scope>
     </dependency>

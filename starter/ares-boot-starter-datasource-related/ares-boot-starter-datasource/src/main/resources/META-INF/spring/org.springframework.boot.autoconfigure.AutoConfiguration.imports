@@ -1,2 +1,2 @@
-cn.ares.boot.starter.datasource.config.DataSourceEnvironmentPostProcessor
-cn.ares.boot.starter.datasource.config.BootDataSourceConfiguration
+com.xiaohongshu.boot.starter.datasource.config.DataSourceEnvironmentPostProcessor
+com.xiaohongshu.boot.starter.datasource.config.BootDataSourceConfiguration

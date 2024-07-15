@@ -23,7 +23,7 @@
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
+      <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>ares-boot-starter-web</artifactId>
     </dependency>
   </dependencies>

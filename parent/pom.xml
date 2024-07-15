@@ -21,4 +21,13 @@
     <module>ares-boot-starter-parent</module>
   </modules>
 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <inherited>false</inherited>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

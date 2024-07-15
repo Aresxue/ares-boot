@@ -55,6 +55,9 @@
         <artifactId>maven-gpg-plugin</artifactId>
         <!-- 打断继承 -->
         <inherited>false</inherited>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
       </plugin>
     </plugins>
   </build>

@@ -21,7 +21,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractQueryInterceptor implements QueryInterceptor {
 
-  public static final Logger SQL_LOGGER = LoggerFactory.getLogger("sqlInterceptor");
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractQueryInterceptor.class);
+  protected static final Logger SQL_LOGGER = LoggerFactory.getLogger("sqlInterceptor");
 
   @Override
   public QueryInterceptor init(MysqlConnection mysqlConnection, Properties properties, Log log) {
@@ -35,7 +36,7 @@ public abstract class AbstractQueryInterceptor implements QueryInterceptor {
       try {
         handle(sqlSupplier.get());
       } catch (Exception e) {
-        LoggerUtil.error("jdbc query interceptor handle sql exception: ", e);
+        LOGGER.error("jdbc query interceptor handle sql exception: ", e);
       }
     }
     return null;

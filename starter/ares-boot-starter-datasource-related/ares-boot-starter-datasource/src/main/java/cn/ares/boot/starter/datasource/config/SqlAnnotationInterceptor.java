@@ -10,6 +10,8 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Signature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author: Ares
@@ -27,6 +29,8 @@ import org.apache.ibatis.plugin.Signature;
 )
 public class SqlAnnotationInterceptor implements Interceptor {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(SqlAnnotationInterceptor.class);
+
   @Override
   public Object intercept(Invocation invocation) throws Throwable {
     Object target = invocation.getTarget();
@@ -40,7 +44,7 @@ public class SqlAnnotationInterceptor implements Interceptor {
       sql = annotation + sql;
       ReflectionUtil.setFieldValue(boundSql, "sql", sql);
     } catch (Throwable throwable) {
-      LoggerUtil.error("add sql annotation fail: ", throwable);
+      LOGGER.error("add sql annotation fail: ", throwable);
     }
     return invocation.proceed();
   }

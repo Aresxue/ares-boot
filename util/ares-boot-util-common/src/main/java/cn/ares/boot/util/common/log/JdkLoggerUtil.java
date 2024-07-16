@@ -39,6 +39,10 @@ public class JdkLoggerUtil {
     logger.addHandler(consoleHandler);
   }
 
+  public static void warn(Logger logger, Object msg) {
+    warn(logger, msg, null);
+  }
+
   public static void warn(Logger logger, Object msg, Throwable throwable) {
     logger.log(WARNING, String.valueOf(msg), throwable);
   }

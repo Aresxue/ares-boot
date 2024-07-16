@@ -24,8 +24,7 @@ public class SunReflectionUtil {
       GET_CALLER_CLASS_METHOD = sunReflectionClass.getDeclaredMethod("getCallerClass", int.class);
     } catch (Throwable throwable) {
       JdkLoggerUtil.warn(LOGGER,
-          "sun.reflect.Reflection#getCallerClass is not found, maybe jdk version is higher than 1.8, throwable: ",
-          throwable);
+          "sun.reflect.Reflection#getCallerClass is not found, maybe jdk version is higher than 1.8");
     }
   }
 

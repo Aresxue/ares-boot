@@ -4,6 +4,7 @@ import static cn.ares.boot.util.common.constant.MiddlewareType.DATABASE;
 import static cn.ares.boot.util.common.constant.StringConstant.FALSE;
 
 import cn.ares.boot.base.log.util.LoggerUtil;
+import cn.ares.boot.util.spring.SpringUtil;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +26,9 @@ public class DataSourceEnvironmentPostProcessor implements EnvironmentPostProces
   @Override
   public void postProcessEnvironment(ConfigurableEnvironment environment,
       SpringApplication application) {
+    if (SpringUtil.isSpringCloudApplication(application)) {
+      return;
+    }
     if (PROCESSED.compareAndSet(false, true)) {
       Properties datasourceConfig = new Properties();
       datasourceConfig.put("mybatis-plus.globalConfig.banner", FALSE);

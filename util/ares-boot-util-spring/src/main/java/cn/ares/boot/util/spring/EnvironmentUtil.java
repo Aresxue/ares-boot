@@ -17,7 +17,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertiesPropertySource;
-import org.springframework.core.env.StandardEnvironment;
 
 /**
  * @author: Ares
@@ -88,8 +87,8 @@ public class EnvironmentUtil {
   public static Properties getPropertiesByPrefix(Environment environment, String prefix,
       boolean retainPrefix, String... excludePropertySourceNames) {
     Properties properties = new Properties();
-    StandardEnvironment standardEnvironment = (StandardEnvironment) environment;
-    standardEnvironment.getPropertySources().forEach(propertySource -> {
+    ConfigurableEnvironment configurableEnvironment = (ConfigurableEnvironment) environment;
+    configurableEnvironment.getPropertySources().forEach(propertySource -> {
       if (propertySource instanceof MapPropertySource && !ArrayUtil.contains(
           excludePropertySourceNames, propertySource.getName())) {
         MapPropertySource mapPropertySource = (MapPropertySource) propertySource;

@@ -58,6 +58,9 @@ public class BootEnvironment implements EnvironmentPostProcessor,
   @Override
   public void postProcessEnvironment(ConfigurableEnvironment environment,
       SpringApplication application) {
+    if (SpringUtil.isSpringCloudApplication(application)) {
+      return;
+    }
     // 设置应用名称
     setAppName(environment);
     // 设置系统属性

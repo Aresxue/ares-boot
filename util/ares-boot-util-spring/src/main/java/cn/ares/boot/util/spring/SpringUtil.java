@@ -649,8 +649,10 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
     if (CollectionUtil.isEmpty(sourceSet)) {
       return false;
     }
-    return sourceSet.stream().anyMatch(
-        source -> DETERMINE_SPRING_CLOUD_CLASS_NAME.equals(source.getClass().getCanonicalName()));
+    return sourceSet.stream().filter(clazz -> clazz instanceof Class).anyMatch(source -> {
+      Class<?> clazz = (Class<?>) source;
+      return DETERMINE_SPRING_CLOUD_CLASS_NAME.equals(clazz.getName());
+    });
   }
 
   private static ApplicationContext getApplicationContext() {

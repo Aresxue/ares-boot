@@ -5,6 +5,7 @@ import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPORT;
 import static org.springframework.context.annotation.AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR;
 
+import cn.ares.boot.util.common.CollectionUtil;
 import cn.ares.boot.util.common.MapUtil;
 import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.common.primitive.BooleanUtil;
@@ -37,6 +38,7 @@ import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.SingletonBeanRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanNameGenerator;
+import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.AnnotationBeanNameGenerator;
@@ -66,6 +68,7 @@ import org.springframework.util.ClassUtils;
 public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware, BeanFactoryAware {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SpringUtil.class);
+  public static final String DETERMINE_SPRING_CLOUD_CLASS_NAME = "org.springframework.cloud.bootstrap.BootstrapImportSelectorConfiguration";
 
   private static ApplicationContext applicationContext;
   private static ApplicationContext firstApplicationContext;
@@ -628,6 +631,26 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
       value = LongUtil.parseLong(resolvePlaceholders(valueExpression));
     }
     return value;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断是否是SpringCloud应用
+   * @description: Determine if it is a SpringCloud application
+   * @time: 2024-07-17 21:19:40
+   * @params: [application] 应用
+   * @return: boolean 是否是SpringCloud应用
+   */
+  public static boolean isSpringCloudApplication(SpringApplication application) {
+    if (null == application) {
+      return false;
+    }
+    Set<Object> sourceSet = application.getAllSources();
+    if (CollectionUtil.isEmpty(sourceSet)) {
+      return false;
+    }
+    return sourceSet.stream().anyMatch(
+        source -> DETERMINE_SPRING_CLOUD_CLASS_NAME.equals(source.getClass().getCanonicalName()));
   }
 
   private static ApplicationContext getApplicationContext() {

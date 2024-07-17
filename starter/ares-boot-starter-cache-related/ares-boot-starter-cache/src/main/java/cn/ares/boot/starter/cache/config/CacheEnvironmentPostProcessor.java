@@ -12,6 +12,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRA
 import cn.ares.boot.base.log.util.LoggerUtil;
 import cn.ares.boot.util.common.primitive.BooleanUtil;
 import cn.ares.boot.util.spring.EnvironmentUtil;
+import cn.ares.boot.util.spring.SpringUtil;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.redisson.spring.starter.RedissonAutoConfiguration;
@@ -43,6 +44,9 @@ public class CacheEnvironmentPostProcessor implements EnvironmentPostProcessor {
   @Override
   public void postProcessEnvironment(ConfigurableEnvironment environment,
       SpringApplication application) {
+    if (SpringUtil.isSpringCloudApplication(application)) {
+      return;
+    }
     if (PROCESSED.compareAndSet(false, true)) {
       Properties cacheConfig = EnvironmentUtil.getPropertiesByPrefix(environment,
           APPLICATION_CACHE_PREFIX);

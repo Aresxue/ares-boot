@@ -46,6 +46,7 @@ public class UserVo {
   private LocalDateTime updateTime;
 
   private String uuid;
+  private LocalDateTime now;
   private String appName;
 
 }

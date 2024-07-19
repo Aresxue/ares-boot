@@ -35,12 +35,15 @@ public class DataSourceEnvironmentPostProcessor implements EnvironmentPostProces
       datasourceConfig.put("mybatis-plus.globalConfig.banner", FALSE);
       EnvironmentUtil.setPropertyIfAbsent(environment, datasourceConfig,
           "mybatis-plus.mapper-locations", "classpath*:/mapper/*Mapper.xml");
+      EnvironmentUtil.setPropertyIfAbsent(environment, datasourceConfig,
+          "mybatis-plus.configuration.log-impl", "org.apache.ibatis.logging.slf4j.Slf4jImpl");
+      EnvironmentUtil.setPropertyIfAbsent(environment, datasourceConfig,
+          "map-underscore-to-camel-case", "true");
       environment.getPropertySources()
           .addLast(new PropertiesPropertySource(DATABASE.getName(), datasourceConfig));
       LoggerUtil.infoDeferred("datasource config load success");
     }
   }
-
 
 
 }

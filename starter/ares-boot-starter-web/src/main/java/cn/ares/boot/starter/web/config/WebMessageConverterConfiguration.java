@@ -6,22 +6,21 @@ import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRA
 import cn.ares.boot.util.common.DateUtil;
 import cn.ares.boot.util.common.ExceptionUtil;
 import cn.ares.boot.util.json.JsonUtil;
+import cn.ares.boot.util.json.deserializer.CompositeLocalDateTimeDeSerializer;
+import cn.ares.boot.util.json.deserializer.CompositeLocalTimeDeSerializer;
 import cn.ares.boot.util.json.serializer.BigDecimalScaleSerializer;
 import cn.ares.boot.util.json.serializer.BigDecimalTrailingZerosSerializer;
+import cn.ares.boot.util.json.serializer.CompositeLocalDateTimeSerializer;
+import cn.ares.boot.util.json.serializer.CompositeLocalTimeSerializer;
 import cn.ares.boot.util.json.serializer.modifier.NullBeanSerializerModifier;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
@@ -85,8 +84,8 @@ public class WebMessageConverterConfiguration implements WebMvcConfigurer {
   private boolean nullToDefaultEnable;
 
   @Override
-  public void configureMessageConverters(@Nullable List<HttpMessageConverter<?>> converters) {
-    if (null != converters) {
+  public void configureMessageConverters(@Nullable List<HttpMessageConverter<?>> converterList) {
+    if (null != converterList) {
       MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter(
           Jackson2ObjectMapperBuilder.json().build());
 
@@ -117,14 +116,14 @@ public class WebMessageConverterConfiguration implements WebMvcConfigurer {
       objectMapper.registerModule(newModule);
 
       // 处理LocalDateTime、LocalDate、LocalTime
-      objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+//      objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
       objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
 
       JavaTimeModule javaTimeModule = new JavaTimeModule();
       javaTimeModule.addSerializer(LocalDateTime.class,
-          new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(localDateTimeFormat)));
+          new CompositeLocalDateTimeSerializer(localDateTimeFormat));
       javaTimeModule.addDeserializer(LocalDateTime.class,
-          new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(localDateTimeFormat)));
+          new CompositeLocalDateTimeDeSerializer(localDateTimeFormat));
 
       javaTimeModule.addSerializer(LocalDate.class,
           new LocalDateSerializer(DateTimeFormatter.ofPattern(localDateFormat)));
@@ -132,16 +131,24 @@ public class WebMessageConverterConfiguration implements WebMvcConfigurer {
           new LocalDateDeserializer(DateTimeFormatter.ofPattern(localDateFormat)));
 
       javaTimeModule.addSerializer(LocalTime.class,
-          new LocalTimeSerializer(DateTimeFormatter.ofPattern(localTimeFormat)));
+          new CompositeLocalTimeSerializer(localTimeFormat));
       javaTimeModule.addDeserializer(LocalTime.class,
-          new LocalTimeDeserializer(DateTimeFormatter.ofPattern(localTimeFormat)));
+          new CompositeLocalTimeDeSerializer(localTimeFormat));
 
       objectMapper.registerModule(javaTimeModule).registerModule(new ParameterNamesModule());
       JsonUtil.enableIgnoreDuplicateModuleRegistrations(objectMapper);
 
       converter.setObjectMapper(objectMapper);
 
-      converters.add(0, converter);
+      // 插入到合适的位置
+      for (int i = 0; i < converterList.size(); i++) {
+        if (converterList.get(i) instanceof MappingJackson2HttpMessageConverter) {
+          converterList.add(i, converter);
+          return;
+        }
+      }
+      // 如果没有找到MappingJackson2HttpMessageConverter则直接添加到最后
+      converterList.add(converter);
     }
   }
 

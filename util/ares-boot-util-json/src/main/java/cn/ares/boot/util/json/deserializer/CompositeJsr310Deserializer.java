@@ -33,7 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @description: Composite LocalDateTime deserializer
  * @version: JDK 1.8
  */
-public class CompositeLocalDateTimeDeserializer extends StdDeserializer<LocalDateTime> implements
+public class CompositeJsr310Deserializer extends StdDeserializer<LocalDateTime> implements
     ContextualDeserializer {
 
   private static final long serialVersionUID = 8186443244781045193L;
@@ -44,7 +44,7 @@ public class CompositeLocalDateTimeDeserializer extends StdDeserializer<LocalDat
 
   private final Set<String> formatSet = new HashSet<>();
 
-  protected CompositeLocalDateTimeDeserializer() {
+  protected CompositeJsr310Deserializer() {
     super(LocalDateTime.class);
   }
 

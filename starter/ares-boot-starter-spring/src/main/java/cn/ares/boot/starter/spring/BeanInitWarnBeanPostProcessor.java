@@ -1,6 +1,7 @@
 package cn.ares.boot.starter.spring;
 
-import cn.ares.boot.base.log.util.LoggerUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -17,6 +18,8 @@ import org.springframework.lang.NonNull;
 @ConditionalOnProperty(name = "ares.spring.bean-init-warn.enabled", havingValue = "true")
 public class BeanInitWarnBeanPostProcessor implements BeanPostProcessor {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(BeanInitWarnBeanPostProcessor.class);
+
   private Long startTime;
 
   @Value("${ares.spring.bean-init-limit-time:200}")
@@ -27,7 +30,7 @@ public class BeanInitWarnBeanPostProcessor implements BeanPostProcessor {
       throws BeansException {
     long useTime = System.currentTimeMillis() - startTime;
     if (useTime > timeLimit) {
-      LoggerUtil.warn("bean: {} over init limit time, use time: {}", beanName, useTime);
+      LOGGER.warn("bean: {} over init limit time, use time: {}", beanName, useTime);
     }
     return bean;
   }

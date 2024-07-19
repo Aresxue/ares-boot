@@ -1,11 +1,14 @@
 package cn.ares.boot.starter.web.config;
 
+import static cn.ares.boot.util.common.constant.StringConstant.FALSE;
 import static cn.ares.boot.util.common.constant.StringConstant.TRUE;
+import static cn.ares.boot.util.spring.EnvironmentUtil.setPropertyIfAbsent;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE;
 import static org.springframework.boot.web.server.Shutdown.GRACEFUL;
 
 import cn.ares.boot.base.config.BootEnvironment;
 import cn.ares.boot.util.common.StringUtil;
+import cn.ares.boot.util.common.primitive.BooleanUtil;
 import cn.ares.boot.util.spring.SpringUtil;
 import java.nio.charset.Charset;
 import java.util.Properties;
@@ -73,8 +76,20 @@ public class WebEnvironmentPostProcessor implements EnvironmentPostProcessor {
         }
       }
 
-
       // 接口文档配置
+      if (BooleanUtil.isTrue(environment.getProperty("ares.web.doc.enabled"))) {
+        properties.put("springdoc.api-docs.enabled", TRUE);
+        properties.put("knife4j.enable", TRUE);
+        setPropertyIfAbsent(environment, properties, "knife4j.setting.language", "zh-CN");
+        setPropertyIfAbsent(environment, properties, "knife4j.setting.swagger-model-name",
+            "实体类列表");
+        setPropertyIfAbsent(environment, properties, "knife4j.enable-footer-custom", TRUE);
+        setPropertyIfAbsent(environment, properties, "knife4j.footer-custom-content",
+            "Apache License 2.0 | Copyright  2024-[Ares]");
+      } else {
+        properties.put("springdoc.api-docs.enabled", FALSE);
+        properties.put("knife4j.enable", FALSE);
+      }
 
       environment.getPropertySources().addLast(new PropertiesPropertySource(WEB, properties));
     }

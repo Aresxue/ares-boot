@@ -10,12 +10,17 @@
             "name": "cors config",
             "type": "cn.ares.boot.starter.web.config.BootCorsConfiguration",
             "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "web doc config",
+            "type": "cn.ares.boot.starter.web.config.WebEnvironmentPostProcessor",
+            "sourceType": "cn.ares.boot.starter.web.config.WebEnvironmentPostProcessor"
         }
     ],
     "properties":
     [
         {
-            "name": "ares.web.message-convert.enable",
+            "name": "ares.web.message-convert.enabled",
             "description": "web message convert enable",
             "type": "java.lang.Boolean",
             "defaultValue": true,
@@ -63,14 +68,14 @@
             "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
         },
         {
-            "name": "ares.web.message-convert.null2default.enable",
+            "name": "ares.web.message-convert.null2default",
             "description": "Add null value to set the serialization of the default value. After opening, the null of Boolean will become false, the null of Number will become 0, the null of string will become '', and the null of array will become []",
             "type": "java.lang.Boolean",
             "defaultValue": false,
             "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
         },
         {
-            "name": "ares.web.cors.enable",
+            "name": "ares.web.cors.enabled",
             "description": "enable cors",
             "type": "java.lang.Boolean",
             "defaultValue": false,
@@ -124,6 +129,13 @@
             "type": "java.lang.Boolean",
             "defaultValue": true,
             "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "ares.web.doc.enabled",
+            "description": "enable web doc",
+            "type": "java.lang.Boolean",
+            "defaultValue": false,
+            "sourceType": "cn.ares.boot.starter.web.config.WebEnvironmentPostProcessor"
         }
     ],
     "hints":

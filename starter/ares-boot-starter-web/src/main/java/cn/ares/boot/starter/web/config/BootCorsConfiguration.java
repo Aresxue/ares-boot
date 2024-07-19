@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @version: JDK 1.8
  */
 @Configuration
-@ConditionalOnProperty(name = "ares.web.cors.enable", havingValue = TRUE)
+@ConditionalOnProperty(name = "ares.web.cors.enabled", havingValue = TRUE)
 public class BootCorsConfiguration implements WebMvcConfigurer {
 
   @Value("${ares.web.cors.mapping:/**}")

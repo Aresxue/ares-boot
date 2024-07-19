@@ -5,6 +5,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRA
 
 import cn.ares.boot.util.common.DateUtil;
 import cn.ares.boot.util.common.ExceptionUtil;
+import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.json.JsonUtil;
 import cn.ares.boot.util.json.deserializer.CompositeLocalDateTimeDeSerializer;
 import cn.ares.boot.util.json.deserializer.CompositeLocalTimeDeSerializer;
@@ -52,12 +53,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author: Ares
  * @time: 2020-11-26 13:48:00
  * @description: 做了以下工作 1.解决js和java数字精度不对等(js为2 ^ 53, java为2 ^ 64) 2.Date类型转为字符串
- * 3.BigDecimal也转为string 4.LocalDateTime、LocalDate、LocalTime等jdk8时间的处理
+ * 3.BigDecimal也转为string 4.LocalDateTime、LocalDate、LocalTime等jdk8时间格式的处理
  * @version: JDK 1.8
  */
 @Configuration
 @ConditionalOnMissingBean(WebMessageConverterConfiguration.class)
-@ConditionalOnProperty(name = "ares.web.message-convert.enable", havingValue = TRUE, matchIfMissing = true)
+@ConditionalOnProperty(name = "ares.web.message-convert.enabled", havingValue = TRUE, matchIfMissing = true)
 @Role(value = ROLE_INFRASTRUCTURE)
 @Order(0)
 public class WebMessageConverterConfiguration implements WebMvcConfigurer {
@@ -77,10 +78,10 @@ public class WebMessageConverterConfiguration implements WebMvcConfigurer {
   @Value("${ares.web.message-convert.local-date-time.format:yyyy-MM-dd HH:mm:ss.SSS}")
   private String localDateTimeFormat;
 
-  @Value("${ares.web.message-convert.not-null:false}")
+  @Value("${ares.web.message-convert.ignore-null:false}")
   private boolean notNull;
 
-  @Value("${ares.web.message-convert.null2default.enable:false}")
+  @Value("${ares.web.message-convert.null2default:false}")
   private boolean nullToDefaultEnable;
 
   @Override
@@ -161,26 +162,58 @@ public class WebMessageConverterConfiguration implements WebMvcConfigurer {
   @ControllerAdvice
   public class RequestConvertConfiguration {
 
+    private final DateTimeFormatter localDateTimeFormatter;
+    private DateTimeFormatter removeZeroLocalDateTimeFormatter;
+    private final DateTimeFormatter localTimeFormatter;
+    private DateTimeFormatter removeZeroLocalTimeFormatter;
+    private final DateTimeFormatter localDateFormatter;
+
+    public RequestConvertConfiguration() {
+      this.localDateTimeFormatter = DateTimeFormatter.ofPattern(localDateTimeFormat);
+      List<String> formatList = StringUtil.listSplit(localDateTimeFormat, ".S");
+      if (formatList.size() > 1) {
+        removeZeroLocalDateTimeFormatter = DateTimeFormatter.ofPattern(formatList.get(0));
+      }
+      this.localTimeFormatter = DateTimeFormatter.ofPattern(localTimeFormat);
+      formatList = StringUtil.listSplit(localTimeFormat, ".S");
+      if (formatList.size() > 1) {
+        removeZeroLocalTimeFormatter = DateTimeFormatter.ofPattern(formatList.get(0));
+      }
+      this.localDateFormatter = DateTimeFormatter.ofPattern(localDateFormat);
+    }
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
       binder.registerCustomEditor(LocalDateTime.class, new PropertyEditorSupport() {
         @Override
         public void setAsText(String text) throws IllegalArgumentException {
-          setValue(LocalDateTime.parse(text, DateTimeFormatter.ofPattern(localDateTimeFormat)));
+          DateTimeFormatter formatter;
+          if (null == removeZeroLocalDateTimeFormatter || text.contains(".")) {
+            formatter = localDateTimeFormatter;
+          } else {
+            formatter = removeZeroLocalDateTimeFormatter;
+          }
+          setValue(LocalDateTime.parse(text, formatter));
         }
       });
 
       binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
         @Override
         public void setAsText(String text) throws IllegalArgumentException {
-          setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern(localDateFormat)));
+          setValue(LocalDate.parse(text, localDateFormatter));
         }
       });
 
       binder.registerCustomEditor(LocalTime.class, new PropertyEditorSupport() {
         @Override
         public void setAsText(String text) throws IllegalArgumentException {
-          setValue(LocalTime.parse(text, DateTimeFormatter.ofPattern(localTimeFormat)));
+          DateTimeFormatter formatter;
+          if (null == removeZeroLocalTimeFormatter || text.contains(".")) {
+            formatter = localTimeFormatter;
+          } else {
+            formatter = removeZeroLocalTimeFormatter;
+          }
+          setValue(LocalTime.parse(text, formatter));
         }
       });
       binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {

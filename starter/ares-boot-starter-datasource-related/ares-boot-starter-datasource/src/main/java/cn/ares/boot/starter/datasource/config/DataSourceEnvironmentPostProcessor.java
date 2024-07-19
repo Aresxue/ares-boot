@@ -2,9 +2,9 @@ package cn.ares.boot.starter.datasource.config;
 
 import static cn.ares.boot.util.common.constant.MiddlewareType.DATABASE;
 import static cn.ares.boot.util.common.constant.StringConstant.FALSE;
+import static cn.ares.boot.util.spring.EnvironmentUtil.setPropertyIfAbsent;
 
 import cn.ares.boot.base.log.util.LoggerUtil;
-import cn.ares.boot.util.spring.EnvironmentUtil;
 import cn.ares.boot.util.spring.SpringUtil;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -33,17 +33,15 @@ public class DataSourceEnvironmentPostProcessor implements EnvironmentPostProces
     if (PROCESSED.compareAndSet(false, true)) {
       Properties datasourceConfig = new Properties();
       datasourceConfig.put("mybatis-plus.globalConfig.banner", FALSE);
-      EnvironmentUtil.setPropertyIfAbsent(environment, datasourceConfig,
-          "mybatis-plus.mapper-locations", "classpath*:/mapper/*Mapper.xml");
-      EnvironmentUtil.setPropertyIfAbsent(environment, datasourceConfig,
-          "mybatis-plus.configuration.log-impl", "org.apache.ibatis.logging.slf4j.Slf4jImpl");
-      EnvironmentUtil.setPropertyIfAbsent(environment, datasourceConfig,
-          "map-underscore-to-camel-case", "true");
+      setPropertyIfAbsent(environment, datasourceConfig, "mybatis-plus.mapper-locations",
+          "classpath*:/mapper/*Mapper.xml");
+      setPropertyIfAbsent(environment, datasourceConfig, "mybatis-plus.configuration.log-impl",
+          "org.apache.ibatis.logging.slf4j.Slf4jImpl");
+      setPropertyIfAbsent(environment, datasourceConfig, "map-underscore-to-camel-case", "true");
       environment.getPropertySources()
           .addLast(new PropertiesPropertySource(DATABASE.getName(), datasourceConfig));
       LoggerUtil.infoDeferred("datasource config load success");
     }
   }
-
 
 }

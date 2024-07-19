@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-base</artifactId>
+    <artifactId>red-boot-base</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-dynamic-route</artifactId>
+  <artifactId>red-boot-base-dynamic-route</artifactId>
   <description>
     动态路由基础模块，提供使用api
     Dynamic routing base module, provide use api

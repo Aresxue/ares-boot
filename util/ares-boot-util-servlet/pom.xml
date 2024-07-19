@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot.util</groupId>
-    <artifactId>ares-boot-util</artifactId>
+    <artifactId>red-boot-util</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-util-servlet</artifactId>
+  <artifactId>red-boot-util-servlet</artifactId>
   <description>
     提供servlet操作工具类
     Provide servlet operation tool class
@@ -20,7 +20,7 @@
 
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-common</artifactId>
+      <artifactId>red-boot-util-common</artifactId>
     </dependency>
 
     <dependency>

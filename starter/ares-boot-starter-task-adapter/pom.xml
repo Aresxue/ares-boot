@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-task-adapter</artifactId>
+  <artifactId>red-boot-starter-task-adapter</artifactId>
   <packaging>pom</packaging>
   <description>
     任务快速使用，可自动从配置中心获取定时任务服务器信息，提供注解方式进行分布式任务调度，提供任务执行前后的拦截器机制，

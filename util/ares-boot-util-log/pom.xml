@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot.util</groupId>
-    <artifactId>ares-boot-util</artifactId>
+    <artifactId>red-boot-util</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-util-log</artifactId>
+  <artifactId>red-boot-util-log</artifactId>
   <description>
     日志工具，自动适配log4j、log4j2、logback三种实现
     Log tool, automatically adapt log4j, log4j2, logback three implementations
@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-common</artifactId>
+      <artifactId>red-boot-util-common</artifactId>
     </dependency>
 
     <dependency>

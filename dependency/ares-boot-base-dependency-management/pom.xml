@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-dependency</artifactId>
+    <artifactId>red-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-dependency-management</artifactId>
+  <artifactId>red-boot-base-dependency-management</artifactId>
   <packaging>pom</packaging>
   <description>
     管理所有base模块的依赖
@@ -21,90 +21,90 @@
     <dependencies>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-model</artifactId>
+        <artifactId>red-boot-base-model</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-config-adapter</artifactId>
+        <artifactId>red-boot-base-config-adapter</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-config-abstract</artifactId>
+        <artifactId>red-boot-base-config-abstract</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-config</artifactId>
+        <artifactId>red-boot-base-config</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-config-file</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-log</artifactId>
+        <artifactId>red-boot-base-config-file</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-metrics</artifactId>
+        <artifactId>red-boot-base-log</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-trace-adapter</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-trace-abstract</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-trace</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-trace-arms</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-trace-pinpoint</artifactId>
+        <artifactId>red-boot-base-metrics</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-validation</artifactId>
+        <artifactId>red-boot-base-trace-adapter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-base-trace-abstract</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-base-trace</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-base-trace-arms</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-base-trace-pinpoint</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-servlet</artifactId>
+        <artifactId>red-boot-base-validation</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-version</artifactId>
+        <artifactId>red-boot-base-servlet</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-dynamic-route</artifactId>
+        <artifactId>red-boot-base-version</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-base-dynamic-route</artifactId>
         <version>${boot.version}</version>
       </dependency>
     </dependencies>

@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-base</artifactId>
+    <artifactId>red-boot-base</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-version</artifactId>
+  <artifactId>red-boot-base-version</artifactId>
 
 
 </project>

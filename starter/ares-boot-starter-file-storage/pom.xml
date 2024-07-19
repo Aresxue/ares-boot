@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-file-storage</artifactId>
+  <artifactId>red-boot-starter-file-storage</artifactId>
   <description>
     文件服务快速使用，可自动从配置中心获取文件服务器信息，业务使用接口即可快速上传文件，适配多种云端服务器以及本地方式
     File service use quickly, and the file server information can be automatically

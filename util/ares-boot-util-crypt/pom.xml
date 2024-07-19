@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot.util</groupId>
-    <artifactId>ares-boot-util</artifactId>
+    <artifactId>red-boot-util</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-util-crypt</artifactId>
+  <artifactId>red-boot-util-crypt</artifactId>
   <description>
     提供加解密工具，并附带多种实现
     Provide encryption and decryption tools, and come with multiple implementations
@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-common</artifactId>
+      <artifactId>red-boot-util-common</artifactId>
     </dependency>
 
     <dependency>

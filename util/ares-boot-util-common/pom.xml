@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot.util</groupId>
-    <artifactId>ares-boot-util</artifactId>
+    <artifactId>red-boot-util</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-util-common</artifactId>
+  <artifactId>red-boot-util-common</artifactId>
   <description>
     通用工具模块, 只依赖jdk的工具类
     Universal tool module, only depends on the tool class of jdk

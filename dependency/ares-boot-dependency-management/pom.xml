@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-dependency</artifactId>
+    <artifactId>red-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-dependency-management</artifactId>
+  <artifactId>red-boot-dependency-management</artifactId>
   <packaging>pom</packaging>
   <description>
     集成所有模块的依赖管理
@@ -21,7 +21,7 @@
     <dependencies>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-self-dependency-management</artifactId>
+        <artifactId>red-boot-self-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>

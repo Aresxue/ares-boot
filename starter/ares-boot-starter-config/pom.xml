@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-config</artifactId>
+  <artifactId>red-boot-starter-config</artifactId>
   <description>
     配置中心快速使用，提供监听api配合热刷新使用
     Config center use quickly, the monitoring api is provided for use with hot refresh

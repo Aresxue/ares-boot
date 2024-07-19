@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-cache-related</artifactId>
+    <artifactId>red-boot-starter-cache-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-cache</artifactId>
+  <artifactId>red-boot-starter-cache</artifactId>
   <description>
     缓存快速使用，可自动从配置中心获取缓存服务器信息，底层实现目前为redis，目前设置了默认序列化策略为json，
     提供了易用和更强大的api，同时集成了多级缓存功能，用户可通过注解实现多级缓存功能，提供分布式锁实现
@@ -23,24 +23,24 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-starter-cache-api</artifactId>
+      <artifactId>red-boot-starter-cache-api</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-json</artifactId>
+      <artifactId>red-boot-util-json</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-spring</artifactId>
+      <artifactId>red-boot-util-spring</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-test</artifactId>
+      <artifactId>red-boot-util-test</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-log</artifactId>
+      <artifactId>red-boot-base-log</artifactId>
     </dependency>
 
     <dependency>

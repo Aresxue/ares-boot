@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-cache-related</artifactId>
+    <artifactId>red-boot-starter-cache-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-cache-api</artifactId>
+  <artifactId>red-boot-starter-cache-api</artifactId>
 
   <description>
     缓存快速使用操作

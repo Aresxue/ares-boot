@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-base</artifactId>
+    <artifactId>red-boot-base</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-log</artifactId>
+  <artifactId>red-boot-base-log</artifactId>
   <description>
     日志模块，集成log4j2,  提供工具类可静态打印日志, 业务可import通用日志配置(中间件配置和业务基础配置)开箱即用，
     另外还提供http接口出入参打印和rpc提供者和消费者的出入参打印(有开关可以热启动和热关闭，同时可在线修改日志级别)，
@@ -28,16 +28,16 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-log</artifactId>
+      <artifactId>red-boot-util-log</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-trace</artifactId>
+      <artifactId>red-boot-base-trace</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-config</artifactId>
+      <artifactId>red-boot-base-config</artifactId>
     </dependency>
 
     <dependency>

@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot.util</groupId>
-    <artifactId>ares-boot-util</artifactId>
+    <artifactId>red-boot-util</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-util-spring</artifactId>
+  <artifactId>red-boot-util-spring</artifactId>
   <description>
     提供spring相关工具类
     Provide spring related tool classes
@@ -19,11 +19,11 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-common</artifactId>
+      <artifactId>red-boot-util-common</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-test</artifactId>
+      <artifactId>red-boot-util-test</artifactId>
       <scope>test</scope>
     </dependency>
 

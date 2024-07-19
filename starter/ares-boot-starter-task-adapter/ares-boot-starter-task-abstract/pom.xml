@@ -6,16 +6,16 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-task-adapter</artifactId>
+    <artifactId>red-boot-starter-task-adapter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-task-abstract</artifactId>
+  <artifactId>red-boot-starter-task-abstract</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-starter-task-api</artifactId>
+      <artifactId>red-boot-starter-task-api</artifactId>
     </dependency>
   </dependencies>
 

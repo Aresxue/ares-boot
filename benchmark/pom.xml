@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot</artifactId>
+    <artifactId>red-boot</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-benchmark</artifactId>
+  <artifactId>red-boot-benchmark</artifactId>
   <name>Ares Boot Benchmark</name>
   <description>
      基准测试模块，对框架进行基准测试

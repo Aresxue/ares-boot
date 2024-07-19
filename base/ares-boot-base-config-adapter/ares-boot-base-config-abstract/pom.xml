@@ -6,24 +6,24 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-base-config-adapter</artifactId>
+    <artifactId>red-boot-base-config-adapter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-config-abstract</artifactId>
+  <artifactId>red-boot-base-config-abstract</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-yaml</artifactId>
+      <artifactId>red-boot-util-yaml</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-json</artifactId>
+      <artifactId>red-boot-util-json</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-spring</artifactId>
+      <artifactId>red-boot-util-spring</artifactId>
     </dependency>
 
     <dependency>

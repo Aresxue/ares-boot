@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-mq-related</artifactId>
+    <artifactId>red-boot-starter-mq-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-mq-api</artifactId>
+  <artifactId>red-boot-starter-mq-api</artifactId>
 
 
 </project>

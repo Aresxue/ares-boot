@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-datasource-related</artifactId>
+  <artifactId>red-boot-starter-datasource-related</artifactId>
   <packaging>pom</packaging>
   <description>
     数据库相关，底层为mybatis plus，可自动从配置中心获取数据库连接信息，同时封装基础DO和通用字段

@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-datasource-related</artifactId>
+    <artifactId>red-boot-starter-datasource-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-datasource-sharding</artifactId>
+  <artifactId>red-boot-starter-datasource-sharding</artifactId>
   <description>
     数据库分片，可选的客户端分库分表方案
     Database sharding, optional client database and table scheme

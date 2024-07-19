@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-dependency</artifactId>
+    <artifactId>red-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-util-dependency-management</artifactId>
+  <artifactId>red-boot-util-dependency-management</artifactId>
   <packaging>pom</packaging>
   <description>
     管理所有util模块的依赖
@@ -21,67 +21,67 @@
     <dependencies>
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-common</artifactId>
+        <artifactId>red-boot-util-common</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-crypt</artifactId>
+        <artifactId>red-boot-util-crypt</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-http</artifactId>
+        <artifactId>red-boot-util-http</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-json</artifactId>
+        <artifactId>red-boot-util-json</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-mapstruct</artifactId>
+        <artifactId>red-boot-util-mapstruct</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-ognl</artifactId>
+        <artifactId>red-boot-util-ognl</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-servlet</artifactId>
+        <artifactId>red-boot-util-servlet</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-spring</artifactId>
+        <artifactId>red-boot-util-spring</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-test</artifactId>
+        <artifactId>red-boot-util-test</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-yaml</artifactId>
+        <artifactId>red-boot-util-yaml</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot.util</groupId>
-        <artifactId>ares-boot-util-log</artifactId>
+        <artifactId>red-boot-util-log</artifactId>
         <version>${boot.version}</version>
       </dependency>
     </dependencies>

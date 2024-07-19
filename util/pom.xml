@@ -6,12 +6,12 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot</artifactId>
+    <artifactId>red-boot</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
   <groupId>com.xiaohongshu.boot.util</groupId>
-  <artifactId>ares-boot-util</artifactId>
+  <artifactId>red-boot-util</artifactId>
   <name>Ares Boot Util</name>
   <packaging>pom</packaging>
   <description>

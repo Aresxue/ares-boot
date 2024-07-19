@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-mq-related</artifactId>
+    <artifactId>red-boot-starter-mq-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-mq-kafka</artifactId>
+  <artifactId>red-boot-starter-mq-kafka</artifactId>
   <description>
     kafka的实现
     Implementation of kafka
@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-starter-mq-abstract</artifactId>
+      <artifactId>red-boot-starter-mq-abstract</artifactId>
     </dependency>
   </dependencies>
 

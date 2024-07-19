@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-cache-related</artifactId>
+  <artifactId>red-boot-starter-cache-related</artifactId>
   <packaging>pom</packaging>
   <description>
     缓存快速使用相关，可自动从配置中心获取缓存服务器信息，底层实现目前为redis，目前设置了默认序列化策略为json，

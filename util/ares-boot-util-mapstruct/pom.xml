@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot.util</groupId>
-    <artifactId>ares-boot-util</artifactId>
+    <artifactId>red-boot-util</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-util-mapstruct</artifactId>
+  <artifactId>red-boot-util-mapstruct</artifactId>
   <description>
     提供mapstruct相关工具类
     Provide mapstruct related tool classes

@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-rule-engine</artifactId>
+  <artifactId>red-boot-starter-rule-engine</artifactId>
   <description>
     规则引擎快速使用，提供规则计算api
     The rule engine can be used quickly, providing rule calculation api

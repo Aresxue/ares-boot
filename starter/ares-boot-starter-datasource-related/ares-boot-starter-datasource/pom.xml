@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-datasource-related</artifactId>
+    <artifactId>red-boot-starter-datasource-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-datasource</artifactId>
+  <artifactId>red-boot-starter-datasource</artifactId>
   <description>
     数据库快速使用，底层为jpa/mybatis plus，可自动从配置中心获取数据库连接信息，同时封装基础领域对象和通用字段
     (主键、创建时间、修改时间、逻辑删除)及其自动处理（自动注入分布式id）
@@ -23,19 +23,19 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-log</artifactId>
+      <artifactId>red-boot-base-log</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-spring</artifactId>
+      <artifactId>red-boot-util-spring</artifactId>
     </dependency>
    <!-- <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-mapstruct</artifactId>
+      <artifactId>red-boot-util-mapstruct</artifactId>
     </dependency>-->
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-test</artifactId>
+      <artifactId>red-boot-util-test</artifactId>
       <scope>test</scope>
     </dependency>
 

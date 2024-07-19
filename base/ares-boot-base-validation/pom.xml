@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-base</artifactId>
+    <artifactId>red-boot-base</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-validation</artifactId>
+  <artifactId>red-boot-base-validation</artifactId>
   <description>
     参数校验模块，包含自定义校验注解等
     Parameter verification module, including custom verification annotations, etc.

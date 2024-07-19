@@ -6,12 +6,12 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-dependency-management</artifactId>
+    <artifactId>red-boot-dependency-management</artifactId>
     <version>1.0.3-SNAPSHOT</version>
     <relativePath>dependency/ares-boot-dependency-management/pom.xml</relativePath>
   </parent>
 
-  <artifactId>ares-boot</artifactId>
+  <artifactId>red-boot</artifactId>
   <name>Ares Boot ${project.version}</name>
   <packaging>pom</packaging>
   <description>

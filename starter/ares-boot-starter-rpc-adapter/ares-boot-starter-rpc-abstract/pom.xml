@@ -6,16 +6,16 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-rpc-adapter</artifactId>
+    <artifactId>red-boot-starter-rpc-adapter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-rpc-abstract</artifactId>
+  <artifactId>red-boot-starter-rpc-abstract</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-starter-rpc-api</artifactId>
+      <artifactId>red-boot-starter-rpc-api</artifactId>
     </dependency>
   </dependencies>
 

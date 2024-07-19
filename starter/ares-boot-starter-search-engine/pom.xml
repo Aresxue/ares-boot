@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-search-engine</artifactId>
+  <artifactId>red-boot-starter-search-engine</artifactId>
   <description>
     搜索引擎快速使用，可自动从配置中心获取搜索引擎连接信息，用于从搜索引擎中检索数据，自定义了一套类sql的api，
     基本涵盖了各种业务场景

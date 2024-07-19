@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-base</artifactId>
+    <artifactId>red-boot-base</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-metrics</artifactId>
+  <artifactId>red-boot-base-metrics</artifactId>
   <description>
     监控模块，包含健康检查以及metrics监控(如prometheus)及其通用化配置
     Monitoring module, including health check and metrics monitoring (such as prometheus) and its

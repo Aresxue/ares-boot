@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-dependency</artifactId>
+    <artifactId>red-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-all</artifactId>
+  <artifactId>red-boot-base-all</artifactId>
   <name>Ares Boot Base All</name>
   <description>
     集成所有base模块的依赖
@@ -20,47 +20,47 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-config</artifactId>
+      <artifactId>red-boot-base-config</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-log</artifactId>
+      <artifactId>red-boot-base-log</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-model</artifactId>
+      <artifactId>red-boot-base-model</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-metrics</artifactId>
+      <artifactId>red-boot-base-metrics</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-trace</artifactId>
+      <artifactId>red-boot-base-trace</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-validation</artifactId>
+      <artifactId>red-boot-base-validation</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-dynamic-route</artifactId>
+      <artifactId>red-boot-base-dynamic-route</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-servlet</artifactId>
+      <artifactId>red-boot-base-servlet</artifactId>
     </dependency>
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-version</artifactId>
+      <artifactId>red-boot-base-version</artifactId>
     </dependency>
   </dependencies>
 
@@ -68,7 +68,7 @@
     <dependencies>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-dependency-management</artifactId>
+        <artifactId>red-boot-base-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>

@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-dependency</artifactId>
+    <artifactId>red-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-dependency-management</artifactId>
+  <artifactId>red-boot-starter-dependency-management</artifactId>
   <packaging>pom</packaging>
   <description>
     管理所有starter模块的依赖
@@ -21,165 +21,165 @@
     <dependencies>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-cache-related</artifactId>
+        <artifactId>red-boot-starter-cache-related</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-cache-api</artifactId>
+        <artifactId>red-boot-starter-cache-api</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-cache</artifactId>
+        <artifactId>red-boot-starter-cache</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-dynamic-cache</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-config</artifactId>
+        <artifactId>red-boot-starter-dynamic-cache</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-datasource-related</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-datasource</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-datasource-sharding</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-dynamic-datasource</artifactId>
+        <artifactId>red-boot-starter-config</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-file-storage</artifactId>
+        <artifactId>red-boot-starter-datasource-related</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-datasource</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-datasource-sharding</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-dynamic-datasource</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-mq-adapter</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-mq-api</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-mq-abstract</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-mq</artifactId>
+        <artifactId>red-boot-starter-file-storage</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-rpc-adapter</artifactId>
+        <artifactId>red-boot-starter-mq-adapter</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-rpc-api</artifactId>
+        <artifactId>red-boot-starter-mq-api</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-rpc-abstract</artifactId>
+        <artifactId>red-boot-starter-mq-abstract</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-rpc</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-rule-engine</artifactId>
+        <artifactId>red-boot-starter-mq</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-search-engine</artifactId>
+        <artifactId>red-boot-starter-rpc-adapter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-rpc-api</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-rpc-abstract</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-rpc</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-spring</artifactId>
+        <artifactId>red-boot-starter-rule-engine</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-task-adapter</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-task-api</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-task-abstract</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-task</artifactId>
-        <version>${boot.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-task-schedulerx2</artifactId>
+        <artifactId>red-boot-starter-search-engine</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-test</artifactId>
+        <artifactId>red-boot-starter-spring</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-validation</artifactId>
+        <artifactId>red-boot-starter-task-adapter</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-task-api</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-task-abstract</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-task</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-task-schedulerx2</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-web</artifactId>
+        <artifactId>red-boot-starter-test</artifactId>
         <version>${boot.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-starter-workflow</artifactId>
+        <artifactId>red-boot-starter-validation</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-web</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.xiaohongshu.boot</groupId>
+        <artifactId>red-boot-starter-workflow</artifactId>
         <version>${boot.version}</version>
       </dependency>
 

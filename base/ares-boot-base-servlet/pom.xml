@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-base</artifactId>
+    <artifactId>red-boot-base</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-base-servlet</artifactId>
+  <artifactId>red-boot-base-servlet</artifactId>
   <description>
     Servlet基础模块, 包含可重复读的流等功能
     Servlet base module that contains repeatable read streams and other features
@@ -19,11 +19,11 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-servlet</artifactId>
+      <artifactId>red-boot-util-servlet</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-spring</artifactId>
+      <artifactId>red-boot-util-spring</artifactId>
     </dependency>
 
     <dependency>

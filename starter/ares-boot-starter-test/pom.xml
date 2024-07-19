@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-test</artifactId>
+  <artifactId>red-boot-starter-test</artifactId>
   <description>
     提供单测生成和覆盖率测试
     Provide unit test case generate and coverage compute

@@ -6,12 +6,12 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-dependency-management</artifactId>
+    <artifactId>red-boot-dependency-management</artifactId>
     <version>1.0.3-SNAPSHOT</version>
     <relativePath/>
   </parent>
 
-  <artifactId>ares-boot-starter-parent</artifactId>
+  <artifactId>red-boot-starter-parent</artifactId>
   <packaging>pom</packaging>
   <name>Ares Boot Starter Parent</name>
   <description>
@@ -23,7 +23,7 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-version</artifactId>
+      <artifactId>red-boot-version</artifactId>
     </dependency>
   </dependencies>
 

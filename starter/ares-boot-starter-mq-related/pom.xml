@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-mq-related</artifactId>
+  <artifactId>red-boot-starter-mq-related</artifactId>
   <packaging>pom</packaging>
   <description>
     消息队列快速使用，可自动从配置中心获取消息队列服务器集群的连接信息，提供工具类发送消息，提供注解方式消费消息，带来更舒适的编程体验，

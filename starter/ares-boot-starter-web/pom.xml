@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-web</artifactId>
+  <artifactId>red-boot-starter-web</artifactId>
   <description>
     web快速使用, 对web应用做一些通用调整如、跨域、序列化调整、全局异常处理、防重复提交
     Web use quickly, Some general tweaks to web applications such as, cross-domain, serialization,
@@ -25,11 +25,11 @@
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-config</artifactId>
+      <artifactId>red-boot-base-config</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-servlet</artifactId>
+      <artifactId>red-boot-base-servlet</artifactId>
     </dependency>
 
     <dependency>

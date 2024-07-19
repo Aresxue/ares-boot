@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-rpc-adapter</artifactId>
+    <artifactId>red-boot-starter-rpc-adapter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-rpc</artifactId>
+  <artifactId>red-boot-starter-rpc</artifactId>
   <description>
     默认实现, 目前为dubbo
     Default implementation, currently dubbo
@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-starter-rpc-abstract</artifactId>
+      <artifactId>red-boot-starter-rpc-abstract</artifactId>
     </dependency>
   </dependencies>
 

@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-spring</artifactId>
+  <artifactId>red-boot-starter-spring</artifactId>
   <description>
     Spring快速使用，预留spring的切入点，对spring做扩展如提供相关工具类
     Spring use quickly, reserve the entry point of spring, and extend spring such as providing related tool classes
@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>ares-boot-util-spring</artifactId>
+      <artifactId>red-boot-util-spring</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -28,7 +28,7 @@
 
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-starter-validation</artifactId>
+      <artifactId>red-boot-starter-validation</artifactId>
     </dependency>
   </dependencies>
 

@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-cache-related</artifactId>
+    <artifactId>red-boot-starter-cache-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-dynamic-cache</artifactId>
+  <artifactId>red-boot-starter-dynamic-cache</artifactId>
   <description>
     多缓存，包含声明式和编程式路由
     Multiple cache, including declarative and programmatic routing
@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-starter-cache</artifactId>
+      <artifactId>red-boot-starter-cache</artifactId>
     </dependency>
   </dependencies>
 

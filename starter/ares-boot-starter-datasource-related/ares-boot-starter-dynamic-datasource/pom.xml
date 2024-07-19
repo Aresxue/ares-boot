@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter-datasource-related</artifactId>
+    <artifactId>red-boot-starter-datasource-related</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-dynamic-datasource</artifactId>
+  <artifactId>red-boot-starter-dynamic-datasource</artifactId>
   <description>
     多数据源，包含声明式和编程式路由及事务
     Multiple data sources, including declarative and programmatic routing and transactions

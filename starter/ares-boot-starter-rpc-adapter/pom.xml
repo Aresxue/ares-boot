@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-rpc-adapter</artifactId>
+  <artifactId>red-boot-starter-rpc-adapter</artifactId>
   <packaging>pom</packaging>
   <description>
     rpc快速使用，可自动从配置中心获取注册中心、线程池、超时时间等配置，

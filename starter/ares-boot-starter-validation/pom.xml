@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-validation</artifactId>
+  <artifactId>red-boot-starter-validation</artifactId>
   <description>
     参数校验实现，参数联动特性支持
     Parameter verification implementation, parameter linkage feature support
@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-log</artifactId>
+      <artifactId>red-boot-base-log</artifactId>
     </dependency>
 
     <dependency>

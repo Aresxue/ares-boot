@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-starter</artifactId>
+    <artifactId>red-boot-starter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-workflow</artifactId>
+  <artifactId>red-boot-starter-workflow</artifactId>
   <description>
     工作流快速使用，提供快速接入和使用
     Workflow is quick to use, providing quick access and use

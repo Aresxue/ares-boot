@@ -6,7 +6,7 @@
 
   <parent>
     <groupId>com.xiaohongshu.boot</groupId>
-    <artifactId>ares-boot-dependency</artifactId>
+    <artifactId>red-boot-dependency</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
@@ -21,11 +21,11 @@
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-model</artifactId>
+      <artifactId>red-boot-base-model</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
-      <artifactId>ares-boot-base-validation</artifactId>
+      <artifactId>red-boot-base-validation</artifactId>
     </dependency>
 
     <dependency>
@@ -44,7 +44,7 @@
     <dependencies>
       <dependency>
         <groupId>com.xiaohongshu.boot</groupId>
-        <artifactId>ares-boot-base-dependency-management</artifactId>
+        <artifactId>red-boot-base-dependency-management</artifactId>
         <version>${boot.version}</version>
         <type>pom</type>
         <scope>import</scope>

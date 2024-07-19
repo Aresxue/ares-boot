@@ -11,7 +11,6 @@ import java.math.BigDecimal;
  * @description: Remove the extra zero at the end
  * @version: JDK 1.8
  */
-@JacksonStdImpl
 public class BigDecimalTrailingZerosSerializer extends ToStringSerializerBase {
 
   private static final long serialVersionUID = 999919204236167357L;

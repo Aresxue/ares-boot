@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ser.std.NumberSerializers;
  * @description: Specifies that double-precision floating-point fields are serialized as double-precision floating-point types
  * @version: JDK 1.8
  */
-@JacksonStdImpl
 public class DoubleSerializer extends NumberSerializers.DoubleSerializer {
 
   private static final long serialVersionUID = -3641974694635872985L;

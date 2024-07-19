@@ -1,0 +1,2 @@
+cn.ares.boot.starter.web.config.WebMessageConverterConfiguration
+cn.ares.boot.starter.web.config.BootCorsConfiguration

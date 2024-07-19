@@ -243,4 +243,19 @@ public class EnvironmentUtil {
     }
   }
 
+  /**
+   * @author: Ares
+   * @description: 如果属性不存在则设置属性
+   * @description: Set the property if it does not exist
+   * @time: 2024-07-19 12:07:10
+   * @params: [environment, properties, key, value] 环境, 属性组, 键, 值
+   * @return: void
+   */
+  public static void setPropertyIfAbsent(ConfigurableEnvironment environment, Properties properties,
+      String key, String value) {
+    if (!environment.containsProperty(key)) {
+      properties.put(key, value);
+    }
+  }
+
 }

@@ -44,6 +44,8 @@
     <redisson.version>3.18.0</redisson.version>
     <!-- spring-boot-starter-actuator2.7.18依赖1.9.17的micrometer -->
     <micrometer.version>1.9.17</micrometer.version>
+    <knife4j-openapi3-starter.version>4.5.0</knife4j-openapi3-starter.version>
+    <swagger.version>2.2.9</swagger.version>
   </properties>
 
   <dependencyManagement>
@@ -239,6 +241,26 @@
         <version>${micrometer.version}</version>
       </dependency>
 
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+        <version>${knife4j-openapi3-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-core</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-annotations</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.swagger.core.v3</groupId>
+        <artifactId>swagger-models</artifactId>
+        <version>${swagger.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

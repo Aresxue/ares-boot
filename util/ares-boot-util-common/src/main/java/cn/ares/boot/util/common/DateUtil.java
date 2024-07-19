@@ -102,7 +102,7 @@ public class DateUtil {
     Map<String, SimpleDateFormat> dateFormatMap = DATE_FORMAT_MAP.get();
     SimpleDateFormat dateFormat = dateFormatMap.get(pattern);
     if (null == dateFormat) {
-      if (null == pattern || pattern.length() == 0) {
+      if (null == pattern || pattern.isEmpty()) {
         dateFormat = new SimpleDateFormat(DATE_FORMAT_ZONE_UTC);
         dateFormatMap.put(pattern, dateFormat);
       } else {

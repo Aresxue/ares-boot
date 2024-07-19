@@ -2,6 +2,7 @@ package cn.ares.boot.util.spring;
 
 
 import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
+import static cn.ares.boot.util.spring.constant.SpringConstant.DETERMINE_SPRING_CLOUD_CLASS_NAME;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPORT;
 import static org.springframework.context.annotation.AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR;
 
@@ -68,7 +69,6 @@ import org.springframework.util.ClassUtils;
 public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware, BeanFactoryAware {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SpringUtil.class);
-  public static final String DETERMINE_SPRING_CLOUD_CLASS_NAME = "org.springframework.cloud.bootstrap.BootstrapImportSelectorConfiguration";
 
   private static ApplicationContext applicationContext;
   private static ApplicationContext firstApplicationContext;

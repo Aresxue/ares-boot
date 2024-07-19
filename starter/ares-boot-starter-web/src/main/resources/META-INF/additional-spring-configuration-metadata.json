@@ -1,0 +1,131 @@
+{
+    "groups":
+    [
+        {
+            "name": "message converter config",
+            "type": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration",
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "cors config",
+            "type": "cn.ares.boot.starter.web.config.BootCorsConfiguration",
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        }
+    ],
+    "properties":
+    [
+        {
+            "name": "ares.web.message-convert.enable",
+            "description": "web message convert enable",
+            "type": "java.lang.Boolean",
+            "defaultValue": true,
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "ares.web.message-convert.big-decimal.scale",
+            "description": "reverse bigDecimal scale when convert BigDecimal to string",
+            "type": "java.lang.Integer",
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "ares.web.message-convert.date.format",
+            "description": "use this format when convert Date to string",
+            "type": "java.lang.String",
+            "defaultValue": "yyyy-MM-dd HH:mm:ss.SSS",
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "ares.web.message-convert.local-date-time.format",
+            "description": "use this format when convert LocalDateTime to string",
+            "type": "java.lang.String",
+            "defaultValue": "yyyy-MM-dd HH:mm:ss.SSS",
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "ares.web.message-convert.local-time.format",
+            "description": "use this format when convert LocalTime to string",
+            "type": "java.lang.String",
+            "defaultValue": "HH:mm:ss.SSS",
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "ares.web.message-convert.local-date.format",
+            "description": "Use this format when convert LocalDate to string",
+            "type": "java.lang.String",
+            "defaultValue": "yyyy-MM-dd",
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "ares.web.message-convert.not-null",
+            "description": "Ignore null when serialization",
+            "type": "java.lang.Boolean",
+            "defaultValue": false,
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "ares.web.message-convert.null2default.enable",
+            "description": "Add null value to set the serialization of the default value. After opening, the null of Boolean will become false, the null of Number will become 0, the null of string will become '', and the null of array will become []",
+            "type": "java.lang.Boolean",
+            "defaultValue": false,
+            "sourceType": "cn.ares.boot.starter.web.config.WebMessageConverterConfiguration"
+        },
+        {
+            "name": "ares.web.cors.enable",
+            "description": "enable cors",
+            "type": "java.lang.Boolean",
+            "defaultValue": false,
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "ares.web.cors.mapping",
+            "description": "cors mapping url",
+            "type": "java.lang.String",
+            "defaultValue": "/**",
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "ares.web.cors.allowed-origins",
+            "description": "cors allowed origins",
+            "type": "java.lang.String",
+            "defaultValue": "*",
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "ares.web.cors.allowed-methods",
+            "description": "cors allowed methods",
+            "type": "java.lang.String",
+            "defaultValue": "*",
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "ares.web.cors.allowed-headers",
+            "description": "cors allowed headers",
+            "type": "java.lang.String",
+            "defaultValue": "*",
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "ares.web.cors.exposed-headers",
+            "description": "cors exposed headers",
+            "type": "java.lang.String",
+            "defaultValue": "",
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "ares.web.cors.max-age",
+            "description": "cors max age",
+            "type": "java.lang.Integer",
+            "defaultValue": 3600,
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        },
+        {
+            "name": "ares.web.cors.allow-credentials",
+            "description": "cors allow credentials",
+            "type": "java.lang.Boolean",
+            "defaultValue": true,
+            "sourceType": "cn.ares.boot.starter.web.config.BootCorsConfiguration"
+        }
+    ],
+    "hints":
+    []
+}

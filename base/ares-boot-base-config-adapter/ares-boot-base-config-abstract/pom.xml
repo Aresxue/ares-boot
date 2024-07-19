@@ -19,6 +19,10 @@
     </dependency>
     <dependency>
       <groupId>io.github.aresxue.boot.util</groupId>
+      <artifactId>ares-boot-util-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.aresxue.boot.util</groupId>
       <artifactId>ares-boot-util-spring</artifactId>
     </dependency>
 

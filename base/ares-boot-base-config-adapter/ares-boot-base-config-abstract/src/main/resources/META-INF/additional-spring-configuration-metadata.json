@@ -1,0 +1,22 @@
+{
+    "groups":
+    [
+        {
+            "name": "ares",
+            "type": "cn.ares.boot.base.config.BootEnvironment",
+            "sourceType": "cn.ares.boot.base.config.BootEnvironment"
+        }
+    ],
+    "properties":
+    [
+        {
+            "name": "ares.application.name",
+            "type": "java.lang.String",
+            "description": "application name use ares boot",
+            "defaultValue": "unknown",
+            "sourceType": "cn.ares.boot.base.config.BootEnvironment"
+        }
+    ],
+    "hints":
+    []
+}

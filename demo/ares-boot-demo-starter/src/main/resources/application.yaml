@@ -2,21 +2,32 @@ ares:
   application:
     name: ares-boot-demo
 
-
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %c#%M#%L: %msg%xEx%n"
 
 mybatis-plus:
-  mapper-locations: classpath*:/mapper/*Mapper.xml
   type-aliases-package: cn.ares.boot.demo
-  configuration:
-    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
-    map-underscore-to-camel-case: true
 
 spring:
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/repeater_plus_demo
+      url: jdbc:mysql://localhost:3306/ares_boot_demo
       username: ares
       password: 123456
+
+knife4j:
+  enable: true
+  setting:
+    language: zh-CN
+    swagger-model-name: 实体类列表
+    enable-footer-custom: true
+    footer-custom-content: Apache License 2.0 | Copyright  2024-[Ares科技有限公司]
+springdoc:
+  api-docs:
+    enabled: true
+  group-configs:
+    - group: '应用接口文档'
+      paths-to-match: '/**'
+      packages-to-scan: cn.ares.boot.demo
+

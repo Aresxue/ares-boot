@@ -21,9 +21,9 @@ public class UserVo {
 
   private LocalDateTime bizTime;
 
-  private Long createBy;
+  private String createBy;
 
-  private Long updateBy;
+  private String updateBy;
 
   /**
    * 是否已删除

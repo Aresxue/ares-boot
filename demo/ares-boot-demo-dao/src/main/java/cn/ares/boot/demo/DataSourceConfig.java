@@ -1,4 +1,4 @@
-package cn.ares.business.demo;
+package cn.ares.boot.demo;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @version: JDK 1.8
  */
 @Configuration
-@MapperScan(basePackages = {"cn.ares.business.demo.**.mapper", "cn.ares.business.demo.**.dao"})
+@MapperScan(basePackages = {"cn.ares.boot.demo.**.mapper", "cn.ares.boot.demo.**.dao"})
 public class DataSourceConfig {
 
 }

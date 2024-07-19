@@ -1,9 +1,9 @@
 package cn.ares.boot.demo.user.service.impl;
 
+import cn.ares.boot.demo.user.domain.mapper.UserMapper;
 import cn.ares.boot.demo.user.service.UserService;
 import cn.ares.boot.demo.user.service.bo.UserBo;
 import cn.ares.boot.util.spring.BeanCopyUtil;
-import cn.ares.business.demo.user.domain.mapper.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserBo queryUserById(Long id) {
-    return BeanCopyUtil.copy(userMapper.queryUserById(id), UserBo.class);
+    return BeanCopyUtil.copy(userMapper.selectById(id), UserBo.class);
   }
 
 }

@@ -1,6 +1,9 @@
 package cn.ares.boot.demo;
 
 import cn.ares.boot.starter.spring.AresApplication;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
@@ -11,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version: JDK 1.8
  */
 @SpringBootApplication
+@OpenAPIDefinition(info = @Info(title = "示例应用", contact = @Contact(name = "Ares"), version = "1.0.0"))
 public class Application {
 
   public static void main(String[] args) {

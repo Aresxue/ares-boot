@@ -6,3 +6,17 @@ ares:
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %c#%M#%L: %msg%xEx%n"
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  type-aliases-package: cn.ares.boot.demo
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    map-underscore-to-camel-case: true
+
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/repeater_plus_demo
+      username: ares
+      password: 123456

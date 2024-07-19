@@ -4,6 +4,7 @@ import static cn.ares.boot.util.common.constant.MiddlewareType.DATABASE;
 import static cn.ares.boot.util.common.constant.StringConstant.FALSE;
 
 import cn.ares.boot.base.log.util.LoggerUtil;
+import cn.ares.boot.util.spring.EnvironmentUtil;
 import cn.ares.boot.util.spring.SpringUtil;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -32,10 +33,14 @@ public class DataSourceEnvironmentPostProcessor implements EnvironmentPostProces
     if (PROCESSED.compareAndSet(false, true)) {
       Properties datasourceConfig = new Properties();
       datasourceConfig.put("mybatis-plus.globalConfig.banner", FALSE);
+      EnvironmentUtil.setPropertyIfAbsent(environment, datasourceConfig,
+          "mybatis-plus.mapper-locations", "classpath*:/mapper/*Mapper.xml");
       environment.getPropertySources()
           .addLast(new PropertiesPropertySource(DATABASE.getName(), datasourceConfig));
       LoggerUtil.infoDeferred("datasource config load success");
     }
   }
+
+
 
 }

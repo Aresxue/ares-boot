@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ser.std.NumberSerializers;
  * @description: Specifies that the long integer field is serialized as a long integer
  * @version: JDK 1.8
  */
-@JacksonStdImpl
 public class LongSerializer extends NumberSerializers.LongSerializer {
 
   private static final long serialVersionUID = -752662085827129328L;

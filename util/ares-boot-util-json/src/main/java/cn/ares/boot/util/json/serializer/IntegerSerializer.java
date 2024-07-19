@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ser.std.NumberSerializers;
  * @description: Specifies that the integer field is serialized as an integer
  * @version: JDK 1.8
  */
-@JacksonStdImpl
 public class IntegerSerializer extends NumberSerializers.IntegerSerializer {
 
   private static final long serialVersionUID = -4607397096311604751L;

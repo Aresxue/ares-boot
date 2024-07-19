@@ -14,7 +14,6 @@ import java.io.IOException;
  * @description: Convert Long o String
  * @version: JDK 1.8
  */
-@JacksonStdImpl
 public class LongToStringSerializer extends NumberSerializers.Base<Object> {
 
   private static final long serialVersionUID = -7912222815768080738L;

@@ -12,7 +12,6 @@ import java.math.RoundingMode;
  * @description: Keep the specified decimal
  * @version: JDK 1.8
  */
-@JacksonStdImpl
 public class BigDecimalScaleSerializer extends ToStringSerializerBase {
 
   private static final long serialVersionUID = 1405232268944934434L;

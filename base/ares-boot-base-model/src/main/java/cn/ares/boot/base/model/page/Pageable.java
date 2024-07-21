@@ -3,6 +3,8 @@ package cn.ares.boot.base.model.page;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author: Ares
@@ -38,6 +40,7 @@ public class Pageable<T> extends BasePage {
     super.setSize(size);
     this.total = total;
   }
+
 
   /**
    * @author: Ares
@@ -117,6 +120,22 @@ public class Pageable<T> extends BasePage {
   public Pageable<T> addSortField(List<SortField> sortFieldList) {
     getSortFieldList().addAll(sortFieldList);
     return this;
+  }
+
+  /**
+   * 转换分页对象
+   *
+   * @param mapping 转换函数
+   * @return 转换后的分页对象
+   */
+  public <R> Pageable<R> convert(Function<? super T, ? extends R> mapping) {
+    List<T> recordList = this.getRecordList();
+    if (null == recordList) {
+      recordList = Collections.emptyList();
+    }
+    Pageable<R> newPageable = Pageable.of(this.getCurrent(), this.getSize(), this.getTotal());
+    newPageable.setRecordList(recordList.stream().map(mapping).collect(Collectors.toList()));
+    return newPageable;
   }
 
   public List<T> getRecordList() {

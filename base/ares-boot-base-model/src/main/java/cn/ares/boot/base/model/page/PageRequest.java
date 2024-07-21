@@ -23,6 +23,12 @@ public class PageRequest extends BasePage implements BaseRequest {
     super.setSize(size);
   }
 
+  public PageRequest(Long current, Long size, List<SortField> sortFieldList) {
+    super.setCurrent(current);
+    super.setSize(size);
+    super.setSortFieldList(sortFieldList);
+  }
+
   /**
    * @author: Ares
    * @description: 构造分页请求

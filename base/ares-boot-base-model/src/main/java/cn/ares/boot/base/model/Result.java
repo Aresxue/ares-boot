@@ -3,6 +3,7 @@ package cn.ares.boot.base.model;
 
 import static cn.ares.boot.base.model.status.BaseSystemStatus.SUCCESS;
 
+import cn.ares.boot.base.model.exception.BaseException;
 import cn.ares.boot.base.model.status.Status;
 import java.io.Serializable;
 
@@ -67,7 +68,7 @@ public final class Result<T> implements Serializable {
   /**
    * @author: Ares
    * @description: 返回失败结果
-   * @description:
+   * @description: Return fail result
    * @time: 2024-07-10 14:52:32
    * @params: [status, params] 状态，参数数组
    * @return: cn.ares.boot.base.model.Result<T> 结果
@@ -77,6 +78,18 @@ public final class Result<T> implements Serializable {
     result.code(status.getCode());
     result.message(status.getMessage(), params);
     return result;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 返回失败结果
+   * @description: Return fail result
+   * @time: 2024-07-23 20:13:34
+   * @params: [baseException, params] 基础异常，入参
+   * @return: cn.ares.boot.base.model.Result<T> 结果
+   */
+  public static <T> Result<T> fail(BaseException baseException, Object... params) {
+    return fail(baseException.getStatus(), params);
   }
 
   /**

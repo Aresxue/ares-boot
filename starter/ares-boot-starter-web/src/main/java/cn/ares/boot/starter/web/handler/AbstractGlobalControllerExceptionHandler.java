@@ -31,7 +31,7 @@ public abstract class AbstractGlobalControllerExceptionHandler {
   @Value("${ares.web.print-header-names-when-fail:content-type,referer,user-agent}")
   private String[] printHeaderNamesWhenFail;
 
-  protected void printErrorLog(String exceptionMsg, String code, Throwable throwable) {
+  protected void printErrorLog(String exceptionMsg, int code, Throwable throwable) {
     HttpServletRequest httpServletRequest = WebUtil.getHttpServletRequest();
     if (null == httpServletRequest) {
       LOGGER.error("http request handle fail, code: {}, {}:  ", code, exceptionMsg, throwable);

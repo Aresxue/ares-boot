@@ -20,7 +20,7 @@ public class LogicDeleteDo extends BaseDo {
    * Logical delete field Use Integer instead of boolean here and do not use is in the field to avoid potential serialization issues
    */
   @TableLogic
-  @TableField(fill = FieldFill.INSERT)
+  @TableField(fill = FieldFill.INSERT, value = "is_deleted")
   private Integer deleted;
 
   public Integer getDeleted() {

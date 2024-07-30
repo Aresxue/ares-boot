@@ -2,10 +2,8 @@ package com.xiaohongshu.boot.starter.datasource.extension;
 
 import static com.xiaohongshu.boot.starter.datasource.constant.DataSourceConstant.CREATE_TIME;
 import static com.xiaohongshu.boot.starter.datasource.constant.DataSourceConstant.DELETED;
-import static com.xiaohongshu.boot.starter.datasource.constant.DataSourceConstant.ID;
 import static com.xiaohongshu.boot.starter.datasource.constant.DataSourceConstant.UPDATE_TIME;
 
-import cn.ares.boot.util.common.SnowFlakeIdUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import java.time.LocalDateTime;
 import org.apache.ibatis.reflection.MetaObject;
@@ -21,9 +19,6 @@ public class LogicDeleteCommonFieldMetaObjectHandler implements MetaObjectHandle
 
   @Override
   public void insertFill(MetaObject metaObject) {
-    if (null == getFieldValByName(ID, metaObject)) {
-      setFieldValByName(ID, SnowFlakeIdUtil.nextIdByCacheWhenClockMoved(), metaObject);
-    }
     setFieldValByName(CREATE_TIME, LocalDateTime.now(), metaObject);
     setFieldValByName(UPDATE_TIME, LocalDateTime.now(), metaObject);
     setFieldValByName(DELETED, 0, metaObject);

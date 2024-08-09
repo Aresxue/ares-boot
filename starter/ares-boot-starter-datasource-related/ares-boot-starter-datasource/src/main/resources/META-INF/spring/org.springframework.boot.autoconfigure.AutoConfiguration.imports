@@ -1,2 +1,1 @@
-com.xiaohongshu.boot.starter.datasource.config.DataSourceEnvironmentPostProcessor
 com.xiaohongshu.boot.starter.datasource.config.BootDataSourceConfiguration

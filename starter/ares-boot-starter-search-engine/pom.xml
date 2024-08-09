@@ -20,5 +20,37 @@
     and shields the underlying middleware
   </description>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-elasticsearch</artifactId>
+    </dependency>
+    <dependency>
+      <artifactId>elasticsearch-rest-high-level-client</artifactId>
+      <groupId>org.elasticsearch.client</groupId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-log</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.aresxue.boot.util</groupId>
+      <artifactId>ares-boot-util-spring</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
 
 </project>

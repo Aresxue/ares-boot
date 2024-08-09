@@ -46,6 +46,7 @@
     <micrometer.version>1.9.17</micrometer.version>
     <knife4j-openapi3-starter.version>4.5.0</knife4j-openapi3-starter.version>
     <swagger.version>2.2.9</swagger.version>
+    <elasticsearch.version>7.14.2</elasticsearch.version>
   </properties>
 
   <dependencyManagement>
@@ -260,6 +261,17 @@
         <groupId>io.swagger.core.v3</groupId>
         <artifactId>swagger-models</artifactId>
         <version>${swagger.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.elasticsearch.client</groupId>
+        <artifactId>elasticsearch-rest-high-level-client</artifactId>
+        <version>${elasticsearch.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.elasticsearch</groupId>
+        <artifactId>elasticsearch</artifactId>
+        <version>${elasticsearch.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

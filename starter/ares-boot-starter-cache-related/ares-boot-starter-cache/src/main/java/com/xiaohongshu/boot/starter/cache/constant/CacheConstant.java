@@ -1,4 +1,4 @@
-package cn.ares.boot.starter.cache.constant;
+package com.xiaohongshu.boot.starter.cache.constant;
 
 /**
  * @author: Ares

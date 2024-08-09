@@ -1,2 +1,2 @@
-cn.ares.boot.starter.search.engine.config.SearchEngineProperties
-cn.ares.boot.starter.search.engine.config.SearchEngineConfiguration
+com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties
+com.xiaohongshu.boot.starter.search.engine.config.SearchEngineConfiguration

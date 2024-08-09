@@ -1,6 +1,6 @@
-package cn.ares.boot.starter.cache.config;
+package com.xiaohongshu.boot.starter.cache.config;
 
-import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_REDISSON_ENABLE;
+import static com.xiaohongshu.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_REDISSON_ENABLE;
 import static cn.ares.boot.util.common.constant.StringConstant.TRUE;
 
 import java.io.IOException;

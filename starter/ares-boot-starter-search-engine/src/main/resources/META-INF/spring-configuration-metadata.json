@@ -3,97 +3,97 @@
     [
         {
             "name": "search engine properties",
-            "type": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties",
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "type": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties",
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         }
     ],
     "properties":
     [
         {
-            "name": "ares.search-engine.enabled",
+            "name": "red.search-engine.enabled",
             "description": "search engine enabled",
             "type": "java.lang.Boolean",
             "defaultValue": true
         },
         {
-            "name": "ares.search-engine.cluster-name",
+            "name": "red.search-engine.cluster-name",
             "description": "search engine cluster name",
             "type": "java.lang.String",
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.cluster-nodes",
+            "name": "red.search-engine.cluster-nodes",
             "description": "search engine cluster nodes",
             "type": "java.util.List<java.lang.String>",
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.request-timeout",
+            "name": "red.search-engine.request-timeout",
             "description": "search engine request timeout",
             "type": "java.lang.Integer",
             "defaultValue": 30000,
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.connect-timeout",
+            "name": "red.search-engine.connect-timeout",
             "description": "search engine connect timeout",
             "type": "java.lang.Integer",
             "defaultValue": 30000,
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.socket-timeout",
+            "name": "red.search-engine.socket-timeout",
             "description": "search engine socket timeout",
             "type": "java.lang.Integer",
             "defaultValue": 30000,
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.keep-alive",
+            "name": "red.search-engine.keep-alive",
             "description": "search engine keep alive",
             "type": "java.lang.Long",
             "defaultValue": 10000,
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.default-page-size",
+            "name": "red.search-engine.default-page-size",
             "description": "search engine default page size",
             "type": "java.lang.Integer",
             "defaultValue": 10,
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.username",
+            "name": "red.search-engine.username",
             "description": "search engine username",
             "type": "java.lang.String",
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.password",
+            "name": "red.search-engine.password",
             "description": "search engine password",
             "type": "java.lang.String",
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.buffer-limit",
+            "name": "red.search-engine.buffer-limit",
             "description": "for exception: entity content is too long [*] for the configured buffer limit [*]",
             "type": "java.lang.Integer",
             "defaultValue": 104857600,
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.max-conn-total",
+            "name": "red.search-engine.max-conn-total",
             "description": "The maximum number of connections in the connection pool, the default is 30, framework set to 200",
             "type": "java.lang.Integer",
             "defaultValue": 200,
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         },
         {
-            "name": "ares.search-engine.max-conn-per-route",
+            "name": "red.search-engine.max-conn-per-route",
             "description": "The default maximum number of connections per route, default 10, framework set to 40",
             "type": "java.lang.Integer",
             "defaultValue": 40,
-            "sourceType": "cn.ares.boot.starter.search.engine.config.SearchEngineProperties"
+            "sourceType": "com.xiaohongshu.boot.starter.search.engine.config.SearchEngineProperties"
         }
     ],
     "hints":

@@ -1,7 +1,7 @@
-package cn.ares.boot.starter.search.engine.config;
+package com.xiaohongshu.boot.starter.search.engine.config;
 
-import static cn.ares.boot.starter.search.engine.config.SearchEngineEnvironmentPostProcessor.SEARCH_ENGINE_ENABLED;
 import static cn.ares.boot.util.common.constant.StringConstant.TRUE;
+import static com.xiaohongshu.boot.starter.search.engine.config.SearchEngineEnvironmentPostProcessor.SEARCH_ENGINE_ENABLED;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE;
 
 import cn.ares.boot.util.spring.ReflectionUtil;
@@ -30,7 +30,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Role;
 
 /**

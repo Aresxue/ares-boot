@@ -1,4 +1,4 @@
-package cn.ares.boot.starter.cache;
+package com.xiaohongshu.boot.starter.cache;
 
 import cn.ares.boot.util.test.BootBaseTest;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package cn.ares.boot.starter.search.engine.config;
+package com.xiaohongshu.boot.starter.search.engine.config;
 
 import static cn.ares.boot.util.common.constant.StringConstant.FALSE;
 import static cn.ares.boot.util.common.constant.StringConstant.TRUE;
@@ -31,7 +31,7 @@ import org.springframework.core.env.PropertiesPropertySource;
 @Role(value = ROLE_INFRASTRUCTURE)
 public class SearchEngineEnvironmentPostProcessor implements EnvironmentPostProcessor {
 
-  private static final String SEARCH_ENGINE_PREFIX = "ares.search-engine.";
+  private static final String SEARCH_ENGINE_PREFIX = "red.search-engine.";
   protected static final String SEARCH_ENGINE_ENABLED = SEARCH_ENGINE_PREFIX + "enabled";
   private static final String SEARCH_ENGINE = "search-engine";
 

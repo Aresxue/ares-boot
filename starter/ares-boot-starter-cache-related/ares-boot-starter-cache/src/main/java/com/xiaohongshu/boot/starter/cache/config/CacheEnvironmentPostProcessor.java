@@ -1,10 +1,10 @@
-package cn.ares.boot.starter.cache.config;
+package com.xiaohongshu.boot.starter.cache.config;
 
-import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_ENABLE;
-import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_POOL_PREFIX;
-import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_PREFIX;
-import static cn.ares.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_REDISSON_ENABLE;
-import static cn.ares.boot.starter.cache.constant.CacheConstant.SPRING_REDIS;
+import static com.xiaohongshu.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_ENABLE;
+import static com.xiaohongshu.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_POOL_PREFIX;
+import static com.xiaohongshu.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_PREFIX;
+import static com.xiaohongshu.boot.starter.cache.constant.CacheConstant.APPLICATION_CACHE_REDISSON_ENABLE;
+import static com.xiaohongshu.boot.starter.cache.constant.CacheConstant.SPRING_REDIS;
 import static cn.ares.boot.util.common.constant.MiddlewareType.CACHE;
 import static cn.ares.boot.util.common.constant.StringConstant.TRUE;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE;

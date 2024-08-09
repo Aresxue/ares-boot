@@ -1,1 +1,1 @@
-org.springframework.boot.env.EnvironmentPostProcessor=cn.ares.boot.starter.search.engine.config.SearchEngineEnvironmentPostProcessor
+org.springframework.boot.env.EnvironmentPostProcessor=com.xiaohongshu.boot.starter.search.engine.config.SearchEngineEnvironmentPostProcessor

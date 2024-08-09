@@ -77,7 +77,7 @@ public class SearchEngineConfiguration {
   @ConditionalOnMissingBean
   @Role(value = ROLE_INFRASTRUCTURE)
   public RestHighLevelClient restHighLevelClient() {
-    LOGGER.info("search engine client init");
+    LOGGER.info("search engine client init start");
     final CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
     // es账号密码
     // es username/password
@@ -120,12 +120,12 @@ public class SearchEngineConfiguration {
 
   private HttpHost[] buildHttpHost() {
     if (null == searchEngineProperties) {
-      throw new UnsupportedOperationException("search engine config error");
+      throw new UnsupportedOperationException("search engine properties is null");
     }
 
     List<String> clusterNodes = searchEngineProperties.getClusterNodes();
     if (clusterNodes.isEmpty()) {
-      throw new UnsupportedOperationException("cluster-nodes is empty");
+      throw new UnsupportedOperationException("search engine cluster nodes is empty");
     }
     HttpHost[] httpHosts = new HttpHost[clusterNodes.size()];
     try {
@@ -138,10 +138,10 @@ public class SearchEngineConfiguration {
         String ip = ipPort[0];
         HttpHost httpHost = new HttpHost(ip, port, "http");
         httpHosts[i] = httpHost;
-        LOGGER.info("search engine server config load success, ip: {}, port: {} ", ip, port);
+        LOGGER.info("search engine server address build success, ip: {}, port: {} ", ip, port);
       }
     } catch (Exception exception) {
-      LOGGER.error("search engine server config load fail: ", exception);
+      LOGGER.error("search engine server address build fail: ", exception);
       throw new UnsupportedOperationException("search engine server config load fail");
     }
     return httpHosts;

@@ -22,8 +22,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.StringJoiner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
@@ -57,7 +59,7 @@ public class StringUtil {
    * @params: [str] 字符串
    * @return: boolean 是否为空
    */
-  public static boolean isEmpty(String str) {
+  public static boolean isEmpty(final String str) {
     return null == str || str.isEmpty();
   }
 
@@ -69,7 +71,7 @@ public class StringUtil {
    * @params: [strArr] 字符串数组
    * @return: boolean 全部为空
    */
-  public static boolean allIsEmpty(String... strArr) {
+  public static boolean allIsEmpty(final String... strArr) {
     if (ArrayUtil.isEmpty(strArr)) {
       throw new IllegalArgumentException("Str arr is empty");
     }
@@ -84,7 +86,7 @@ public class StringUtil {
    * @params: [strArr] 字符串数组
    * @return: boolean 任一为空
    */
-  public static boolean anyIsEmpty(String... strArr) {
+  public static boolean anyIsEmpty(final String... strArr) {
     if (ArrayUtil.isEmpty(strArr)) {
       throw new IllegalArgumentException("Str arr is empty");
     }
@@ -99,7 +101,7 @@ public class StringUtil {
    * @params: [str] 字符串
    * @return: boolean 是否非空
    */
-  public static boolean isNotEmpty(String str) {
+  public static boolean isNotEmpty(final String str) {
     return !isEmpty(str);
   }
 
@@ -111,7 +113,7 @@ public class StringUtil {
    * @params: [strArr] 字符串数组
    * @return: boolean 全部非空
    */
-  public static boolean allIsNotEmpty(String... strArr) {
+  public static boolean allIsNotEmpty(final String... strArr) {
     if (ArrayUtil.isEmpty(strArr)) {
       throw new IllegalArgumentException("Str arr is empty");
     }
@@ -126,7 +128,7 @@ public class StringUtil {
    * @params: [strArr] 字符串数组
    * @return: boolean 任一非空
    */
-  public static boolean anyIsNotEmpty(String... strArr) {
+  public static boolean anyIsNotEmpty(final String... strArr) {
     if (ArrayUtil.isEmpty(strArr)) {
       throw new IllegalArgumentException("Str arr is empty");
     }
@@ -141,7 +143,7 @@ public class StringUtil {
    * @params: [str] 字符串
    * @return: boolean 是否为空白
    */
-  public static boolean isBlank(String str) {
+  public static boolean isBlank(final String str) {
     return null == str || str.trim().isEmpty();
   }
 
@@ -153,7 +155,7 @@ public class StringUtil {
    * @params: [str] 字符串
    * @return: boolean 是否非空白
    */
-  public static boolean isNotBlank(String str) {
+  public static boolean isNotBlank(final String str) {
     return !isBlank(str);
   }
 
@@ -165,7 +167,7 @@ public class StringUtil {
    * @params: [obj] 对象
    * @return: boolean 是否为空
    */
-  public static boolean isEmpty(Object obj) {
+  public static boolean isEmpty(final Object obj) {
     return null == obj || isEmpty(obj.toString());
   }
 
@@ -177,7 +179,7 @@ public class StringUtil {
    * @params: [obj] 对象
    * @return: boolean 是否非空
    */
-  public static boolean isNotEmpty(Object obj) {
+  public static boolean isNotEmpty(final Object obj) {
     return !isEmpty(obj);
   }
 
@@ -189,14 +191,14 @@ public class StringUtil {
    * @params: [source] 源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String underlineToBigCamelCase(String source) {
+  public static String underlineToBigCamelCase(final String source) {
     if (isEmpty(source)) {
       return source;
     }
-    List<String> splitList = listSplit(source, UNDERLINE);
-    StringBuilder builder = new StringBuilder();
-    for (String s : splitList) {
-      builder.append(upperFirst(s.toLowerCase()));
+    final List<String> splitList = listSplit(source, UNDERLINE);
+    final StringBuilder builder = new StringBuilder();
+    for (String str : splitList) {
+      builder.append(upperFirst(str.toLowerCase()));
     }
     return builder.toString();
   }
@@ -209,14 +211,14 @@ public class StringUtil {
    * @params: [source] 将字符串中的源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String strikeToBigCamelCase(String source) {
+  public static String strikeToBigCamelCase(final String source) {
     if (isEmpty(source)) {
       return source;
     }
-    List<String> splitList = listSplit(source, MINUS);
-    StringBuilder builder = new StringBuilder();
-    for (String s : splitList) {
-      builder.append(upperFirst(s.toLowerCase()));
+    final List<String> splitList = listSplit(source, MINUS);
+    final StringBuilder builder = new StringBuilder();
+    for (String str : splitList) {
+      builder.append(upperFirst(str.toLowerCase()));
     }
     return builder.toString();
   }
@@ -230,7 +232,7 @@ public class StringUtil {
    * @params: [source] 源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String strikeToLittleCamelCase(String source) {
+  public static String strikeToLittleCamelCase(final String source) {
     return lowerFirst(strikeToBigCamelCase(source));
   }
 
@@ -242,14 +244,14 @@ public class StringUtil {
    * @params: [source] 源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String strikeToUnderline(String source) {
+  public static String strikeToUnderline(final String source) {
     if (isEmpty(source)) {
       return source;
     }
-    List<String> splitList = listSplit(source, MINUS);
-    StringJoiner result = new StringJoiner(UNDERLINE);
-    for (String s : splitList) {
-      result.add(s);
+    final List<String> splitList = listSplit(source, MINUS);
+    final StringJoiner result = new StringJoiner(UNDERLINE);
+    for (String str : splitList) {
+      result.add(str);
     }
     return String.valueOf(result);
   }
@@ -262,12 +264,12 @@ public class StringUtil {
    * @params: [source] 源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String underlineUpperToLittleCamelCase(String source) {
+  public static String underlineUpperToLittleCamelCase(final String source) {
     if (isEmpty(source)) {
       return source;
     }
-    List<String> splitList = listSplit(source, UNDERLINE);
-    StringBuilder builder = new StringBuilder();
+    final List<String> splitList = listSplit(source, UNDERLINE);
+    final StringBuilder builder = new StringBuilder();
     for (String s : splitList) {
       builder.append(upperFirst(s));
     }
@@ -282,14 +284,14 @@ public class StringUtil {
    * @params: [source] 源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String strikeToUnderlineUpper(String source) {
+  public static String strikeToUnderlineUpper(final String source) {
     if (isEmpty(source)) {
       return source;
     }
-    List<String> splitList = listSplit(source, MINUS);
-    StringJoiner result = new StringJoiner(UNDERLINE);
-    for (String s : splitList) {
-      result.add(s.toUpperCase());
+    final  List<String> splitList = listSplit(source, MINUS);
+    final  StringJoiner result = new StringJoiner(UNDERLINE);
+    for (String str : splitList) {
+      result.add(str.toUpperCase());
     }
     return String.valueOf(result);
   }
@@ -302,7 +304,7 @@ public class StringUtil {
    * @params: [source] 源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String underlineToLittleCamelCase(String source) {
+  public static String underlineToLittleCamelCase(final String source) {
     return lowerFirst(underlineToBigCamelCase(source));
   }
 
@@ -314,11 +316,11 @@ public class StringUtil {
    * @params: [source] 源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String upperFirst(String source) {
+  public static String upperFirst(final String source) {
     if (isEmpty(source)) {
       return source;
     }
-    char[] chars = source.toCharArray();
+    final char[] chars = source.toCharArray();
     chars[0] = 97 <= chars[0] && chars[0] <= 122 ? (char) (chars[0] - 32) : chars[0];
     return String.valueOf(chars);
   }
@@ -331,11 +333,11 @@ public class StringUtil {
    * @params: [source] 源字符串
    * @return: java.lang.String 转换后字符串
    */
-  public static String lowerFirst(String source) {
+  public static String lowerFirst(final String source) {
     if (isEmpty(source)) {
       return source;
     }
-    char[] chars = source.toCharArray();
+    final char[] chars = source.toCharArray();
     chars[0] = 65 <= chars[0] && chars[0] <= 90 ? (char) (chars[0] + 32) : chars[0];
     return String.valueOf(chars);
   }
@@ -348,17 +350,17 @@ public class StringUtil {
    * @params: [email] 邮箱
    * @return: boolean 是否符合邮箱格式
    */
-  public static boolean validateEmailFormat(String email) {
+  public static boolean validateEmailFormat(final String email) {
     if (isEmpty(email)) {
       return false;
     }
-    String regex = "^([a-z0-9A-Z]+[-|.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(email);
+    final String regex = "^([a-z0-9A-Z]+[-|.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    final Pattern pattern = Pattern.compile(regex);
+    final Matcher matcher = pattern.matcher(email);
     return matcher.matches();
   }
 
-  public static String trim(String originStr) {
+  public static String trim(final String originStr) {
     return trim(originStr, " ");
   }
 
@@ -372,15 +374,15 @@ public class StringUtil {
    * @params: [originStr, trim] 源字符串，首尾要去除的空格
    * @return: java.lang.String 转换后字符串
    */
-  public static String trim(String originStr, String trim) {
+  public static String trim(final String originStr, final String trim) {
     if (isEmpty(originStr)) {
       return originStr;
     }
-    String result = trimStart(originStr, trim);
+    final String result = trimStart(originStr, trim);
     return trimEnd(result, trim);
   }
 
-  private static String trimStart(String str, String trim) {
+  private static String trimStart(String str, final String trim) {
     if (null == str || isEmpty(trim)) {
       return str;
     }
@@ -394,7 +396,7 @@ public class StringUtil {
     return str;
   }
 
-  private static String trimEnd(String str, String trim) {
+  private static String trimEnd(String str, final String trim) {
     if (null == str || isEmpty(trim)) {
       return str;
     }
@@ -416,7 +418,7 @@ public class StringUtil {
    * @params: [str, delimiter, allowStrEmpty] 字符串，分隔符，空字符是否算一个字符串
    * @return: java.util.List<java.lang.String> 响应参数
    */
-  public static List<String> listSplit(String str, String separator) {
+  public static List<String> listSplit(final String str, final String separator) {
     return listSplit(str, separator, true);
   }
 
@@ -429,9 +431,9 @@ public class StringUtil {
    * @return: java.lang.String[] str array after split
    * @return: java.lang.String[] 分割后的字符串数组
    */
-  public static String[] split(String str, String separator) {
-    List<String> listSplit = listSplit(str, separator);
-    String[] strArray = new String[listSplit.size()];
+  public static String[] split(final String str, final String separator) {
+    final List<String> listSplit = listSplit(str, separator);
+    final String[] strArray = new String[listSplit.size()];
     listSplit.toArray(strArray);
     return strArray;
   }
@@ -445,16 +447,16 @@ public class StringUtil {
    * @return: java.util.List<java.lang.String> str list after split
    * @return: java.util.List<java.lang.String> 分割后的字符串列表
    */
-  public static List<String> listSplit(String str, String separator, boolean allowStrEmpty) {
+  public static List<String> listSplit(final String str, final String separator, final boolean allowStrEmpty) {
     if (str == null) {
       return null;
     } else {
-      int len = str.length();
+      final int len = str.length();
       if (len == 0) {
         return Collections.emptyList();
       } else if (separator != null && !"".equals(separator)) {
-        int separatorLength = separator.length();
-        List<String> substrings = new ArrayList<>();
+        final int separatorLength = separator.length();
+        final List<String> substrings = new ArrayList<>();
         int numberOfSubstrings = 0;
         int beg = 0;
         int end = 0;
@@ -548,13 +550,13 @@ public class StringUtil {
    * @params: [sequence] 字符序列
    * @return: boolean 是否为数字
    */
-  public static boolean isNumeric(CharSequence sequence) {
+  public static boolean isNumeric(final CharSequence sequence) {
     if (isEmpty(sequence)) {
       return false;
     } else {
-      int sz = sequence.length();
+      final int sequenceLength = sequence.length();
 
-      for (int i = 0; i < sz; ++i) {
+      for (int i = 0; i < sequenceLength; ++i) {
         if (!Character.isDigit(sequence.charAt(i))) {
           return false;
         }
@@ -572,7 +574,7 @@ public class StringUtil {
    * @params: [sequence] 字符序列
    * @return: boolean 是否为空
    */
-  public static boolean isEmpty(CharSequence sequence) {
+  public static boolean isEmpty(final CharSequence sequence) {
     return sequence == null || sequence.length() == 0;
   }
 
@@ -584,7 +586,7 @@ public class StringUtil {
    * @params: [object] 对象
    * @return: java.lang.String 解析结果
    */
-  public static String parseString(Object object) {
+  public static String parseString(final Object object) {
     if (null == object) {
       return null;
     }
@@ -600,7 +602,7 @@ public class StringUtil {
    * @params: [object, defaultValue] 对象，默认值
    * @return: java.lang.String 解析结果
    */
-  public static String parseStringOrDefault(Object object, String defaultValue) {
+  public static String parseStringOrDefault(final Object object, final String defaultValue) {
     if (null == object) {
       return defaultValue;
     }
@@ -615,7 +617,7 @@ public class StringUtil {
    * @params: [inputStream] 输入流
    * @return: java.lang.String 解析结果
    */
-  public static String parseSteamToString(InputStream inputStream) {
+  public static String parseSteamToString(final InputStream inputStream) {
     return parseSteamToString(inputStream, true);
   }
 
@@ -628,7 +630,7 @@ public class StringUtil {
    * @params: [inputStream, throwEx] 输入流，是否抛出异常
    * @return: java.lang.String 解析结果
    */
-  public static String parseSteamToString(InputStream inputStream, boolean throwEx) {
+  public static String parseSteamToString(final InputStream inputStream, final boolean throwEx) {
     if (null == inputStream) {
       if (throwEx) {
         throw new IllegalArgumentException("InputStream is null");
@@ -648,7 +650,7 @@ public class StringUtil {
    * @params: [content, charset] 内容, 编码
    * @return: java.io.InputStream 输入流
    */
-  public static InputStream parseStringToStream(String content, Charset charset) {
+  public static InputStream parseStringToStream(final String content, final Charset charset) {
     return parseStringToStream(content, charset, true);
   }
 
@@ -661,7 +663,7 @@ public class StringUtil {
    * @params: [content, charset, throwEx] 内容，编码，是否抛出异常
    * @return: java.io.InputStream 输入流
    */
-  public static InputStream parseStringToStream(String content, Charset charset, boolean throwEx) {
+  public static InputStream parseStringToStream(final String content, final Charset charset, final boolean throwEx) {
     if (isEmpty(content)) {
       if (throwEx) {
         throw new IllegalArgumentException("Content is empty");
@@ -680,7 +682,7 @@ public class StringUtil {
    * @params: [content] 内容
    * @return: java.io.InputStream 输入流
    */
-  public static InputStream parseStringToStream(String content) {
+  public static InputStream parseStringToStream(final String content) {
     return parseStringToStream(content, Charset.defaultCharset());
   }
 
@@ -692,7 +694,7 @@ public class StringUtil {
    * @params: [count] 长度
    * @return: java.lang.String 随机字符串
    */
-  public static String random(int count) {
+  public static String random(final int count) {
     return random(count, true, true);
   }
 
@@ -704,7 +706,7 @@ public class StringUtil {
    * @params: [count, letters, numbers] 长度，是否包含字母，是否包含数字
    * @return: java.lang.String 随机字符串
    */
-  public static String random(int count, boolean letters, boolean numbers) {
+  public static String random(final int count, final boolean letters, final boolean numbers) {
     return random(count, 0, 0, letters, numbers);
   }
 
@@ -716,7 +718,7 @@ public class StringUtil {
    * @params: [count, start, end, letters, numbers] 长度，起始字符，结束字符，是否包含字母，是否包含数字
    * @return: java.lang.String out 出参
    */
-  public static String random(int count, int start, int end, boolean letters, boolean numbers) {
+  public static String random(final int count, final int start, final int end, final boolean letters, final boolean numbers) {
     return random(count, start, end, letters, numbers, null);
   }
 
@@ -815,7 +817,7 @@ public class StringUtil {
    * @params: [value, setter] 值, 操作
    * @return: void
    */
-  public static void setIfPresent(String value, Consumer<String> setter) {
+  public static void setIfPresent(final String value, final Consumer<String> setter) {
     if (isNotEmpty(value)) {
       setter.accept(value);
     }
@@ -904,7 +906,7 @@ public class StringUtil {
    * @params: [str, size, padStr] 字符串，长度，填充字符串
    * @return: java.lang.String 填充后字符串
    */
-  public static String rightPadWithOver(final String str, final int size, String padStr) {
+  public static String rightPadWithOver(final String str, final int size, final String padStr) {
     if (str.length() > size) {
       return str.substring(0, size);
     }
@@ -997,37 +999,37 @@ public class StringUtil {
   /**
    * @author: Ares
    * @description: 使用分割符连接多个字符串
-   * @description: Concatenate multiple strings using delimiter
+   * @description: Concatenate multiple strArr using delimiter
    * @time: 2022-06-07 15:37:54
-   * @params: [delimiter, strings] 分割符，字符串
+   * @params: [delimiter, strArr] 分割符，字符串
    * @return: java.lang.String 连接后字符串
    */
-  public static String join(final char delimiter, final String... strings) {
-    if (strings.length == 0) {
+  public static String join(final char delimiter, final String... strArr) {
+    if (strArr.length == 0) {
       return null;
     }
-    if (strings.length == 1) {
-      return strings[0];
+    if (strArr.length == 1) {
+      return strArr[0];
     }
-    int length = strings.length - 1;
-    for (final String s : strings) {
-      if (s == null) {
+    int length = strArr.length - 1;
+    for (final String str : strArr) {
+      if (str == null) {
         continue;
       }
-      length += s.length();
+      length += str.length();
     }
-    final StringBuilder sb = new StringBuilder(length);
-    if (strings[0] != null) {
-      sb.append(strings[0]);
+    final StringBuilder builder = new StringBuilder(length);
+    if (strArr[0] != null) {
+      builder.append(strArr[0]);
     }
-    for (int i = 1; i < strings.length; ++i) {
-      if (!isEmpty(strings[i])) {
-        sb.append(delimiter).append(strings[i]);
+    for (int i = 1; i < strArr.length; ++i) {
+      if (!isEmpty(strArr[i])) {
+        builder.append(delimiter).append(strArr[i]);
       } else {
-        sb.append(delimiter);
+        builder.append(delimiter);
       }
     }
-    return sb.toString();
+    return builder.toString();
   }
 
 
@@ -1039,7 +1041,7 @@ public class StringUtil {
    * @params: [delimiter, stringList] 分隔符，字符串列表
    * @return: java.lang.String 连接后字符串
    */
-  public static String join(String delimiter, final List<String> stringList) {
+  public static String join(final String delimiter, final List<String> stringList) {
     if (CollectionUtil.isEmpty(stringList)) {
       return null;
     }
@@ -1132,6 +1134,118 @@ public class StringUtil {
     }
     buf.append(text, start, text.length());
     return buf.toString();
+  }
+
+  /**
+   * @author: Ares
+   * @description:
+   * @time: 2024-08-14 14:56:10
+   * @params: [text, searchList, replacementList, repeat, timeToLive] 文本，检索字符串数组，替换字符串数组
+   * @return: java.lang.String 替换后字符串
+   */
+  public static String replace(final String text, final String[] searchList,
+      final String[] replacementList, final boolean repeat, final int timeToLive) {
+    if (timeToLive < 0) {
+      final Set<String> searchSet = new HashSet<>(Arrays.asList(searchList));
+      final Set<String> replacementSet = new HashSet<>(Arrays.asList(replacementList));
+      searchSet.retainAll(replacementSet);
+      if (!searchSet.isEmpty()) {
+        throw new IllegalStateException("Aborting to protect against StackOverflowError - " +
+            "output of one loop is the input of another");
+      }
+    }
+
+    if (isEmpty(text) || searchList == null || searchList.length == 0 ||
+        replacementList == null || replacementList.length == 0) {
+      return text;
+    }
+
+    final int searchLength = searchList.length;
+    final int replacementLength = replacementList.length;
+
+    // make sure lengths are ok, these need to be equal
+    if (searchLength != replacementLength) {
+      throw new IllegalArgumentException("Search and Replace array lengths don't match: "
+          + searchLength + " vs " + replacementLength);
+    }
+
+    boolean[] noMoreMatchesForReplIndex = new boolean[searchLength];
+
+    int textIndex = -1;
+    int replaceIndex = -1;
+    int tempIndex = -1;
+
+    for (int i = 0; i < searchLength; i++) {
+      if (noMoreMatchesForReplIndex[i] || isEmpty(searchList[i]) || replacementList[i] == null) {
+        continue;
+      }
+      tempIndex = text.indexOf(searchList[i]);
+
+      if (tempIndex == -1) {
+        noMoreMatchesForReplIndex[i] = true;
+      } else if (textIndex == -1 || tempIndex < textIndex) {
+        textIndex = tempIndex;
+        replaceIndex = i;
+      }
+    }
+
+    if (textIndex == -1) {
+      return text;
+    }
+
+    int start = 0;
+    int increase = 0;
+
+    for (int i = 0; i < searchList.length; i++) {
+      if (searchList[i] == null || replacementList[i] == null) {
+        continue;
+      }
+      int greater = replacementList[i].length() - searchList[i].length();
+      if (greater > 0) {
+        increase += 3 * greater;
+      }
+    }
+    increase = Math.min(increase, text.length() / 5);
+
+    final StringBuilder buf = new StringBuilder(text.length() + increase);
+    while (textIndex != -1) {
+
+      for (int i = start; i < textIndex; i++) {
+        buf.append(text.charAt(i));
+      }
+      buf.append(replacementList[replaceIndex]);
+
+      start = textIndex + searchList[replaceIndex].length();
+
+      textIndex = -1;
+      replaceIndex = -1;
+      for (int i = 0; i < searchLength; i++) {
+        if (noMoreMatchesForReplIndex[i] || searchList[i] == null ||
+            searchList[i].isEmpty() || replacementList[i] == null) {
+          continue;
+        }
+        tempIndex = text.indexOf(searchList[i], start);
+
+        // see if we need to keep searching for this
+        if (tempIndex == -1) {
+          noMoreMatchesForReplIndex[i] = true;
+        } else if (textIndex == -1 || tempIndex < textIndex) {
+          textIndex = tempIndex;
+          replaceIndex = i;
+        }
+      }
+    }
+
+    final int textLength = text.length();
+    for (int i = start; i < textLength; i++) {
+      buf.append(text.charAt(i));
+    }
+    final String result = buf.toString();
+    if (!repeat) {
+      return result;
+    }
+
+    return replace(result, searchList, replacementList, repeat, timeToLive - 1);
   }
 
   /**
@@ -1248,8 +1362,8 @@ public class StringUtil {
    * @params: [str] 字符串
    * @return: boolean 是否包含占位符
    */
-  public static boolean isFormat(String str) {
-    Matcher matcher = FORMAT_PATTERN.matcher(str);
+  public static boolean isFormat(final String str) {
+    final Matcher matcher = FORMAT_PATTERN.matcher(str);
     return matcher.find();
   }
 
@@ -1261,8 +1375,8 @@ public class StringUtil {
    * @params: [str] 字符串
    * @return: boolean 是否不全是字母和数字
    */
-  public static boolean notAlphabetAndNumber(String str) {
-    Matcher matcher = NOT_ALPHABET_AND_NUMBER_PATTERN.matcher(str);
+  public static boolean notAlphabetAndNumber(final String str) {
+    final Matcher matcher = NOT_ALPHABET_AND_NUMBER_PATTERN.matcher(str);
     return matcher.find();
   }
 
@@ -1273,7 +1387,7 @@ public class StringUtil {
    * @params: [str] 字符串
    * @return: java.io.StringReader
    */
-  public static StringReader getReader(CharSequence str) {
+  public static StringReader getReader(final CharSequence str) {
     if (null == str) {
       return null;
     }
@@ -1288,7 +1402,7 @@ public class StringUtil {
    * @params: [cs] 字符序列
    * @return: java.lang.String 字符串
    */
-  public static String str(CharSequence cs) {
+  public static String str(final CharSequence cs) {
     return null == cs ? null : cs.toString();
   }
 
@@ -1299,16 +1413,16 @@ public class StringUtil {
    * @params: [str] 字符串
    * @return: int 转换后字符串
    */
-  public static int atoi(String str) {
+  public static int atoi(final String str) {
     long result = 0;
 
     boolean start = false;
     boolean plusOrMinus = true;
     for (int i = 0; i < str.length(); i++) {
-      char currentChar = str.charAt(i);
+      final char currentChar = str.charAt(i);
 
       if (Character.isDigit(currentChar)) {
-        int numericValue = Character.getNumericValue(currentChar);
+        final int numericValue = Character.getNumericValue(currentChar);
         if (plusOrMinus) {
           result = result * 10 + numericValue;
           if (result > Integer.MAX_VALUE) {
@@ -1345,12 +1459,12 @@ public class StringUtil {
    * @params: [str] 被包含文本
    * @return: boolean 是否包含
    */
-  public static boolean hasText(String str) {
+  public static boolean hasText(final String str) {
     return (str != null && !str.isEmpty() && containsText(str));
   }
 
-  private static boolean containsText(CharSequence str) {
-    int strLen = str.length();
+  private static boolean containsText(final CharSequence str) {
+    final int strLen = str.length();
     for (int i = 0; i < strLen; i++) {
       if (!Character.isWhitespace(str.charAt(i))) {
         return true;
@@ -1364,14 +1478,14 @@ public class StringUtil {
    * @description: 字符序列包含指定字符序列
    * @description: The character sequence contains the specified character sequence
    * @time: 2022-06-07 16:27:01
-   * @params: [seq, searchSeq] 字符序列，被包含字符序列
+   * @params: [charSequence, searchSeq] 字符序列，被包含字符序列
    * @return: boolean 是否包含
    */
-  public static boolean contains(final CharSequence seq, final CharSequence searchSeq) {
-    if (seq == null || searchSeq == null) {
+  public static boolean contains(final CharSequence charSequence, final CharSequence searchSeq) {
+    if (charSequence == null || searchSeq == null) {
       return false;
     }
-    return indexOf(seq, searchSeq, 0) >= 0;
+    return indexOf(charSequence, searchSeq, 0) >= 0;
   }
 
   /**
@@ -1379,14 +1493,14 @@ public class StringUtil {
    * @description: 字符序列包含指定字符
    * @description: The character sequence contains the specified character
    * @time: 2022-06-07 16:29:41
-   * @params: [seq, searchChar] 字符序列，被包含字符
+   * @params: [charSequence, searchChar] 字符序列，被包含字符
    * @return: boolean 是否包含
    */
-  public static boolean contains(final CharSequence seq, final int searchChar) {
-    if (isEmpty(seq)) {
+  public static boolean contains(final CharSequence charSequence, final int searchChar) {
+    if (isEmpty(charSequence)) {
       return false;
     }
-    return indexOf(seq, searchChar, 0) >= 0;
+    return indexOf(charSequence, searchChar, 0) >= 0;
   }
 
   /**
@@ -1398,17 +1512,17 @@ public class StringUtil {
    * @params: [sequence, searchChar, startPos] 字符串，检索字符，起始下标
    * @return: int 下标
    */
-  public static int indexOf(final CharSequence cs, final int searchChar, int start) {
-    if (cs instanceof String) {
-      return ((String) cs).indexOf(searchChar, start);
+  public static int indexOf(final CharSequence charSequence, final int searchChar, int start) {
+    if (charSequence instanceof String) {
+      return ((String) charSequence).indexOf(searchChar, start);
     }
-    final int sz = cs.length();
+    final int sequenceLength = charSequence.length();
     if (start < 0) {
       start = 0;
     }
     if (searchChar < Character.MIN_SUPPLEMENTARY_CODE_POINT) {
-      for (int i = start; i < sz; i++) {
-        if (cs.charAt(i) == searchChar) {
+      for (int i = start; i < sequenceLength; i++) {
+        if (charSequence.charAt(i) == searchChar) {
           return i;
         }
       }
@@ -1416,9 +1530,9 @@ public class StringUtil {
     }
     if (searchChar <= Character.MAX_CODE_POINT) {
       final char[] chars = Character.toChars(searchChar);
-      for (int i = start; i < sz - 1; i++) {
-        final char high = cs.charAt(i);
-        final char low = cs.charAt(i + 1);
+      for (int i = start; i < sequenceLength - 1; i++) {
+        final char high = charSequence.charAt(i);
+        final char low = charSequence.charAt(i + 1);
         if (high == chars[0] && low == chars[1]) {
           return i;
         }
@@ -1448,11 +1562,11 @@ public class StringUtil {
    * @params: [str, open, close] 字符串，起始字符串，结束字符串
    * @return: java.lang.String 结果
    */
-  public static String substringBetween(String str, String open, String close) {
+  public static String substringBetween(final String str, final String open, final String close) {
     if (null == str || null == open || null == close) {
       return null;
     }
-    int start = str.indexOf(open);
+    final int start = str.indexOf(open);
     if (start != INDEX_NOT_FOUND) {
       int end = str.indexOf(close, start + open.length());
       if (end != INDEX_NOT_FOUND) {
@@ -1568,27 +1682,27 @@ public class StringUtil {
    * StringUtils.getCommonPrefix(new String[] {"i am a machine", "i am a robot"}) = "i am a "
    * </pre>
    *
-   * @param strs array of String objects, entries may be null
+   * @param strArr array of String objects, entries may be null
    * @return the initial sequence of characters that are common to all Strings in the array; empty
    * String if the array is null, the elements are all null or if there is no common prefix.
    */
-  public static String getCommonPrefix(final String... strs) {
-    if (ArrayUtil.isEmpty(strs)) {
+  public static String getCommonPrefix(final String... strArr) {
+    if (ArrayUtil.isEmpty(strArr)) {
       return EMPTY;
     }
-    final int smallestIndexOfDiff = indexOfDifference(strs);
+    final int smallestIndexOfDiff = indexOfDifference(strArr);
     if (smallestIndexOfDiff == INDEX_NOT_FOUND) {
       // all strings were identical
-      if (strs[0] == null) {
+      if (strArr[0] == null) {
         return EMPTY;
       }
-      return strs[0];
+      return strArr[0];
     } else if (smallestIndexOfDiff == 0) {
       // there were no common initial characters
       return EMPTY;
     } else {
       // we found a common initial character sequence
-      return strs[0].substring(0, smallestIndexOfDiff);
+      return strArr[0].substring(0, smallestIndexOfDiff);
     }
   }
 
@@ -1690,7 +1804,7 @@ public class StringUtil {
    * @return: java.util.Optional<T> 结果
    */
   @SafeVarargs
-  public static <T> Optional<T> coalesce(T... values) {
+  public static <T> Optional<T> coalesce(final T... values) {
     if (ArrayUtil.isNotEmpty(values)) {
       for (T value : values) {
         if (null != value) {

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 /**
  * @author: Ares
  * @time: 2024-07-02 14:06:34
- * @description: 带操作人信息的逻领域对象基类
+ * @description: 带操作人信息的逻辑删除领域对象基类
  * @description: Domain object base class with operator information
  * @version: JDK 1.8
  */

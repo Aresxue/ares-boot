@@ -1,39 +1,27 @@
-package com.xiaohongshu.boot.starter.datasource.model;
+package cn.ares.boot.starter.web.model;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author: Ares
- * @time: 2024-07-02 13:59:23
- * @description: 领域对象基类
- * @description: Domain object base class
+ * @time: 2024-08-14 16:20:52
+ * @description: 响应对象基类
  * @version: JDK 1.8
  */
-public class BaseDo implements Serializable {
+@Schema(description = "响应对象基类")
+public class BaseVo implements Serializable {
 
-  private static final long serialVersionUID = -2448140408302894683L;
+  private static final long serialVersionUID = 5505774677115832488L;
 
-  /**
-   * 主键
-   */
-  @TableId(type = IdType.INPUT)
+  @Schema(description = "主键")
   private Long id;
 
-  /**
-   * 创建时间
-   */
-  @TableField(fill = FieldFill.INSERT, value = "create_time")
+  @Schema(description = "创建时间")
   private LocalDateTime createTime;
 
-  /**
-   * 更新时间
-   */
-  @TableField(fill = FieldFill.INSERT_UPDATE, value = "update_time")
+  @Schema(description = "更新时间")
   private LocalDateTime updateTime;
 
   public Long getId() {
@@ -62,7 +50,7 @@ public class BaseDo implements Serializable {
 
   @Override
   public String toString() {
-    return "BaseDo{" +
+    return "BaseVo{" +
         "id=" + id +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +

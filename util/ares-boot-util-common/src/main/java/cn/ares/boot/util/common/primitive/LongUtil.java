@@ -1,5 +1,7 @@
 package cn.ares.boot.util.common.primitive;
 
+import cn.ares.boot.util.common.StringUtil;
+
 /**
  * @author: Ares
  * @time: 2021-12-02 12:57:00
@@ -21,6 +23,21 @@ public class LongUtil {
       return null;
     }
     return Long.parseLong(object.toString());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 解析字符串不为空时返回长整形
+   * @description: Returns a long integer when the parsed string is not empty
+   * @time: 2024-08-21 15:54:15
+   * @params: [str] 字符串
+   * @return: java.lang.Long 结果
+   */
+  public static Long parseLong(String str) {
+    if (StringUtil.isBlank(str)) {
+      return null;
+    }
+    return Long.parseLong(str);
   }
 
   /**

@@ -108,16 +108,19 @@ public class LogPrintAspect {
       if (isLogPrintEnabled(throwable)) {
         boolean printParams = logPrintConfiguration.isParamsEnabled() && logPrint.printParams();
         String methodName = point.getSignature().getName();
+        String bizMessage = logPrint.bizMessage();
         if (logPrintConfiguration.isOnlyError()) {
           if (null != throwable) {
             String paramsStr = serialization(printParams, point.getArgs());
-            logger.error("method: {}, params: {}, throwable: ", methodName, paramsStr, throwable);
+            logger.error("biz message: {}, method: {}, params: {}, throwable: ", bizMessage,
+                methodName, paramsStr, throwable);
           }
         } else {
           String paramsStr = serialization(printParams, point.getArgs());
           String resultStr = serialization(
               logPrintConfiguration.isResultEnabled() && logPrint.printResult(), result);
-          printLog(logPrint.logLevel(), logger, "method: {}, params: {}, result: {}", methodName,
+          printLog(logPrint.logLevel(), logger,
+              "biz message: {}, method: {}, params: {}, result: {}", bizMessage, methodName,
               paramsStr, resultStr);
         }
       }

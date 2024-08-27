@@ -314,7 +314,6 @@ public class FileUtil {
    * @description: Decompress gzip folder
    * @time: 2023-11-22 20:51:56
    * @params: [inputFilePath, outputFolder] gzip文件路径，输出目录
-   * @return: void
    */
   public static void decompressGzipFolder(String inputFilePath, String outputFolder)
       throws IOException {

@@ -320,7 +320,6 @@ public class ThreadUtil {
    * @description: Remove jvm shutDown hook
    * @time: 2023-05-08 11:31:15
    * @params: [shutDownHook]
-   * @return: void
    */
   public static void removeShutdownHook(Thread shutDownHook) {
     if (shutDownHook != null) {

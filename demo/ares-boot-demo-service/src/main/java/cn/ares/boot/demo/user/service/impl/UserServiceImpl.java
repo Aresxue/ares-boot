@@ -1,8 +1,10 @@
 package cn.ares.boot.demo.user.service.impl;
 
+import cn.ares.boot.base.log.annotation.LogPrint;
 import cn.ares.boot.demo.user.domain.mapper.UserMapper;
 import cn.ares.boot.demo.user.service.UserService;
 import cn.ares.boot.demo.user.service.bo.UserBo;
+import cn.ares.boot.demo.user.service.param.UserParam;
 import cn.ares.boot.util.spring.BeanCopyUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
+@LogPrint(printParams = false)
 public class UserServiceImpl implements UserService {
 
   private final UserMapper userMapper;
@@ -22,6 +25,12 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserBo queryUserById(Long id) {
     return BeanCopyUtil.copy(userMapper.selectById(id), UserBo.class);
+  }
+
+  @LogPrint
+  @Override
+  public UserBo testLogPrint(UserParam userParam) {
+    return queryUserById(userParam.getId());
   }
 
 }

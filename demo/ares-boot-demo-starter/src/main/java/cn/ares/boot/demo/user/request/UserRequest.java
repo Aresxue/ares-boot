@@ -19,4 +19,6 @@ public class UserRequest implements BaseRequest {
   private LocalDateTime bizTime;
   private LocalTime start;
 
+  private Long id;
+
 }

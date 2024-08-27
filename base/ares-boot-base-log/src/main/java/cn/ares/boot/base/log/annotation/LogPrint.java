@@ -6,6 +6,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import org.springframework.boot.logging.LogLevel;
 
 /**
  * @author: Ares
@@ -13,23 +14,29 @@ import java.lang.annotation.Target;
  * @description: 打印方法出入注解
  * @version: JDK 1.8
  */
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
 public @interface LogPrint {
 
   /**
-   * 是否打印请求
-   * print request or not
+   * 日志打印级别
+   * Log print level
    */
-  boolean printRequest() default true;
+  LogLevel logLevel() default LogLevel.INFO;
 
   /**
-   * 是否打印响应
-   * print response or not
+   * 是否打印请求
+   * print params or not
    */
-  boolean printResponse() default true;
+  boolean printParams() default true;
+
+  /**
+   * 是否打印结果
+   * print result or not
+   */
+  boolean printResult() default true;
 
   /**
    * 入参中额外的信息

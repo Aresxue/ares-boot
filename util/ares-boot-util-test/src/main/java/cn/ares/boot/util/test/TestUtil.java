@@ -16,7 +16,6 @@ public class TestUtil {
    * @description: await
    * @time: 2023-05-04 14:57:55
    * @params: []
-   * @return: void
    */
   public static void await() {
     try {

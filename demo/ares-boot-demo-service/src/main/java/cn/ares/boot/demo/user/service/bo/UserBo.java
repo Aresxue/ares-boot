@@ -1,5 +1,6 @@
 package cn.ares.boot.demo.user.service.bo;
 
+import cn.ares.boot.base.log.annotation.LogPrintIgnore;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.Data;
 @Data
 public class UserBo {
 
+  @LogPrintIgnore
   private String name;
 
   private LocalTime start;

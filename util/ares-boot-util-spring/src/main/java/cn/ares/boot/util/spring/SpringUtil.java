@@ -289,7 +289,6 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
    * @description: Register singleton objects into the spring container
    * @time: 2023-05-11 12:15:00
    * @params: [beanName, singletonObject] 对象名称，单例对象
-   * @return: void
    */
   public static void registerSingleton(String beanName, Object singletonObject) {
     beanFactory.registerSingleton(beanName, singletonObject);
@@ -302,7 +301,6 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
    * object definition custom handling)
    * @time: 2023-05-11 12:18:16
    * @params: [beanName, beanClass, supplier, customizers] 对象名称，对象类，构造bean的逻辑，对象定义自定义处理数组
-   * @return: void
    */
   public static <T> void registerBean(String beanName, Class<T> beanClass,
       Supplier<T> supplier, BeanDefinitionCustomizer... customizers) {
@@ -424,7 +422,6 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
    * @description: add componentScanning packages
    * @time: 2021-11-24 16:49:00
    * @params: [packages, metadata] 包，元数据
-   * @return: void
    */
   public static void addComponentScanningPackageSet(Set<String> packageSet,
       AnnotationMetadata metadata) {

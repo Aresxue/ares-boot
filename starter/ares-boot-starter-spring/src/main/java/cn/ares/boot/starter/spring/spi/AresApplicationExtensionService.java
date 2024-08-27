@@ -15,7 +15,6 @@ public interface AresApplicationExtensionService {
    * @description: 运行之前做一些处理
    * @time: 2022-05-25 12:22:22
    * @params: [primarySource, args] 主类，参数数组
-   * @return: void
    */
   void handleBeforeRun(Class<?> primarySource, String[] args);
 
@@ -25,7 +24,6 @@ public interface AresApplicationExtensionService {
    * @description: 运行之后做一些处理
    * @time: 2022-05-25 12:22:34
    * @params: [primarySource, args] 主类，参数数组
-   * @return: void
    */
   void handleAfterRun(Class<?> primarySource, String[] args);
 

@@ -32,7 +32,6 @@ public class MapUtil {
    * @description: Merge properties into map
    * @time: 2022-06-07 16:52:41
    * @params: [props, map] 属性，map
-   * @return: void
    */
   public static <K, V> void mergePropertiesIntoMap(Properties props, Map<K, V> map) {
     if (props != null) {

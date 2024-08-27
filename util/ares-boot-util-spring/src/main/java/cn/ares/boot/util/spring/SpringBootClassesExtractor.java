@@ -51,7 +51,6 @@ public class SpringBootClassesExtractor {
    * folder
    * @time: 2023-11-15 10:52:34
    * @params: [jarPath, bizPackageNameSet, classesDir] fat jar路径，业务包名，输出文件夹路径
-   * @return: void
    */
   public static void extractClasses(String jarPath, Set<String> bizPackageNameSet,
       String classesDir)
@@ -67,7 +66,6 @@ public class SpringBootClassesExtractor {
    * @time: 2023-11-15 10:52:34
    * @params: [jarPath, bizPackageName, excludePackageNameSet, classesDir]
    * @params: fat jar路径，业务包名，排除在外的包名，输出文件夹路径
-   * @return: void
    */
   public static void extractClasses(String jarPath, Set<String> bizPackageNameSet,
       Set<String> excludePackageNameSet, String classesDir) throws IOException {
@@ -87,7 +85,6 @@ public class SpringBootClassesExtractor {
    * file
    * @time: 2023-11-16 20:11:34
    * @params: [jarPath, bizPackageNameSet, classesGzPath] fat jar路径，业务包名，输出gzip文件路径
-   * @return: void
    */
   public static void extractClassesGzip(String jarPath, Set<String> bizPackageNameSet,
       String classesGzPath)
@@ -103,7 +100,6 @@ public class SpringBootClassesExtractor {
    * @time: 2023-11-16 10:11:34
    * @params: [jarPath, bizPackageNameSet, excludePackageNameSet, classesGzPath]
    * @params: fat jar路径，业务包名，排除在外的包名，输出gzip文件路径
-   * @return: void
    */
   public static void extractClassesGzip(String jarPath, Set<String> bizPackageNameSet,
       Set<String> excludePackageNameSet, String classesGzPath) throws IOException {
@@ -133,7 +129,6 @@ public class SpringBootClassesExtractor {
    * @params: [jarFile, bizPackageNameSet, excludePackageNameSet, inputStreamBiConsumer,
    * jarConsumer]
    * @params: fat jar路径，业务包名，排除在外的包名，输入流消费者，jar消费者
-   * @return: void
    */
   public static void iterableClass(String jarPath, Set<String> bizPackageNameSet,
       Set<String> excludePackageNameSet,

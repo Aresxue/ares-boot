@@ -24,7 +24,7 @@ import org.springframework.lang.NonNull;
  * @version: JDK 1.8
  */
 @Configuration
-@Import({LogPrintAspect.class})
+@Import({LogPrintConfiguration.class, LogPrintAspect.class})
 @Role(value = ROLE_INFRASTRUCTURE)
 public class LogConfiguration implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 

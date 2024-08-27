@@ -112,7 +112,6 @@ public class EnvironmentUtil {
    * @description: Add classes that spring needs to exclude, such as some AutoConfigure
    * @time: 2021-07-06 11:14:00
    * @params: [environment, config, excludeClassNames] 环境信息实体，配置，排除类名称
-   * @return: void
    */
   public static void addSpringExclude(Environment environment, Properties config,
       String excludeClassNames) {
@@ -130,7 +129,6 @@ public class EnvironmentUtil {
    * @description: Add classes that spring needs to exclude, such as some AutoConfigure
    * @time: 2022-06-08 17:46:45
    * @params: [environment, config, excludeClass] 环境信息实体，配置，排除类
-   * @return: void
    */
   public static void addSpringExclude(Environment environment, Properties config,
       Class<?>... excludeClass) {
@@ -228,7 +226,6 @@ public class EnvironmentUtil {
    * else add it at the end
    * @time: 2022-06-08 17:49:24
    * @params: [propertySources, propertiesPropertySource] 属性源聚合，属性源
-   * @return: void
    */
   public static void addBefore(MutablePropertySources propertySources,
       PropertiesPropertySource propertiesPropertySource) {
@@ -249,7 +246,6 @@ public class EnvironmentUtil {
    * @description: Set the property if it does not exist
    * @time: 2024-07-19 12:07:10
    * @params: [environment, properties, key, value] 环境, 属性组, 键, 值
-   * @return: void
    */
   public static void setPropertyIfAbsent(ConfigurableEnvironment environment, Properties properties,
       String key, String value) {

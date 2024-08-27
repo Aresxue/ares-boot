@@ -17,7 +17,6 @@ public class AssertUtil {
    * @description: If the assertion condition is true, the corresponding action is performed
    * @time: 2024-05-29 14:02:16
    * @params: [condition, runnable] 断言条件，执行操作
-   * @return: void
    */
   public static void assertTrue(boolean condition, Runnable runnable) {
     if (condition) {
@@ -31,7 +30,6 @@ public class AssertUtil {
    * @description: If the assertion condition is true, the corresponding action is performed(throw exception)
    * @time: 2024-05-29 14:02:16
    * @params: [condition, runnable] 断言条件，执行操作
-   * @return: void
    */
   public static void assertTrue(boolean condition, RunnableWithException runnable)
       throws Exception {

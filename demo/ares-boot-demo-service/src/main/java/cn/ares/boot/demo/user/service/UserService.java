@@ -2,6 +2,7 @@ package cn.ares.boot.demo.user.service;
 
 
 import cn.ares.boot.demo.user.service.bo.UserBo;
+import cn.ares.boot.demo.user.service.param.UserParam;
 
 /**
  * @author: Ares
@@ -12,5 +13,7 @@ import cn.ares.boot.demo.user.service.bo.UserBo;
 public interface UserService {
 
   UserBo queryUserById(Long id);
+
+  UserBo testLogPrint(UserParam userParam);
 
 }

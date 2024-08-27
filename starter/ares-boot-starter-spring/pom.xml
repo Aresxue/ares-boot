@@ -30,6 +30,11 @@
       <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>red-boot-starter-validation</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
   </dependencies>
 
 </project>

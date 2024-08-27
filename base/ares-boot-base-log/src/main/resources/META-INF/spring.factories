@@ -1,1 +1,2 @@
 org.springframework.context.ApplicationListener=cn.ares.boot.base.log.config.LogConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=cn.ares.boot.base.log.config.LogConfiguration

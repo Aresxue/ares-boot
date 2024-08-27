@@ -121,7 +121,6 @@ public class BeanCopyUtil {
    * properties and ignore null values)
    * @time: 2021-03-05 13:34:00
    * @params: [sourceObject, targetObject] 源对象，目标对象
-   * @return: void
    */
   public static <SOURCE, T> void copyPropertiesIgnoreNull(SOURCE sourceObject, T targetObject) {
     BeanUtils.copyProperties(sourceObject, targetObject, getNullPropertyNames(sourceObject));
@@ -135,7 +134,6 @@ public class BeanCopyUtil {
    * properties)
    * @time: 2021-03-05 13:34:00
    * @params: [sourceObject, targetObject] 源对象，目标对象
-   * @return: void
    */
   public static <SOURCE, TARGET> void copyProperties(SOURCE sourceObject, TARGET targetObject,
       String... ignoreProperties) {

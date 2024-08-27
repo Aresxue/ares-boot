@@ -42,7 +42,6 @@ public class ExpandObject implements Serializable {
    * @description: Clear all key and value
    * @time: 2022-06-08 14:42:55
    * @params: []
-   * @return: void
    */
   public void clear() {
     if (null != this.expandMap) {
@@ -202,7 +201,6 @@ public class ExpandObject implements Serializable {
    * @description: Put expand value
    * @time: 2021-11-06 17:24
    * @params: [key, value] 键，值
-   * @return: void
    */
   public void put(String key, Object value) {
     if (null == this.expandMap) {
@@ -216,7 +214,6 @@ public class ExpandObject implements Serializable {
    * @description: Put expand value if key not exist
    * @time: 2023-06-26 17:31:44
    * @params: [key, value] 键，值
-   * @return: void
    */
   public void putIfAbsent(String key, Object value) {
     if (null == this.expandMap) {
@@ -231,7 +228,6 @@ public class ExpandObject implements Serializable {
    * @description: Put the key-value pair of the extended object into
    * @time: 2023-06-26 17:33:35
    * @params: [expandObject] 扩展对象
-   * @return: void
    */
   public void putAll(ExpandObject expandObject) {
     if (null == this.expandMap) {
@@ -246,7 +242,6 @@ public class ExpandObject implements Serializable {
    * @description: Iterate over key-value pairs
    * @time: 2023-06-26 17:36:21
    * @params: [action] 遍历处理
-   * @return: void
    */
   public void forEach(BiConsumer<? super String, ? super Object> action) {
     if (MapUtil.isNotEmpty(expandMap)) {

@@ -741,7 +741,6 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: The request needs to set the message body
    * @time: 2019-08-16 16:56:00
    * @params: [httpRequestBase, request] 请求对象, 请求消息体
-   * @return: void
    */
   private static <T> void setBody(HttpUriRequestBase httpRequestBase, T request) {
     if (null == request) {
@@ -770,7 +769,6 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @time: 2019-11-01 16:21:00
    * @params: [requestBase, headers, socketTimeout, connectTimeout, connectionRequestTimeout]
    * 请求基类，自定义消息头，套接字超时时间，连接超时时间，获取连接超时时间
-   * @return: void
    */
   private static void configRequest(HttpUriRequestBase requestBase, Map<String, String> headers,
       int socketTimeout, int connectTimeout, int connectionRequestTimeout) {
@@ -811,7 +809,6 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: Init http connection pool management object
    * @time: 2023-03-09 15:23:49
    * @params: [httpConnectionConfig] http连接配置
-   * @return: void
    */
   private static void initManager(HttpConnectionConfig httpConnectionConfig,
       HostnameVerifier hostnameVerifier) {
@@ -848,7 +845,6 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: Start monitoring threads, close exceptions and idle threads
    * @time: 2019-08-17 09:49:00
    * @params: []
-   * @return: void
    */
   private static void startMonitor() {
     // 使用命名的线程工厂，在排查问题有标识性

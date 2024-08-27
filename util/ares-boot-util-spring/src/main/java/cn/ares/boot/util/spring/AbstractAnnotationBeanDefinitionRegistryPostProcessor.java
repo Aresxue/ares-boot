@@ -80,7 +80,6 @@ public abstract class AbstractAnnotationBeanDefinitionRegistryPostProcessor impl
    * @description: Registry BeanDefinition
    * @time: 2022-05-25 23:23:40
    * @params: [registry, clazz, annotation] bean定义注册器，类，注解
-   * @return: void
    */
   public abstract void registry(BeanDefinitionRegistry registry, Class<?> clazz,
       Annotation annotation);

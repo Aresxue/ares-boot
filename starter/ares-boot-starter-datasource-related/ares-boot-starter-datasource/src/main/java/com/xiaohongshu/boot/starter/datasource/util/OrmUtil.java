@@ -19,7 +19,6 @@ public class OrmUtil {
    * @description: 根据值中是否有*决定走模糊还是精确查询
    * @time: 2023-06-27 17:03:38
    * @params: [abstractWrapper, condition, column, value] queryWrapper，条件，列，值
-   * @return: void
    */
   public static <T, R, Children extends AbstractWrapper<T, R, Children>> void eqOrLike(
       AbstractWrapper<T, R, Children> abstractWrapper, boolean condition, R column, String value) {
@@ -43,7 +42,6 @@ public class OrmUtil {
    * @description: 根据值中是否有*决定走模糊还是精确查询
    * @time: 2023-06-27 17:03:38
    * @params: [queryWrapper, column, value] queryWrapper，列，值
-   * @return: void
    */
   public static <T, R, Children extends AbstractWrapper<T, R, Children>> void eqOrLike(
       AbstractWrapper<T, R, Children> abstractWrapper, R column, String value) {

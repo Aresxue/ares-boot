@@ -588,7 +588,6 @@ public class JsonUtil {
    * @time: 2021-11-27 05:40:00
    * @params: [objectMapper, dateFormat, localDateFormat, localTimeFormat, localDateTimeFormat]
    * objectMapper, dateFormat, localDateFormat, localTimeFormat, localDateTimeFormat
-   * @return: void
    */
   public static void configTime(ObjectMapper objectMapper, String dateFormat,
       String localDateFormat, String localTimeFormat, String localDateTimeFormat) {
@@ -630,7 +629,6 @@ public class JsonUtil {
    * @description: 禁用objectMapper忽略模块重复注册的功能
    * @time: 2023-05-08 15:27:31
    * @params: [objectMapper] objectMapper
-   * @return: void
    */
   public static void disableIgnoreDuplicateModuleRegistrations(ObjectMapper objectMapper) {
     objectMapper.disable(IGNORE_DUPLICATE_MODULE_REGISTRATIONS);
@@ -641,7 +639,6 @@ public class JsonUtil {
    * @description: 启用objectMapper忽略模块重复注册的功能
    * @time: 2023-05-08 15:27:31
    * @params: [objectMapper] objectMapper
-   * @return: void
    */
   public static void enableIgnoreDuplicateModuleRegistrations(ObjectMapper objectMapper) {
     objectMapper.enable(IGNORE_DUPLICATE_MODULE_REGISTRATIONS);

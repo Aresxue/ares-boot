@@ -93,7 +93,6 @@ public class ScriptUtil {
    * @description: Set the classloader for the engine manager
    * @time: 2023-05-08 13:07:52
    * @params: [classLoader]
-   * @return: void
    */
   public static void setEngineManager(ClassLoader classLoader) {
     engineManager = new ScriptEngineManager(classLoader);

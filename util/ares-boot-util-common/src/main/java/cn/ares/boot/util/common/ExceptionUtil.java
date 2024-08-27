@@ -166,7 +166,6 @@ public class ExceptionUtil {
    * @description: Catch when an exception occurs during an execution (Throws a RuntimeException)
    * @time: 2022-06-08 13:56:54
    * @params: [runnable] 无返回的操作
-   * @return: void
    */
   public static void run(RunnableWithException runnable) {
     run(runnable, false);
@@ -179,7 +178,6 @@ public class ExceptionUtil {
    * ignore the exception)
    * @time: 2022-06-08 13:56:54
    * @params: [runnable, ignore] 无返回的操作，忽略异常
-   * @return: void
    */
   public static void run(RunnableWithException runnable, boolean ignore) {
     run(runnable, ignore, null);
@@ -192,7 +190,6 @@ public class ExceptionUtil {
    * does not specify throwing RuntimeException)
    * @time: 2022-06-08 13:56:54
    * @params: [runnable, wrapperException] 无返回的操作，包装异常
-   * @return: void
    */
   public static <E extends RuntimeException> void run(RunnableWithException runnable,
       Class<E> wrapperException) {
@@ -205,7 +202,6 @@ public class ExceptionUtil {
    * @description: Catch exceptions when performing operations (can be ignored and thrown)
    * @time: 2022-06-08 13:56:54
    * @params: [runnable, ignore, wrapperException] 无返回的操作，忽略异常，包装异常
-   * @return: void
    */
   public static <E extends RuntimeException> void run(RunnableWithException runnable,
       boolean ignore, Class<E> wrapperException) {
@@ -231,7 +227,6 @@ public class ExceptionUtil {
    * @description: Throw an exception when the condition is not met
    * @time: 2022-06-08 13:59:49
    * @params: [condition, message] 条件，信息
-   * @return: void
    */
   public static void assertTrue(boolean condition, String message) {
     if (!condition) {
@@ -245,7 +240,6 @@ public class ExceptionUtil {
    * @description: Iterate over the exception and do the assignment processing(handle suppressedExceptions)）
    * @time: 2023-12-07 14:46:08
    * @params: [throwable, consumer] 待迭代异常，异常处理
-   * @return: void
    */
   public static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer) {
     iterableThrowable(throwable, consumer, true);
@@ -257,7 +251,6 @@ public class ExceptionUtil {
    * @description: Iterate over the exception and do the assignment processing(Can specify whether to handle suppressedExceptions)
    * @time: 2023-12-07 14:46:08
    * @params: [throwable, consumer, handleSuppressed] 待迭代异常，异常处理, 是否处理抑制异常
-   * @return: void
    */
   public static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer, boolean handleSuppressed) {
     if (null == throwable) {

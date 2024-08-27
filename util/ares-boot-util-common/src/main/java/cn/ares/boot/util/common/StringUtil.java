@@ -815,7 +815,6 @@ public class StringUtil {
    * @description: Perform action when value is not empty
    * @time: 2022-06-07 11:20:13
    * @params: [value, setter] 值, 操作
-   * @return: void
    */
   public static void setIfPresent(final String value, final Consumer<String> setter) {
     if (isNotEmpty(value)) {

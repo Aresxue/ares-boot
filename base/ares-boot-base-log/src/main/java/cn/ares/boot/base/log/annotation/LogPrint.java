@@ -39,15 +39,9 @@ public @interface LogPrint {
   boolean printResult() default true;
 
   /**
-   * 入参中额外的信息
-   * Info of extra parameters in the request
+   * 业务信息
+   * Business message
    */
-  String requestOtherMessage() default "";
-
-  /**
-   * 响应中额外的信息
-   * Info of extra parameters in the response
-   */
-  String responseOtherMessage() default "";
+  String bizMessage() default "";
 
 }

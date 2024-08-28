@@ -26,13 +26,17 @@
       <artifactId>ares-boot-base-log</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.github.aresxue.boot</groupId>
+      <artifactId>ares-boot-base-model</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.github.aresxue.boot.util</groupId>
       <artifactId>ares-boot-util-spring</artifactId>
     </dependency>
-   <!-- <dependency>
+    <dependency>
       <groupId>io.github.aresxue.boot.util</groupId>
       <artifactId>ares-boot-util-mapstruct</artifactId>
-    </dependency>-->
+    </dependency>
     <dependency>
       <groupId>io.github.aresxue.boot.util</groupId>
       <artifactId>ares-boot-util-test</artifactId>

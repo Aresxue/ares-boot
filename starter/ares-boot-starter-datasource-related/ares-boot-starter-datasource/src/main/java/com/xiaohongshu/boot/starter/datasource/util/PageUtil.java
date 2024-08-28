@@ -1,4 +1,4 @@
-package cn.ares.boot.starter.datasource.util;
+package com.xiaohongshu.boot.starter.datasource.util;
 
 import cn.ares.boot.base.model.page.PageRequest;
 import cn.ares.boot.base.model.page.Pageable;

@@ -23,33 +23,33 @@ public class BusinessException extends BaseException {
   }
 
   public BusinessException(Status status, Object... params) {
-    this(status, true, params);
+    this(true, status, params);
   }
 
   public BusinessException(Status status, Throwable throwable) {
-    this(status, throwable, true);
+    this(true, status, throwable);
   }
 
   public BusinessException(Status status, Throwable throwable, Object... params) {
-    this(status, throwable, true, params);
+    this(true, status, throwable, params);
   }
 
-  public BusinessException(Status status, boolean log) {
+  public BusinessException(boolean log, Status status) {
     super(status);
     this.log = log;
   }
 
-  public BusinessException(Status status, boolean log, Object... params) {
+  public BusinessException(boolean log, Status status, Object... params) {
     super(status, params);
     this.log = log;
   }
 
-  public BusinessException(Status status, Throwable throwable, boolean log) {
+  public BusinessException(boolean log, Status status, Throwable throwable) {
     super(status, throwable);
     this.log = log;
   }
 
-  public BusinessException(Status status, Throwable throwable, boolean log, Object... params) {
+  public BusinessException(boolean log, Status status, Throwable throwable, Object... params) {
     super(status, throwable, params);
     this.log = log;
   }

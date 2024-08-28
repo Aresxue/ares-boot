@@ -29,29 +29,36 @@
       <groupId>com.xiaohongshu.boot.util</groupId>
       <artifactId>red-boot-util-spring</artifactId>
     </dependency>
-   <!-- <dependency>
-      <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>red-boot-util-mapstruct</artifactId>
-    </dependency>-->
-    <dependency>
-      <groupId>com.xiaohongshu.boot.util</groupId>
-      <artifactId>red-boot-util-test</artifactId>
-      <scope>test</scope>
-    </dependency>
+    <groupId>com.xiaohongshu.boot.util</groupId>
+    <artifactId>red-boot-base-model</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.xiaohongshu.boot.util</groupId>
+    <artifactId>red-boot-util-mapstruct</artifactId>
+  </dependency>
+  <!-- <dependency>
+     <groupId>io.github.aresxue.boot.util</groupId>
+     <artifactId>ares-boot-util-mapstruct</artifactId>
+   </dependency>-->
+  <dependency>
+    <groupId>com.xiaohongshu.boot.util</groupId>
+    <artifactId>red-boot-util-test</artifactId>
+    <scope>test</scope>
+  </dependency>
 
-    <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>druid-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.mysql</groupId>
-      <artifactId>mysql-connector-j</artifactId>
-    </dependency>
+  <dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus-boot-starter</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>druid-spring-boot-starter</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+  </dependency>
 
-  </dependencies>
+</dependencies>
 
-</project>
+  </project>

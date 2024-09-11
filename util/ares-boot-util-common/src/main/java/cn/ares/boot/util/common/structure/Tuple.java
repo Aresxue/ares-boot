@@ -3,7 +3,8 @@ package cn.ares.boot.util.common.structure;
 /**
  * @author: Ares
  * @time: 2021-07-29 10:49:00
- * @description: Tuple
+ * @description: 二个对象的元组
+ * @description: Tuple for two objects
  * @version: JDK 1.8
  */
 public class Tuple<A, B> {
@@ -13,10 +14,10 @@ public class Tuple<A, B> {
   private A first;
   private B second;
 
-  private Tuple() {
+  protected Tuple() {
   }
 
-  public static <A, B> Tuple<A, B> empty() {
+  public static <A, B> Tuple<A, B> emptyTuple() {
     return EMPTY;
   }
 
@@ -42,4 +43,5 @@ public class Tuple<A, B> {
   public void setSecond(B second) {
     this.second = second;
   }
+
 }

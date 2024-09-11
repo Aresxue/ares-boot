@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author: Ares
  * @time: 2024-01-16 16:28:25
- * @description: web流量限制
- * @description: Web traffic limit
+ * @description: 流量限速
+ * @description: Traffic limit
  * @version: JDK 1.8
  */
 @Target({ElementType.TYPE, ElementType.METHOD})

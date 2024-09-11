@@ -13,7 +13,7 @@ public class ThreeTuple<A, B, C> extends Tuple<A, B> {
 
   public C third;
 
-  protected ThreeTuple() {
+  public ThreeTuple() {
   }
 
   public static <A, B, C> ThreeTuple<A, B, C> emptyThirdTuple() {

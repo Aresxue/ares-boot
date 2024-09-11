@@ -13,7 +13,7 @@ public class FourTuple<A, B, C, D> extends ThreeTuple<A, B, C> {
 
   public D four;
 
-  protected FourTuple() {
+  public FourTuple() {
   }
 
   public static <A, B, C, D> FourTuple<A, B, C, D> emptyFourTuple() {

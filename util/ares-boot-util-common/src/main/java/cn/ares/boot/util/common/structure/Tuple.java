@@ -14,7 +14,7 @@ public class Tuple<A, B> {
   private A first;
   private B second;
 
-  protected Tuple() {
+  public Tuple() {
   }
 
   public static <A, B> Tuple<A, B> emptyTuple() {

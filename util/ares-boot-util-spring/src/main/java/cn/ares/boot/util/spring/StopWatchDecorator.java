@@ -30,7 +30,6 @@ public class StopWatchDecorator extends StopWatch {
    * @description: 停止并获取从开始过去的总毫秒数（如果不是运行状态不会停止）
    * @description: Gets the number of milliseconds since the start(will not stop if it is not in running state)
    * @time: 2023-05-08 17:13:57
-   * @params: []
    * @return: long
    */
   public long stopAndGetTotalMillis() {
@@ -45,7 +44,6 @@ public class StopWatchDecorator extends StopWatch {
    * @description: 停止并获取从开始过去的总秒数（如果不是运行状态不会停止）
    * @description: Gets the number of seconds since the start(will not stop if it is not in running state)
    * @time: 2023-05-08 17:13:57
-   * @params: []
    * @return: long
    */
   public double stopAndGetTotalSeconds() {
@@ -60,7 +58,6 @@ public class StopWatchDecorator extends StopWatch {
    * @description: 停止并获取从开始过去的总纳秒数（如果不是运行状态不会停止）
    * @description: Gets the number of nanoseconds since the start(will not stop if it is not in running state)
    * @time: 2023-05-08 17:13:57
-   * @params: []
    * @return: long
    */
   public long stopAndGetTotalNanos() {
@@ -75,7 +72,6 @@ public class StopWatchDecorator extends StopWatch {
    * @description: 停止并获取上一次的纳秒数（如果不是运行状态不会停止）
    * @description: Stop and get the last nanosecond(will not stop if it is not in running state)
    * @time: 2023-05-11 12:48:15
-   * @params: []
    * @return: long 纳秒数
    */
   public long stopAndGetLastNanos() {
@@ -90,7 +86,6 @@ public class StopWatchDecorator extends StopWatch {
    * @description: 停止并获取上一次的纳秒数（如果不是运行状态不会停止）
    * @description: Stop and get the last millisecond(will not stop if it is not in running state)
    * @time: 2023-05-11 12:48:15
-   * @params: []
    * @return: long 毫秒数
    */
   public long stopAndGetLastMillis() {

@@ -4,6 +4,7 @@ import static cn.ares.boot.util.common.constant.StringConstant.TRUE;
 import static com.xiaohongshu.boot.starter.search.engine.config.SearchEngineEnvironmentPostProcessor.SEARCH_ENGINE_ENABLED;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE;
 
+import cn.ares.boot.starter.search.engine.extension.ExtensionElasticsearchRestTemplate;
 import cn.ares.boot.util.spring.ReflectionUtil;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -26,11 +27,15 @@ import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
+import org.springframework.data.elasticsearch.core.convert.ElasticsearchConverter;
 
 /**
  * @author: Ares
@@ -69,8 +74,7 @@ public class SearchEngineConfiguration {
    * @author: Ares
    * @description: 初始化Elasticsearch官方提供的RestHighLevelClient（高级客户端）
    * @description: Initialize the official provided RestHighLevelClient (high-level client)
-   * @time: 2021-03-27 19:54:00
-   * @params: [] 请求参数
+   * @time: 2021-03-27 19:54:00 请求参数
    * @return: org.elasticsearch.client.RestHighLevelClient 高级客户端
    */
   @Bean
@@ -145,6 +149,13 @@ public class SearchEngineConfiguration {
       throw new UnsupportedOperationException("search engine server config load fail");
     }
     return httpHosts;
+  }
+
+  @Bean
+  @ConditionalOnMissingBean(value = ElasticsearchOperations.class, name = "elasticsearchTemplate")
+  @ConditionalOnBean(RestHighLevelClient.class)
+  ElasticsearchRestTemplate elasticsearchTemplate(RestHighLevelClient client, ElasticsearchConverter converter) {
+    return new ExtensionElasticsearchRestTemplate(client, converter);
   }
 
 }

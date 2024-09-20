@@ -303,7 +303,6 @@ public class XmlUtil {
    * @author: Ares
    * @description: create document builder
    * @time: 2022-06-08 14:37:44
-   * @params: []
    * @return: javax.xml.parsers.DocumentBuilder
    */
   public static DocumentBuilder createDocumentBuilder() {
@@ -320,7 +319,6 @@ public class XmlUtil {
    * @author: Ares
    * @description: create document builder factory
    * @time: 2022-06-08 14:38:16
-   * @params: []
    * @return: javax.xml.parsers.DocumentBuilderFactory
    */
   public static DocumentBuilderFactory createDocumentBuilderFactory() {
@@ -415,7 +413,6 @@ public class XmlUtil {
    * @author: Ares
    * @description: create xml document
    * @time: 2022-06-08 14:41:01
-   * @params: []
    * @return: org.w3c.dom.Document
    */
   public static Document createXml() {

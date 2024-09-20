@@ -1,7 +1,18 @@
 package cn.ares.boot.util.crypt;
 
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.AES256;
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.DES;
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.RSA;
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.SM4;
+
+import cn.ares.boot.util.common.MapUtil;
+import cn.ares.boot.util.common.structure.Tuple;
+import cn.ares.boot.util.crypt.constant.CryptAlgorithm;
+import cn.ares.boot.util.crypt.impl.Aes256;
+import cn.ares.boot.util.crypt.impl.Des;
+import cn.ares.boot.util.crypt.impl.Rsa;
+import cn.ares.boot.util.crypt.impl.Sm4;
 import java.util.Map;
-import java.util.function.Supplier;
 
 /**
  * @author: Ares
@@ -12,90 +23,116 @@ import java.util.function.Supplier;
  */
 public class ReverseCryptUtil {
 
+  private static final String REVERSE_IMPL = "ares.crypt.reverse.impl";
+  private static final Map<CryptAlgorithm, ReverseCrypt> REVERSE_CRYPT_MAP = MapUtil.newConcurrentMap();
   private static ReverseCrypt reverseCrypt;
 
+  static {
+    REVERSE_CRYPT_MAP.put(AES256, Aes256.getInstance());
+    REVERSE_CRYPT_MAP.put(DES, Des.getInstance());
+    REVERSE_CRYPT_MAP.put(RSA, Rsa.getInstance());
+    REVERSE_CRYPT_MAP.put(SM4, Sm4.getInstance());
+
+    setReverseCryptInstance();
+  }
+
+  private static void setReverseCryptInstance() {
+    String cryptAlgorithmName = System.getProperty(REVERSE_IMPL, AES256.getName());
+    CryptAlgorithm cryptAlgorithm = CryptAlgorithm.getCryptAlgorithm(cryptAlgorithmName);
+    reverseCrypt = getInstance(cryptAlgorithm);
+  }
+
   public static byte[] enCrypt(byte[] srcData) {
-    return doReverseCrypt(() -> reverseCrypt.enCrypt(srcData));
+    return reverseCrypt.enCrypt(srcData);
   }
 
   public static String enCrypt(String srcData) {
-    return doReverseCrypt(() -> reverseCrypt.enCrypt(srcData));
+    return reverseCrypt.enCrypt(srcData);
   }
 
   public static byte[] deCrypt(byte[] targetData) {
-    return doReverseCrypt(() -> reverseCrypt.deCrypt(targetData));
+    return reverseCrypt.deCrypt(targetData);
   }
 
   public static String deCrypt(String targetData) {
-    return doReverseCrypt(() -> reverseCrypt.deCrypt(targetData));
+    return reverseCrypt.deCrypt(targetData);
   }
 
   public static String deCrypt(String targetData, String privateKey) {
-    return doReverseCrypt(() -> reverseCrypt.deCrypt(targetData, privateKey));
+    return reverseCrypt.deCrypt(targetData, privateKey);
   }
 
   public static byte[] deCrypt(byte[] targetData, String privateKey) {
-    return doReverseCrypt(() -> reverseCrypt.deCrypt(targetData, privateKey));
+    return reverseCrypt.deCrypt(targetData, privateKey);
   }
 
   public static boolean signatureVerify(byte[] srcData, byte[] targetData) {
-    return doReverseCrypt(
-        () -> reverseCrypt.signatureVerify(srcData, targetData));
+    return reverseCrypt.signatureVerify(srcData, targetData);
   }
 
 
-  public static boolean signatureVerify(byte[] srcData, byte[] targetData,
-      String privateKey) {
-    return doReverseCrypt(() -> doReverseCrypt(
-        () -> reverseCrypt.signatureVerify(srcData, targetData, privateKey)));
+  public static boolean signatureVerify(byte[] srcData, byte[] targetData, String privateKey) {
+    return reverseCrypt.signatureVerify(srcData, targetData, privateKey);
   }
 
   public static String getDefaultPrivateKey() {
-    return doReverseCrypt(() -> reverseCrypt.getDefaultPrivateKey());
+    return reverseCrypt.getDefaultPrivateKey();
   }
 
   public static String getDefaultPublicKey() {
-    return doReverseCrypt(() -> reverseCrypt.getDefaultPublicKey());
+    return reverseCrypt.getDefaultPublicKey();
   }
 
-  public static Map<String, String> generateKey() throws Exception {
-    if (null == reverseCrypt) {
-      reverseCrypt = ReverseCrypt.getInstance();
-    }
+  public static Tuple<String, String> generateKey() throws Exception {
     return reverseCrypt.generateKey();
   }
 
-  public static Map<String, String> generateKey(int length) throws Exception {
-    if (null == reverseCrypt) {
-      reverseCrypt = ReverseCrypt.getInstance();
-    }
-    return reverseCrypt.generateKey(length);
-  }
-
   public static String enCrypt(String srcData, String publicKey) {
-    return doReverseCrypt(() -> reverseCrypt.enCrypt(srcData, publicKey));
+    return reverseCrypt.enCrypt(srcData, publicKey);
   }
 
   public static byte[] enCrypt(byte[] srcData, String publicKey) {
-    return doReverseCrypt(() -> reverseCrypt.enCrypt(srcData, publicKey));
+    return reverseCrypt.enCrypt(srcData, publicKey);
   }
 
   public static boolean signatureVerify(String srcData, String targetData,
       String privateKey) {
-    return doReverseCrypt(
-        () -> reverseCrypt.signatureVerify(srcData, targetData, privateKey));
+    return reverseCrypt.signatureVerify(srcData, targetData, privateKey);
   }
 
   public static boolean signatureVerify(String srcData, String targetData) {
-    return doReverseCrypt(
-        () -> reverseCrypt.signatureVerify(srcData, targetData));
+    return reverseCrypt.signatureVerify(srcData, targetData);
   }
 
-  private static <T> T doReverseCrypt(Supplier<T> reverseCryptSupplier) {
-    if (null == reverseCrypt) {
-      reverseCrypt = ReverseCrypt.getInstance();
+  /**
+   * @author: Ares
+   * @description: Get default reverse crypt instance
+   * @description: 获取可逆算法加密实例
+   * @time: 2021-11-22 14:06:00
+   * @params: [cryptAlgorithm] 算法
+   * @return: ReverseCrypt 可逆算法加密实例
+   */
+  public static ReverseCrypt getInstance(CryptAlgorithm cryptAlgorithm) {
+    if (null == cryptAlgorithm) {
+      throw new RuntimeException("Crypt algorithm is null");
     }
-    return reverseCryptSupplier.get();
+    if (!cryptAlgorithm.isReverse()) {
+      throw new RuntimeException("Current crypt algorithm is not reverse algorithm");
+    }
+    return REVERSE_CRYPT_MAP.get(cryptAlgorithm);
+  }
+
+  public static boolean registerAlgorithm(CryptAlgorithm algorithm, ReverseCrypt crypt) {
+    if (null == algorithm) {
+      return false;
+    }
+    REVERSE_CRYPT_MAP.putIfAbsent(algorithm, crypt);
+    setReverseCryptInstance();
+    return true;
+  }
+
+  public static void setReverseCrypt(ReverseCrypt reverseCrypt) {
+    ReverseCryptUtil.reverseCrypt = reverseCrypt;
   }
 
 }

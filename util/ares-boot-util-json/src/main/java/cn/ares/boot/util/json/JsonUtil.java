@@ -477,7 +477,6 @@ public class JsonUtil {
    * @description: Get object mapper with default configure and time serialization strategy(Do not
    * ignore null values)
    * @time: 2021-12-23 22:58:30
-   * @params: []
    * @return: com.fasterxml.jackson.databind.json.JsonMapper
    */
   public static JsonMapper getJsonMapper() {
@@ -547,7 +546,6 @@ public class JsonUtil {
    * @description: Get object mapper with default configure and time serialization strategy(Do not
    * ignore null values)
    * @time: 2021-12-23 22:58:30
-   * @params: []
    * @return: com.fasterxml.jackson.databind.json.JsonMapper
    */
   public static JsonMapper getDefaultJsonMapper() {

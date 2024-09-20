@@ -1,6 +1,7 @@
 package cn.ares.boot.util.common.constant;
 
-import java.util.Arrays;
+import cn.ares.boot.util.common.MapUtil;
+import java.util.Map;
 
 /**
  * @author: Ares
@@ -27,8 +28,13 @@ public enum OperateSystem {
 
   private static final OperateSystem LOCAL_OPERATE_SYSTEM;
 
+  private static final Map<String, OperateSystem> CACHED = MapUtil.newMap(values().length);
+
   static {
     LOCAL_OPERATE_SYSTEM = getOperateSystem(System.getProperty("os.name"));
+    for (OperateSystem operateSystem : values()) {
+      CACHED.put(operateSystem.getLowerSystem(), operateSystem);
+    }
   }
 
   OperateSystem(String system, String lowerSystem) {
@@ -45,10 +51,7 @@ public enum OperateSystem {
   }
 
   public static OperateSystem getOperateSystem(String info) {
-    return Arrays.stream(OperateSystem.values())
-        .filter(system -> info.toLowerCase().contains(system.getLowerSystem()))
-        .findFirst()
-        .orElse(OperateSystem.UNKNOWN);
+    return CACHED.getOrDefault(info.toLowerCase(), UNKNOWN);
   }
 
   public static OperateSystem getLocalOperateSystem() {

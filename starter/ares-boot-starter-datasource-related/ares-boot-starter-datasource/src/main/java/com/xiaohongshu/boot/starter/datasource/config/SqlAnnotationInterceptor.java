@@ -1,7 +1,6 @@
 package com.xiaohongshu.boot.starter.datasource.config;
 
 import cn.ares.boot.base.config.BootEnvironment;
-import cn.ares.boot.base.log.util.LoggerUtil;
 import cn.ares.boot.util.spring.ReflectionUtil;
 import java.sql.Connection;
 import org.apache.ibatis.executor.statement.StatementHandler;
@@ -17,16 +16,11 @@ import org.slf4j.LoggerFactory;
  * @author: Ares
  * @time: 2024-07-02 17:36:29
  * @description: 用于为sql语句添加注释，标记语句的执行应用
- * @description: Used to add comments to SQL statements and mark the execution application of
- * statements
+ * @description: Used to add comments to SQL statements and mark the execution application of statements
  * @version: JDK 1.8
  */
-@Intercepts(
-    {
-        @Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class,
-            Integer.class}),
-    }
-)
+@Intercepts({@Signature(type = StatementHandler.class, method = "prepare",
+    args = {Connection.class, Integer.class}),})
 public class SqlAnnotationInterceptor implements Interceptor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SqlAnnotationInterceptor.class);

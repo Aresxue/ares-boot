@@ -32,7 +32,6 @@ public interface AresApplicationExtensionService {
    * @description: Execution order, the smaller, the earlier
    * @description: 执行顺序，越小越早
    * @time: 2022-06-09 14:51:55
-   * @params: []
    * @return: int 执行排序
    */
   default int getOrder(){

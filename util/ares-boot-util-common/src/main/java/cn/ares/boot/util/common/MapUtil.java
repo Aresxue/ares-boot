@@ -151,7 +151,6 @@ public class MapUtil {
    * @description: 以默认的元素个数创建HashMap
    * @description: New HashMap with default size
    * @time: 2022-06-07 16:54:01
-   * @params: []
    * @return: java.util.HashMap<K, V>
    */
   public static <K, V> HashMap<K, V> newHashMap() {
@@ -175,7 +174,6 @@ public class MapUtil {
    * @description: 以默认的元素个数创建HashMap
    * @description: New ConcurrentMap with default size
    * @time: 2023-05-08 11:46:35
-   * @params: []
    * @return: java.util.concurrent.ConcurrentMap<K, V>
    */
   public static <K, V> ConcurrentMap<K, V> newConcurrentMap() {

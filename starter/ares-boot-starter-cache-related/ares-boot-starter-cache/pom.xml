@@ -14,16 +14,23 @@
   <description>
     缓存快速使用，可自动从配置中心获取缓存服务器信息，底层实现目前为redis，目前设置了默认序列化策略为json，
     提供了易用和更强大的api，同时集成了多级缓存功能，用户可通过注解实现多级缓存功能，提供分布式锁实现
-    Cache use quickly, can automatically obtain cache server information from the configuration center,
+    Cache use quickly, can automatically obtain cache server information from the configuration
+    center,
     the bottom implementation is redis, the default serialization policy is set to json.
-    Provides an easy to use and more powerful api, while integrating multi-level caching capabilities,
-    users can realize multi-level caching capabilities through annotations, providing distributed lock implementation
+    Provides an easy to use and more powerful api, while integrating multi-level caching
+    capabilities,
+    users can realize multi-level caching capabilities through annotations, providing distributed
+    lock implementation
   </description>
 
   <dependencies>
     <dependency>
       <groupId>com.xiaohongshu.boot</groupId>
       <artifactId>red-boot-starter-cache-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.xiaohongshu.boot.util</groupId>
+      <artifactId>red-boot-util-compress</artifactId>
     </dependency>
     <dependency>
       <groupId>com.xiaohongshu.boot.util</groupId>

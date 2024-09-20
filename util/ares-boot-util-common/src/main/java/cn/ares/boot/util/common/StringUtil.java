@@ -1545,7 +1545,6 @@ public class StringUtil {
    * @description: 随机获取一个汉字
    * @description: Get a random chinese character
    * @time: 2022-09-12 19:47:24
-   * @params: []
    * @return: char random chinese character 随机汉字
    */
   public static char getRandomChineseCharacter() {

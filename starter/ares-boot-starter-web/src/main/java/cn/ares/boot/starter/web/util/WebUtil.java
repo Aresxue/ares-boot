@@ -18,7 +18,6 @@ public class WebUtil {
    * @description: 获取当前http servlet请求
    * @description: Get current http servlet request
    * @time: 2023-02-09 11:03:18
-   * @params: []
    * @return: javax.servlet.http.HttpServletRequest
    */
   public static HttpServletRequest getHttpServletRequest() {

@@ -1,6 +1,6 @@
 package cn.ares.boot.util.crypt.impl;
 
-import cn.ares.boot.util.crypt.AbstractCrypt;
+import cn.ares.boot.util.common.structure.Tuple;
 import cn.ares.boot.util.crypt.ReverseCrypt;
 import java.io.ByteArrayOutputStream;
 import java.security.KeyFactory;
@@ -12,8 +12,6 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.HashMap;
-import java.util.Map;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -31,14 +29,12 @@ public class Rsa extends ReverseCrypt {
   private static final String KEY_ALGORITHM = "RSA";
 
   /**
-   * RSA maximum encrypted plaintext size
-   * RSA最大加密明文大小
+   * RSA maximum encrypted plaintext size RSA最大加密明文大小
    */
   private static final int MAX_ENCRYPT_BLOCK = 117;
 
   /**
-   * RSA maximum decrypted ciphertext size
-   * RSA最大解密密文大小
+   * RSA maximum decrypted ciphertext size RSA最大解密密文大小
    */
   private static final int MAX_DECRYPT_BLOCK = 128;
 
@@ -51,7 +47,6 @@ public class Rsa extends ReverseCrypt {
       int inputLen = srcData.length;
       int offSet = 0;
       int i = 0;
-      byte[] cache;
       return getBytes(srcData, outputStream, cipher, inputLen, offSet, i, MAX_ENCRYPT_BLOCK);
     }
   }
@@ -64,7 +59,6 @@ public class Rsa extends ReverseCrypt {
       cipher.init(Cipher.DECRYPT_MODE, key);
       int inputLen = targetData.length;
       int offSet = 0;
-      byte[] cache;
       int i = 0;
       // Decrypt data segments
       // 对数据分段解密
@@ -90,34 +84,25 @@ public class Rsa extends ReverseCrypt {
   }
 
   @Override
-  public Map<String, String> generateKey(int length) throws Exception {
-    Map<String, String> keyMap = new HashMap<>(4);
+  public Tuple<String, String> generateKey() throws Exception {
     KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-    keyPairGen.initialize(length);
+    keyPairGen.initialize(DEFAULT_KEY_LENGTH);
     KeyPair keyPair = keyPairGen.generateKeyPair();
 
     RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
     RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-
-    keyMap.put(PUBLIC_KEY_NAME, AbstractCrypt.bytesToString(publicKey.getEncoded()));
-    keyMap.put(PRIVATE_KEY_NAME, AbstractCrypt.bytesToString(privateKey.getEncoded()));
-    return keyMap;
+    return Tuple.of(bytesToString(publicKey.getEncoded()), bytesToString(privateKey.getEncoded()));
   }
 
-  @Override
-  public Map<String, String> generateKey() throws Exception {
-    return generateKey(DEFAULT_KEY_LENGTH);
-  }
-
-  private static PublicKey buildPublicKey(String publicKey) throws Exception {
-    byte[] keyBytes = AbstractCrypt.stringToBytes(publicKey);
+  private PublicKey buildPublicKey(String publicKey) throws Exception {
+    byte[] keyBytes = stringToBytes(publicKey);
     X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
     KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
     return keyFactory.generatePublic(keySpec);
   }
 
   private PrivateKey buildPrivateKey(String privateKey) throws Exception {
-    byte[] keyBytes = AbstractCrypt.stringToBytes(privateKey);
+    byte[] keyBytes = stringToBytes(privateKey);
     PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
     KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
     return keyFactory.generatePrivate(keySpec);

@@ -169,7 +169,6 @@ public class SnowFlakeIdWorker {
    * @author: Ares
    * @description: 获取工作ID
    * @time: 2020-09-01 15:26:00
-   * @params: []
    * @return: java.lang.Long 工作标识
    */
   private static Long getWorkId() {
@@ -191,7 +190,6 @@ public class SnowFlakeIdWorker {
    * @description: 获取分布式标识 (该方法是线程安全的)
    * @description: Get the distributed identity (this method is thread-safe)
    * @time: 2023-05-08 13:10:23
-   * @params: []
    * @return: long 分布式标识
    */
   public long nextId() {
@@ -245,7 +243,6 @@ public class SnowFlakeIdWorker {
    * @description: A way to obtain distributed identities that is compatible with short clock
    * backticks (the method is thread-safe)
    * @time: 2023-05-08 13:09:45
-   * @params: []
    * @return: long 分布式标识
    */
   public long nextIdByCacheWhenClockMoved() {

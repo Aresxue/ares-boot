@@ -54,8 +54,8 @@ public class BootRedissonConfiguration {
   @Value("${ares.application.cache.redisson.command-timeout:3000}")
   private Integer commandTimeout;
   /**
-   * 数据读取模式（默认读从，可能会存在存完立马读不到的情况） Data read mode (default read from, there may be a situation where
-   * you can't read it immediately after saving)
+   * 数据读取模式（默认读从，可能会存在存完立马读不到的情况）
+   * Data read mode (default read from, there may be a situation where you can't read it immediately after saving)
    */
   @Value("${ares.application.cache.redisson.read-mode:SLAVE}")
   private String readMode;

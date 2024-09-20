@@ -154,7 +154,6 @@ public class DateUtil {
    * @description: 获取一天后的日期字符串
    * @description: Get the date string one day later
    * @time: 2022-06-08 13:42:40
-   * @params: []
    * @return: java.lang.String 日期字符串
    */
   public static String getNextDayStart() {
@@ -172,7 +171,6 @@ public class DateUtil {
    * @description: 获取今天最后的日期字符串
    * @description: Get the last date string of today
    * @time: 2022-06-08 13:43:30
-   * @params: []
    * @return: java.lang.String 日期字符串
    */
   public static String getTodayEnd() {
@@ -189,7 +187,6 @@ public class DateUtil {
    * @description: 获取今天最后的日期字符串
    * @description: Get the start date string of today
    * @time: 2022-06-08 13:44:36
-   * @params: []
    * @return: java.lang.String 日期字符串
    */
   public static String getTodayStart() {
@@ -409,7 +406,6 @@ public class DateUtil {
    * @description: 获取默认时区
    * @description: Get default timeZone offset
    * @time: 2023-05-08 11:32:49
-   * @params: []
    * @return: java.lang.Integer
    */
   public static Integer getDefaultTimeZoneOffset() {

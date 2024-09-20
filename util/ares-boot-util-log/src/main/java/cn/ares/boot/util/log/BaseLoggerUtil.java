@@ -154,7 +154,6 @@ public class BaseLoggerUtil {
    * @author: Ares
    * @description: Get locationAwareLogger
    * @time: 2021-05-31 16:48:00
-   * @params: []
    * @return: org.slf4j.spi.LocationAwareLogger
    */
   private static LocationAwareLogger getLocationAwareLogger() {

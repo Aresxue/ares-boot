@@ -15,11 +15,14 @@ public class TestUtil {
    * @description: 一直等待
    * @description: await
    * @time: 2023-05-04 14:57:55
-   * @params: []
    */
   public static void await() {
+    await(Integer.MAX_VALUE);
+  }
+
+  public static void await(long millis) {
     try {
-      Thread.sleep(Integer.MAX_VALUE);
+      Thread.sleep(millis);
     } catch (InterruptedException interruptedException) {
       throw new CheckedExceptionWrapper(interruptedException);
     }

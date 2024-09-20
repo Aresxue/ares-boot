@@ -14,7 +14,6 @@ public interface Status {
    * @description: Get status code
    * @description: 获取状态码
    * @time: 2022-06-10 15:47:46
-   * @params: []
    * @return: int 状态码
    */
   int getCode();
@@ -24,7 +23,6 @@ public interface Status {
    * @description: Get status message
    * @description: 获取状态信息
    * @time: 2022-06-10 15:48:24
-   * @params: []
    * @return: java.lang.String 状态信息
    */
   String getMessage();

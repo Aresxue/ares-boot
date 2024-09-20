@@ -10,10 +10,10 @@ public class ByteUtil {
 
   /**
    * @author: Ares
-   * @description: 合并多个byte数组
+   * @description: 合并多个字节数组
    * @description: Merge multiple byte array
    * @time: 2021-11-22 13:21:00
-   * @params: [origin, extra] 原始byte数组，额外byte数组
+   * @params: [origin, extra] 原始字节数组，额外字节数组
    * @return: byte[] 合并后数组
    */
   public static byte[] merge(byte[] origin, byte[]... extra) {
@@ -21,23 +21,19 @@ public class ByteUtil {
       throw new RuntimeException("Origin data is null");
     }
     int newLength = origin.length;
-    if (extra.length > 0) {
-      for (byte[] bytes : extra) {
-        if (null != bytes) {
-          newLength += bytes.length;
-        }
+    for (byte[] bytes : extra) {
+      if (null != bytes) {
+        newLength += bytes.length;
       }
     }
     byte[] result = new byte[newLength];
     int position = origin.length;
     System.arraycopy(origin, 0, result, 0, position);
-    if (extra.length > 0) {
-      for (byte[] bytes : extra) {
-        if (null != bytes) {
-          int currentLength = bytes.length;
-          System.arraycopy(bytes, 0, result, position, currentLength);
-          position += currentLength;
-        }
+    for (byte[] bytes : extra) {
+      if (null != bytes) {
+        int currentLength = bytes.length;
+        System.arraycopy(bytes, 0, result, position, currentLength);
+        position += currentLength;
       }
     }
 
@@ -46,10 +42,10 @@ public class ByteUtil {
 
   /**
    * @author: Ares
-   * @description: byte数组右填充0到指定长度
+   * @description: 字节数组右填充0到指定长度
    * @description: The byte array is right-padded with 0 to the specified length
    * @time: 2022-06-07 16:59:53
-   * @params: [data, length] byte数组，长度
+   * @params: [data, length] 字节数组，长度
    * @return: byte[] 填充后数组
    */
   public static byte[] rightPaddingZero(byte[] data, int length) {
@@ -67,15 +63,15 @@ public class ByteUtil {
 
   /**
    * @author: Ares
-   * @description: 把byte数组转为16进制字符串
+   * @description: 把字节数组转为16进制字符串
    * @description: Convert byte array to hexadecimal string
    * @time: 2022-06-07 17:41:09
-   * @params: [src] byte数组
+   * @params: [src] 字节数组
    * @return: java.lang.String 16进制字符串
    */
   public static String bytesToHexString(byte[] src) {
     StringBuilder stringBuilder = new StringBuilder();
-    if (src == null || src.length <= 0) {
+    if (src == null || src.length == 0) {
       return null;
     }
     for (byte b : src) {
@@ -91,11 +87,11 @@ public class ByteUtil {
 
   /**
    * @author: Ares
-   * @description: 把16进制字符串转为byte数组
+   * @description: 把16进制字符串转为字节数组
    * @description: Convert hexadecimal string to byte array
    * @time: 2022-06-07 17:41:51
    * @params: [hexString] 16进制字符串
-   * @return: byte[] byte数组
+   * @return: byte[] 字节数组
    */
   public static byte[] hexStringToBytes(String hexString) {
     if (null == hexString || hexString.isEmpty()) {

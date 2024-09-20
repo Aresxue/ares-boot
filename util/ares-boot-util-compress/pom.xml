@@ -26,13 +26,13 @@
       <artifactId>zstd-jni</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.github.aresxue.boot.util</groupId>
-      <artifactId>ares-boot-util-common</artifactId>
+      <groupId>com.xiaohongshu.boot.util</groupId>
+      <artifactId>red-boot-util-common</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>io.github.aresxue.boot.util</groupId>
-      <artifactId>ares-boot-util-test</artifactId>
+      <groupId>com.xiaohongshu.boot.util</groupId>
+      <artifactId>red-boot-util-test</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

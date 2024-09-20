@@ -84,6 +84,12 @@
         <artifactId>red-boot-util-log</artifactId>
         <version>${boot.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>com.xiaohongshu.boot.util</groupId>
+        <artifactId>red-boot-util-compress</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

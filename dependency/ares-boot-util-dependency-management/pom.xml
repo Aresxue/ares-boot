@@ -90,6 +90,12 @@
         <artifactId>red-boot-util-compress</artifactId>
         <version>${boot.version}</version>
       </dependency>
+
+      <dependency>
+        <groupId>io.github.aresxue.boot.util</groupId>
+        <artifactId>ares-boot-util-compress</artifactId>
+        <version>${boot.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

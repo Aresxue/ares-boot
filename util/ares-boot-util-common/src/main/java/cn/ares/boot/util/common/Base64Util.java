@@ -30,10 +30,10 @@ public class Base64Util {
 
   /**
    * @author: Ares
-   * @description: 编码byte数组返回字符串
+   * @description: 编码字节数组返回字符串
    * @description: Encode byte array and return string
    * @time: 2022-06-08 11:08:23
-   * @params: [bytes] byte数组
+   * @params: [bytes] 字节数组
    * @return: java.lang.String 解码后文本
    */
   public static String encode(byte[] bytes) {
@@ -55,11 +55,11 @@ public class Base64Util {
 
   /**
    * @author: Ares
-   * @description: 把文本以默认编码编码成byte数组
+   * @description: 把文本以默认编码编码成字节数组
    * @description: Encode the text into a byte array with the default encoding
    * @time: 2022-06-08 11:10:49
    * @params: [text] 文本
-   * @return: byte[] 编码后byte数组
+   * @return: byte[] 编码后字节数组
    */
   public static byte[] encodeByte(String text) {
     return encodeByte(text, Charset.defaultCharset());
@@ -67,11 +67,11 @@ public class Base64Util {
 
   /**
    * @author: Ares
-   * @description: 把文本以指定编码编码成byte数组
+   * @description: 把文本以指定编码编码成字节数组
    * @description: Encode the text into a byte array with the specified encoding
    * @time: 2022-06-08 11:10:49
    * @params: [text, charset] 文本，编码
-   * @return: byte[] 编码后byte数组
+   * @return: byte[] 编码后字节数组
    */
   public static byte[] encodeByte(String text, Charset charset) {
     return ENCODER.encode(text.getBytes(charset));
@@ -79,11 +79,11 @@ public class Base64Util {
 
   /**
    * @author: Ares
-   * @description: 编码byte数组返回byte数组
+   * @description: 编码字节数组返回字节数组
    * @description: Encode byte array and return byte array
    * @time: 2022-06-08 11:12:27
-   * @params: [bytes] byte数组
-   * @return: byte[] 编码后byte数组
+   * @params: [bytes] 字节数组
+   * @return: byte[] 编码后字节数组
    */
   public static byte[] encodeByte(byte[] bytes) {
     return ENCODER.encode(bytes);
@@ -103,10 +103,10 @@ public class Base64Util {
 
   /**
    * @author: Ares
-   * @description: 以默认编码解码byte数组
+   * @description: 以默认编码解码字节数组
    * @description: Decode byte array with default encoding
    * @time: 2022-06-08 11:14:21
-   * @params: [src] 源byte数组
+   * @params: [src] 源字节数组
    * @return: java.lang.String 解码后字符串
    */
   public static String decode(byte[] src) {
@@ -115,10 +115,10 @@ public class Base64Util {
 
   /**
    * @author: Ares
-   * @description: 以指定编码解码byte数组
+   * @description: 以指定编码解码字节数组
    * @description: Decode byte array with specified encoding
    * @time: 2022-06-08 11:14:51
-   * @params: [src, charset] 源byte数组，编码
+   * @params: [src, charset] 源字节数组，编码
    * @return: java.lang.String 解码后字符串
    */
   public static String decode(byte[] src, Charset charset) {
@@ -127,11 +127,11 @@ public class Base64Util {
 
   /**
    * @author: Ares
-   * @description: 解码byte数组
+   * @description: 解码字节数组
    * @description: Decode byte array
    * @time: 2022-06-08 11:16:01
-   * @params: [src] 源byte数组
-   * @return: byte[] 解码后byte数组
+   * @params: [src] 源字节数组
+   * @return: byte[] 解码后字节数组
    */
   public static byte[] decodeByte(byte[] src) {
     return DECODER.decode(src);
@@ -143,7 +143,7 @@ public class Base64Util {
    * @description: Decode string with default encoding
    * @time: 2022-06-08 11:16:01
    * @params: [src] 源字符串
-   * @return: byte[] 解码后byte数组
+   * @return: byte[] 解码后字节数组
    */
   public static byte[] decodeByte(String src) {
     return DECODER.decode(src.getBytes(Charset.defaultCharset()));

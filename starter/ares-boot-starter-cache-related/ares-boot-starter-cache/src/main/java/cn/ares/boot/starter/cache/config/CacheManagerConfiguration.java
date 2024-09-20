@@ -35,19 +35,21 @@ import org.springframework.context.annotation.Role;
 public class CacheManagerConfiguration {
 
   /**
-   * ttl默认设为3天 ttl is set to 3 days by default
+   * ttl默认设为3天
+   * ttl is set to 3 days by default
    */
   @Value("${ares.application.cache.manager.ttl:259200000}")
   private Long ttl;
 
   /**
-   * 最大空闲时间，默认为30分钟 Maximum idle time, default is 30 minutes
+   * 最大空闲时间，默认为30分钟
+   * Maximum idle time, default is 30 minutes
    */
   @Value("${ares.application.cache.manager.max-idle-time:1800000}")
   private Long maxIdleTime;
   /**
-   * 设置map的最大大小，超出的元素使用LRU算法进行剔除 Set max size of map. Superfluous elements are evicted using LRU
-   * algorithm.
+   * 设置map的最大大小，超出的元素使用LRU算法进行剔除
+   * Set max size of map. Superfluous elements are evicted using LRU algorithm.
    */
   @Value("${ares.application.cache.manager.max-size:}")
   private Integer maxSize;

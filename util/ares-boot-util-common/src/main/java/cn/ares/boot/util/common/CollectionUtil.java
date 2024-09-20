@@ -151,7 +151,6 @@ public class CollectionUtil {
    * @description: 以默认的元素个数创建不可重复集合
    * @description: New HashSet with default size
    * @time: 2022-06-07 17:09:35
-   * @params: []
    * @return: java.util.HashSet<E>
    */
   public static <E> HashSet<E> newHashSet() {

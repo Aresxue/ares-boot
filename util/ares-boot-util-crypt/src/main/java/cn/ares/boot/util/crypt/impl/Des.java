@@ -1,17 +1,14 @@
 package cn.ares.boot.util.crypt.impl;
 
-import cn.ares.boot.util.common.StringUtil;
-import cn.ares.boot.util.common.primitive.ByteUtil;
-import cn.ares.boot.util.crypt.AbstractCrypt;
+import static javax.crypto.Cipher.DECRYPT_MODE;
+import static javax.crypto.Cipher.ENCRYPT_MODE;
+
+import cn.ares.boot.util.common.structure.Tuple;
 import cn.ares.boot.util.crypt.ReverseCrypt;
-import java.nio.charset.Charset;
-import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Map;
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * @author: Ares
@@ -21,51 +18,33 @@ import javax.crypto.spec.DESKeySpec;
  */
 public class Des extends ReverseCrypt {
 
-  private static final int DEFAULT_KEY_LENGTH = 8;
-
   private static final String KEY_ALGORITHM = "DES";
+  private static final int DEFAULT_KEY_LENGTH = 56;
 
   @Override
   public byte[] enCryptImpl(byte[] srcData, String password) throws Exception {
-    SecureRandom random = new SecureRandom();
-    DESKeySpec desKey = new DESKeySpec(password.getBytes());
-    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(KEY_ALGORITHM);
-    SecretKey secretKey = keyFactory.generateSecret(desKey);
-    Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
-    cipher.init(Cipher.ENCRYPT_MODE, secretKey, random);
-    return cipher.doFinal(ByteUtil.rightPaddingZero(srcData, 8));
+    Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+    SecretKeySpec secretKeySpec = new SecretKeySpec(stringToBytes(password), KEY_ALGORITHM);
+    cipher.init(ENCRYPT_MODE, secretKeySpec);
+    return cipher.doFinal(srcData);
   }
 
 
   @Override
   public byte[] deCryptImpl(byte[] targetData, String password) throws Exception {
-    SecureRandom random = new SecureRandom();
-    DESKeySpec desKey = new DESKeySpec((password.getBytes()));
-    SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-    SecretKey secretKey = keyFactory.generateSecret(desKey);
-    Cipher cipher = Cipher.getInstance("DES/ECB/NoPadding");
-    cipher.init(Cipher.DECRYPT_MODE, secretKey, random);
+    Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+    SecretKeySpec secretKeySpec = new SecretKeySpec(stringToBytes(password), KEY_ALGORITHM);
+    cipher.init(DECRYPT_MODE, secretKeySpec);
     return cipher.doFinal(targetData);
   }
 
   @Override
-  public Map<String, String> generateKey(int length) throws Exception {
-    Map<String, String> keyMap = new HashMap<>(4);
-
-    String randomStr = StringUtil.random(length);
-    DESKeySpec desKeySpec = new DESKeySpec(randomStr.getBytes(Charset.defaultCharset()));
-    SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance(KEY_ALGORITHM);
-    secretKeyFactory.generateSecret(desKeySpec);
-    String password = AbstractCrypt.bytesToString(desKeySpec.getKey());
-
-    keyMap.put(PUBLIC_KEY_NAME, password);
-    keyMap.put(PRIVATE_KEY_NAME, password);
-    return keyMap;
-  }
-
-  @Override
-  public Map<String, String> generateKey() throws Exception {
-    return generateKey(DEFAULT_KEY_LENGTH);
+  public Tuple<String, String> generateKey() throws Exception {
+    KeyGenerator keyGenerator = KeyGenerator.getInstance(KEY_ALGORITHM);
+    keyGenerator.init(DEFAULT_KEY_LENGTH);
+    SecretKey secretKey = keyGenerator.generateKey();
+    String secretKeyStr = bytesToString(secretKey.getEncoded());
+    return Tuple.of(secretKeyStr, secretKeyStr);
   }
 
 

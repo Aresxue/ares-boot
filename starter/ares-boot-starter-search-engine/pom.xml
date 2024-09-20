@@ -29,6 +29,11 @@
       <artifactId>elasticsearch-rest-high-level-client</artifactId>
       <groupId>org.elasticsearch.client</groupId>
     </dependency>
+    <dependency>
+      <groupId>org.dromara.easy-es</groupId>
+      <artifactId>easy-es-core</artifactId>
+      <optional>true</optional>
+    </dependency>
 
     <dependency>
       <groupId>io.github.aresxue.boot</groupId>

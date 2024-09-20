@@ -1,6 +1,19 @@
 package cn.ares.boot.util.crypt;
 
-import java.util.function.Supplier;
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.HMAC_SM3;
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.MD5;
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.SHA1;
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.SHA256;
+import static cn.ares.boot.util.crypt.constant.CryptAlgorithm.SM3;
+
+import cn.ares.boot.util.common.MapUtil;
+import cn.ares.boot.util.crypt.constant.CryptAlgorithm;
+import cn.ares.boot.util.crypt.impl.HMacSm3;
+import cn.ares.boot.util.crypt.impl.Md5;
+import cn.ares.boot.util.crypt.impl.Sha1;
+import cn.ares.boot.util.crypt.impl.Sha256;
+import cn.ares.boot.util.crypt.impl.Sm3;
+import java.util.Map;
 import java.util.zip.CRC32;
 
 /**
@@ -12,65 +25,71 @@ import java.util.zip.CRC32;
  */
 public class InReverseCryptUtil {
 
+  private static final String IN_REVERSE_IMPL = "ares.crypt.in-reverse.impl";
+  private static final Map<CryptAlgorithm, InReverseCrypt> IN_REVERSE_CRYPT_MAP = MapUtil.newConcurrentMap();
   private static InReverseCrypt inReverseCrypt;
 
+  static {
+    IN_REVERSE_CRYPT_MAP.put(MD5, Md5.getInstance());
+    IN_REVERSE_CRYPT_MAP.put(SHA1, Sha1.getInstance());
+    IN_REVERSE_CRYPT_MAP.put(SHA256, Sha256.getInstance());
+    IN_REVERSE_CRYPT_MAP.put(SM3, Sm3.getInstance());
+    IN_REVERSE_CRYPT_MAP.put(HMAC_SM3, HMacSm3.getInstance());
+
+    setInReverseCryptInstance();
+  }
+
+  private static void setInReverseCryptInstance() {
+    String cryptAlgorithmName = System.getProperty(IN_REVERSE_IMPL, MD5.getName());
+    CryptAlgorithm cryptAlgorithm = CryptAlgorithm.getCryptAlgorithm(cryptAlgorithmName);
+    inReverseCrypt = getInstance(cryptAlgorithm);
+  }
 
   public static byte[] enCrypt(byte[] srcData) {
-    return doInReverseCrypt(() -> inReverseCrypt.enCrypt(srcData));
+    return inReverseCrypt.enCrypt(srcData);
   }
 
   public static String enCrypt(String srcData) {
-    return doInReverseCrypt(() -> inReverseCrypt.enCrypt(srcData));
+    return inReverseCrypt.enCrypt(srcData);
   }
 
   public static boolean signatureVerify(byte[] srcData, byte[] targetData) {
-    return doInReverseCrypt(
-        () -> inReverseCrypt.signatureVerify(srcData, targetData));
+    return inReverseCrypt.signatureVerify(srcData, targetData);
   }
 
 
   public static boolean signatureVerify(byte[] srcData, byte[] targetData,
       String salt) {
-    return doInReverseCrypt(() -> doInReverseCrypt(
-        () -> inReverseCrypt.signatureVerify(srcData, targetData, salt)));
+    return inReverseCrypt.signatureVerify(srcData, targetData, salt);
   }
 
   public static String getDefaultSalt() {
-    return doInReverseCrypt(() -> inReverseCrypt.getDefaultSalt());
+    return inReverseCrypt.getDefaultSalt();
   }
 
   public static String generateSalt() {
-    return doInReverseCrypt(() -> inReverseCrypt.generateSalt());
+    return inReverseCrypt.generateSalt();
   }
 
   public static String generateSalt(int numBytes) {
-    return doInReverseCrypt(() -> inReverseCrypt.generateSalt(numBytes));
+    return inReverseCrypt.generateSalt(numBytes);
   }
 
   public static String enCrypt(String srcData, String salt) {
-    return doInReverseCrypt(() -> inReverseCrypt.enCrypt(srcData, salt));
+    return inReverseCrypt.enCrypt(srcData, salt);
   }
 
   public static byte[] enCrypt(byte[] srcData, String salt) {
-    return doInReverseCrypt(() -> inReverseCrypt.enCrypt(srcData, salt));
+    return inReverseCrypt.enCrypt(srcData, salt);
   }
 
   public static boolean signatureVerify(String srcData, String targetData,
       String privateKeyOrSalt) {
-    return doInReverseCrypt(
-        () -> inReverseCrypt.signatureVerify(srcData, targetData, privateKeyOrSalt));
+    return inReverseCrypt.signatureVerify(srcData, targetData, privateKeyOrSalt);
   }
 
   public static boolean signatureVerify(String srcData, String targetData) {
-    return doInReverseCrypt(
-        () -> inReverseCrypt.signatureVerify(srcData, targetData));
-  }
-
-  private static <T> T doInReverseCrypt(Supplier<T> inReverseCryptSupplier) {
-    if (null == inReverseCrypt) {
-      inReverseCrypt = InReverseCrypt.getInstance();
-    }
-    return inReverseCryptSupplier.get();
+    return inReverseCrypt.signatureVerify(srcData, targetData);
   }
 
   /**
@@ -101,6 +120,45 @@ public class InReverseCryptUtil {
     CRC32 crc32 = new CRC32();
     crc32.update(byteArr, offset, length);
     return (int) (crc32.getValue() & 0x7FFFFFFF);
+  }
+
+  /**
+   * @author: Ares
+   * @description: get inReverse crypt instance by crypt algorithm
+   * @description: 获取指定算法的不可逆算法加密实例
+   * @time: 2021-11-22 15:23:00
+   * @params: [cryptAlgorithm] 加密算法
+   * @return: InReverseCrypt 不可逆算法加密实例
+   */
+  public static InReverseCrypt getInstance(CryptAlgorithm cryptAlgorithm) {
+    if (null == cryptAlgorithm) {
+      throw new RuntimeException("Crypt algorithm is null");
+    }
+    if (cryptAlgorithm.isReverse()) {
+      throw new RuntimeException("Current crypt algorithm is reverse algorithm");
+    }
+    return IN_REVERSE_CRYPT_MAP.get(cryptAlgorithm);
+  }
+
+
+  /**
+   * @description: 注册算法
+   * @description: Register algorithm
+   * @time: 2021-11-22 15:23:00
+   * @params: [algorithm, crypt] 算法，加密实例
+   * @return: boolean 是否注册成功
+   */
+  public static boolean registerAlgorithm(CryptAlgorithm algorithm, InReverseCrypt crypt) {
+    if (null == algorithm) {
+      return false;
+    }
+    IN_REVERSE_CRYPT_MAP.putIfAbsent(algorithm, crypt);
+    setInReverseCryptInstance();
+    return true;
+  }
+
+  public static void setInReverseCrypt(InReverseCrypt inReverseCrypt) {
+    InReverseCryptUtil.inReverseCrypt = inReverseCrypt;
   }
 
 }

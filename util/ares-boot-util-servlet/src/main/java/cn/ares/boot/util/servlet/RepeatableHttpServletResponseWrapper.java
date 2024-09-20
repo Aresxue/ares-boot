@@ -30,8 +30,7 @@ public class RepeatableHttpServletResponseWrapper extends HttpServletResponseWra
    * @author: Ares
    * @description: 利用TeeOutputStream复制流，解决多次读写问题
    * 用super.getOutputStream来获取源outPutStream，也可以用注释的那种方式获取，传过来
-   * @time: 2021/4/15 15:30
-   * @params: [] 请求参数
+   * @time: 2021/4/15 15:30 请求参数
    * @return: javax.servlet.ServletOutputStream 响应参数
    */
   @Override

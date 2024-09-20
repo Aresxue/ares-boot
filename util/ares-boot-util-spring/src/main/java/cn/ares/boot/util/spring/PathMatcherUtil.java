@@ -23,7 +23,6 @@ public class PathMatcherUtil {
    * @description: 获取实例
    * @description: Get instance
    * @time: 2023-05-11 12:51:52
-   * @params: []
    * @return: org.springframework.util.PathMatcher
    */
   public static PathMatcher getInstance() {

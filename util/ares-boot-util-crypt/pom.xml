@@ -30,6 +30,12 @@
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcpkix-jdk18on</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>io.github.aresxue.boot.util</groupId>
+      <artifactId>ares-boot-util-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 </project>

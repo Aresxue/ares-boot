@@ -10,6 +10,8 @@ import static cn.ares.boot.util.common.constant.StringConstant.TRUE;
 import static org.springframework.beans.factory.config.BeanDefinition.ROLE_INFRASTRUCTURE;
 
 import cn.ares.boot.base.log.util.LoggerUtil;
+import cn.ares.boot.starter.cache.template.CacheTemplate;
+import cn.ares.boot.starter.cache.util.CacheRateLimiterUtil;
 import cn.ares.boot.util.common.primitive.BooleanUtil;
 import cn.ares.boot.util.spring.EnvironmentUtil;
 import cn.ares.boot.util.spring.SpringUtil;
@@ -20,6 +22,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Role;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -37,6 +40,7 @@ import org.springframework.core.env.PropertiesPropertySource;
 @ConditionalOnProperty(name = APPLICATION_CACHE_ENABLE, havingValue = TRUE, matchIfMissing = true)
 @Order(Ordered.LOWEST_PRECEDENCE - 10_000)
 @Role(value = ROLE_INFRASTRUCTURE)
+@Import(value = {CacheRateLimiterUtil.class, CacheTemplate.class})
 public class CacheEnvironmentPostProcessor implements EnvironmentPostProcessor {
 
   private static final AtomicBoolean PROCESSED = new AtomicBoolean(false);

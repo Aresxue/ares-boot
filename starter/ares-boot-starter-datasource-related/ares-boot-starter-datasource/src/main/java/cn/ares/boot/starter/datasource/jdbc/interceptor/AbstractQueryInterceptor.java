@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author: Ares
  * @time: 2022-09-15 09:56:43
+ * @description: 抽象查询拦截器
  * @description: Abstract QueryInterceptor
  * @version: JDK 1.8
  */
@@ -32,6 +33,7 @@ public abstract class AbstractQueryInterceptor implements QueryInterceptor {
   @Override
   public <T extends Resultset> T preProcess(Supplier<String> sqlSupplier, Query query) {
     if (null != query && BootEnvironment.isApplicationReady()) {
+      // 当发生失败时，告警不影响业务
       // The alarm does not affect the business when the failure occurs
       try {
         handle(sqlSupplier.get());

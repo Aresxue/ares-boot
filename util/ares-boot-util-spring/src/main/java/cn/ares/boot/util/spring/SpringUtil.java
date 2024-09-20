@@ -276,7 +276,6 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
    * @description: 获取对象定义名称数组
    * @description: Gets an array of object definition names
    * @time: 2023-05-11 12:14:21
-   * @params: []
    * @return: java.lang.String[] 对象定义名称数组
    */
   public static String[] getBeanDefinitionNames() {
@@ -313,7 +312,6 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
    * @description: 获取环境
    * @description: Get Environment
    * @time: 2023-05-11 12:19:43
-   * @params: []
    * @return: org.springframework.core.env.Environment 环境
    */
   public static Environment getEnvironment() {
@@ -326,7 +324,6 @@ public class SpringUtil implements ApplicationContextAware, BeanClassLoaderAware
    * @description: 获取所有的Bean的类
    * @description: Gets all the Bean classes
    * @time: 2019-06-11 15:32:00
-   * @params: []
    * @return: java.util.List<java.lang.Class ?>
    */
   public static List<Class<?>> getAllBeans() {

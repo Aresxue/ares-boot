@@ -41,7 +41,6 @@ public class ThreadUtil {
    * @description: 以默认并发度获取合适的线程数
    * @description: Get suitable thread count when thread multiple is two
    * @time: 2021-12-22 23:17:53
-   * @params: []
    * @return: int thread count
    * @return: int 线程数
    */
@@ -80,7 +79,6 @@ public class ThreadUtil {
    * @description: Get a large number of threads (4 times the number of threads if the number of
    * threads is 2 or less)
    * @time: 2023-05-08 11:12:28
-   * @params: []
    * @return: int 线程数
    */
   public static int getLargeThreadCount() {
@@ -161,7 +159,6 @@ public class ThreadUtil {
    * @description: 获取当前线程的所有ThreadLocalMap
    * @description: Get all ThreadLocalMap of current thread
    * @time: 2022-10-11 11:22:45
-   * @params: []
    * @return: java.util.Map<java.lang.ThreadLocal < ?>,java.lang.Object>
    */
   public static Map<ThreadLocal<?>, Object> getAllThreadLocalMap() {
@@ -175,7 +172,6 @@ public class ThreadUtil {
    * @description: 获取当前线程的ThreadLocalMap
    * @description: Get ThreadLocalMap of current thread
    * @time: 2022-10-11 11:22:45
-   * @params: []
    * @return: java.util.Map<java.lang.ThreadLocal < ?>,java.lang.Object>
    */
   public static Map<ThreadLocal<?>, Object> getThreadLocalMap() {
@@ -187,7 +183,6 @@ public class ThreadUtil {
    * @description: 获取当前线程的InheritableThreadLocalMap
    * @description: Get InheritableThreadLocalMap of current thread
    * @time: 2022-10-11 11:22:45
-   * @params: []
    * @return: java.util.Map<java.lang.ThreadLocal < ?>,java.lang.Object>
    */
   public static Map<ThreadLocal<?>, Object> getInheritableThreadLocalsMap() {

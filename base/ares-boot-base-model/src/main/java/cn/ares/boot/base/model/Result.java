@@ -42,7 +42,6 @@ public final class Result<T> implements Serializable {
    * @description: 返回成功的结果
    * @description: Return success result
    * @time: 2024-07-10 14:52:32
-   * @params: []
    * @return: cn.ares.boot.base.model.Result<T> 结果
    */
   public static <T> Result<T> success() {
@@ -97,7 +96,6 @@ public final class Result<T> implements Serializable {
    * @description: 返回失败的结果
    * @description: Return fail result
    * @time: 2024-07-10 14:52:32
-   * @params: []
    * @return: cn.ares.boot.base.model.Result<T> 结果
    */
   public static <T> Result<T> fail() {

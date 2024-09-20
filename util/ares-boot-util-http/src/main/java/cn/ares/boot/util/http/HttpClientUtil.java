@@ -606,7 +606,6 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 获取最后一次http请求的请求头
    * @description: Get the request headers of the last http request
    * @time: 2022-07-14 14:22:18
-   * @params: []
    * @return: org.apache.http.Header[] 请求消息头
    */
   public static Header[] getLastHttpRequestHeaders() {
@@ -618,7 +617,6 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 获取最后一次http请求的响应头
    * @description: Get the response headers of the last http request
    * @time: 2022-07-14 14:33:08
-   * @params: []
    * @return: org.apache.http.Header[] 响应消息头
    */
   public static Header[] getLastHttpResponseHeaders() {
@@ -844,7 +842,6 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 开启监控线程, 对异常和空闲线程进行关闭
    * @description: Start monitoring threads, close exceptions and idle threads
    * @time: 2019-08-17 09:49:00
-   * @params: []
    */
   private static void startMonitor() {
     // 使用命名的线程工厂，在排查问题有标识性

@@ -49,7 +49,7 @@ public class NetworkUtil {
     List<String> ipList = getLocalHostAddress();
     for (String str : ipList) {
       InetAddress address = InetAddress.getByName(str);
-      // 获得网络接口对象(即网卡), 并得到mac地址, mac地址存在于一个byte数组中。
+      // 获得网络接口对象(即网卡), 并得到mac地址, mac地址存在于一个字节数组中。
       // Get the network interface object (ie network card), and get the mac address, which exists in a byte array.
       byte[] mac = NetworkInterface.getByInetAddress(address).getHardwareAddress();
       if (null != mac) {
@@ -75,8 +75,7 @@ public class NetworkUtil {
    * @author: Ares
    * @description: 以默认连接符获取mac地址
    * @description: Get mac address with default connector
-   * @time: 2020-05-14 16:00
-   * @params: [] 请求参数
+   * @time: 2020-05-14 16:00 请求参数
    * @return: java.lang.String mac地址
    */
   public static String getMac() throws SocketException, UnknownHostException {
@@ -87,8 +86,7 @@ public class NetworkUtil {
    * @author: Ares
    * @description: 获取本机ip列表
    * @description: Get the local ip list
-   * @time: 2020-05-14 16:02:00
-   * @params: [] 请求参数
+   * @time: 2020-05-14 16:02:00 请求参数
    * @return: java.util.List<java.lang.String> ip列表
    */
   public static List<String> getLocalHostAddress() throws SocketException {
@@ -113,8 +111,7 @@ public class NetworkUtil {
    * @author: Ares
    * @description: 获取最后一个ip地址
    * @description: Get the last ip address
-   * @time: 2022-06-08 14:07:07
-   * @params: [] in 入参
+   * @time: 2022-06-08 14:07:07 in 入参
    * @return: java.lang.String out 出参
    */
   public static String getLastLocalHostAddress() {

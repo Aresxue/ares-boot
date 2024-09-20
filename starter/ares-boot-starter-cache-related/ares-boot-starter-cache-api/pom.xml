@@ -19,8 +19,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>io.github.aresxue.boot.util</groupId>
-      <artifactId>ares-boot-util-common</artifactId>
+      <groupId>com.xiaohongshu.boot.util</groupId>
+      <artifactId>red-boot-util-common</artifactId>
     </dependency>
 
     <dependency>

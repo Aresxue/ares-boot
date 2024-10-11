@@ -4,7 +4,7 @@ import cn.ares.boot.util.compress.LosslessCompress;
 import cn.ares.boot.util.compress.exception.IOExceptionWrapper;
 import com.github.luben.zstd.ZstdInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

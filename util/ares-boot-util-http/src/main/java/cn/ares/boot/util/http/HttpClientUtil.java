@@ -106,21 +106,24 @@ public class HttpClientUtil implements ApplicationContextAware {
   private static HttpConnectionConfig config = new HttpConnectionConfig();
 
   /**
-   * Http请求客户端，针对单个host或ip+port使用一个CloseableHttpClient Http request client, use a
-   * CloseableHttpClient for a single host or ip+port
+   * Http请求客户端，针对单个host或ip+port使用一个CloseableHttpClient
+   * Http request client, use a CloseableHttpClient for a single host or ip+port
    */
   private static final Map<String, CloseableHttpClient> HTTP_CLIENT_MAP = new ConcurrentHashMap<>();
   /**
-   * Http连接池管理对象 Http connection pool management object
+   * Http连接池管理对象
+   * Http connection pool management object
    */
   private static PoolingHttpClientConnectionManager connectionManager;
   /**
-   * 监控Http连接池中的空闲和异常连接 Monitor idle and abnormal connections in the Http connection pool
+   * 监控Http连接池中的空闲和异常连接
+   * Monitor idle and abnormal connections in the Http connection pool
    */
   private static ScheduledExecutorService monitorExecutor = null;
 
   /**
-   * 是否启动监控线程 Whether to start the monitoring thread
+   * 是否启动监控线程
+   * Whether to start the monitoring thread
    */
   private static final AtomicBoolean IS_START_MONITOR = new AtomicBoolean(false);
 
@@ -214,8 +217,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用请求对象发起Post请求地址获取结果（等待指定超时时间）
-   * @description: Use the request object to initiate a Post request address to get the result (wait
-   * for the specified timeout)
+   * @description: Use the request object to initiate a Post request address to get the result (wait for the specified timeout)
    * @time: 2022-12-28 11:40:07
    * @params: [url, request, socketTimeout] 请求地址，请求对象，超时时间）
    * @return: java.lang.String 响应结果
@@ -228,8 +230,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头发起Post请求地址获取结果/文件
-   * @description: Pass in the request object and message header to initiate the Post request
-   * address to get the result or file
+   * @description: Pass in the request object and message header to initiate the Post request address to get the result or file
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers, fileSavePath] 请求地址，请求对象，消息头，文件保存地址（可选）
    * @return: java.lang.String 响应结果
@@ -243,8 +244,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头发起Post请求地址获取结果
-   * @description: Pass in the request object and message header to initiate the Post request
-   * address to get the result (wait for the specified timeout)
+   * @description: Pass in the request object and message header to initiate the Post request address to get the result (wait for the specified timeout)
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers] 请求地址，请求对象，消息头
    * @return: java.lang.String 响应结果
@@ -257,8 +257,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头发起Post请求地址获取结果（等待指定超时时间）
-   * @description: Pass in the request object and message header to initiate the Post request
-   * address to get the result (wait for the specified timeout)
+   * @description: Pass in the request object and message header to initiate the Post request address to get the result (wait for the specified timeout)
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers, socketTimeout] 请求地址，请求对象，消息头，超时时间
    * @return: java.lang.String 响应结果
@@ -273,8 +272,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头发起Post请求地址获取结果/文件（等待指定超时时间）
-   * @description: Pass in the request object and message header to initiate the Post request
-   * address to get the result or file (wait for the specified timeout)
+   * @description: Pass in the request object and message header to initiate the Post request address to get the result or file (wait for the specified timeout)
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers, socketTimeout, fileSavePath] 请求地址，请求对象，消息头，超时时间，文件保存地址（可选）
    * @return: java.lang.String 响应结果
@@ -288,9 +286,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头发起Post请求地址获取结果/文件（等待指定超时时间、连接超时时间、连接获取超时时间）
-   * @description: The incoming request object and message header initiate the Post request address
-   * to get the result or file (waiting for the specified timeout, connection timeout, and
-   * connection acquisition timeout)
+   * @description: The incoming request object and message header initiate the Post request address to get the result or file (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
    * fileSavePath] 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，文件保存地址（可选）
@@ -306,9 +302,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头使用代理发起Post请求地址获取结果/文件（等待指定超时时间、连接超时时间、连接获取超时时间）
-   * @description: The incoming request object and message header use the proxy to initiate a Post
-   * request address to get the result or file (waiting for the specified timeout, connection
-   * timeout, and connection acquisition timeout)
+   * @description: The incoming request object and message header use the proxy to initiate a Post request address to get the result or file (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
    * proxy] 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
@@ -400,8 +394,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用消息头发起get请求地址获取结果/文件
-   * @description: Use the message header to initiate a get request address to get the result or
-   * file
+   * @description: Use the message header to initiate a get request address to get the result or file
    * @time: 2019-05-08 15:39:00
    * @params: [url, param, fileSavePath] 请求地址，消息头，文件保存地址（可选）
    * @return: java.lang.String 响应结果
@@ -415,8 +408,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用请求对象发起get请求地址获取结果（等待超时时间）
-   * @description: Use the request object to initiate a get request address to get the result (wait
-   * for the timeout period)
+   * @description: Use the request object to initiate a get request address to get the result (wait for the timeout period)
    * @time: 2019-05-08 15:39:00
    * @params: [url, param, socketTimeout] 请求地址，请求参数，超时时间
    * @return: java.lang.String 响应结果
@@ -428,8 +420,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用消息头发起get请求地址获取结果/文件（等待超时时间）
-   * @description: Use the message header to initiate a get request address to get the result or
-   * file (wait for the timeout period)
+   * @description: Use the message header to initiate a get request address to get the result or file (wait for the timeout period)
    * @time: 2019-05-08 15:39:00
    * @params: [url, param, socketTimeout, fileSavePath] 请求地址，消息头，超时时间，文件保存地址（可选）
    * @return: java.lang.String 响应结果
@@ -443,8 +434,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用请求对象和消息头发起get请求地址获取结果/文件（等待超时时间）
-   * @description: Use the request object and message header to initiate a get request address to
-   * get the result or file (waiting for the timeout period)
+   * @description: Use the request object and message header to initiate a get request address to get the result or file (waiting for the timeout period)
    * @time: 2019-05-08 15:39:00
    * @params: [url, param, headers, socketTimeout, fileSavePath] 请求地址，请求对象，消息头，超时时间，文件保存地址（可选）
    * @return: java.lang.String 响应结果
@@ -463,8 +453,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用消息头发起get请求地址获取结果/文件（等待超时时间，连接超时时间，连接获取超时时间）
-   * @description: Use the message header to initiate a get request address to get the result or
-   * file(waiting timeout, connection timeout, connection acquisition timeout)
+   * @description: Use the message header to initiate a get request address to get the result or file(waiting timeout, connection timeout, connection acquisition timeout)
    * @time: 2019-05-08 15:39:00
    * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, fileSavePath]
    * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，文件保存地址（可选）
@@ -479,11 +468,10 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用消息头使用代理发起get请求地址获取结果/文件（等待超时时间，连接超时时间，连接获取超时时间）
-   * @description: Use the message header to use the proxy to initiate a get request address to get
-   * the result or file (waiting timeout, connection timeout, connection acquisition timeout)
+   * @description: Use the message header to use the proxy to initiate a get request address to get the result or file (waiting timeout, connection timeout, connection acquisition timeout)
    * @time: 2019-05-08 15:39:00
-   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy,
-   * fileSavePath] 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理，文件保存地址（可选）
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy, fileSavePath] 
+   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
   public static String get(String url, Map<String, String> headers, int socketTimeout,
@@ -525,8 +513,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 使用请求对象发起Delete请求地址获取结果（等待指定超时时间）
-   * @description: Use the request object to initiate a Delete request address to get the result
-   * (wait for the specified timeout)
+   * @description: Use the request object to initiate a Delete request address to get the result(wait for the specified timeout)
    * @time: 2022-12-28 11:40:07
    * @params: [url, request, socketTimeout] 请求地址，请求对象，超时时间
    * @return: java.lang.String 响应结果
@@ -538,8 +525,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头发起Delete请求地址获取结果
-   * @description: Pass in the request object and message header to initiate the Delete request
-   * address to get the result
+   * @description: Pass in the request object and message header to initiate the Delete request address to get the result
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers] 请求地址，请求对象，消息头
    * @return: java.lang.String 响应结果
@@ -552,8 +538,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头发起Delete请求地址获取结果（等待指定超时时间）
-   * @description: Pass in the request object and message header to initiate the Delete request
-   * address to get the result (wait for the specified timeout)
+   * @description: Pass in the request object and message header to initiate the Delete request address to get the result (wait for the specified timeout)
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers, socketTimeout] 请求地址，请求对象，消息头，超时时间
    * @return: java.lang.String 响应结果
@@ -567,9 +552,7 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头发起Delete请求地址获取结果（等待指定超时时间、连接超时时间、连接获取超时时间）
-   * @description: The incoming request object and message header initiate the Delete request
-   * address to get the result (waiting for the specified timeout, connection timeout, and
-   * connection acquisition timeout)
+   * @description: The incoming request object and message header initiate the Delete request address to get the result (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
    * @time: 2022-12-28 11:41:46
    * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout]
    * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间
@@ -584,12 +567,10 @@ public class HttpClientUtil implements ApplicationContextAware {
   /**
    * @author: Ares
    * @description: 传入请求对象和消息头使用代理发起Delete请求地址获取结果（等待指定超时时间、连接超时时间、连接获取超时时间）
-   * @description: The incoming request object and message header use the proxy to initiate a Post
-   * request address to get the result (waiting for the specified timeout, connection timeout, and
-   * connection acquisition timeout)
+   * @description: The incoming request object and message header use the proxy to initiate a Post request address to get the result (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
    * @time: 2022-12-28 11:41:46
-   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
-   * proxy] 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy] 
+   * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
    * @return: java.lang.String 响应结果
    */
   public static <T> String delete(String url, T request, Map<String, String> headers,
@@ -920,8 +901,6 @@ public class HttpClientUtil implements ApplicationContextAware {
      * @description: Http连接监控，关闭异常和空闲连接
      * @description: Http connection monitoring, closing exceptions and idle connections
      * @time: 2019-08-17 09:39:00
-     * @params: []
-     * @return: void
      */
     @Override
     public void run() {

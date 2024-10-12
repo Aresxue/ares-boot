@@ -19,8 +19,9 @@ public class GcUtilTest {
     // 监控1分钟窗口
     Duration validateDuration = Duration.ofMinutes(1);
 
-    GcUtil.runWhenFullGc(validatePeriod, validateDuration, 1,
+    GcUtil.runWhenFullGc("Test", validatePeriod, validateDuration, 1,
         () -> LOGGER.info("Full GC happened"));
+//    GcUtil.shutdownGcMonitor("Test");
     Thread.sleep(Integer.MAX_VALUE);
   }
 

@@ -1578,10 +1578,12 @@ public class NumberUtil {
     final int start = chars[0] == '-' || chars[0] == '+' ? 1 : 0;
     // leading 0, skip if is a decimal number
     if (sz > start + 1 && chars[start] == '0' && !StringUtil.contains(str, '.')) {
-      if (chars[start + 1] == 'x' || chars[start + 1] == 'X') { // leading 0x/0X
+      // leading 0x/0X
+      if (chars[start + 1] == 'x' || chars[start + 1] == 'X') {
         int i = start + 2;
         if (i == sz) {
-          return false; // str == "0x"
+          // str == "0x"
+          return false;
         }
         // checking hex (it can't be anything else)
         for (; i < chars.length; i++) {
@@ -1635,7 +1637,8 @@ public class NumberUtil {
           return false;
         }
         allowSigns = false;
-        foundDigit = false; // we need a digit after the E
+        // we need a digit after the E
+        foundDigit = false;
       } else {
         return false;
       }

@@ -628,6 +628,7 @@ public class JsonUtil {
    * @time: 2023-05-08 15:27:31
    * @params: [objectMapper] objectMapper
    */
+  @SuppressWarnings("deprecation")
   public static void disableIgnoreDuplicateModuleRegistrations(ObjectMapper objectMapper) {
     objectMapper.disable(IGNORE_DUPLICATE_MODULE_REGISTRATIONS);
   }
@@ -638,6 +639,7 @@ public class JsonUtil {
    * @time: 2023-05-08 15:27:31
    * @params: [objectMapper] objectMapper
    */
+  @SuppressWarnings("deprecation")
   public static void enableIgnoreDuplicateModuleRegistrations(ObjectMapper objectMapper) {
     objectMapper.enable(IGNORE_DUPLICATE_MODULE_REGISTRATIONS);
   }

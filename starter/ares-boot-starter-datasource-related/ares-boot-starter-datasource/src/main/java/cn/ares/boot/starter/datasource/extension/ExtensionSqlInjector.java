@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.extension.injector.methods.AlwaysUpdateSomeColumnById;
 import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
 import java.util.List;
+import org.apache.ibatis.session.Configuration;
 
 /**
  * @author: Ares
@@ -17,8 +18,9 @@ import java.util.List;
 public class ExtensionSqlInjector extends DefaultSqlInjector {
 
   @Override
-  public List<AbstractMethod> getMethodList(Class<?> mapperClass, TableInfo tableInfo) {
-    List<AbstractMethod> methodList = super.getMethodList(mapperClass, tableInfo);
+  public List<AbstractMethod> getMethodList(Configuration configuration, Class<?> mapperClass,
+      TableInfo tableInfo) {
+    List<AbstractMethod> methodList = super.getMethodList(configuration, mapperClass, tableInfo);
     methodList.add(
         new InsertBatchSomeColumn(fieldInfo -> fieldInfo.getFieldFill() != FieldFill.UPDATE));
     methodList.add(

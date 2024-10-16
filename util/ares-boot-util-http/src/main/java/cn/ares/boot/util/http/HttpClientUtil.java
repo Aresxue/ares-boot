@@ -763,6 +763,7 @@ public class HttpClientUtil implements ApplicationContextAware {
 
     // setConnectionManagerShared谨慎使用, 误用会导致关闭一个host或ip和port下的client会关闭公用的manager
     // Use setConnectionManagerShared with caution, misuse will lead to closing a host or client under ip and port will close the public manager
+    //noinspection deprecation
     RequestConfig requestConfig = RequestConfig.custom()
         .setConnectionRequestTimeout(Timeout.ofMilliseconds(connectionRequestTimeout))
         .setConnectTimeout(Timeout.ofMilliseconds(connectTimeout))

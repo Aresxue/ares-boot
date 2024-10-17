@@ -966,8 +966,9 @@ public final class CronExpression {
     boolean gotOne = false;
     // loop until we've computed the next time, or we've past the endTime
     while (!gotOne) {
-      //if (endTime != null && calendar.getTime().after(endTime)) return null;
-      if (calendar.get(Calendar.YEAR) > 2999) { // prevent endless loop...
+      // if (endTime != null && calendar.getTime().after(endTime)) return null;
+      // prevent endless loop...
+      if (calendar.get(Calendar.YEAR) > 2999) {
         return null;
       }
 
@@ -1203,7 +1204,8 @@ public final class CronExpression {
           // are we looking for the Nth XXX day in the month?
           // desired
           final int dow = daysOfWeek.first();
-          final int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK); // current d-o-w
+          // current d-o-w
+          final int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
           int daysToAdd = 0;
           if (currentDayOfWeek < dow) {
             daysToAdd = dow - currentDayOfWeek;
@@ -1258,7 +1260,8 @@ public final class CronExpression {
 
           int lastDayOfMonth = getLastDayOfMonth(month, calendar.get(Calendar.YEAR));
 
-          if (day + daysToAdd > lastDayOfMonth) { // will we pass the end of
+          // will we pass the end of
+          if (day + daysToAdd > lastDayOfMonth) {
             // the month?
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MINUTE, 0);
@@ -1267,7 +1270,8 @@ public final class CronExpression {
             calendar.set(Calendar.MONTH, month);
             // no '- 1' here because we are promoting the month
             continue;
-          } else if (daysToAdd > 0) { // are we switching days?
+          } else if (daysToAdd > 0) {
+            // are we switching days?
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -1329,7 +1333,8 @@ public final class CronExpression {
         time = year;
         year = sortedSet.first();
       } else {
-        return null; // ran out of years...
+        // ran out of years...
+        return null;
       }
 
       if (year != time) {

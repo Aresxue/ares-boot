@@ -20,7 +20,7 @@ public class OrmUtil {
    * @time: 2023-06-27 17:03:38
    * @params: [abstractWrapper, condition, column, value] queryWrapper，条件，列，值
    */
-  public static <T, R, Children extends AbstractWrapper<T, R, Children>> void eqOrLike(
+  public static <T, R, Children extends AbstractWrapper<T, R, Children>> AbstractWrapper<T, R, Children> eqOrLike(
       AbstractWrapper<T, R, Children> abstractWrapper, boolean condition, R column, String value) {
     if (StringUtil.isNotBlank(value)) {
       if (value.contains(ASTERISK)) {
@@ -31,27 +31,28 @@ public class OrmUtil {
             // 会在左右都拼上%，在解析和执行like查询时，一般会优化掉连续的%，所以多个%不会影响实际的查询性能
             // will be spliced on both sides with %, in parsing and executing like queries, continuous % will generally be optimized, so multiple % will not affect the actual query performance
             // *abc* -> %abc% -> %%abc%%
-            abstractWrapper.like(condition, column, sqlValue);
+            return abstractWrapper.like(condition, column, sqlValue);
           } else {
             // 会在左拼上%，在解析和执行like查询时，一般会优化掉连续的%，所以多个%不会影响实际的查询性能
             // will be spliced on the left with %, in parsing and executing like queries, continuous % will generally be optimized, so multiple % will not affect the actual query performance
             // *abc -> %abc -> %%abc
-            abstractWrapper.likeLeft(condition, column, sqlValue);
+            return abstractWrapper.likeLeft(condition, column, sqlValue);
           }
         } else if (value.endsWith(ASTERISK)) {
           // 会在右拼上%，在解析和执行like查询时，一般会优化掉连续的%，所以多个%不会影响实际的查询性能
           // will be spliced on the right with %, in parsing and executing like queries, continuous % will generally be optimized, so multiple % will not affect the actual query performance
           // abc* -> abc% -> abc%%
-          abstractWrapper.likeRight(condition, column, sqlValue);
+          return abstractWrapper.likeRight(condition, column, sqlValue);
         }
         // 会在右拼上%，可能会影响实际的查询性能
         // will be spliced on the right with %, which may affect the actual query performance
         // ab*c -> ab%c -> ab%c%
-        abstractWrapper.likeRight(condition, column, sqlValue);
+        return abstractWrapper.likeRight(condition, column, sqlValue);
       } else {
-        abstractWrapper.eq(condition, column, value);
+        return abstractWrapper.eq(condition, column, value);
       }
     }
+    return abstractWrapper;
   }
 
   /**
@@ -60,9 +61,9 @@ public class OrmUtil {
    * @time: 2023-06-27 17:03:38
    * @params: [queryWrapper, column, value] queryWrapper，列，值
    */
-  public static <T, R, Children extends AbstractWrapper<T, R, Children>> void eqOrLike(
+  public static <T, R, Children extends AbstractWrapper<T, R, Children>> AbstractWrapper<T, R, Children> eqOrLike(
       AbstractWrapper<T, R, Children> abstractWrapper, R column, String value) {
-    eqOrLike(abstractWrapper, true, column, value);
+    return eqOrLike(abstractWrapper, true, column, value);
   }
 
 }

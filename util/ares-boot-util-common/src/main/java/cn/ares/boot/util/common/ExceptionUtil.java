@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
 /**
@@ -30,38 +31,59 @@ public class ExceptionUtil {
 
   /**
    * @author: Ares
+   * @description: 获取原始的可抛出信息
    * @description: Get origin throwable
-   * @time: 2021-11-09 10:54：00
-   * @params: [throwable]
-   * @return: java.lang.Throwable origin Throwable
+   * @time: 2024-10-24 10:54:00
+   * @params: [throwable] 可抛出信息
+   * @return: java.lang.Throwable 原始可抛出信息
    */
   public static Throwable getOriginThrowable(Throwable throwable) {
-    Throwable originalThrowable = throwable;
-    if (throwable instanceof InvocationTargetException
-        || throwable instanceof UndeclaredThrowableException) {
-      originalThrowable = getOriginThrowable(throwable.getCause());
-    }
-    return originalThrowable;
+    return getOriginThrowable(throwable, false);
   }
 
   /**
    * @author: Ares
-   * @description: Get origin Throwable
-   * @time: 2022-06-08 13:53:24
-   * @params: [runtimeException] 运行时异常
-   * @return: java.lang.Throwable
+   * @description: 获取原始的可抛出信息
+   * @description: Get origin throwable
+   * @time: 2024-10-24 10:54:00
+   * @params: [throwable, ignoreExecutionException] 可抛出信息，忽略ExecutionException
+   * @return: java.lang.Throwable 原始可抛出信息
    */
-  public static Throwable getOriginException(RuntimeException runtimeException) {
-    Throwable throwable = runtimeException.getCause();
-    if (null == throwable) {
-      return runtimeException;
-    } else if (ClassUtil.isSameClass(RuntimeException.class, throwable.getClass())
-        || throwable instanceof CheckedExceptionWrapper) {
-      return getOriginException((RuntimeException) throwable);
-    } else {
-      return throwable;
+  public static Throwable getOriginThrowable(Throwable throwable,
+      boolean ignoreExecutionException) {
+    if (throwable instanceof InvocationTargetException) {
+      InvocationTargetException targetException = (InvocationTargetException) throwable;
+      return getOriginThrowable(targetException.getTargetException(), ignoreExecutionException);
     }
+    if (throwable instanceof UndeclaredThrowableException) {
+      UndeclaredThrowableException undeclared = (UndeclaredThrowableException) throwable;
+      return getOriginThrowable(undeclared.getUndeclaredThrowable(), ignoreExecutionException);
+    }
+    if (throwable instanceof CheckedExceptionWrapper) {
+      CheckedExceptionWrapper checkedExceptionWrapper = (CheckedExceptionWrapper) throwable;
+      Throwable unwrap = checkedExceptionWrapper.unwrap();
+      if (null == unwrap) {
+        return throwable;
+      }
+      return getOriginThrowable(checkedExceptionWrapper.unwrap(), ignoreExecutionException);
+    }
+    if (throwable instanceof RuntimeException) {
+      Throwable cause = throwable.getCause();
+      if (null == cause) {
+        return throwable;
+      }
+      return getOriginThrowable(cause, ignoreExecutionException);
+    }
+    if (!ignoreExecutionException && throwable instanceof ExecutionException) {
+      Throwable cause = throwable.getCause();
+      if (null == cause) {
+        return throwable;
+      }
+      return getOriginThrowable(cause, false);
+    }
+    return throwable;
   }
+
 
   /**
    * @author: Ares
@@ -237,7 +259,8 @@ public class ExceptionUtil {
   /**
    * @author: Ares
    * @description: 迭代异常并做指定处理（处理抑制异常）
-   * @description: Iterate over the exception and do the assignment processing(handle suppressedExceptions)）
+   * @description: Iterate over the exception and do the assignment processing(handle
+   * suppressedExceptions)）
    * @time: 2023-12-07 14:46:08
    * @params: [throwable, consumer] 待迭代异常，异常处理
    */
@@ -248,11 +271,13 @@ public class ExceptionUtil {
   /**
    * @author: Ares
    * @description: 迭代异常并做指定处理（可指定是否处理抑制异常）
-   * @description: Iterate over the exception and do the assignment processing(Can specify whether to handle suppressedExceptions)
+   * @description: Iterate over the exception and do the assignment processing(Can specify whether
+   * to handle suppressedExceptions)
    * @time: 2023-12-07 14:46:08
    * @params: [throwable, consumer, handleSuppressed] 待迭代异常，异常处理, 是否处理抑制异常
    */
-  public static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer, boolean handleSuppressed) {
+  public static void iterableThrowable(Throwable throwable, Consumer<Throwable> consumer,
+      boolean handleSuppressed) {
     if (null == throwable) {
       return;
     }
@@ -289,7 +314,8 @@ public class ExceptionUtil {
   /**
    * @author: Ares
    * @description: 为异常生成身份标识（还原字节码改写导致的类名和方法名变更）
-   * @description: Generate identifiers for exceptions (undo class and method name changes caused by bytecode rewriting)
+   * @description: Generate identifiers for exceptions (undo class and method name changes caused by
+   * bytecode rewriting)
    * @time: 2023-11-30 15:47:52
    * @params: [throwable] 异常
    * @return: java.lang.String 异常标识

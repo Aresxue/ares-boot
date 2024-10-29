@@ -2,6 +2,8 @@ package cn.ares.boot.util.common;
 
 import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -28,6 +30,20 @@ public class MapUtilTest {
     JdkLoggerUtil.info(LOGGER, map.get(null));
     map.put(null, "null");
     JdkLoggerUtil.info(LOGGER, map.get(null));
+
+    Map<String, Integer> testMap = new LinkedHashMap<>();
+    for (int i = 1; i <= 11; i++) {
+      testMap.put("Key" + i, i);
+    }
+    int numOfParts = 3;
+    // 将map分成3部分
+    List<Map<String, Integer>> splitMaps = MapUtil.split(testMap, numOfParts);
+
+    JdkLoggerUtil.info(LOGGER, "original Map: " + testMap);
+    JdkLoggerUtil.info(LOGGER, "split into " + numOfParts + " parts:");
+    for (int i = 0; i < splitMaps.size(); i++) {
+      JdkLoggerUtil.info(LOGGER, ("part " + (i + 1) + ": " + splitMaps.get(i)));
+    }
   }
 
 }

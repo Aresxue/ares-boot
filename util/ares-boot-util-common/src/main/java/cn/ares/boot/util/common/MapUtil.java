@@ -422,4 +422,41 @@ public class MapUtil {
     return sourceMap;
   }
 
+
+  /**
+   * @author: Ares
+   * @description: 将映射拆分为多个子映射
+   * @time: 2024-10-29 15:18:57
+   * @params: [map, size] 映射，多少个子映射
+   * @return: java.util.List<java.util.Map<K, V>> 映射列表
+   */
+  public static <K, V> List<Map<K, V>> split(Map<K, V> map, int size) {
+    if (isEmpty(map) || size <= 0) {
+      return CollectionUtil.asList(map);
+    }
+
+    List<Map<K, V>> mapList = new ArrayList<>(size);
+    int numOfElementsPerMap = (int) Math.ceil((double) map.size() / size);
+    Map<K, V> currentMap = MapUtil.newHashMap(numOfElementsPerMap);
+    int count = 0;
+
+    for (Map.Entry<K, V> entry : map.entrySet()) {
+      currentMap.put(entry.getKey(), entry.getValue());
+      count++;
+
+      if (count == numOfElementsPerMap) {
+        mapList.add(currentMap);
+        currentMap = MapUtil.newHashMap(numOfElementsPerMap);
+        count = 0;
+      }
+    }
+
+    // Add the last map if it has any elements
+    if (!currentMap.isEmpty()) {
+      mapList.add(currentMap);
+    }
+
+    return mapList;
+  }
+
 }

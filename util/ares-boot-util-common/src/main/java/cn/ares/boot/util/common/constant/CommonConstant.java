@@ -32,6 +32,8 @@ public interface CommonConstant {
   byte FALSE = 0;
   byte TRUE = 1;
 
+  byte[] ZERO_BYTE_ARR = new byte[0];
+
   /**
    * Unicode 基本汉字编码范围0x4e00~0x9fa5 共 20902个
    */

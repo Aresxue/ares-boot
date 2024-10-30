@@ -1,5 +1,7 @@
 package cn.ares.boot.util.common.primitive;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * @author: Ares
  * @time: 2021-11-23 16:24:00
@@ -141,6 +143,20 @@ public class ByteUtil {
       return defaultValue;
     }
     return Byte.parseByte(object.toString());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 生成指定大小的随机数组
+   * @description: Generates a random array of specified size
+   * @time: 2024-10-30 12:07:33
+   * @params: [size] 数组大小
+   * @return: byte[] 数组
+   */
+  public static byte[] random(int size) {
+    byte[] byteArray = new byte[size];
+    ThreadLocalRandom.current().nextBytes(byteArray);
+    return byteArray;
   }
 
 }

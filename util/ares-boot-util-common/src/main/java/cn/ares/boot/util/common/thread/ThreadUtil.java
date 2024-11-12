@@ -326,4 +326,24 @@ public class ThreadUtil {
     }
   }
 
+
+  /**
+   * @author: Ares
+   * @description: 在指定延迟后执行操作
+   * @description: Perform operations after the specified delay
+   * @time: 2024-11-12 21:47:35
+   * @params: [runnable, delay] 操作，延迟
+   */
+  public static void schedule(Runnable runnable, long delay) {
+    ScheduledExecutorService scheduledExecutorService = newScheduledThreadPool(1,
+        "Once-Scheduled-%d");
+    scheduledExecutorService.schedule(() -> {
+      runnable.run();
+      // 任务完成后关闭调度器
+      // Close the scheduler after the task is completed
+      scheduledExecutorService.shutdown();
+    }, delay, TimeUnit.MILLISECONDS);
+  }
+
+
 }

@@ -71,7 +71,7 @@ public class GcMonitor implements Runnable {
 
   private boolean isFullGc(String gcName) {
     return gcName.contains("Old") || gcName.contains("Full") || gcName.contains("Tenured")
-        || "PS MarkSweep".equals(gcName);
+        || "ConcurrentMarkSweep".equals(gcName) || "PS MarkSweep".equals(gcName);
   }
 
   @Override

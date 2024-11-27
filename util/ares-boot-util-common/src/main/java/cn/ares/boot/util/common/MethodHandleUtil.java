@@ -39,7 +39,7 @@ class MethodHandleUtil {
         TRUSTED_LOOKUP = (MethodHandles.Lookup) internal.get(null);
         internal.setAccessible(isAccessible);
       } catch (Throwable t) {
-        JdkLoggerUtil.warn(LOGGER, "get trusted lookup fail: ", t);
+        JdkLoggerUtil.warn(LOGGER, "get trusted lookup fail:", t);
       }
     }
   }

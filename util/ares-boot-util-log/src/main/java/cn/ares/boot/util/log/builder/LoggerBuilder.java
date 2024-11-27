@@ -83,7 +83,7 @@ public class LoggerBuilder {
         default:
       }
     } catch (Exception exception) {
-      JdkLoggerUtil.warn(LOGGER, "build logger fail: ", exception);
+      JdkLoggerUtil.warn(LOGGER, "build logger fail:", exception);
       for (String loggerName : loggerNames) {
         loggerMap.put(loggerName, loggerFactory.getLogger(loggerName));
       }

@@ -112,7 +112,7 @@ public class LogPrintAspect {
         if (logPrintConfiguration.isOnlyError()) {
           if (null != throwable) {
             String paramsStr = serialization(printParams, point.getArgs());
-            logger.error("biz message: {}, method: {}, params: {}, throwable: ", bizMessage,
+            logger.error("biz message: {}, method: {}, params: {}, throwable:", bizMessage,
                 methodName, paramsStr, throwable);
           }
         } else {
@@ -126,7 +126,7 @@ public class LogPrintAspect {
       }
     } catch (Exception exception) {
       if (null != logger) {
-        logger.warn("print method log exception: ", exception);
+        logger.warn("print method log exception:", exception);
       }
     }
   }

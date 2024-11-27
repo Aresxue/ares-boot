@@ -23,8 +23,8 @@ public class RePutRejectedExecutionHandler implements RejectedExecutionHandler {
     // put是阻塞的
     try {
       executor.getQueue().put(runnable);
-    } catch (Exception e) {
-      LOGGER.error("re-put the task exception: ", e);
+    } catch (Exception exception) {
+      LOGGER.error("re-put the task exception:", exception);
     }
   }
 

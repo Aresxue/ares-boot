@@ -778,7 +778,7 @@ public class ReflectionUtil {
           if (t instanceof WrongMethodTypeException) {
             // 发生错误方法类型异常做告警不阻断
             // An error occurs. Method Type Abnormal Alarms are not blocked
-            LOGGER.warn("method handle invoke fail: ", t);
+            LOGGER.warn("method handle invoke fail:", t);
           } else if (t instanceof Error) {
             throw new CheckedExceptionWrapper(t);
           } else if (t instanceof Exception) {
@@ -900,8 +900,8 @@ public class ReflectionUtil {
     invokeMethod.setTarget(target);
     try {
       invokeMethod.setMethodHandle(InvokeUtil.findMethodHandle(method));
-    } catch (Exception e) {
-      LOGGER.warn("find method handle exception: ", e);
+    } catch (Exception exception) {
+      LOGGER.warn("find method handle exception:", exception);
     }
     return invokeMethod;
   }

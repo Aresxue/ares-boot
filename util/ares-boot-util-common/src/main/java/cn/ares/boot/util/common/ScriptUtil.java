@@ -77,13 +77,13 @@ public class ScriptUtil {
         } else {
           return invocable.invokeFunction(CALCULATE_METHOD_NAME, param);
         }
-      } catch (Exception e) {
-        throw new ExecuteScriptException("Execute script exception: ", e);
+      } catch (Exception exception) {
+        throw new ExecuteScriptException("Execute script exception:", exception);
       }
-    } catch (ExecuteScriptException e) {
-      throw e;
-    } catch (Throwable e) {
-      throw new UnknownException("Unknown exception: ", e);
+    } catch (ExecuteScriptException executeScriptException) {
+      throw executeScriptException;
+    } catch (Throwable throwable) {
+      throw new UnknownException("Unknown exception:", throwable);
     }
   }
 

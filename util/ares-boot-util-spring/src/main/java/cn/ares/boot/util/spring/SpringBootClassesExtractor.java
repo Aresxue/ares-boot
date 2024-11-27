@@ -155,8 +155,8 @@ public class SpringBootClassesExtractor {
                 inputStreamConsumer);
             CompletableFuture.runAsync(tempJarFile::delete);
           }
-        } catch (Exception e) {
-          LOGGER.warn("extract file: {} exception: ", entryName, e);
+        } catch (Exception exception) {
+          LOGGER.warn("extract file: {} exception:", entryName, exception);
         }
       });
     }

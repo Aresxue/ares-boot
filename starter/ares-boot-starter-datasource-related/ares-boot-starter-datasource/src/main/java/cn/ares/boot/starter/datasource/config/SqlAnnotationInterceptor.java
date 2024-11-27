@@ -38,7 +38,7 @@ public class SqlAnnotationInterceptor implements Interceptor {
       sql = annotation + sql;
       ReflectionUtil.setFieldValue(boundSql, "sql", sql);
     } catch (Throwable throwable) {
-      LOGGER.error("add sql annotation fail: ", throwable);
+      LOGGER.error("add sql annotation fail:", throwable);
     }
     return invocation.proceed();
   }

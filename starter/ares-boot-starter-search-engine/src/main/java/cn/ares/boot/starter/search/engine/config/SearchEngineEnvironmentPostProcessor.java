@@ -64,7 +64,7 @@ public class SearchEngineEnvironmentPostProcessor implements EnvironmentPostProc
             .addLast(new PropertiesPropertySource(SEARCH_ENGINE, properties));
         LoggerUtil.infoDeferred("search engine config load success");
       } catch (Exception exception) {
-        LoggerUtil.errorDeferred("search engine config load fail: ", exception);
+        LoggerUtil.errorDeferred("search engine config load fail:", exception);
       }
     }
   }

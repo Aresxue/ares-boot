@@ -149,12 +149,12 @@ public class JsonUtil {
     try {
       return pretty ? objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object)
           : objectMapper.writeValueAsString(object);
-    } catch (JsonProcessingException e) {
-      LOGGER.warn("java object convert to json string exception: ", e);
+    } catch (JsonProcessingException exception) {
+      LOGGER.warn("java object convert to json string exception:", exception);
       if (useToString) {
         result = object.toString();
       } else {
-        throw new JsonException("Java object convert to json string exception", e);
+        throw new JsonException("Java object convert to json string exception", exception);
       }
     }
 
@@ -408,8 +408,8 @@ public class JsonUtil {
   public static byte[] toBytes(Object object) {
     try {
       return DEFAULT_JSON_MAPPER.writeValueAsBytes(object);
-    } catch (JsonProcessingException e) {
-      LOGGER.warn("java object convert to byte array exception: ", e);
+    } catch (JsonProcessingException jsonProcessingException) {
+      LOGGER.warn("java object convert to byte array exception:", jsonProcessingException);
       return String.valueOf(object).getBytes(Charset.defaultCharset());
     }
   }

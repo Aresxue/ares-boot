@@ -37,8 +37,8 @@ public abstract class AbstractQueryInterceptor implements QueryInterceptor {
       // The alarm does not affect the business when the failure occurs
       try {
         handle(sqlSupplier.get());
-      } catch (Exception e) {
-        LOGGER.error("jdbc query interceptor handle sql exception: ", e);
+      } catch (Exception exception) {
+        LOGGER.error("jdbc query interceptor handle sql exception:", exception);
       }
     }
     return null;

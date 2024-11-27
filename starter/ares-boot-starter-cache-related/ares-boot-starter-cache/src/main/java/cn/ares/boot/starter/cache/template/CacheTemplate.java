@@ -123,7 +123,7 @@ public class CacheTemplate<V> implements CacheOperation<V> {
         return true;
       }
     } catch (Exception exception) {
-      LOGGER.error("set object to cache exception: ", exception);
+      LOGGER.error("set object to cache exception:", exception);
       return false;
     }
   }

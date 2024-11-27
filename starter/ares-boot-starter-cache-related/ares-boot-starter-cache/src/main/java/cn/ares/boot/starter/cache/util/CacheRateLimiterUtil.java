@@ -115,7 +115,7 @@ public class CacheRateLimiterUtil {
       }
       return cancelResult;
     } catch (Exception exception) {
-      LOGGER.warn("cancel limiter fail for key: {}, exception: ", key, exception);
+      LOGGER.warn("cancel limiter fail for key: {}, exception:", key, exception);
       return false;
     }
   }

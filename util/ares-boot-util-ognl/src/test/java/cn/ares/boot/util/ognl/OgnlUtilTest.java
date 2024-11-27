@@ -27,7 +27,7 @@ public class OgnlUtilTest {
     try {
       parseResult = OgnlUtil.parse(expressionText, "#{", "'", "}", "'", map);
     } catch (OgnlException ognlException) {
-      JdkLoggerUtil.warn(LOGGER, "parse error: ", ognlException);
+      JdkLoggerUtil.warn(LOGGER, "parse fail: ", ognlException);
     }
     LOGGER.info("parse result: " + parseResult);
     Assert.isTrue(null != parseResult && parseResult.contains("good"), "解析失败");

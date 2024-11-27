@@ -19,8 +19,8 @@ public class HttpClientUtilTest {
     try {
       String result = HttpClientUtil.get("https://www.baidu.com");
       LOGGER.info(result);
-    } catch (Exception e) {
-      LOGGER.error("exception: ", e);
+    } catch (Exception exception) {
+      LOGGER.error("exception:", exception);
     }
   }
 
@@ -30,8 +30,8 @@ public class HttpClientUtilTest {
       String result = HttpClientUtil.post(
           "http://127.0.0.1:8080/downLoadFile", null, "classes.gz");
       LOGGER.info("result: {}", result);
-    } catch (Exception e) {
-      LOGGER.error("exception: ", e);
+    } catch (Exception exception) {
+      LOGGER.error("exception:", exception);
     }
   }
 

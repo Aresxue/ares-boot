@@ -53,7 +53,7 @@ public class MapperAnnotationClassResolver {
         mapperInterfaceField.setAccessible(true);
         mpEnabled = true;
       } catch (NoSuchFieldException exception) {
-        JdkLoggerUtil.warn(LOGGER, "get mapper interface field fail: ", exception);
+        JdkLoggerUtil.warn(LOGGER, "get mapper interface field fail:", exception);
       }
     }
   }

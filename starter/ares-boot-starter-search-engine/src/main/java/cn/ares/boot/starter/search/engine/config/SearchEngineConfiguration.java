@@ -145,7 +145,7 @@ public class SearchEngineConfiguration {
         LOGGER.info("search engine server address build success, ip: {}, port: {} ", ip, port);
       }
     } catch (Exception exception) {
-      LOGGER.error("search engine server address build fail: ", exception);
+      LOGGER.error("search engine server address build fail:", exception);
       throw new UnsupportedOperationException("search engine server config load fail");
     }
     return httpHosts;

@@ -854,8 +854,8 @@ public class HttpClientUtil implements ApplicationContextAware {
       }
       connectionManager.close();
       monitorExecutor.shutdown();
-    } catch (IOException e) {
-      LOGGER.error("close http connection pool exception: ", e);
+    } catch (IOException ioException) {
+      LOGGER.error("close http connection pool exception:", ioException);
     }
   }
 
@@ -865,8 +865,8 @@ public class HttpClientUtil implements ApplicationContextAware {
       if (null != httpClient) {
         httpClient.close();
       }
-    } catch (IOException e) {
-      LOGGER.error("close http connection pool exception: ", e);
+    } catch (IOException ioException) {
+      LOGGER.error("close http connection pool exception:", ioException);
     }
   }
 

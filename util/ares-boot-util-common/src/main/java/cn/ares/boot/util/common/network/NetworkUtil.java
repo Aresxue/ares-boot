@@ -122,7 +122,7 @@ public class NetworkUtil {
       // Get the last
       return ipList.get(ipList.size() - 1);
     } catch (SocketException socketException) {
-      JdkLoggerUtil.warn(LOGGER, "get local host address fail: ", socketException);
+      JdkLoggerUtil.warn(LOGGER, "get local host address fail:", socketException);
     }
     return DEFAULT_LOCALHOST;
   }

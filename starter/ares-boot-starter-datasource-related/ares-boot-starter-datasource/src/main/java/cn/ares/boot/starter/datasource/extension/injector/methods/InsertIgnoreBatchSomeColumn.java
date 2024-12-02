@@ -18,9 +18,8 @@ public class InsertIgnoreBatchSomeColumn extends InsertBatchSomeColumn {
 
   private static final long serialVersionUID = 7945498968463756217L;
 
-  public InsertIgnoreBatchSomeColumn(
-      Predicate<TableFieldInfo> predicate) {
-    super(predicate);
+  public InsertIgnoreBatchSomeColumn(Predicate<TableFieldInfo> predicate) {
+    super("insertIgnoreBatchSomeColumn", predicate);
   }
 
   @Override

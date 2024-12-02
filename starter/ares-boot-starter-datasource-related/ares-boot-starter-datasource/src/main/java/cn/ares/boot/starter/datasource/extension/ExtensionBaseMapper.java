@@ -28,6 +28,15 @@ public interface ExtensionBaseMapper<T> extends BaseMapper<T> {
 
   /**
    * @author: Ares
+   * @description: 批量插入（忽略报错）
+   * @time: 2024-12-02 14:51:20
+   * @params: [entityList] 对象列表
+   * @return: int 影响行数
+   */
+  int insertIgnoreBatchSomeColumn(Collection<T> entityList);
+
+  /**
+   * @author: Ares
    * @description: 根据逐渐更新固定字段
    * @description: Update fixed fields according to primary key
    * @time: 2024-07-02 14:54:05

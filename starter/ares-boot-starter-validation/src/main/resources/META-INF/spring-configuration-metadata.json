@@ -1,0 +1,22 @@
+{
+    "groups":
+    [
+        {
+            "name": "validation config",
+            "type": "cn.ares.boot.starter.spring.validation.config.ValidationConfiguration",
+            "sourceType": "cn.ares.boot.starter.spring.validation.config.ValidationConfiguration"
+        }
+    ],
+    "properties":
+    [
+        {
+            "name": "ares.validation.fail-fast",
+            "description": "validation fail fast",
+            "type": "java.lang.String",
+            "defaultValue": "false",
+            "sourceType": "cn.ares.boot.starter.spring.validation.config.ValidationConfiguration"
+        }
+    ],
+    "hints":
+    []
+}

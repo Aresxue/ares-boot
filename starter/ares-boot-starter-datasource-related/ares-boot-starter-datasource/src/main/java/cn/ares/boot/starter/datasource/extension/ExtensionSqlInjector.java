@@ -1,5 +1,6 @@
 package cn.ares.boot.starter.datasource.extension;
 
+import cn.ares.boot.starter.datasource.extension.injector.methods.InsertIgnoreBatchSomeColumn;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
@@ -23,6 +24,8 @@ public class ExtensionSqlInjector extends DefaultSqlInjector {
     List<AbstractMethod> methodList = super.getMethodList(configuration, mapperClass, tableInfo);
     methodList.add(
         new InsertBatchSomeColumn(fieldInfo -> fieldInfo.getFieldFill() != FieldFill.UPDATE));
+    methodList.add(
+        new InsertIgnoreBatchSomeColumn(fieldInfo -> fieldInfo.getFieldFill() != FieldFill.UPDATE));
     methodList.add(
         new AlwaysUpdateSomeColumnById(fieldInfo -> fieldInfo.getFieldFill() != FieldFill.INSERT));
     return methodList;

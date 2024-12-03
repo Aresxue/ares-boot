@@ -75,6 +75,7 @@ import org.apache.hc.core5.http.HttpStatus;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.config.Registry;
 import org.apache.hc.core5.http.config.RegistryBuilder;
+import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.ssl.SSLContexts;
@@ -737,7 +738,11 @@ public class HttpClientUtil implements ApplicationContextAware {
     if (headerValue.contains(APPLICATION_FORM_URLENCODED.getMimeType())) {
       httpPost.setEntity(new StringEntity(encodeGetRequest(request), Charset.defaultCharset()));
     } else {
-      httpPost.setEntity(new StringEntity(JsonUtil.toJsonString(request), APPLICATION_JSON));
+      if (request instanceof byte[]) {
+        httpPost.setEntity(new ByteArrayEntity((byte[]) request, APPLICATION_JSON));
+      } else {
+        httpPost.setEntity(new StringEntity(JsonUtil.toJsonString(request), APPLICATION_JSON));
+      }
     }
   }
 

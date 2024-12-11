@@ -26,6 +26,10 @@ public enum LoggerType {
     }
   }
 
+  public static LoggerType getByConfigFileName(String loggerFactoryClassName) {
+    return CACHED.getOrDefault(loggerFactoryClassName, LOGBACK);
+  }
+
   private final String configFileName;
   private final String loggerFactoryClassName;
 
@@ -40,10 +44,6 @@ public enum LoggerType {
 
   public String getLoggerFactory() {
     return loggerFactoryClassName;
-  }
-
-  public static LoggerType getLoggerType(String loggerFactoryClassName) {
-    return CACHED.getOrDefault(loggerFactoryClassName, LOGBACK);
   }
 
 }

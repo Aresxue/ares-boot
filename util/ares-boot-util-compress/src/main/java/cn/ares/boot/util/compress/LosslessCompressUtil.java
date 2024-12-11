@@ -32,9 +32,7 @@ public class LosslessCompressUtil {
 
   private static void setLosslessCompressInstance() {
     String compressAlgorithmName = System.getProperty(LOSS_LESS_COMPRESS_IMPL, ZSTD.getName());
-    CompressAlgorithm compressAlgorithm = CompressAlgorithm.getCompressAlgorithm(
-        compressAlgorithmName);
-    losslessCompress = getInstance(compressAlgorithm);
+    losslessCompress = getInstance(CompressAlgorithm.getByName(compressAlgorithmName));
   }
 
   /**

@@ -41,8 +41,7 @@ public class InReverseCryptUtil {
 
   private static void setInReverseCryptInstance() {
     String cryptAlgorithmName = System.getProperty(IN_REVERSE_IMPL, MD5.getName());
-    CryptAlgorithm cryptAlgorithm = CryptAlgorithm.getCryptAlgorithm(cryptAlgorithmName);
-    inReverseCrypt = getInstance(cryptAlgorithm);
+    inReverseCrypt = getInstance(CryptAlgorithm.getByName(cryptAlgorithmName));
   }
 
   public static byte[] enCrypt(byte[] srcData) {

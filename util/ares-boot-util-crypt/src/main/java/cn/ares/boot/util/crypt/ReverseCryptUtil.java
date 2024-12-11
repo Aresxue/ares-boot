@@ -38,8 +38,7 @@ public class ReverseCryptUtil {
 
   private static void setReverseCryptInstance() {
     String cryptAlgorithmName = System.getProperty(REVERSE_IMPL, AES256.getName());
-    CryptAlgorithm cryptAlgorithm = CryptAlgorithm.getCryptAlgorithm(cryptAlgorithmName);
-    reverseCrypt = getInstance(cryptAlgorithm);
+    reverseCrypt = getInstance(CryptAlgorithm.getByName(cryptAlgorithmName));
   }
 
   public static byte[] enCrypt(byte[] srcData) {

@@ -33,7 +33,7 @@ public class LoggerBuilder {
     ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
     try {
       Class<? extends ILoggerFactory> classType = loggerFactory.getClass();
-      LoggerType loggerType = LoggerType.getLoggerType(classType.getName());
+      LoggerType loggerType = LoggerType.getByConfigFileName(classType.getName());
       URL url = LoggerBuilder.class.getClassLoader()
           .getResource(logConfigDir + loggerType.getConfigFileName());
       switch (loggerType) {

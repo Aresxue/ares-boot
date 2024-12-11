@@ -32,6 +32,11 @@ public enum CryptAlgorithm {
     }
   }
 
+  public static CryptAlgorithm getByName(String cryptAlgorithmName) {
+    return Optional.ofNullable(CACHED.get(cryptAlgorithmName))
+        .orElseThrow(() -> new RuntimeException(cryptAlgorithmName + " not impl"));
+  }
+
   private final String name;
   private final boolean reverse;
 
@@ -46,11 +51,6 @@ public enum CryptAlgorithm {
 
   public boolean isReverse() {
     return reverse;
-  }
-
-  public static CryptAlgorithm getCryptAlgorithm(String cryptAlgorithmName) {
-    return Optional.ofNullable(CACHED.get(cryptAlgorithmName))
-        .orElseThrow(() -> new RuntimeException(cryptAlgorithmName + " not impl"));
   }
 
 }

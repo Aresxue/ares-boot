@@ -36,6 +36,11 @@ public enum CompressAlgorithm {
     }
   }
 
+  public static CompressAlgorithm getByName(String compressAlgorithmName) {
+    return Optional.ofNullable(CACHED.get(compressAlgorithmName))
+        .orElseThrow(() -> new RuntimeException(compressAlgorithmName + " not impl"));
+  }
+
   CompressAlgorithm(String name, boolean loss) {
     this.name = name;
     this.loss = loss;
@@ -47,11 +52,6 @@ public enum CompressAlgorithm {
 
   public boolean isLoss() {
     return loss;
-  }
-
-  public static CompressAlgorithm getCompressAlgorithm(String compressAlgorithmName) {
-    return Optional.ofNullable(CACHED.get(compressAlgorithmName))
-        .orElseThrow(() -> new RuntimeException(compressAlgorithmName + " not impl"));
   }
 
 }

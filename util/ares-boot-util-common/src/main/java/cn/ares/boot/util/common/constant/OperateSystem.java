@@ -23,12 +23,7 @@ public enum OperateSystem {
   IPHONE("IPhone", "iphone"),
   UNKNOWN("UnKnown", "unKnown");
 
-  private final String system;
-
-  private final String lowerSystem;
-
   private static final OperateSystem LOCAL_OPERATE_SYSTEM;
-
   private static final Map<String, OperateSystem> CACHED = MapUtil.newMap(values().length);
 
   static {
@@ -38,17 +33,12 @@ public enum OperateSystem {
     }
   }
 
+  private final String system;
+  private final String lowerSystem;
+
   OperateSystem(String system, String lowerSystem) {
     this.system = system;
     this.lowerSystem = lowerSystem;
-  }
-
-  public String getSystem() {
-    return system;
-  }
-
-  public String getLowerSystem() {
-    return lowerSystem;
   }
 
   public static OperateSystem getOperateSystem(String info) {
@@ -67,6 +57,14 @@ public enum OperateSystem {
     // 只在windows和mac时匹配，认为这两种是开发的本地机器
     // Match only on windows and mac, consider these two to be the local machine for development
     return MAC.equals(operateSystem) || WINDOWS.equals(operateSystem);
+  }
+
+  public String getSystem() {
+    return system;
+  }
+
+  public String getLowerSystem() {
+    return lowerSystem;
   }
 
 }

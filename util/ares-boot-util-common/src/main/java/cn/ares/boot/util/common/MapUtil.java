@@ -73,6 +73,18 @@ public class MapUtil {
 
   /**
    * @author: Ares
+   * @description: 根据入参构建一个新映射（不校验入参长度且忽略键值都为null的值）
+   * @description: Build a new map based on the input(Do not verify input parameter length)
+   * @time: 2024-01-18 14:03:14
+   * @params: [args] 参数
+   * @return: java.util.Map<K, V> 映射
+   */
+  public static <K, V> Map<K, V> of(Object... args) {
+    return newMap(false, true, args);
+  }
+
+  /**
+   * @author: Ares
    * @description: 根据入参构建一个新映射（是否校验入参长度）
    * @description: Build a new map based on the input(Whether to verify the input parameter length)
    * @time: 2024-01-18 14:03:14
@@ -80,10 +92,22 @@ public class MapUtil {
    * @return: java.util.Map<K, V> 映射
    */
   public static <K, V> Map<K, V> newMap(boolean checkLength, Object... args) {
+    return newMap(checkLength, false, args);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 根据入参构建一个新映射（是否校验入参长度/是否忽略键值都为null的值）
+   * @description: Build a new map based on the input(Whether to verify the input parameter length)
+   * @time: 2024-01-18 14:03:14
+   * @params: [checkLength, ignoreNull, args] 是否校验入参长度，忽略键值都为null的值，参数
+   * @return: java.util.Map<K, V> 映射
+   */
+  public static <K, V> Map<K, V> newMap(boolean checkLength, boolean ignoreNull, Object... args) {
     if (checkLength && ArrayUtil.isOddLength(args)) {
       throw new IllegalArgumentException("Args length must be even");
     }
-    return newMap(null, args);
+    return newMap(null, ignoreNull, args);
   }
 
   /**
@@ -118,8 +142,20 @@ public class MapUtil {
    * @params: [mapImplClass, args] 映射实现实现类，参数
    * @return: java.util.Map<K, V> 映射
    */
-  @SuppressWarnings("unchecked")
   public static <M, K, V> Map<K, V> newMap(Class<M> mapImplClass, Object... args) {
+    return newMap(mapImplClass, false, args);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 根据映射实现类型和入参构建一个新映射
+   * @description: Build a new map based on the input
+   * @time: 2024-01-11 14:03:14
+   * @params: [mapImplClass, ignoreNull, args] 映射实现实现类，忽略键值都为null的值，参数
+   * @return: java.util.Map<K, V> 映射
+   */
+  @SuppressWarnings("unchecked")
+  public static <M, K, V> Map<K, V> newMap(Class<M> mapImplClass, boolean ignoreNull, Object... args) {
     if (ArrayUtil.isEmpty(args)) {
       return Collections.emptyMap();
     }
@@ -140,8 +176,13 @@ public class MapUtil {
       });
     }
 
-    for (int i = 0; i < args.length -1; i = i + 2) {
-      map.put((K) args[i], (V) args[i + 1]);
+    for (int i = 0; i < args.length - 1; i = i + 2) {
+      K key = (K) args[i];
+      V value = (V) args[i + 1];
+      if (ignoreNull && null == key && null == value) {
+        continue;
+      }
+      map.put(key, value);
     }
     return map;
   }

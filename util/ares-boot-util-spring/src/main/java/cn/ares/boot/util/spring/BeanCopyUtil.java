@@ -3,10 +3,13 @@ package cn.ares.boot.util.spring;
 import cn.ares.boot.util.common.CollectionUtil;
 import cn.ares.boot.util.common.throwable.CheckedExceptionWrapper;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -16,6 +19,7 @@ import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.cglib.core.Converter;
+import org.springframework.util.ReflectionUtils;
 
 /**
  * @author: Ares
@@ -332,6 +336,99 @@ public class BeanCopyUtil {
     }
     String[] result = new String[emptyNames.size()];
     return emptyNames.toArray(result);
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 获取属性Map
+   * @description: Get property Map
+   * @time: 2025-01-04 16:11:31
+   * @params: [source] 源对象
+   * @return: java.util.Map<java.lang.String, java.lang.Object> 目标Map
+   */
+  public static Map<String, Object> copyPropertiesToMap(Object source) {
+    Map<String, Object> targetMap = new HashMap<>();
+    copyPropertiesToMap(source, targetMap);
+    return targetMap;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 拷贝对象属性到目标Map
+   * @description: Copy object properties to target Map
+   * @time: 2025-01-04 16:02:08
+   * @params: [source, targetMap] 源对象，目标Map
+   */
+  public static void copyPropertiesToMap(Object source, Map<String, Object> targetMap) {
+    copyPropertiesToMap(source, targetMap, true);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 拷贝对象属性到目标Map（可以指定是否忽略transient字段）
+   * @description: Copy object properties to target Map (can specify whether to ignore transient)
+   * @time: 2025-01-04 16:02:08
+   * @params: [source, targetMap, ignoreTransient] 源对象，目标Map，忽略transient字段
+   */
+  public static void copyPropertiesToMap(Object source, Map<String, Object> map,
+      boolean ignoreTransient) {
+    if (null == source || null == map) {
+      return;
+    }
+    ReflectionUtils.doWithLocalFields(source.getClass(), field -> {
+      // 忽略合成字段
+      // Ignore synthetic fields
+      if (field.isSynthetic()) {
+        return;
+      }
+      int modifiers = field.getModifiers();
+      // 忽略静态字段
+      // Ignore static fields
+      if (Modifier.isStatic(modifiers)) {
+        return;
+      }
+      // 忽略transient字段
+      // Ignore transient fields
+      if (ignoreTransient && Modifier.isTransient(modifiers)) {
+        return;
+      }
+      ReflectionUtils.makeAccessible(field);
+      map.put(field.getName(), field.get(source));
+    });
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 拷贝Map属性到目标对象
+   * @description: Copy Map properties to target object
+   * @time: 2025-01-04 16:07:10
+   * @params: [sourceMap, target] 源Map，目标对象
+   */
+  public static void copyMapToProperties(Map<String, Object> sourceMap, Object target) {
+    if (null == sourceMap || null == target) {
+      return;
+    }
+
+    ReflectionUtils.doWithLocalFields(target.getClass(), field -> {
+      ReflectionUtils.makeAccessible(field);
+      field.set(target, sourceMap.get(field.getName()));
+    });
+  }
+
+  /**
+   * @author: Ares
+   * @description: 拷贝Map属性到目标对象
+   * @description: Copy Map properties to target object
+   * @time: 2025-01-04 16:07:10
+   * @params: [sourceMap, target] 源Map，目标对象
+   */
+  public static <TARGET> TARGET copyMapToProperties(Map<String, Object> sourceMap,
+      Class<TARGET> targetClass) {
+    TARGET targetObject = BeanUtils.instantiateClass(targetClass);
+    copyMapToProperties(sourceMap, targetObject);
+    return targetObject;
   }
 
 }

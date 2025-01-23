@@ -113,7 +113,11 @@ public class ExceptionUtil {
     }
     StringWriter stringWriter = new StringWriter();
     throwable.printStackTrace(new PrintWriter(stringWriter));
-    return stringWriter.toString().substring(0, retainLength);
+    String str = stringWriter.toString();
+    if (str.length() > retainLength) {
+      str = str.substring(0, retainLength) + "...";
+    }
+    return str;
   }
 
   /**

@@ -87,8 +87,11 @@ public final class Result<T> implements Serializable {
    * @params: [baseException, params] 基础异常，入参
    * @return: cn.ares.boot.base.model.Result<T> 结果
    */
-  public static <T> Result<T> fail(BaseException baseException, Object... params) {
-    return fail(baseException.getStatus(), params);
+  public static <T> Result<T> fail(BaseException baseException) {
+    Result<T> result = new Result<>();
+    result.code(baseException.getStatus().getCode());
+    result.message(baseException.getMessage());
+    return result;
   }
 
   /**

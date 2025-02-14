@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.aresxue</groupId>
     <artifactId>ares-parent</artifactId>
-    <version>release-xiaohongshu</version>
+    <version>release</version>
     <relativePath/>
   </parent>
 
@@ -62,14 +62,6 @@
   </dependencyManagement>
 
   <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-gpg-plugin</artifactId>
-        <!-- 打断继承 -->
-        <inherited>false</inherited>
-      </plugin>
-    </plugins>
     <pluginManagement>
       <plugins>
         <plugin>

@@ -1,6 +1,8 @@
 package cn.ares.boot.util.common;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * @author: Ares
@@ -276,6 +278,54 @@ public class ArrayUtil {
    */
   public static boolean isOddLength(Object[] array) {
     return isNotEmpty(array) && NumberUtil.isOdd(array.length);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断所有元素全部为null
+   * @description: Determine if all elements are null
+   * @time: 2025-02-14 11:26:34
+   * @params: [array] 数组
+   * @return: boolean 是否都为null
+   */
+  public static boolean allIsNull(Object[] array) {
+    return Arrays.stream(array).allMatch(Objects::isNull);
+  }
+
+  /*
+   * @author: Ares
+   * @description: 判断所有元素全部不为null
+   * @description: Determine if all elements are not null
+   * @time: 2025-02-14 11:27:16
+   * @params: [array] 数组
+   * @return: boolean 是否都不为null
+   */
+  public static boolean allIsNotNull(Object[] array) {
+    return Arrays.stream(array).allMatch(Objects::nonNull);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断任意元素为null
+   * @description: Determine if any element is null
+   * @time: 2025-02-14 11:27:36
+   * @params: [array] 数组
+   * @return: boolean 是否有元素为null
+   */
+  public static boolean anyIsNull(Object[] array) {
+    return Arrays.stream(array).anyMatch(Objects::isNull);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断任意元素不为null
+   * @description: Determine if any element is not null
+   * @time: 2025-02-14 11:28:07
+   * @params: [array] 数组
+   * @return: boolean 是否有元素不为null
+   */
+  public static boolean anyIsNotNull(Object[] array) {
+    return Arrays.stream(array).anyMatch(Objects::nonNull);
   }
 
 }

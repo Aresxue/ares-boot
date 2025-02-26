@@ -225,7 +225,7 @@ public class HttpClientUtil implements ApplicationContextAware {
    */
   public static <T> String post(String url, T request, int socketTimeout)
       throws Exception {
-    return post(url, request, Collections.emptyMap(), socketTimeout, null);
+    return post(url, request, Collections.emptyMap(), socketTimeout,null);
   }
 
   /**
@@ -253,6 +253,20 @@ public class HttpClientUtil implements ApplicationContextAware {
   public static <T> String post(String url, T request, Map<String, String> headers)
       throws Exception {
     return post(url, request, headers, config.getSocketTimeout());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头发起Post请求地址获取结果
+   * @description: Pass in the request object and message header to initiate the Post request address to get the result (wait for the specified timeout)
+   * @time: 2022-12-28 11:41:46
+   * @params: [url, request, headers, context] 请求地址，请求对象，消息头，http客户端上下文
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String post(String url, T request, Map<String, String> headers,
+      HttpClientContext context) throws Exception {
+    return post(url, request, headers, config.getSocketTimeout(), config.getConnectTimeout(),
+        config.getConnectionRequestTimeout(), null, context);
   }
 
   /**
@@ -289,8 +303,8 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 传入请求对象和消息头发起Post请求地址获取结果/文件（等待指定超时时间、连接超时时间、连接获取超时时间）
    * @description: The incoming request object and message header initiate the Post request address to get the result or file (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
    * @time: 2022-12-28 11:41:46
-   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
-   * fileSavePath] 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，文件保存地址（可选）
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, fileSavePath]
+   * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，文件保存地址
    * @return: java.lang.String 响应结果
    */
   public static <T> String post(String url, T request, Map<String, String> headers,
@@ -302,20 +316,52 @@ public class HttpClientUtil implements ApplicationContextAware {
 
   /**
    * @author: Ares
+   * @description: 传入请求对象和消息头发起Post请求地址获取结果/文件（等待指定超时时间、连接超时时间、连接获取超时时间）
+   * @description: The incoming request object and message header initiate the Post request address to get the result or file (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
+   * @time: 2022-12-28 11:41:46
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, fileSavePath, context]
+   * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，文件保存地址，http客户端上下文
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String post(String url, T request, Map<String, String> headers,
+      int socketTimeout, int connectTimeout, int connectionRequestTimeout, String fileSavePath,
+      HttpClientContext context) throws Exception {
+    return post(url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
+        null, fileSavePath, context);
+  }
+
+  /**
+   * @author: Ares
    * @description: 传入请求对象和消息头使用代理发起Post请求地址获取结果/文件（等待指定超时时间、连接超时时间、连接获取超时时间）
    * @description: The incoming request object and message header use the proxy to initiate a Post request address to get the result or file (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
    * @time: 2022-12-28 11:41:46
-   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
-   * proxy] 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy, fileSavePath]
+   * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理，文件保存地址
    * @return: java.lang.String 响应结果
    */
   public static <T> String post(String url, T request, Map<String, String> headers,
       int socketTimeout, int connectTimeout, int connectionRequestTimeout, HttpHost proxy,
       String fileSavePath) throws Exception {
+    return post(url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout,
+        proxy, fileSavePath, null);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头使用代理发起Post请求地址获取结果/文件（等待指定超时时间、连接超时时间、连接获取超时时间）
+   * @description: The incoming request object and message header use the proxy to initiate a Post request address to get the result or file (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
+   * @time: 2022-12-28 11:41:46
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy, context]
+   * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理，文件保存地址，http客户端上下文
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String post(String url, T request, Map<String, String> headers,
+      int socketTimeout, int connectTimeout, int connectionRequestTimeout, HttpHost proxy,
+      String fileSavePath, HttpClientContext context) throws Exception {
     HttpPost httpPost = new HttpPost(url);
     httpPost.setHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
     configRequest(httpPost, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
-    return request(httpPost, request, fileSavePath);
+    return request(httpPost, request, fileSavePath, context);
   }
 
   /**
@@ -471,7 +517,7 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 使用消息头使用代理发起get请求地址获取结果/文件（等待超时时间，连接超时时间，连接获取超时时间）
    * @description: Use the message header to use the proxy to initiate a get request address to get the result or file (waiting timeout, connection timeout, connection acquisition timeout)
    * @time: 2019-05-08 15:39:00
-   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy, fileSavePath] 
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy, fileSavePath]
    * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理，文件保存地址（可选）
    * @return: java.lang.String 响应结果
    **/
@@ -570,7 +616,7 @@ public class HttpClientUtil implements ApplicationContextAware {
    * @description: 传入请求对象和消息头使用代理发起Delete请求地址获取结果（等待指定超时时间、连接超时时间、连接获取超时时间）
    * @description: The incoming request object and message header use the proxy to initiate a Post request address to get the result (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
    * @time: 2022-12-28 11:41:46
-   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy] 
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy]
    * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
    * @return: java.lang.String 响应结果
    */
@@ -652,20 +698,28 @@ public class HttpClientUtil implements ApplicationContextAware {
     }
   }
 
+  private static <T> String request(HttpUriRequestBase requestBase, T request, String fileSavePath)
+      throws Exception {
+    return request(requestBase, request, fileSavePath, null);
+  }
+
   /**
    * @author: Ares
    * @description: 请求通用代码
    * @description: Request generic code
    * @time: 2019-05-08 15:46:00
-   * @params: [requestBase, url, request, fileSavePath] 请求基类，请求地址，请求对象，文件保存地址（可选）
+   * @params: [requestBase, url, request, fileSavePath, context] 请求基类，请求地址，请求对象，文件保存地址，http客户端上下文
    * @return: java.lang.String 响应结果
    **/
-  private static <T> String request(HttpUriRequestBase requestBase, T request, String fileSavePath)
-      throws Exception {
+  private static <T> String request(HttpUriRequestBase requestBase, T request, String fileSavePath,
+      HttpClientContext context) throws Exception {
     setBody(requestBase, request);
     URI uri = requestBase.getUri();
     int port = NetworkUtil.extractPort(uri);
-    return getHttpClient(uri.getHost(), port).execute(requestBase, HttpClientContext.create(),
+    if (null == context) {
+      context = HttpClientContext.create();
+    }
+    return getHttpClient(uri.getHost(), port).execute(requestBase, context,
         new BasicHttpClientResponseHandler() {
           @Override
           public String handleResponse(ClassicHttpResponse response) throws IOException {

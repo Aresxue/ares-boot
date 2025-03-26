@@ -1,7 +1,9 @@
 package cn.ares.boot.util.common;
 
 import cn.ares.boot.util.common.log.JdkLoggerUtil;
+import java.util.Collections;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -28,6 +30,10 @@ public class CollectionUtilTest {
 
     JdkLoggerUtil.info(LOGGER, CollectionUtil.asSet(set, 2, 3));
     JdkLoggerUtil.info(LOGGER, CollectionUtil.asSet(null, 2, 3));
+
+    Queue<String> queue = CollectionUtil.singletonQueue("ares");
+    assert queue.size() == 1;
+    JdkLoggerUtil.info(LOGGER, queue);
   }
 
 }

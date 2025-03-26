@@ -3,6 +3,8 @@ package cn.ares.boot.util.common;
 import cn.ares.boot.util.common.primitive.IntegerUtil;
 import cn.ares.boot.util.common.structure.ConcurrentHashSet;
 import cn.ares.boot.util.common.structure.SplitList;
+import java.io.Serializable;
+import java.util.AbstractQueue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -13,10 +15,16 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Queue;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.Spliterator;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * @author: Ares
@@ -329,6 +337,18 @@ public class CollectionUtil {
     ArrayList<E> list = newArrayList(arraySize);
     Collections.addAll(list, elements);
     return list;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 创建单个元素的队列
+   * @description: Create a queue with a single element
+   * @time: 2025-03-26 16:17:42
+   * @params: [element] 元素
+   * @return: java.util.Queue<E> 队列
+   */
+  public static <E> Queue<E> singletonQueue(E element) {
+    return new SingletonQueue<>(element);
   }
 
   /**
@@ -786,6 +806,143 @@ public class CollectionUtil {
     public void remove() throws UnsupportedOperationException {
       throw new UnsupportedOperationException("Not supported");
     }
+  }
+
+  private static class SingletonQueue<E>
+      extends AbstractQueue<E>
+      implements Serializable {
+
+    private static final long serialVersionUID = 301761495112136052L;
+
+    private final E element;
+
+    SingletonQueue(E obj) {
+      element = obj;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+      return singletonIterator(element);
+    }
+
+    @Override
+    public int size() {
+      return 1;
+    }
+
+    @Override
+    public boolean offer(E e) {
+      return false;
+    }
+
+    @Override
+    public E poll() {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public E peek() {
+      return element;
+    }
+
+    @Override
+    public Spliterator<E> spliterator() {
+      return singletonSpliterator(element);
+    }
+
+    @Override
+    public boolean remove(Object o) {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void clear() {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void forEach(Consumer<? super E> action) {
+      action.accept(element);
+    }
+  }
+
+  private static <E> Iterator<E> singletonIterator(final E e) {
+    return new Iterator<E>() {
+      private boolean hasNext = true;
+
+      @Override
+      public boolean hasNext() {
+        return hasNext;
+      }
+
+      @Override
+      public E next() {
+        if (hasNext) {
+          hasNext = false;
+          return e;
+        }
+        throw new NoSuchElementException();
+      }
+
+      @Override
+      public void remove() {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public void forEachRemaining(Consumer<? super E> action) {
+        Objects.requireNonNull(action);
+        if (hasNext) {
+          action.accept(e);
+          hasNext = false;
+        }
+      }
+    };
+  }
+
+  private static <T> Spliterator<T> singletonSpliterator(final T element) {
+    return new Spliterator<T>() {
+      long est = 1;
+
+      @Override
+      public Spliterator<T> trySplit() {
+        return null;
+      }
+
+      @Override
+      public boolean tryAdvance(Consumer<? super T> consumer) {
+        Objects.requireNonNull(consumer);
+        if (est > 0) {
+          est--;
+          consumer.accept(element);
+          return true;
+        }
+        return false;
+      }
+
+      @Override
+      public void forEachRemaining(Consumer<? super T> consumer) {
+        tryAdvance(consumer);
+      }
+
+      @Override
+      public long estimateSize() {
+        return est;
+      }
+
+      @Override
+      public int characteristics() {
+        int value = (element != null) ? Spliterator.NONNULL : 0;
+
+        return value | Spliterator.SIZED | Spliterator.SUBSIZED | Spliterator.IMMUTABLE |
+            Spliterator.DISTINCT | Spliterator.ORDERED;
+      }
+    };
   }
 
 }

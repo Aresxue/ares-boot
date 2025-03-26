@@ -18,13 +18,18 @@ public class RePutRejectedExecutionHandler implements RejectedExecutionHandler {
 
   @Override
   public void rejectedExecution(Runnable runnable, ThreadPoolExecutor executor) {
+    if (executor.isShutdown()) {
+      LOGGER.warn("thread pool is shutdown");
+      return;
+    }
     LOGGER.warn("process that the thread pool is fully loaded and re-put tasks");
     // put is blocking
     // put是阻塞的
     try {
       executor.getQueue().put(runnable);
-    } catch (Exception exception) {
-      LOGGER.error("re-put the task exception:", exception);
+    } catch (InterruptedException interruptedException) {
+      LOGGER.error("re-put the task exception:", interruptedException);
+      Thread.currentThread().interrupt();
     }
   }
 

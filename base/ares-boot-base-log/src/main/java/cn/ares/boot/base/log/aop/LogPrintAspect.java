@@ -132,6 +132,9 @@ public class LogPrintAspect {
   }
 
   private String serialization(boolean condition, Object obj) {
+    if (null == obj) {
+      return null;
+    }
     if (condition) {
       String str = JsonUtil.toJsonString(JSON_MAPPER, obj);
       // 超过阈值不打印

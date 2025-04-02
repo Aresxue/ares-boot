@@ -37,7 +37,7 @@ public interface ExtensionBaseMapper<T> extends BaseMapper<T> {
 
   /**
    * @author: Ares
-   * @description: 根据逐渐更新固定字段
+   * @description: 根据主键更新固定字段
    * @description: Update fixed fields according to primary key
    * @time: 2024-07-02 14:54:05
    * @params: [entity] 实体对象

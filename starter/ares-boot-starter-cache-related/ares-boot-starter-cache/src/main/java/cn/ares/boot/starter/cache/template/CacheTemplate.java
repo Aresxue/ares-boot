@@ -1,11 +1,9 @@
 package cn.ares.boot.starter.cache.template;
 
-import static org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPORT;
-import static org.springframework.data.redis.connection.RedisStringCommands.SetOption.UPSERT;
-
+import cn.ares.boot.starter.cache.constant.TryLockFailAction;
+import cn.ares.boot.starter.cache.exception.TryLockFailException;
 import cn.ares.boot.starter.cache.operation.CacheOperation;
 import cn.ares.boot.starter.cache.util.CacheUtil;
-import cn.ares.boot.util.common.ExceptionUtil;
 import cn.ares.boot.util.compress.LosslessCompressUtil;
 import cn.ares.boot.util.json.JsonUtil;
 import java.nio.charset.Charset;
@@ -40,6 +38,12 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.data.redis.core.types.Expiration;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
+
+import static cn.ares.boot.starter.cache.constant.TryLockFailAction.LOG_DEBUG;
+import static cn.ares.boot.starter.cache.constant.TryLockFailAction.LOG_WARN;
+import static cn.ares.boot.starter.cache.constant.TryLockFailAction.THROW_EXCEPTION;
+import static org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPORT;
+import static org.springframework.data.redis.connection.RedisStringCommands.SetOption.UPSERT;
 
 /**
  * @author: Ares
@@ -896,50 +900,50 @@ public class CacheTemplate<V> implements CacheOperation<V> {
 
   @Override
   public void runWithLock(String key, Runnable runnable) {
-    runWithLock(key, null, runnable);
-  }
-
-  @Override
-  public void runWithLock(String key, Duration leaseTime, Runnable runnable) {
     if (null == redissonClient) {
       throw new RuntimeException("Redisson not load");
     }
     RLock lock = redissonClient.getLock(key);
-    if (null == leaseTime) {
-      lock.lock();
-    } else {
-      lock.lock(leaseTime.toMillis(), TimeUnit.MILLISECONDS);
-    }
+    boolean locked = false;
     try {
+      lock.lock();
+      locked = true;
       runnable.run();
     } finally {
-      if (lock.isLocked() && lock.isHeldByCurrentThread()) {
-        lock.unlock();
-      }
+      unlock(locked, lock);
     }
   }
 
   @Override
   public <T> T getWithLock(String key, Supplier<T> supplier) {
-    return getWithLock(key, null, supplier);
-  }
-
-  @Override
-  public <T> T getWithLock(String key, Duration leaseTime, Supplier<T> supplier) {
     if (null == redissonClient) {
       throw new RuntimeException("Redisson not load");
     }
     RLock lock = redissonClient.getLock(key);
-    if (null == leaseTime) {
-      lock.lock();
-    } else {
-      lock.lock(leaseTime.toMillis(), TimeUnit.MILLISECONDS);
-    }
+    boolean locked = false;
     try {
+      lock.lock();
+      locked = true;
       return supplier.get();
     } finally {
-      if (lock.isLocked() && lock.isHeldByCurrentThread()) {
+      unlock(locked, lock);
+    }
+  }
+
+  private void unlock(boolean locked, RLock lock) {
+    if (locked) {
+      try {
         lock.unlock();
+      } catch (IllegalMonitorStateException illegalMonitorStateException) {
+        // 锁已自动释放或当前线程未持有锁，无需处理
+        // The lock has been automatically released or the current thread does not hold the lock
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("lock already released: ", illegalMonitorStateException);
+        }
+      } catch (Exception exception) {
+        if (LOGGER.isWarnEnabled()) {
+          LOGGER.warn("unlock exception", exception);
+        }
       }
     }
   }
@@ -957,20 +961,44 @@ public class CacheTemplate<V> implements CacheOperation<V> {
 
   @Override
   public void runWithTryLock(String key, Duration waitTime, Duration leaseTime, Runnable runnable) {
+    runWithTryLock(key, waitTime, leaseTime, runnable, LOG_DEBUG, THROW_EXCEPTION);
+  }
+
+  @Override
+  public void runWithTryLock(String key, Duration waitTime, Duration leaseTime, Runnable runnable,
+      TryLockFailAction notAcquiredAction, TryLockFailAction interruptedAction) {
     if (null == redissonClient) {
       throw new RuntimeException("Redisson not load");
     }
     RLock lock = redissonClient.getLock(key);
-    boolean lockResult = ExceptionUtil.get(
-        () -> lock.tryLock(waitTime.toMillis(), leaseTime.toMillis(), TimeUnit.MILLISECONDS));
+    boolean locked = false;
     try {
-      if (lockResult) {
+      locked = lock.tryLock(waitTime.toMillis(), leaseTime.toMillis(), TimeUnit.MILLISECONDS);
+      if (locked) {
         runnable.run();
+      } else {
+        executeTryLockFailAction(key, waitTime, leaseTime, notAcquiredAction, null);
       }
+    } catch (InterruptedException interruptedException) {
+      Thread.currentThread().interrupt();
+      executeTryLockFailAction(key, waitTime, leaseTime, interruptedAction, interruptedException);
     } finally {
-      if (lockResult && lock.isLocked() && lock.isHeldByCurrentThread()) {
-        lock.unlock();
+      unlock(locked, lock);
+    }
+  }
+
+  private void executeTryLockFailAction(String key, Duration waitTime, Duration leaseTime,
+      TryLockFailAction action, Exception exception) {
+    if (LOG_DEBUG.equals(action)) {
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("try lock fail, key: {}, waitTime: {}, leaseTime: {}", key, waitTime.toMillis(), leaseTime.toMillis());
       }
+    } else if (LOG_WARN.equals(action)) {
+      if (LOGGER.isWarnEnabled()) {
+        LOGGER.warn("try lock fail, key: {}, waitTime: {}, leaseTime: {}", key, waitTime.toMillis(), leaseTime.toMillis());
+      }
+    } else if (THROW_EXCEPTION.equals(action)) {
+      throw new TryLockFailException(key, waitTime, leaseTime, exception);
     }
   }
 
@@ -987,21 +1015,31 @@ public class CacheTemplate<V> implements CacheOperation<V> {
   @Override
   public <T> T getWithTryLock(String key, Duration waitTime, Duration leaseTime,
       Supplier<T> supplier) {
+    return getWithTryLock(key, waitTime, leaseTime, supplier, LOG_DEBUG, LOG_DEBUG);
+  }
+
+  @Override
+  public <T> T getWithTryLock(String key, Duration waitTime, Duration leaseTime,
+      Supplier<T> supplier, TryLockFailAction notAcquiredAction, TryLockFailAction interruptedAction) {
     if (null == redissonClient) {
       throw new RuntimeException("Redisson not load");
     }
     RLock lock = redissonClient.getLock(key);
-    boolean lockResult = ExceptionUtil.get(
-        () -> lock.tryLock(waitTime.toMillis(), leaseTime.toMillis(), TimeUnit.MILLISECONDS));
+    boolean locked = false;
     try {
-      if (lockResult) {
+      locked = lock.tryLock(waitTime.toMillis(), leaseTime.toMillis(), TimeUnit.MILLISECONDS);
+      if (locked) {
         return supplier.get();
+      } else {
+        executeTryLockFailAction(key, waitTime, leaseTime, notAcquiredAction, null);
       }
       return null;
+    } catch (InterruptedException interruptedException) {
+      Thread.currentThread().interrupt();
+      executeTryLockFailAction(key, waitTime, leaseTime, interruptedAction, interruptedException);
+      return null;
     } finally {
-      if (lockResult && lock.isLocked() && lock.isHeldByCurrentThread()) {
-        lock.unlock();
-      }
+      unlock(locked, lock);
     }
   }
 

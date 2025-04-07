@@ -1,5 +1,6 @@
 package cn.ares.boot.starter.cache.operation;
 
+import cn.ares.boot.starter.cache.constant.TryLockFailAction;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Date;
@@ -1356,14 +1357,6 @@ public interface CacheOperation<V> {
    * @params: [key, runnable] 键，任务
    */
   void runWithLock(String key, Runnable runnable);
-  /**
-   * @author: Ares
-   * @description: 带着指定键的分布式锁执行任务（超时释放）
-   * @description: Execute tasks with distributed locks with specified keys (timeout release)
-   * @time: 2024-09-19 19:14:47
-   * @params: [key, leaseTime, runnable] 键，锁超时释放时间，任务
-   */
-  void runWithLock(String key, Duration leaseTime, Runnable runnable);
 
   /**
    * @author: Ares
@@ -1374,15 +1367,6 @@ public interface CacheOperation<V> {
    * @return: T 任务执行结果
    */
   <T> T getWithLock(String key, Supplier<T> supplier);
-  /**
-   * @author: Ares
-   * @description: 带着指定键的分布式锁执行任务获取结果（超时释放）
-   * @description: Execute tasks with distributed locks with specified keys to get results (timeout)
-   * @time: 2024-09-19 19:15:39
-   * @params: [key, leaseTime, supplier] 键，锁超时释放时间，任务
-   * @return: T 任务执行结果
-   */
-  <T> T getWithLock(String key, Duration leaseTime, Supplier<T> supplier);
 
   /**
    * @author: Ares
@@ -1395,19 +1379,29 @@ public interface CacheOperation<V> {
   /**
    * @author: Ares
    * @description: 带着指定键的分布式锁执行任务（可指定锁获取等待时间）
-   * @description: Execute tasks with distributed locks with specified keys (you can specify the lock acquisition waiting time)
+   * @description: Execute tasks with distributed locks with specified keys (you can specify the lock acquired wait time)
    * @time: 2024-09-19 19:16:57
    * @params: [key, waitTime, runnable] 键，锁获取等待时间，任务
    */
   void runWithTryLock(String key, Duration waitTime, Runnable runnable);
   /**
    * @author: Ares
-   * @description: 带着指定键的分布式锁执行任务（可指定锁获取等待时间和超时释放时间）
-   * @description: Execute tasks with distributed locks with specified keys (you can specify the lock acquisition waiting time and timeout release time)
-   * @time: 2024-09-19 19:16:57
+   * @description: 带着指定键的分布式锁执行任务获取结果（可指定锁获取等待时间和超时释放时间）
+   * @description: Execute tasks with distributed locks with specified keys (you can specify the lock acquired wait time and timeout release time)
+   * @time: 2025-04-07 16:57:40 
    * @params: [key, waitTime, leaseTime, runnable] 键，锁获取等待时间，锁超时释放时间，任务
    */
   void runWithTryLock(String key, Duration waitTime, Duration leaseTime, Runnable runnable);
+  /**
+   * @author: Ares
+   * @description: 带着指定键的分布式锁执行任务（可指定锁获取等待时间、超时释放时间、没有获取锁后的处理方式、获取锁被中断后的处理方式）
+   * @description: Execute tasks with distributed locks with specified keys (you can specify the lock acquired wait timeout, release timeout, no acquired lock action, and try lock interrupted action)
+   * @time: 2024-09-19 19:16:57
+   * @params: [key, waitTime, leaseTime, runnable, notAcquiredAction, interruptedAction]
+   * 键，锁获取等待时间，锁超时释放时间，任务，没有获取锁后的处理方式，获取锁被中断后的处理方式
+   */
+  void runWithTryLock(String key, Duration waitTime, Duration leaseTime, Runnable runnable,
+      TryLockFailAction notAcquiredAction, TryLockFailAction interruptedAction);
 
   /**
    * @author: Ares
@@ -1415,23 +1409,37 @@ public interface CacheOperation<V> {
    * @description: Execute tasks with distributed locks with specified keys to get results
    * @time: 2024-09-19 19:16:57
    * @params: [key, runnable] 键，任务
+   * @return 任务执行结果
    */
   <T> T getWithTryLock(String key, Supplier<T> supplier);
   /**
    * @author: Ares
    * @description: 带着指定键的分布式锁执行任务获取结果（可指定锁获取等待时间）
-   * @description: Execute tasks with distributed locks with specified keys to get results (you can specify the lock acquisition waiting time)
+   * @description: Execute tasks with distributed locks with specified keys to get results (you can specify the lock acquired wait time)
    * @time: 2024-09-19 19:16:57
    * @params: [key, waitTime, runnable] 键，锁获取等待时间，任务
+   * @return 任务执行结果
    */
   <T> T getWithTryLock(String key, Duration waitTime, Supplier<T> supplier);
   /**
    * @author: Ares
    * @description: 带着指定键的分布式锁执行任务获取结果（可指定锁获取等待时间和超时释放时间）
-   * @description: Execute tasks with distributed locks with specified keys to get results (you can specify the lock acquisition waiting time and timeout release time)
-   * @time: 2024-09-19 19:16:57
+   * @description: Execute tasks with distributed locks with specified keys to get results (you can specify the lock acquired wait time and timeout release time)
+   * @time: 2025-04-07 16:55:58 
    * @params: [key, waitTime, leaseTime, runnable] 键，锁获取等待时间，锁超时释放时间，任务
+   * @return 任务执行结果
    */
   <T> T getWithTryLock(String key, Duration waitTime, Duration leaseTime, Supplier<T> supplier);
+  /**
+   * @author: Ares
+   * @description: 带着指定键的分布式锁执行任务获取结果（可指定锁获取等待时间、超时释放时间、没有获取锁后的处理方式、获取锁被中断后的处理方式）
+   * @description: Execute tasks with distributed locks with specified keys to get results (you can specify the lock acquired wait timeout, release timeout, no acquired lock action, and try lock interrupted action)
+   * @time: 2024-09-19 19:16:57
+   * @params: [key, waitTime, leaseTime, runnable, notAcquiredAction, interruptedAction]
+   * 键，锁获取等待时间，锁超时释放时间，任务，没有获取锁后的处理方式，获取锁被中断后的处理方式
+   * @return 任务执行结果
+   */
+  <T> T getWithTryLock(String key, Duration waitTime, Duration leaseTime, Supplier<T> supplier,
+      TryLockFailAction notAcquiredAction, TryLockFailAction interruptedAction);
 
 }

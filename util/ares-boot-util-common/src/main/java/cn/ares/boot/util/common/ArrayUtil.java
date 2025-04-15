@@ -104,8 +104,20 @@ public class ArrayUtil {
    * @params: [array] 数组
    * @return: boolean 是否为空
    */
-  public static boolean isEmpty(Object[] array) {
+  public static <T> boolean isEmpty(T[] array) {
     return null == array || array.length == 0;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断byte数组是否为空
+   * @description: Determine byte array is empty
+   * @time: 2023-07-20 14:00:00
+   * @params: [array] byte数组
+   * @return: boolean 是否为空
+   */
+  public static boolean isEmpty(byte[] array) {
+    return array == null || array.length == 0;
   }
 
   /**
@@ -116,7 +128,19 @@ public class ArrayUtil {
    * @params: [array] 数组
    * @return: boolean 是否非空
    */
-  public static boolean isNotEmpty(Object[] array) {
+  public static <T> boolean isNotEmpty(T[] array) {
+    return !isEmpty(array);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断byte数组是否非空
+   * @description: Determine byte array is not empty
+   * @time: 2023-07-20 14:00:00
+   * @params: [array] byte数组
+   * @return: boolean 是否非空
+   */
+  public static boolean isNotEmpty(byte[] array) {
     return !isEmpty(array);
   }
 
@@ -264,7 +288,7 @@ public class ArrayUtil {
    * @return {@code true} if length of arrays matches, treating
    *  {@code null} as an empty array
    */
-  public static boolean isSameLength(final Object[] array1, final Object[] array2) {
+  public static <T> boolean isSameLength(final T[] array1, final T[] array2) {
     return getLength(array1) == getLength(array2);
   }
 
@@ -276,56 +300,105 @@ public class ArrayUtil {
    * @params: [array] 数组
    * @return: boolean 数组长度为奇数个
    */
-  public static boolean isOddLength(Object[] array) {
+  public static <T> boolean isOddLength(T[] array) {
     return isNotEmpty(array) && NumberUtil.isOdd(array.length);
   }
 
   /**
    * @author: Ares
-   * @description: 判断所有元素全部为null
-   * @description: Determine if all elements are null
+   * @description: 判断所有数组全部为null
+   * @description: Determine if all array are null
    * @time: 2025-02-14 11:26:34
-   * @params: [array] 数组
+   * @params: [arrArr] 二维数组
    * @return: boolean 是否都为null
    */
-  public static boolean allIsNull(Object[] array) {
-    return Arrays.stream(array).allMatch(Objects::isNull);
+  public static <T> boolean allIsNull(T[]... arrArr) {
+    return Arrays.stream(arrArr).allMatch(Objects::isNull);
   }
 
   /*
    * @author: Ares
-   * @description: 判断所有元素全部不为null
-   * @description: Determine if all elements are not null
+   * @description: 判断所有数组全部不为null
+   * @description: Determine if all arrArr are not null
    * @time: 2025-02-14 11:27:16
-   * @params: [array] 数组
+   * @params: [arrArr] 二维数组
    * @return: boolean 是否都不为null
    */
-  public static boolean allIsNotNull(Object[] array) {
-    return Arrays.stream(array).allMatch(Objects::nonNull);
+  public static <T> boolean allIsNotNull(T[]... arrArr) {
+    return Arrays.stream(arrArr).allMatch(Objects::nonNull);
   }
 
   /**
    * @author: Ares
    * @description: 判断任意元素为null
-   * @description: Determine if any element is null
+   * @description: Determine if any arrArr is null
    * @time: 2025-02-14 11:27:36
-   * @params: [array] 数组
-   * @return: boolean 是否有元素为null
+   * @params: [arrArr] 二维数组
+   * @return: boolean 是否有数组为null
    */
-  public static boolean anyIsNull(Object[] array) {
-    return Arrays.stream(array).anyMatch(Objects::isNull);
+  public static <T> boolean anyIsNull(T[]... arrArr) {
+    return Arrays.stream(arrArr).anyMatch(Objects::isNull);
   }
 
   /**
    * @author: Ares
-   * @description: 判断任意元素不为null
-   * @description: Determine if any element is not null
+   * @description: 判断任意数组不为null
+   * @description: Determine if any arrArr is not null
    * @time: 2025-02-14 11:28:07
-   * @params: [array] 数组
-   * @return: boolean 是否有元素不为null
+   * @params: [arrArr] 二维数组
+   * @return: boolean 是否有数组不为null
    */
-  public static boolean anyIsNotNull(Object[] array) {
-    return Arrays.stream(array).anyMatch(Objects::nonNull);
+  public static <T> boolean anyIsNotNull(T[]... arrArr) {
+    return Arrays.stream(arrArr).anyMatch(Objects::nonNull);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断任意数组不为空
+   * @description: Determine if any array is not empty
+   * @time: 2025-04-15 17:30:34
+   * @params: [arrArr] 二维数组
+   * @return: boolean 是否有数组为空
+   */
+  public static <T> boolean anyIsNotEmpty(T[]... arrArr) {
+    return Arrays.stream(arrArr).anyMatch(ArrayUtil::isNotEmpty);
+  }
+
+
+  /**
+   * @author: Ares
+   * @description: 判断任意字节数组不为空
+   * @description: Determine if any byte array is not empty
+   * @time: 2025-04-15 17:30:34
+   * @params: [byteArrArr] 二维字节数组
+   * @return: boolean 是否有字节数组为空
+   */
+  public static <T> boolean anyIsNotEmpty(byte[]... byteArrArr) {
+    return Arrays.stream(byteArrArr).anyMatch(ArrayUtil::isNotEmpty);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断所有数组不为空
+   * @description: Determine if all array is not empty
+   * @time: 2025-04-15 17:31:44
+   * @params: [arrArr] 二维数组
+   * @return: boolean 是否数组都不为空
+   */
+  public static <T> boolean allIsNotEmpty(T[]... arrArr) {
+    return Arrays.stream(arrArr).anyMatch(ArrayUtil::isNotEmpty);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 判断所有字节数组不为空
+   * @description: Determine if all byte array is not empty
+   * @time: 2025-04-15 17:31:44
+   * @params: [arrArr] 二维字节数组
+   * @return: boolean 是否字节数组都不为空
+   */
+  public static <T> boolean allIsNotEmpty(byte[]... byteArrArr) {
+    return Arrays.stream(byteArrArr).anyMatch(ArrayUtil::isNotEmpty);
   }
 
 }

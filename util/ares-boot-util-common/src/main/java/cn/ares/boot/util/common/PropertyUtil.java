@@ -17,6 +17,9 @@ import java.util.function.Function;
  */
 public class PropertyUtil {
 
+  private static final String USER_DIR = System.getProperty("user.dir");
+  private static final String USER_HOME = System.getProperty("user.home");
+
   /**
    * @author: Ares
    * @description: 获取属性（不存在时取默认值的字符串）
@@ -189,4 +192,25 @@ public class PropertyUtil {
     return propValue;
   }
 
+  /**
+   * @author: Ares
+   * @description: 获取用户执行目录
+   * @description: Get user directory
+   * @time: 2025-04-08 20:59:24
+   * @return: java.lang.String 用户目录
+   */
+  public static String getUserDir() {
+    return USER_DIR;
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取用户主目录
+   * @description: Get user home
+   * @time: 2025-04-08 21:00:20
+   * @return: java.lang.String 用户主目录
+   */
+  public static String getUserHome() {
+    return USER_HOME;
+  }
 }

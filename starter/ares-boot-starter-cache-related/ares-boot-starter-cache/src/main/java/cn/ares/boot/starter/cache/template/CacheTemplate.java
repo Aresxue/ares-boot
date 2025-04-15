@@ -991,11 +991,11 @@ public class CacheTemplate<V> implements CacheOperation<V> {
       TryLockFailAction action, Exception exception) {
     if (LOG_DEBUG.equals(action)) {
       if (LOGGER.isDebugEnabled()) {
-        LOGGER.debug("try lock fail, key: {}, waitTime: {}, leaseTime: {}", key, waitTime.toMillis(), leaseTime.toMillis());
+        LOGGER.debug("try lock fail, key: {}, waitTime: {}, leaseTime: {}, exception:", key, waitTime.toMillis(), leaseTime.toMillis(), exception);
       }
     } else if (LOG_WARN.equals(action)) {
       if (LOGGER.isWarnEnabled()) {
-        LOGGER.warn("try lock fail, key: {}, waitTime: {}, leaseTime: {}", key, waitTime.toMillis(), leaseTime.toMillis());
+        LOGGER.warn("try lock fail, key: {}, waitTime: {}, leaseTime: {}, exception:", key, waitTime.toMillis(), leaseTime.toMillis(), exception);
       }
     } else if (THROW_EXCEPTION.equals(action)) {
       throw new TryLockFailException(key, waitTime, leaseTime, exception);

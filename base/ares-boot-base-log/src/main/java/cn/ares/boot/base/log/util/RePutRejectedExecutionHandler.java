@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @description: Re-put the task when thread pool task queue is fully
  * @version: JDK 1.8
  */
-public class RePutRejectedExecutionHandler implements RejectedExecutionHandler {
+class RePutRejectedExecutionHandler implements RejectedExecutionHandler {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RePutRejectedExecutionHandler.class);
 
@@ -27,7 +27,7 @@ public class RePutRejectedExecutionHandler implements RejectedExecutionHandler {
    */
   private final RejectedExecutionHandler backupRejectedExecutionHandler;
 
-  public RePutRejectedExecutionHandler(Set<Thread> workerThreadSet, RejectedExecutionHandler handler) {
+  RePutRejectedExecutionHandler(Set<Thread> workerThreadSet, RejectedExecutionHandler handler) {
     this.workerThreadSet = workerThreadSet;
     // 默认使用拒绝策略和jdk
     // 默认使用拒绝策略

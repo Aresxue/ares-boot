@@ -291,8 +291,7 @@ public class ThreadUtil {
   /**
    * @author: Ares
    * @description: 获取线程池服务（设置工作线程数小于等于0时自动取线程核心数）
-   * @description: Get thread pool service (Set the number of thread cores to be automatically
-   * fetched when the number of worker threads is less than or equal to 0)
+   * @description: Get thread pool service (Set the number of thread cores to be automatically fetched when the number of worker threads is less than or equal to 0)
    * @time: 2023-05-08 10:52:16
    * @params: [threadNameFormat, workerNum, taskSize, rejectedExecutionHandler]
    * 线程命名格式，工作线程数，任务数量，拒绝策略

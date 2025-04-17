@@ -1,7 +1,11 @@
 package cn.ares.boot.base.log.util;
 
 
+import cn.ares.boot.util.common.thread.NameThreadFactory;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionHandler;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -70,6 +74,25 @@ public class ThreadWithLogUtil {
       // Preserve interrupt status.
       Thread.currentThread().interrupt();
     }
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取队列满载时重新放入任务的线程池服务（设置工作线程数小于等于0时自动取线程核心数）
+   * @description: Get the thread pool service that rePut task when the queue is full (automatically takes the core number of threads when the number of working threads is set to less than or equal to 0)
+   * @time: 2025-04-17 10:52:16
+   * @params: [threadNameFormat, workerNum, taskSize, rejectedExecutionHandler]
+   * 线程命名格式，工作线程数，任务数量，拒绝策略
+   * @return: java.util.concurrent.ExecutorService 线程池服务
+   */
+  public static ExecutorService getRePutExecutorService(String threadNameFormat, Integer workerNum,
+      Integer taskSize, RejectedExecutionHandler rejectedExecutionHandler) {
+    ThreadFactory threadFactory = new NameThreadFactory().setNameFormat(threadNameFormat).build();
+    if (workerNum <= 0) {
+      workerNum = Runtime.getRuntime().availableProcessors() * 2;
+    }
+    return new RePutThreadPoolExecutor(workerNum, workerNum, 0L, TimeUnit.MILLISECONDS,
+        new LinkedBlockingQueue<>(taskSize), threadFactory, rejectedExecutionHandler);
   }
 
 }

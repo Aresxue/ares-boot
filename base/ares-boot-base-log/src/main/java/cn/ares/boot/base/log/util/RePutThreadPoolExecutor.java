@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author: Ares
  * @time: 2025-04-16 20:44:19
- * @description: 可追踪的线程池
- * @description: Trackable thread pool
+ * @description: 队列满载时重新放入任务的线程池
+ * @description: RePut the task when thread pool task queue is fully
  * @version: JDK 1.8
  */
 public class RePutThreadPoolExecutor extends TrackableThreadPoolExecutor {

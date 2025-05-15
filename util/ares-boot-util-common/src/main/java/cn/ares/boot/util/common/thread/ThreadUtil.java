@@ -301,7 +301,12 @@ public class ThreadUtil {
    */
   public static ExecutorService getExecutorService(String threadNameFormat, Integer workerNum,
       Integer taskSize, RejectedExecutionHandler rejectedExecutionHandler) {
-    return getExecutorService(threadNameFormat, workerNum, taskSize, rejectedExecutionHandler, Duration.ofMinutes(5));
+    return getExecutorService(threadNameFormat, workerNum, taskSize, rejectedExecutionHandler, Duration.ofMillis(0), true);
+  }
+
+  public static ExecutorService getExecutorService(String threadNameFormat, Integer workerNum,
+      Integer taskSize, RejectedExecutionHandler rejectedExecutionHandler, Duration keepAliveDuration) {
+    return getExecutorService(threadNameFormat, workerNum, taskSize, rejectedExecutionHandler, keepAliveDuration, true);
   }
 
   /**
@@ -309,13 +314,16 @@ public class ThreadUtil {
    * @description: 获取线程池服务（设置工作线程数小于等于0时自动取线程核心数）
    * @description: Get thread pool service (Set the number of thread cores to be automatically fetched when the number of worker threads is less than or equal to 0)
    * @time: 2023-05-08 10:52:16
-   * @params: [threadNameFormat, workerNum, taskSize, rejectedExecutionHandler, keepAliveDuration]
-   * 线程命名格式，工作线程数，任务数量，拒绝策略，保持存活时间
+   * @params: [threadNameFormat, workerNum, taskSize, rejectedExecutionHandler, keepAliveDuration, daemon]
+   * 线程命名格式，工作线程数，任务数量，拒绝策略，保持存活时间，是否守护线程
    * @return: java.util.concurrent.ExecutorService 线程池服务
    */
   public static ExecutorService getExecutorService(String threadNameFormat, Integer workerNum,
-      Integer taskSize, RejectedExecutionHandler rejectedExecutionHandler, Duration keepAliveDuration) {
-    ThreadFactory threadFactory = new NameThreadFactory().setNameFormat(threadNameFormat).build();
+      Integer taskSize, RejectedExecutionHandler rejectedExecutionHandler, Duration keepAliveDuration, boolean daemon) {
+    ThreadFactory threadFactory = new NameThreadFactory()
+        .setNameFormat(threadNameFormat)
+        .setDaemon(daemon)
+        .build();
     if (workerNum <= 0) {
       workerNum = Runtime.getRuntime().availableProcessors() * 2;
     }

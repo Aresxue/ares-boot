@@ -6,7 +6,9 @@ import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -292,20 +294,39 @@ public class ThreadUtil {
    * @author: Ares
    * @description: 获取线程池服务（设置工作线程数小于等于0时自动取线程核心数）
    * @description: Get thread pool service (Set the number of thread cores to be automatically fetched when the number of worker threads is less than or equal to 0)
-   * @time: 2023-05-08 10:52:16
+   * @time: 2025-05-15 10:52:16
    * @params: [threadNameFormat, workerNum, taskSize, rejectedExecutionHandler]
    * 线程命名格式，工作线程数，任务数量，拒绝策略
    * @return: java.util.concurrent.ExecutorService 线程池服务
    */
   public static ExecutorService getExecutorService(String threadNameFormat, Integer workerNum,
       Integer taskSize, RejectedExecutionHandler rejectedExecutionHandler) {
+    return getExecutorService(threadNameFormat, workerNum, taskSize, rejectedExecutionHandler, Duration.ofMinutes(5));
+  }
+
+  /**
+   * @author: Ares
+   * @description: 获取线程池服务（设置工作线程数小于等于0时自动取线程核心数）
+   * @description: Get thread pool service (Set the number of thread cores to be automatically fetched when the number of worker threads is less than or equal to 0)
+   * @time: 2023-05-08 10:52:16
+   * @params: [threadNameFormat, workerNum, taskSize, rejectedExecutionHandler, keepAliveDuration]
+   * 线程命名格式，工作线程数，任务数量，拒绝策略，保持存活时间
+   * @return: java.util.concurrent.ExecutorService 线程池服务
+   */
+  public static ExecutorService getExecutorService(String threadNameFormat, Integer workerNum,
+      Integer taskSize, RejectedExecutionHandler rejectedExecutionHandler, Duration keepAliveDuration) {
     ThreadFactory threadFactory = new NameThreadFactory().setNameFormat(threadNameFormat).build();
     if (workerNum <= 0) {
       workerNum = Runtime.getRuntime().availableProcessors() * 2;
     }
-    return new ThreadPoolExecutor(workerNum, workerNum, 0L,
-        TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(taskSize),
-        threadFactory, rejectedExecutionHandler);
+    BlockingQueue<Runnable> blockingQueue;
+    if (null == taskSize || taskSize <= 0) {
+      blockingQueue = new SynchronousQueue<>();
+    } else {
+      blockingQueue = new LinkedBlockingQueue<>(taskSize);
+    }
+    return new ThreadPoolExecutor(workerNum, workerNum, keepAliveDuration.toMillis(),
+        TimeUnit.MILLISECONDS, blockingQueue, threadFactory, rejectedExecutionHandler);
   }
 
   /**

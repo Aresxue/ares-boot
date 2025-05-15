@@ -54,8 +54,7 @@ public class LogPrintAspect {
       if (null == workerNum) {
         workerNum = ThreadUtil.getLargeThreadCount();
       }
-      executorService = ThreadUtil.getExecutorService("Log-Print-Pool-%d", workerNum, 1024,
-          new DiscardPolicy());
+      executorService = ThreadUtil.getExecutorService("Log-Print-Pool-%d", workerNum, 1024, new DiscardPolicy());
     }
   }
 

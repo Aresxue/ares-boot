@@ -17,8 +17,7 @@ public class ThreadUtilTest {
   public static void main(String[] args) {
     LOGGER.info("largeThreadCount: " + ThreadUtil.getLargeThreadCount());
     LOGGER.info("suitableThreadCount: " + ThreadUtil.getSuitableThreadCount());
-    ThreadUtil.getExecutorService("Test-Case-Repeat-Thread-%d", -1,
-        100_000, new CallerRunsPolicy());
+    ThreadUtil.getExecutorService("Test-Case-Repeat-Thread-%d", -1, 100_000, new CallerRunsPolicy());
   }
 
 }

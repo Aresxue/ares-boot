@@ -328,7 +328,9 @@ public class ThreadUtil {
       workerNum = Runtime.getRuntime().availableProcessors() * 2;
     }
     BlockingQueue<Runnable> blockingQueue;
-    if (null == taskSize || taskSize <= 0) {
+    if (null == taskSize || taskSize < 0) {
+      blockingQueue = new LinkedBlockingQueue<>();
+    } else if (taskSize == 0) {
       blockingQueue = new SynchronousQueue<>();
     } else {
       blockingQueue = new LinkedBlockingQueue<>(taskSize);

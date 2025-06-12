@@ -135,27 +135,27 @@
 
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
-        <artifactId>ares-boot-starter-task-adapter</artifactId>
+        <artifactId>ares-boot-starter-timed-job-adapter</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
-        <artifactId>ares-boot-starter-task-api</artifactId>
+        <artifactId>ares-boot-starter-timed-job-api</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
-        <artifactId>ares-boot-starter-task-abstract</artifactId>
+        <artifactId>ares-boot-starter-timed-job-abstract</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
-        <artifactId>ares-boot-starter-task</artifactId>
+        <artifactId>ares-boot-starter-timed-job</artifactId>
         <version>${boot.version}</version>
       </dependency>
       <dependency>
         <groupId>io.github.aresxue.boot</groupId>
-        <artifactId>ares-boot-starter-task-schedulerx2</artifactId>
+        <artifactId>ares-boot-starter-timed-job-schedulerx2</artifactId>
         <version>${boot.version}</version>
       </dependency>
 

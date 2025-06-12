@@ -6,11 +6,11 @@
 
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
-    <artifactId>ares-boot-starter-task-adapter</artifactId>
+    <artifactId>ares-boot-starter-timed-job-adapter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-task</artifactId>
+  <artifactId>ares-boot-starter-timed-job</artifactId>
   <description>
     默认实现，当前为xxl job
     Default implementation, currently xxl job
@@ -19,7 +19,7 @@
   <dependencies>
     <dependency>
       <groupId>io.github.aresxue.boot</groupId>
-      <artifactId>ares-boot-starter-task-abstract</artifactId>
+      <artifactId>ares-boot-starter-timed-job-abstract</artifactId>
     </dependency>
   </dependencies>
 

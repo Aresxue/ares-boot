@@ -10,10 +10,10 @@
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-task-adapter</artifactId>
+  <artifactId>ares-boot-starter-timed-job-adapter</artifactId>
   <packaging>pom</packaging>
   <description>
-    任务快速使用，可自动从配置中心获取定时任务服务器信息，提供注解方式进行分布式任务调度，提供任务执行前后的拦截器机制，
+    定时任务快速使用，可自动从配置中心获取定时任务服务器信息，提供注解方式进行分布式任务调度，提供任务执行前后的拦截器机制，
     基于base集成全链路信息（包括tid）跨线程跨线程池跨进程传递的功能
     Task use quickly, can automatically obtain scheduled task server information from
     the configuration center, and provide annotations for distributed task scheduling.
@@ -23,10 +23,10 @@
   </description>
 
   <modules>
-    <module>ares-boot-starter-task-api</module>
-    <module>ares-boot-starter-task-abstract</module>
-    <module>ares-boot-starter-task</module>
-    <module>ares-boot-starter-task-schedulerx2</module>
+    <module>ares-boot-starter-timed-job-api</module>
+    <module>ares-boot-starter-timed-job-abstract</module>
+    <module>ares-boot-starter-timed-job</module>
+    <module>ares-boot-starter-timed-job-schedulerx2</module>
   </modules>
 
 </project>

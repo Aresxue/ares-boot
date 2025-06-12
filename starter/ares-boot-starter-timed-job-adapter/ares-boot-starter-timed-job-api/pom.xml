@@ -6,17 +6,11 @@
 
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
-    <artifactId>ares-boot-starter-task-adapter</artifactId>
+    <artifactId>ares-boot-starter-timed-job-adapter</artifactId>
     <version>1.0.3-SNAPSHOT</version>
   </parent>
 
-  <artifactId>ares-boot-starter-task-abstract</artifactId>
+  <artifactId>ares-boot-starter-timed-job-api</artifactId>
 
-  <dependencies>
-    <dependency>
-      <groupId>io.github.aresxue.boot</groupId>
-      <artifactId>ares-boot-starter-task-api</artifactId>
-    </dependency>
-  </dependencies>
 
 </project>

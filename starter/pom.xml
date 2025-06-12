@@ -30,7 +30,7 @@
     <module>ares-boot-starter-rule-engine</module>
     <module>ares-boot-starter-search-engine</module>
     <module>ares-boot-starter-spring</module>
-    <module>ares-boot-starter-task-adapter</module>
+    <module>ares-boot-starter-timed-job-adapter</module>
     <module>ares-boot-starter-test</module>
     <module>ares-boot-starter-validation</module>
     <module>ares-boot-starter-web</module>

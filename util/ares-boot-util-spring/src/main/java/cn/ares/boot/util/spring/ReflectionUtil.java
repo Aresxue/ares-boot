@@ -74,15 +74,13 @@ public class ReflectionUtil {
    * which degrades performance as fields are added. Here we change the time complexity to hashMap
    * to O(1), but it uses more memory
    */
-  private static final Map<Class<?>, Map<String, List<Field>>> DECLARED_FIELD_MAP_CACHE = new ConcurrentReferenceHashMap<>(
-      256);
+  private static final Map<Class<?>, Map<String, List<Field>>> DECLARED_FIELD_MAP_CACHE = new ConcurrentReferenceHashMap<>(256);
   /**
    * Cache for {@link Class#getDeclaredMethods()} plus equivalent default methods from Java 8 based
    * interfaces, allowing for fast iteration.
    * 改自org.springframework.util.ReflectionUtils#declaredMethodsCache
    */
-  private static final Map<Class<?>, Map<String, List<Method>>> DECLARED_METHOD_MAP_CACHE = new ConcurrentReferenceHashMap<>(
-      256);
+  private static final Map<Class<?>, Map<String, List<Method>>> DECLARED_METHOD_MAP_CACHE = new ConcurrentReferenceHashMap<>(256);
   @SuppressWarnings("unchecked")
   /**
    * 方法句柄参数长度上限，超过该个数将不会使用方法句柄，按照JVM的规范方法句柄调用的方法最多不能超过255（JVM方法是256）
@@ -217,8 +215,7 @@ public class ReflectionUtil {
    * @params: [target, fieldName, fieldType, accessible] 目标对象，字段名，字段类型，访问限制
    * @return: java.lang.reflect.Field 字段
    */
-  public static Field findField(Object target, String fieldName, Class<?> fieldType,
-      boolean accessible) {
+  public static Field findField(Object target, String fieldName, Class<?> fieldType, boolean accessible) {
     if (null == target) {
       return null;
     }
@@ -1175,11 +1172,17 @@ public class ReflectionUtil {
     Class<?> searchType = clazz;
     while (searchType != null) {
       Map<String, List<Method>> methodMap;
-      // 这里逻辑从org.springframework.util.ReflectionUtils.findMethod(Class<?>, String, Class<?>...)复制而来，后续思考为什么这么做如果可以的话接口的method也可以缓存
+      /*
+      因为接口的Method对象并不总能正确作用于实现类的实例，且不能保证方法访问控制、代理、注解等一致性，因此不建议针对接口的Method做缓存，推荐以实际类的Method为主
+      1.默认方法（Default Methods）的重写问题
+      2.动态代理和AOP的干扰
+      3.接口方法不包含实现类的注解信息
+      4.多接口冲突的歧义性
+      5.类加载器隔离的失效
+       */
       if (searchType.isInterface()) {
         for (Method method : searchType.getMethods()) {
-          if (methodName.equals(method.getName()) && (paramTypes == null || hasSameParams(method,
-              paramTypes))) {
+          if (methodName.equals(method.getName()) && (paramTypes == null || hasSameParams(method, paramTypes))) {
             return method;
           }
         }

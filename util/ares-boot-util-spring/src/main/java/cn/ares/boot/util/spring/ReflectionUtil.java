@@ -1148,8 +1148,7 @@ public class ReflectionUtil {
       try {
         Field[] declaredFields = clazz.getDeclaredFields();
         result = Arrays.stream(declaredFields).collect(Collectors.groupingBy(Field::getName));
-        DECLARED_FIELD_MAP_CACHE.put(clazz,
-            MapUtil.isEmpty(result) ? Collections.emptyMap() : result);
+        DECLARED_FIELD_MAP_CACHE.put(clazz, result.isEmpty() ? Collections.emptyMap() : result);
       } catch (Throwable ex) {
         throw new IllegalStateException("Failed to introspect Class [" + clazz.getName() +
             "] from ClassLoader [" + clazz.getClassLoader() + "]", ex);

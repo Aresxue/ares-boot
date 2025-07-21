@@ -166,8 +166,7 @@ public class BaseLoggerUtil {
     return (LocationAwareLogger) logger;
   }
 
-  private static void log(String msg, LocationAwareLogger locationAwareLogger, int logLevel,
-      Object[] objects) {
+  private static void log(String msg, LocationAwareLogger locationAwareLogger, int logLevel, Object[] objects) {
     List<Object> paramList = new ArrayList<>();
     Throwable throwable = null;
     for (Object param : objects) {

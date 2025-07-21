@@ -13,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import static org.slf4j.spi.LocationAwareLogger.ERROR_INT;
+import static org.slf4j.spi.LocationAwareLogger.WARN_INT;
+
 /**
  * @author: Ares
  * @time: 2024-07-19 15:19:57
@@ -22,8 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
  */
 public abstract class AbstractGlobalControllerExceptionHandler {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(
-      AbstractGlobalControllerExceptionHandler.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractGlobalControllerExceptionHandler.class);
 
   /**
    * 失败时输出的消息头的名称
@@ -31,10 +33,19 @@ public abstract class AbstractGlobalControllerExceptionHandler {
   @Value("${ares.web.print-header-names-when-fail:content-type,referer,user-agent}")
   private String[] printHeaderNamesWhenFail;
 
-  protected void printErrorLog(String exceptionMsg, int code, Throwable throwable) {
+  protected void printErrorLog(String exceptionMsg, int code, Throwable throwable, int logLevel) {
+    // 如果日志级别小于等于0则不打印
+    if (logLevel < 0) {
+      return;
+    }
     HttpServletRequest httpServletRequest = WebUtil.getHttpServletRequest();
     if (null == httpServletRequest) {
-      LOGGER.error("http request handle fail, code: {}, {}:  ", code, exceptionMsg, throwable);
+      if (WARN_INT == logLevel) {
+        LOGGER.warn("http request handle fail, code: {}, {}:  ", code, exceptionMsg, throwable);
+      } else {
+        // 除了告警级别其它都认为是错误级别
+        LOGGER.error("http request handle fail, code: {}, {}:  ", code, exceptionMsg, throwable);
+      }
     } else {
       String fromIp = HttpServletUtil.getFromIp(httpServletRequest);
       String path = httpServletRequest.getServletPath();
@@ -52,10 +63,14 @@ public abstract class AbstractGlobalControllerExceptionHandler {
         }
         body = new String(requestWrapper.getCachedBytes(), Charset.forName(requestEncoding));
       }
-      LOGGER.error(
-          "http request handle fail, code: {}, from ip: {}, path: {}, query: {}, body: {}, headers: {}, {}: ",
-          code, fromIp, path, query, body, JsonUtil.toJsonString(printHeaderMap), exceptionMsg,
-          throwable);
+      if (WARN_INT == logLevel) {
+        LOGGER.warn("http request handle fail, code: {}, from ip: {}, path: {}, query: {}, body: {}, headers: {}, {}: ",
+            code, fromIp, path, query, body, JsonUtil.toJsonString(printHeaderMap), exceptionMsg, throwable);
+      } else {
+        // 除了告警级别其它都认为是错误级别
+        LOGGER.error("http request handle fail, code: {}, from ip: {}, path: {}, query: {}, body: {}, headers: {}, {}: ",
+            code, fromIp, path, query, body, JsonUtil.toJsonString(printHeaderMap), exceptionMsg, throwable);
+      }
     }
   }
 

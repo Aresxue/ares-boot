@@ -909,9 +909,9 @@ public class ReflectionUtil {
    * @description: shallow clone
    * @time: 2023-07-12 21:38:01
    * @params: [source] 源对象
-   * @return: java.lang.Object 克隆出的对象
+   * @return: T 克隆出的对象
    */
-  public static Object shallowClone(Object target) {
+  public static <T> T shallowClone(T target) {
     return shallowClone(target, true);
   }
 
@@ -921,14 +921,14 @@ public class ReflectionUtil {
    * @description: shallow clone
    * @time: 2023-07-12 21:38:01
    * @params: [source, includeSuperFields] 源对象，是否包含父类字段
-   * @return: java.lang.Object 克隆出的对象
+   * @return: T 克隆出的对象
    */
-  public static Object shallowClone(Object source, boolean includeSuperFields) {
+  public static <T> T shallowClone(T source, boolean includeSuperFields) {
     if (null == source) {
       return null;
     }
     Class<?> clazz = source.getClass();
-    Object target = invokeConstructor(clazz);
+    T target = invokeConstructor(clazz);
     shallowCopy(source, target, includeSuperFields);
     return target;
   }

@@ -24,7 +24,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class MapUtil {
 
-  public static final int MAX_POWER_OF_TWO = 1 << (Integer.SIZE - 2);
+  private static final int MAX_POWER_OF_TWO = 1 << (Integer.SIZE - 2);
 
   /**
    * @author: Ares

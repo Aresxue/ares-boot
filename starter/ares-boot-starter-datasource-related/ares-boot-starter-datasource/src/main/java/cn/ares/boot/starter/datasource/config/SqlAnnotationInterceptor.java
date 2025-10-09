@@ -32,7 +32,7 @@ public class SqlAnnotationInterceptor implements Interceptor {
     try {
       BoundSql boundSql = statementHandler.getBoundSql();
       String sql = boundSql.getSql();
-      String annotation = String.format("/* appName=%s */", BootEnvironment.getAppName());
+      String annotation = "/* appName=" + BootEnvironment.getAppName() + " */";
       // 在sql语句前面加上注释然后用反射修改boundSql的sql属性实现修改sql的目的
       // Add a comment in front of the SQL statement and then use reflection to modify the sql properties of boundSql
       sql = annotation + sql;

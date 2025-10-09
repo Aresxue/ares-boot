@@ -454,7 +454,7 @@ public class StringUtil {
       final int len = str.length();
       if (len == 0) {
         return Collections.emptyList();
-      } else if (separator != null && !"".equals(separator)) {
+      } else if (separator != null && !separator.isEmpty()) {
         final int separatorLength = separator.length();
         final List<String> substrings = new ArrayList<>();
         int numberOfSubstrings = 0;

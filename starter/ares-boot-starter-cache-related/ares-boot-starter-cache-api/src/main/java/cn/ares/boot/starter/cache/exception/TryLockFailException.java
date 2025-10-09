@@ -14,8 +14,7 @@ public class TryLockFailException extends IllegalStateException {
   private static final long serialVersionUID = 354778576330926436L;
 
   public TryLockFailException(String key, Duration waitTime, Duration leaseTime, Exception ex) {
-    super(String.format("try lock fail, key: %s, waitTime: %s, leaseTime: %s", key,
-        waitTime.toMillis(), leaseTime.toMillis()), ex);
+    super("try lock fail, key: " + key + ", waitTime: " + waitTime.toMillis() + ", leaseTime: " + leaseTime.toMillis(), ex);
   }
 
 

@@ -110,9 +110,8 @@ public class AopUtil {
       Method methodToUse = MethodIntrospector.selectInvocableMethod(method, targetType);
       if (Modifier.isPrivate(methodToUse.getModifiers()) && !Modifier
           .isStatic(methodToUse.getModifiers()) && SpringProxy.class.isAssignableFrom(targetType)) {
-        throw new IllegalStateException(String.format(
-            "Need to invoke method '%s' found on proxy for target class '%s' but cannot be delegated to target bean. Switch its visibility to package or protected.",
-            method.getName(), method.getDeclaringClass().getSimpleName()));
+        throw new IllegalStateException("Need to invoke method '" + method.getName() + "' found on proxy for target class '"
+            + method.getDeclaringClass().getSimpleName() + "' but cannot be delegated to target bean. Switch its visibility to package or protected.");
       } else {
         return methodToUse;
       }

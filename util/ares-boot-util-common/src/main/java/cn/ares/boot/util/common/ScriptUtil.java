@@ -50,8 +50,7 @@ public class ScriptUtil {
       if (StringUtil.isEmpty(templatePath)) {
         templatePath = langName + SCRIPT_TEMPLATE_SUFFIX;
       }
-      ScriptEngine engine = SCRIPT_ENGINE_CACHE.computeIfAbsent(langName,
-          value -> engineManager.getEngineByName(langName));
+      ScriptEngine engine = SCRIPT_ENGINE_CACHE.computeIfAbsent(langName, value -> engineManager.getEngineByName(langName));
       if (null == engine) {
         throw new ExecuteScriptException("Not found script engine by " + langName);
       }

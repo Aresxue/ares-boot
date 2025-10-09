@@ -151,13 +151,10 @@ public class SnowFlakeIdWorker {
 
   public SnowFlakeIdWorker(long workerId, long dataCenterId, long epoch, int sequenceCacheSize) {
     if (workerId > MAX_WORKER_ID || workerId < 0) {
-      throw new IllegalArgumentException(
-          String.format("Worker Id can't be greater than %d or less than 0", MAX_WORKER_ID));
+      throw new IllegalArgumentException("Worker Id can't be greater than " + MAX_WORKER_ID + " or less than 0");
     }
     if (dataCenterId > MAX_DATA_CENTER_ID || dataCenterId < 0) {
-      throw new IllegalArgumentException(
-          String.format("DataCenter Id can't be greater than %d or less than 0",
-              MAX_DATA_CENTER_ID));
+      throw new IllegalArgumentException("DataCenter Id can't be greater than " + MAX_DATA_CENTER_ID + " or less than 0");
     }
     this.workerId = workerId;
     this.dataCenterId = dataCenterId;
@@ -260,9 +257,7 @@ public class SnowFlakeIdWorker {
             // 可自定义异常、告警等，短暂不能对外提供，故障转移，将请求转发到正常机器
             // Can customize exceptions, alarms, etc., can not be provided externally for a short time,
             // failover, and forward requests to normal machines
-            throw new UnsupportedOperationException(
-                String.format("The time back range is too large and exceeds %dms caches",
-                    sequenceCacheSize));
+            throw new UnsupportedOperationException("The time back range is too large and exceeds " + sequenceCacheSize + "ms caches");
           }
           long preSequence = this.sequenceCache[index];
           tempSequence = (preSequence + 1) & SEQUENCE_MASK;

@@ -1,9 +1,6 @@
 package cn.ares.boot.util.common;
 
 
-import static cn.ares.boot.util.common.constant.StringConstant.ZERO;
-import static cn.ares.boot.util.common.constant.SymbolConstant.REGEX_SPOT;
-
 import cn.ares.boot.util.common.primitive.IntegerUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,8 +15,12 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+
+import static cn.ares.boot.util.common.constant.StringConstant.ZERO;
+import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
 
 /**
  * @author: Ares
@@ -288,17 +289,14 @@ public class DateUtil {
    * @return: long 时间戳
    */
   public static long getMicrosecond(String dateTime) {
-    String[] dateTimes = dateTime.split(REGEX_SPOT);
-    if (dateTimes.length > 1) {
-      dateTime = dateTimes[0];
+    List<String> dateTimeList = StringUtil.listSplit(dateTime, SPOT);
+    if (dateTimeList.size() > 1) {
+      dateTime = dateTimeList.get(0);
     }
-    LocalDateTime localDateTime = LocalDateTime.parse(dateTime,
-        DateTimeFormatter.ofPattern(DATE_FORMAT_WHIFFLETREE_SECOND));
-    long result =
-        localDateTime.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond() * 1_000_000;
-    if (dateTimes.length > 1) {
-      int microsecond = Integer.parseInt(
-          StringUtil.rightPadWithOver(dateTimes[1], DATABASE_PRECISION, ZERO));
+    LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DateTimeFormatter.ofPattern(DATE_FORMAT_WHIFFLETREE_SECOND));
+    long result = localDateTime.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond() * 1_000_000;
+    if (dateTimeList.size() > 1) {
+      int microsecond = Integer.parseInt(StringUtil.rightPadWithOver(dateTimeList.get(1), DATABASE_PRECISION, ZERO));
       result += microsecond;
     }
 
@@ -314,15 +312,13 @@ public class DateUtil {
    * @return: java.time.LocalDateTime 本地日期时间
    */
   public static LocalDateTime getDefaultLocalDateTime(String dateTime) {
-    String[] dateTimes = dateTime.split(REGEX_SPOT);
-    if (dateTimes.length > 1) {
-      dateTime = dateTimes[0];
+    List<String> dateTimeList = StringUtil.listSplit(dateTime, SPOT);
+    if (dateTimeList.size() > 1) {
+      dateTime = dateTimeList.get(0);
     }
-    LocalDateTime localDateTime = LocalDateTime.parse(dateTime,
-        DATE_FORMAT_WHIFFLETREE_SECOND_FORMATTER);
-    if (dateTimes.length > 1) {
-      int microsecond = Integer.parseInt(
-          StringUtil.rightPadWithOver(dateTimes[1], DATABASE_PRECISION, ZERO));
+    LocalDateTime localDateTime = LocalDateTime.parse(dateTime, DATE_FORMAT_WHIFFLETREE_SECOND_FORMATTER);
+    if (dateTimeList.size() > 1) {
+      int microsecond = Integer.parseInt(StringUtil.rightPadWithOver(dateTimeList.get(1), DATABASE_PRECISION, ZERO));
       localDateTime = localDateTime.plusNanos(microsecond * 1_000L);
     }
 
@@ -338,14 +334,13 @@ public class DateUtil {
    * @return: java.time.LocalTime 本地时间
    */
   public static LocalTime getDefaultLocalTime(String time) {
-    String[] dateTimes = time.split(REGEX_SPOT);
-    if (dateTimes.length > 1) {
-      time = dateTimes[0];
+    List<String> timeList = StringUtil.listSplit(time, SPOT);
+    if (timeList.size() > 1) {
+      time = timeList.get(0);
     }
     LocalTime localTime = LocalTime.parse(time, DATE_FORMAT_TIME_FORMATTER);
-    if (dateTimes.length > 1) {
-      int microsecond = Integer.parseInt(
-          StringUtil.rightPadWithOver(dateTimes[1], DATABASE_PRECISION, ZERO));
+    if (timeList.size() > 1) {
+      int microsecond = Integer.parseInt(StringUtil.rightPadWithOver(timeList.get(1), DATABASE_PRECISION, ZERO));
       localTime = localTime.plusNanos(microsecond * 1_000L);
     }
 

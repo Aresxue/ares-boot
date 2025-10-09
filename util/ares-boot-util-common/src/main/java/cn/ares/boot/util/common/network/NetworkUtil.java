@@ -1,11 +1,6 @@
 package cn.ares.boot.util.common.network;
 
 
-import static cn.ares.boot.util.common.constant.StringConstant.HTTPS;
-import static cn.ares.boot.util.common.constant.StringConstant.HTTPS_DEFAULT_PORT;
-import static cn.ares.boot.util.common.constant.StringConstant.HTTP_DEFAULT_PORT;
-import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
-
 import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.common.log.JdkLoggerUtil;
 import java.net.Inet4Address;
@@ -19,6 +14,12 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.logging.Logger;
+
+import static cn.ares.boot.util.common.constant.StringConstant.HTTPS;
+import static cn.ares.boot.util.common.constant.StringConstant.HTTPS_DEFAULT_PORT;
+import static cn.ares.boot.util.common.constant.StringConstant.HTTP_DEFAULT_PORT;
+import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
+import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
 
 /**
  * @author: Ares
@@ -136,9 +137,9 @@ public class NetworkUtil {
    * @return: int int ip
    */
   public static int ipToInt(String ipStr) {
-    String[] ip = ipStr.split("\\.");
-    return (Integer.parseInt(ip[0]) << 24) + (Integer.parseInt(ip[1]) << 16) + (
-        Integer.parseInt(ip[2]) << 8) + Integer.parseInt(ip[3]);
+    List<String> ipList = StringUtil.listSplit(ipStr, SPOT);
+    return (Integer.parseInt(ipList.get(0)) << 24) + (Integer.parseInt(ipList.get(1)) << 16) + (
+        Integer.parseInt(ipList.get(2)) << 8) + Integer.parseInt(ipList.get(3));
   }
 
   /**

@@ -218,19 +218,21 @@ public class ClassUtil {
     if (className == null) {
       return null;
     } else {
-      String[] ss = className.split("\\.");
-      StringBuilder sb = new StringBuilder(className.length());
+      List<String> strList = StringUtil.listSplit(className, ".");
+      StringBuilder builder = new StringBuilder(className.length());
 
-      for (int i = 0; i < ss.length; ++i) {
-        String s = ss[i];
-        if (i != ss.length - 1) {
-          sb.append(s.charAt(0)).append('.');
+      int size = strList.size();
+      int lastIndex = size - 1;
+      for (int i = 0; i < size; ++i) {
+        String str = strList.get(i);
+        if (i != lastIndex) {
+          builder.append(str.charAt(0)).append('.');
         } else {
-          sb.append(s);
+          builder.append(str);
         }
       }
 
-      return sb.toString();
+      return builder.toString();
     }
   }
 

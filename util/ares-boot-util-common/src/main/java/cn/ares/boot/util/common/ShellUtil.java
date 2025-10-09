@@ -35,8 +35,7 @@ public class ShellUtil {
       map.forEach((thread, elements) -> {
         if (elements != null && elements.length > 0) {
           String threadName = thread.getName();
-          result.append(String.format("%-40sTID: %d STATE: %s%n", threadName, thread.getId(),
-              thread.getState()));
+          result.append(String.format("%-40sTID: %d STATE: %s%n", threadName, thread.getId(), thread.getState()));
           for (StackTraceElement element : elements) {
             result.append(String.format("%-40s%s%n", threadName, element.toString()));
           }

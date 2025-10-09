@@ -1,9 +1,16 @@
 package cn.ares.boot.util.servlet;
 
 
+import cn.ares.boot.util.common.StringUtil;
+import cn.ares.boot.util.common.constant.OperateSystem;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
 import static cn.ares.boot.util.common.constant.StringConstant.UNKNOWN;
 import static cn.ares.boot.util.common.constant.SymbolConstant.COMMA;
 import static cn.ares.boot.util.common.constant.SymbolConstant.SEMICOLON;
+import static cn.ares.boot.util.common.constant.SymbolConstant.SPACE;
 import static cn.ares.boot.util.servlet.constant.BrowserType.CHROME;
 import static cn.ares.boot.util.servlet.constant.BrowserType.EDGE;
 import static cn.ares.boot.util.servlet.constant.BrowserType.FIREFOX;
@@ -16,12 +23,6 @@ import static cn.ares.boot.util.servlet.constant.BrowserType.OPR;
 import static cn.ares.boot.util.servlet.constant.BrowserType.SAFARI;
 import static cn.ares.boot.util.servlet.constant.ServletConstant.CLIENT_MAC_ADDRESS;
 import static cn.ares.boot.util.servlet.constant.ServletConstant.USER_AGENT;
-
-import cn.ares.boot.util.common.StringUtil;
-import cn.ares.boot.util.common.constant.OperateSystem;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -44,26 +45,26 @@ public class HttpServletUtil {
    */
   public static String getFromIp(HttpServletRequest request) {
     String ip = request.getHeader("x-forwarded-for");
-    if (ip != null && ip.length() != 0 && !UNKNOWN.equalsIgnoreCase(ip)) {
+    if (ip != null && !ip.isEmpty() && !UNKNOWN.equalsIgnoreCase(ip)) {
       // 多次反向代理后会有多个ip值，第一个ip才是真实ip
       // After multiple reverse proxies, there will be multiple ip values, the first ip is the real ip
       if (ip.contains(COMMA)) {
-        ip = ip.split(COMMA)[0];
+        ip = StringUtil.listSplit(ip, COMMA).get(0);
       }
     }
-    if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+    if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getHeader("Proxy-Client-IP");
     }
-    if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+    if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getHeader("WL-Proxy-Client-IP");
     }
-    if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+    if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getHeader("HTTP_CLIENT_IP");
     }
-    if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+    if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getHeader("HTTP_X_FORWARDED_FOR");
     }
-    if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+    if (ip == null || ip.isEmpty() || UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getRemoteAddr();
     }
     return ip;
@@ -104,39 +105,31 @@ public class HttpServletUtil {
 
     String browser = null;
     if (user.contains(EDGE.value())) {
-      browser = StringUtil.replace(userAgent.substring(userAgent.indexOf("Edge")).split(" ")[0],
-          "/", "-");
+      browser = StringUtil.replace(userAgent.substring(userAgent.indexOf("Edge")).split(SPACE)[0], "/", "-");
     } else if (user.contains(MSIE.value())) {
       String substring = userAgent.substring(userAgent.indexOf("MSIE")).split(";")[0];
       browser =
-          StringUtil.replace(substring.split(" ")[0], "MSIE", "IE") + "-" + substring.split(" ")[1];
+          StringUtil.replace(substring.split(SPACE)[0], "MSIE", "IE") + "-" + substring.split(SPACE)[1];
     } else {
-      String[] split = userAgent.substring(userAgent.indexOf("Version")).split(" ");
+      String[] split = userAgent.substring(userAgent.indexOf("Version")).split(SPACE);
       if (user.contains(SAFARI.value()) && user.contains(VERSION)) {
-        browser = (userAgent.substring(userAgent.indexOf("Safari")).split(" ")[0]).split("/")[0]
-            + "-" + (split[0]).split("/")[1];
+        browser = (userAgent.substring(userAgent.indexOf("Safari")).split(SPACE)[0]).split("/")[0] + "-" + (split[0]).split("/")[1];
       } else if (user.contains(OPR.value()) || user.contains(OPERA.value())) {
         if (user.contains(OPERA.value())) {
-          browser = (userAgent.substring(userAgent.indexOf("Opera")).split(" ")[0]).split("/")[0]
-              + "-" + (split[0]).split("/")[1];
+          browser = (userAgent.substring(userAgent.indexOf("Opera")).split(SPACE)[0]).split("/")[0] + "-" + (split[0]).split("/")[1];
         } else if (user.contains(OPR.value())) {
-          browser = StringUtil.replace(
-              StringUtil.replace((userAgent.substring(userAgent.indexOf("OPR")).split(" ")[0]), "/",
-                  "-"), "OPR", "Opera");
+          browser = StringUtil.replace(StringUtil.replace((userAgent.substring(userAgent.indexOf("OPR")).split(SPACE)[0]), "/", "-"), "OPR", "Opera");
         }
       } else if (user.contains(CHROME.value())) {
-        browser = StringUtil.replace(userAgent.substring(userAgent.indexOf("Chrome")).split(" ")[0],
-            "/", "-");
+        browser = StringUtil.replace(userAgent.substring(userAgent.indexOf("Chrome")).split(SPACE)[0], "/", "-");
       } else if ((user.contains(NETSCAPE.value())) || (user.contains(NETSCAPE6.value())) ||
           (user.contains("mozilla/4.7")) || (user.contains("mozilla/4.78")) ||
           (user.contains("mozilla/4.08")) || (user.contains("mozilla/3"))) {
         browser = "Netscape-?";
       } else if (user.contains(FIREFOX.value())) {
-        browser = StringUtil.replace(
-            userAgent.substring(userAgent.indexOf("Firefox")).split(" ")[0], "/", "-");
+        browser = StringUtil.replace(userAgent.substring(userAgent.indexOf("Firefox")).split(SPACE)[0], "/", "-");
       } else if (user.contains(IE.value())) {
-        String version = StringUtil.replace(
-            userAgent.substring(userAgent.indexOf(IE.value())).split(" ")[0], "rv:", "-");
+        String version = StringUtil.replace(userAgent.substring(userAgent.indexOf(IE.value())).split(SPACE)[0], "rv:", "-");
         browser = "IE" + version.substring(0, version.length() - 1);
       } else {
         browser = "UnKnown, More-Info: " + userAgent;

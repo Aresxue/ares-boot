@@ -1,12 +1,12 @@
 package cn.ares.boot.util.common;
 
-import static cn.ares.boot.util.common.constant.CommonConstant.FLOATING_POINT_NUMBER_PATTERN;
-
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Objects;
+
+import static cn.ares.boot.util.common.constant.CommonConstant.FLOATING_POINT_NUMBER_PATTERN;
 
 /**
  * @author: Ares
@@ -1312,8 +1312,10 @@ public class NumberUtil {
    * @throws IllegalArgumentException if {@code array} is either {@code null} or empty
    */
   private static void validateArray(final Object array) {
-    notNull(array);
-    isTrue(Array.getLength(array) != 0);
+    Objects.requireNonNull(array, "array");
+    if (Array.getLength(array) == 0) {
+      throw new IllegalArgumentException("Array cannot be empty.");
+    }
   }
 
   // 3 param min
@@ -1789,16 +1791,6 @@ public class NumberUtil {
    */
   public static int compare(final byte x, final byte y) {
     return x - y;
-  }
-
-  private static <T> void notNull(final T object, final Object... values) {
-    Objects.requireNonNull(object, () -> String.format("array", values));
-  }
-
-  private static void isTrue(final boolean expression, final Object... values) {
-    if (!expression) {
-      throw new IllegalArgumentException(String.format("Array cannot be empty.", values));
-    }
   }
 
   public static boolean isFloatingPointNumber(String str) {

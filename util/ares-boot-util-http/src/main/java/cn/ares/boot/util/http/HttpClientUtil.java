@@ -1,20 +1,5 @@
 package cn.ares.boot.util.http;
 
-import static cn.ares.boot.util.common.constant.SymbolConstant.AND;
-import static cn.ares.boot.util.common.constant.SymbolConstant.COLON;
-import static cn.ares.boot.util.common.constant.SymbolConstant.EQUALS;
-import static cn.ares.boot.util.common.constant.SymbolConstant.LEFT_SQ_BRACKET;
-import static cn.ares.boot.util.common.constant.SymbolConstant.QUESTION_MARK;
-import static cn.ares.boot.util.common.constant.SymbolConstant.RIGHT_SQ_BRACKET;
-import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
-import static cn.ares.boot.util.http.constant.HttpConstant.HTTP_POOL_MONITOR_THREAD_FACTORY_NAME;
-import static cn.ares.boot.util.http.constant.HttpConstant.HTTP_REQUEST_HEADERS;
-import static cn.ares.boot.util.http.constant.HttpConstant.HTTP_RESPONSE_HEADERS;
-import static org.apache.hc.core5.http.ContentType.APPLICATION_FORM_URLENCODED;
-import static org.apache.hc.core5.http.ContentType.APPLICATION_JSON;
-import static org.apache.hc.core5.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPORT;
-
 import cn.ares.boot.util.common.ArrayUtil;
 import cn.ares.boot.util.common.ExceptionUtil;
 import cn.ares.boot.util.common.StringUtil;
@@ -50,7 +35,11 @@ import org.apache.hc.client5.http.HttpRequestRetryStrategy;
 import org.apache.hc.client5.http.HttpRoute;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpHead;
+import org.apache.hc.client5.http.classic.methods.HttpOptions;
+import org.apache.hc.client5.http.classic.methods.HttpPatch;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpTrace;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.config.RequestConfig;
@@ -89,6 +78,21 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Component;
+
+import static cn.ares.boot.util.common.constant.SymbolConstant.AND;
+import static cn.ares.boot.util.common.constant.SymbolConstant.COLON;
+import static cn.ares.boot.util.common.constant.SymbolConstant.EQUALS;
+import static cn.ares.boot.util.common.constant.SymbolConstant.LEFT_SQ_BRACKET;
+import static cn.ares.boot.util.common.constant.SymbolConstant.QUESTION_MARK;
+import static cn.ares.boot.util.common.constant.SymbolConstant.RIGHT_SQ_BRACKET;
+import static cn.ares.boot.util.common.constant.SymbolConstant.SPOT;
+import static cn.ares.boot.util.http.constant.HttpConstant.HTTP_POOL_MONITOR_THREAD_FACTORY_NAME;
+import static cn.ares.boot.util.http.constant.HttpConstant.HTTP_REQUEST_HEADERS;
+import static cn.ares.boot.util.http.constant.HttpConstant.HTTP_RESPONSE_HEADERS;
+import static org.apache.hc.core5.http.ContentType.APPLICATION_FORM_URLENCODED;
+import static org.apache.hc.core5.http.ContentType.APPLICATION_JSON;
+import static org.apache.hc.core5.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.beans.factory.config.BeanDefinition.ROLE_SUPPORT;
 
 /**
  * @author: Ares
@@ -604,6 +608,358 @@ public class HttpClientUtil implements ApplicationContextAware {
 
   /**
    * @author: Ares
+   * @description: 发起Head请求地址获取结果
+   * @description: Initiate a Head request address to get the result
+   * @time: 2025-10-09 18:01:00
+   * @params: [url] 请求地址
+   * @return: java.lang.String 响应结果
+   */
+  public static String head(String url) throws Exception {
+    return head(url, Collections.emptyMap());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 发起Head请求地址获取结果（等待指定超时时间）
+   * @description: Initiate a Head request address to get the result (wait for the specified timeout)
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, socketTimeout] 请求地址，超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String head(String url, int socketTimeout) throws Exception {
+    return head(url, Collections.emptyMap(), socketTimeout);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Head请求地址获取结果
+   * @description: Use the message header to initiate a Head request address to get the result
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, headers] 请求地址，消息头
+   * @return: java.lang.String 响应结果
+   */
+  public static String head(String url, Map<String, String> headers) throws Exception {
+    return head(url, headers, config.getSocketTimeout());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Head请求地址获取结果（等待指定超时时间）
+   * @description: Use the message header to initiate a Head request address to get the result (wait for the specified timeout)
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, headers, socketTimeout] 请求地址，消息头，超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String head(String url, Map<String, String> headers, int socketTimeout) throws Exception {
+    return head(url, headers, socketTimeout, config.getConnectTimeout(), config.getConnectionRequestTimeout());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Head请求地址获取结果（等待超时时间，连接超时时间，连接获取超时时间）
+   * @description: Use the message header to initiate a Head request address to get the result (waiting timeout, connection timeout, connection acquisition timeout)
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout]
+   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String head(String url, Map<String, String> headers, int socketTimeout,
+      int connectTimeout, int connectionRequestTimeout) throws Exception {
+    return head(url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, null);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头使用代理发起Head请求地址获取结果（等待超时时间，连接超时时间，连接获取超时时间）
+   * @description: Use the message header to use the proxy to initiate a Head request address to get the result (waiting timeout, connection timeout, connection acquisition timeout)
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy]
+   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
+   * @return: java.lang.String 响应结果
+   */
+  public static String head(String url, Map<String, String> headers, int socketTimeout,
+      int connectTimeout, int connectionRequestTimeout, HttpHost proxy) throws Exception {
+    HttpHead httpHead = new HttpHead(url);
+    httpHead.setHeader(CONTENT_TYPE, APPLICATION_FORM_URLENCODED.toString());
+    configRequest(httpHead, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
+    return request(httpHead, null, null);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 发起Options请求地址获取结果
+   * @description: Initiate an Options request address to get the result
+   * @time: 2025-10-09 18:01:00
+   * @params: [url] 请求地址
+   * @return: java.lang.String 响应结果
+   */
+  public static String options(String url) throws Exception {
+    return options(url, Collections.emptyMap());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 发起Options请求地址获取结果（等待指定超时时间）
+   * @description: Initiate an Options request address to get the result (wait for the specified timeout)
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, socketTimeout] 请求地址，超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String options(String url, int socketTimeout) throws Exception {
+    return options(url, Collections.emptyMap(), socketTimeout);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Options请求地址获取结果
+   * @description: Use the message header to initiate an Options request address to get the result
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, headers] 请求地址，消息头
+   * @return: java.lang.String 响应结果
+   */
+  public static String options(String url, Map<String, String> headers) throws Exception {
+    return options(url, headers, config.getSocketTimeout());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Options请求地址获取结果（等待指定超时时间）
+   * @description: Use the message header to initiate an Options request address to get the result (wait for the specified timeout)
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, headers, socketTimeout] 请求地址，消息头，超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String options(String url, Map<String, String> headers, int socketTimeout) throws Exception {
+    return options(url, headers, socketTimeout, config.getConnectTimeout(), config.getConnectionRequestTimeout());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Options请求地址获取结果（等待超时时间，连接超时时间，连接获取超时时间）
+   * @description: Use the message header to initiate an Options request address to get the result (waiting timeout, connection timeout, connection acquisition timeout)
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout]
+   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String options(String url, Map<String, String> headers, int socketTimeout,
+      int connectTimeout, int connectionRequestTimeout) throws Exception {
+    return options(url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, null);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头使用代理发起Options请求地址获取结果（等待超时时间，连接超时时间，连接获取超时时间）
+   * @description: Use the message header to use the proxy to initiate an Options request address to get the result (waiting timeout, connection timeout, connection acquisition timeout)
+   * @time: 2025-10-09 18:01:00
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy]
+   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
+   * @return: java.lang.String 响应结果
+   */
+  public static String options(String url, Map<String, String> headers, int socketTimeout,
+      int connectTimeout, int connectionRequestTimeout, HttpHost proxy) throws Exception {
+    HttpOptions httpOptions = new HttpOptions(url);
+    httpOptions.setHeader(CONTENT_TYPE, APPLICATION_FORM_URLENCODED.toString());
+    configRequest(httpOptions, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
+    return request(httpOptions, null, null);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用请求对象发起Patch请求地址获取结果
+   * @description: Use the request object to initiate a Patch request address to get the result
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request] 请求地址，请求对象
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request) throws Exception {
+    return patch(url, request, Collections.emptyMap());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用请求对象发起Patch请求地址获取结果/文件
+   * @description: Use the request object to initiate a Patch request address to get the result or file
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request, fileSavePath] 请求地址，请求对象，文件保存地址（可选）
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request, String fileSavePath) throws Exception {
+    return patch(url, request, Collections.emptyMap(), fileSavePath);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用请求对象发起Patch请求地址获取结果（等待指定超时时间）
+   * @description: Use the request object to initiate a Patch request address to get the result (wait for the specified timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request, socketTimeout] 请求地址，请求对象，超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request, int socketTimeout) throws Exception {
+    return patch(url, request, Collections.emptyMap(), socketTimeout, null);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头发起Patch请求地址获取结果/文件
+   * @description: Pass in the request object and message header to initiate the Patch request address to get the result or file
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request, headers, fileSavePath] 请求地址，请求对象，消息头，文件保存地址（可选）
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request, Map<String, String> headers, String fileSavePath) throws Exception {
+    return patch(url, request, headers, config.getSocketTimeout(), fileSavePath);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头发起Patch请求地址获取结果
+   * @description: Pass in the request object and message header to initiate the Patch request address to get the result
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request, headers] 请求地址，请求对象，消息头
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request, Map<String, String> headers) throws Exception {
+    return patch(url, request, headers, config.getSocketTimeout());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头发起Patch请求地址获取结果（等待指定超时时间）
+   * @description: Pass in the request object and message header to initiate the Patch request address to get the result (wait for the specified timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request, headers, socketTimeout] 请求地址，请求对象，消息头，超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request, Map<String, String> headers, int socketTimeout) throws Exception {
+    return patch(url, request, headers, socketTimeout, config.getConnectTimeout(), config.getConnectionRequestTimeout(), null);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头发起Patch请求地址获取结果/文件（等待指定超时时间）
+   * @description: Pass in the request object and message header to initiate the Patch request address to get the result or file (wait for the specified timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request, headers, socketTimeout, fileSavePath] 请求地址，请求对象，消息头，超时时间，文件保存地址（可选）
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request, Map<String, String> headers, int socketTimeout, String fileSavePath) throws Exception {
+    return patch(url, request, headers, socketTimeout, config.getConnectTimeout(), config.getConnectionRequestTimeout(), fileSavePath);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头发起Patch请求地址获取结果/文件（等待指定超时时间、连接超时时间、连接获取超时时间）
+   * @description: The incoming request object and message header initiate the Patch request address to get the result or file (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, fileSavePath]
+   * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，文件保存地址
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request, Map<String, String> headers, int socketTimeout,
+      int connectTimeout, int connectionRequestTimeout, String fileSavePath) throws Exception {
+    return patch(url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, null, fileSavePath);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 传入请求对象和消息头使用代理发起Patch请求地址获取结果/文件（等待指定超时时间、连接超时时间、连接获取超时时间）
+   * @description: The incoming request object and message header use the proxy to initiate a Patch request address to get the result or file (waiting for the specified timeout, connection timeout, and connection acquisition timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, request, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy, fileSavePath]
+   * 请求地址，请求对象，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理，文件保存地址
+   * @return: java.lang.String 响应结果
+   */
+  public static <T> String patch(String url, T request, Map<String, String> headers, int socketTimeout,
+      int connectTimeout, int connectionRequestTimeout, HttpHost proxy, String fileSavePath) throws Exception {
+    HttpPatch httpPatch = new HttpPatch(url);
+    httpPatch.setHeader(CONTENT_TYPE, APPLICATION_JSON.toString());
+    configRequest(httpPatch, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
+    return request(httpPatch, request, fileSavePath);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 发起Trace请求地址获取结果
+   * @description: Initiate a Trace request address to get the result
+   * @time: 2025-10-09 18:02:00
+   * @params: [url] 请求地址
+   * @return: java.lang.String 响应结果
+   */
+  public static String trace(String url) throws Exception {
+    return trace(url, Collections.emptyMap());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 发起Trace请求地址获取结果（等待指定超时时间）
+   * @description: Initiate a Trace request address to get the result (wait for the specified timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, socketTimeout] 请求地址，超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String trace(String url, int socketTimeout) throws Exception {
+    return trace(url, Collections.emptyMap(), socketTimeout);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Trace请求地址获取结果
+   * @description: Use the message header to initiate a Trace request address to get the result
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, headers] 请求地址，消息头
+   * @return: java.lang.String 响应结果
+   */
+  public static String trace(String url, Map<String, String> headers) throws Exception {
+    return trace(url, headers, config.getSocketTimeout());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Trace请求地址获取结果（等待指定超时时间）
+   * @description: Use the message header to initiate a Trace request address to get the result (wait for the specified timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, headers, socketTimeout] 请求地址，消息头，超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String trace(String url, Map<String, String> headers, int socketTimeout) throws Exception {
+    return trace(url, headers, socketTimeout, config.getConnectTimeout(), config.getConnectionRequestTimeout());
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头发起Trace请求地址获取结果（等待超时时间，连接超时时间，连接获取超时时间）
+   * @description: Use the message header to initiate a Trace request address to get the result (waiting timeout, connection timeout, connection acquisition timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout]
+   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间
+   * @return: java.lang.String 响应结果
+   */
+  public static String trace(String url, Map<String, String> headers, int socketTimeout,
+      int connectTimeout, int connectionRequestTimeout) throws Exception {
+    return trace(url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, null);
+  }
+
+  /**
+   * @author: Ares
+   * @description: 使用消息头使用代理发起Trace请求地址获取结果（等待超时时间，连接超时时间，连接获取超时时间）
+   * @description: Use the message header to use the proxy to initiate a Trace request address to get the result (waiting timeout, connection timeout, connection acquisition timeout)
+   * @time: 2025-10-09 18:02:00
+   * @params: [url, headers, socketTimeout, connectTimeout, connectionRequestTimeout, proxy]
+   * 请求地址，消息头，套接字超时时间，连接超时时间，连接获取超时时间，http代理
+   * @return: java.lang.String 响应结果
+   */
+  public static String trace(String url, Map<String, String> headers, int socketTimeout,
+      int connectTimeout, int connectionRequestTimeout, HttpHost proxy) throws Exception {
+    HttpTrace httpTrace = new HttpTrace(url);
+    httpTrace.setHeader(CONTENT_TYPE, APPLICATION_FORM_URLENCODED.toString());
+    configRequest(httpTrace, headers, socketTimeout, connectTimeout, connectionRequestTimeout);
+    return request(httpTrace, null, null);
+  }
+
+  /**
+   * @author: Ares
    * @description: 获取最后一次http请求的请求头
    * @description: Get the request headers of the last http request
    * @time: 2022-07-14 14:22:18
@@ -746,22 +1102,21 @@ public class HttpClientUtil implements ApplicationContextAware {
     if (null == request) {
       return;
     }
-    if (!(httpRequestBase instanceof HttpPost)) {
-      return;
-    }
-    HttpPost httpPost = (HttpPost) httpRequestBase;
-    Header header = httpPost.getFirstHeader(CONTENT_TYPE);
-    if (null == header) {
-      return;
-    }
-    String headerValue = header.getValue();
-    if (headerValue.contains(APPLICATION_FORM_URLENCODED.getMimeType())) {
-      httpPost.setEntity(new StringEntity(encodeGetRequest(request), Charset.defaultCharset()));
-    } else {
-      if (request instanceof byte[]) {
-        httpPost.setEntity(new ByteArrayEntity((byte[]) request, APPLICATION_JSON));
+
+    if (httpRequestBase instanceof HttpPost || httpRequestBase instanceof HttpPatch) {
+      Header header = httpRequestBase.getFirstHeader(CONTENT_TYPE);
+      if (null == header) {
+        return;
+      }
+      String headerValue = header.getValue();
+      if (headerValue.contains(APPLICATION_FORM_URLENCODED.getMimeType())) {
+        httpRequestBase.setEntity(new StringEntity(encodeGetRequest(request), Charset.defaultCharset()));
       } else {
-        httpPost.setEntity(new StringEntity(JsonUtil.toJsonString(request), APPLICATION_JSON));
+        if (request instanceof byte[]) {
+          httpRequestBase.setEntity(new ByteArrayEntity((byte[]) request, APPLICATION_JSON));
+        } else {
+          httpRequestBase.setEntity(new StringEntity(JsonUtil.toJsonString(request), APPLICATION_JSON));
+        }
       }
     }
   }

@@ -437,7 +437,7 @@ public class ClassUtil {
       return BASE_CLASS_TO_IDENTIFIER_MAP.get(clazz);
     }
 
-    return "L" + clazz.getName().replace('.', '/') + ";";
+    return "L" + StringUtil.replace(clazz.getName(), ".", "/") + ";";
   }
 
 
@@ -552,7 +552,7 @@ public class ClassUtil {
    * @return 类路径
    */
   public static String toNormalClass(String identifier) {
-    return identifier.replace("/", ".");
+    return StringUtil.replace(identifier, "/", ".");
   }
 
   /**

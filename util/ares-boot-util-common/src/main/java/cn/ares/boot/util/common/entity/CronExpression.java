@@ -233,11 +233,6 @@ public final class CronExpression {
     return true;
   }
 
-  public static void validateExpression(final String cronExpression) throws ParseException {
-
-    new CronExpression(cronExpression);
-  }
-
   ////////////////////////////////////////////////////////////////////////////
   //
   // Expression Parsing Functions
@@ -272,22 +267,15 @@ public final class CronExpression {
       while (tokenizer.hasMoreTokens() && exprOn <= YEAR) {
         String expr = tokenizer.nextToken().trim();
         // throw an exception if L is used with other days of the month
-        if (exprOn == DAY_OF_MONTH && expr.indexOf('L') != -1 && expr.length() > 1 && expr.contains(
-            ",")) {
-          throw new ParseException(
-              "Support for specifying 'L' and 'LW' with other days of the month is not implemented",
-              -1);
+        if (exprOn == DAY_OF_MONTH && expr.indexOf('L') != -1 && expr.length() > 1 && expr.contains(",")) {
+          throw new ParseException("Support for specifying 'L' and 'LW' with other days of the month is not implemented", -1);
         }
         // throw an exception if L is used with other days of the week
-        if (exprOn == DAY_OF_WEEK && expr.indexOf('L') != -1 && expr.length() > 1 && expr.contains(
-            ",")) {
-          throw new ParseException(
-              "Support for specifying 'L' with other days of the week is not implemented", -1);
+        if (exprOn == DAY_OF_WEEK && expr.indexOf('L') != -1 && expr.length() > 1 && expr.contains(",")) {
+          throw new ParseException("Support for specifying 'L' with other days of the week is not implemented", -1);
         }
-        if (exprOn == DAY_OF_WEEK && expr.indexOf('#') != -1
-            && expr.indexOf('#', expr.indexOf('#') + 1) != -1) {
-          throw new ParseException(
-              "Support for specifying multiple \"nth\" days is not implemented.", -1);
+        if (exprOn == DAY_OF_WEEK && expr.indexOf('#') != -1 && expr.indexOf('#', expr.indexOf('#') + 1) != -1) {
+          throw new ParseException("Support for specifying multiple \"nth\" days is not implemented.", -1);
         }
 
         final StringTokenizer tempTokenizer = new StringTokenizer(expr, ",");
@@ -517,8 +505,7 @@ public final class CronExpression {
     return index;
   }
 
-  private int checkNext(final int pos, final String str, final int val, final int type)
-      throws ParseException {
+  private int checkNext(final int pos, final String str, final int val, final int type) throws ParseException {
     int end = -1;
     int index = pos;
 
@@ -551,9 +538,7 @@ public final class CronExpression {
         throw new ParseException("'W' option is not valid here. (pos=" + index + ")", index);
       }
       if (val > 31) {
-        throw new ParseException(
-            "The 'W' option does not make sense with values larger than 31 (max number of days in a month)",
-            index);
+        throw new ParseException("The 'W' option does not make sense with values larger than 31 (max number of days in a month)", index);
       }
       final TreeSet<Integer> set = getSet(type);
       set.add(val);

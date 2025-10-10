@@ -144,7 +144,7 @@ public class StringUtil {
    * @return: boolean 是否为空白
    */
   public static boolean isBlank(final String str) {
-    return null == str || str.trim().isEmpty();
+    return null == str || StringUtil.trim(str).isEmpty();
   }
 
   /**

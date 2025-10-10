@@ -74,7 +74,7 @@ public class IntegerUtil {
    * @throws NumberFormatException if the string does not contain a parsable integer.
    */
   public static int parseInt(final String str, final int defaultValue) {
-    return StringUtil.isEmpty(str) ? defaultValue : Integer.parseInt(str.trim());
+    return StringUtil.isEmpty(str) ? defaultValue : Integer.parseInt(StringUtil.trim(str));
   }
 
   /**

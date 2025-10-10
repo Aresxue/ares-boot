@@ -65,7 +65,7 @@ public class ThreadWithLogUtil {
         executor.shutdownNow();
         // Wait a while for tasks to respond to being cancelled.
         if (!executor.awaitTermination(timeout, timeUnit)) {
-          LoggerUtil.warn(executor + "%s didn't terminate!");
+          LoggerUtil.warn(executor + " didn't terminate!");
         }
       }
     } catch (InterruptedException ie) {

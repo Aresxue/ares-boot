@@ -4,7 +4,6 @@ package cn.ares.boot.util.common.entity;
 import cn.ares.boot.util.common.CollectionUtil;
 import cn.ares.boot.util.common.DateUtil;
 import cn.ares.boot.util.common.MapUtil;
-import cn.ares.boot.util.common.StringUtil;
 import cn.ares.boot.util.common.primitive.IntegerUtil;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -271,7 +270,7 @@ public final class CronExpression {
 
       StringTokenizer tokenizer = new StringTokenizer(expression, " \t", false);
       while (tokenizer.hasMoreTokens() && exprOn <= YEAR) {
-        String expr = StringUtil.trim(tokenizer.nextToken());
+        String expr = tokenizer.nextToken().trim();
         // throw an exception if L is used with other days of the month
         if (exprOn == DAY_OF_MONTH && expr.indexOf('L') != -1 && expr.length() > 1 && expr.contains(
             ",")) {

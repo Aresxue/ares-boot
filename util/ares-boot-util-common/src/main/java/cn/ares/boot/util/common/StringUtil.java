@@ -1,18 +1,6 @@
 package cn.ares.boot.util.common;
 
 
-import static cn.ares.boot.util.common.constant.CommonConstant.CHINESE_CHARACTER_LENGTH;
-import static cn.ares.boot.util.common.constant.CommonConstant.CHINESE_CHARACTER_START;
-import static cn.ares.boot.util.common.constant.CommonConstant.FORMAT_PATTERN;
-import static cn.ares.boot.util.common.constant.CommonConstant.NOT_ALPHABET_AND_NUMBER_PATTERN;
-import static cn.ares.boot.util.common.constant.StringConstant.EMPTY;
-import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
-import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS_CHAR;
-import static cn.ares.boot.util.common.constant.SymbolConstant.PLUS_CHAR;
-import static cn.ares.boot.util.common.constant.SymbolConstant.SPACE;
-import static cn.ares.boot.util.common.constant.SymbolConstant.SPACE_CHAR;
-import static cn.ares.boot.util.common.constant.SymbolConstant.UNDERLINE;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -24,7 +12,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -32,6 +19,18 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static cn.ares.boot.util.common.constant.CommonConstant.CHINESE_CHARACTER_LENGTH;
+import static cn.ares.boot.util.common.constant.CommonConstant.CHINESE_CHARACTER_START;
+import static cn.ares.boot.util.common.constant.CommonConstant.FORMAT_PATTERN;
+import static cn.ares.boot.util.common.constant.CommonConstant.NOT_ALPHABET_AND_NUMBER_PATTERN;
+import static cn.ares.boot.util.common.constant.StringConstant.EMPTY;
+import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS;
+import static cn.ares.boot.util.common.constant.SymbolConstant.MINUS_CHAR;
+import static cn.ares.boot.util.common.constant.SymbolConstant.PLUS_CHAR;
+import static cn.ares.boot.util.common.constant.SymbolConstant.SPACE;
+import static cn.ares.boot.util.common.constant.SymbolConstant.SPACE_CHAR;
+import static cn.ares.boot.util.common.constant.SymbolConstant.UNDERLINE;
 
 /**
  * @author: Ares
@@ -144,7 +143,7 @@ public class StringUtil {
    * @return: boolean 是否为空白
    */
   public static boolean isBlank(final String str) {
-    return null == str || StringUtil.trim(str).isEmpty();
+    return null == str || str.trim().isEmpty();
   }
 
   /**

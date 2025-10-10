@@ -1,9 +1,9 @@
 package cn.ares.boot.util.common.primitive;
 
-import static cn.ares.boot.util.common.constant.NumberConstant.TEN_THOUSAND_BIG_INTEGER;
-
 import cn.ares.boot.util.common.StringUtil;
 import java.math.BigInteger;
+
+import static cn.ares.boot.util.common.constant.NumberConstant.TEN_THOUSAND_BIG_INTEGER;
 
 /**
  * @author: Ares
@@ -74,7 +74,7 @@ public class IntegerUtil {
    * @throws NumberFormatException if the string does not contain a parsable integer.
    */
   public static int parseInt(final String str, final int defaultValue) {
-    return StringUtil.isEmpty(str) ? defaultValue : Integer.parseInt(StringUtil.trim(str));
+    return StringUtil.isEmpty(str) ? defaultValue : Integer.parseInt(str.trim());
   }
 
   /**

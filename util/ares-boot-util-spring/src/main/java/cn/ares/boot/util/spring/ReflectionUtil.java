@@ -262,23 +262,8 @@ public class ReflectionUtil {
    * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
    */
-  public static List<Field> findAllFields(Object target, boolean accessible,
-      boolean ignoreOverrideField) {
+  public static List<Field> findAllFields(Object target, boolean accessible, boolean ignoreOverrideField) {
     return findAllFields(target, accessible, ignoreOverrideField, field -> true);
-  }
-
-  /**
-   * @author: Ares
-   * @description: 从目标对象中获取所有的非synthetic字段（包括父类但除了Object）
-   * @description: Gets all non-synthetic fields from the target Object (including the parent class
-   * but except Object)
-   * @time: 2023-12-12 21:02:07
-   * @params: [target, accessible, ignoreOverrideField] 目标对象，访问限制，忽略重写字段（保留子类）
-   * @return: java.util.List<java.lang.reflect.Field> 字段列表
-   */
-  public static List<Field> findAllFieldsNotSynthetic(Object target, boolean accessible,
-      boolean ignoreOverrideField) {
-    return findAllFields(target, accessible, ignoreOverrideField, field -> !field.isSynthetic());
   }
 
   /**
@@ -290,8 +275,7 @@ public class ReflectionUtil {
    * @params: [target, accessible, ignoreOverrideField, predicate] 目标对象，访问限制，忽略重写字段（保留子类），字段筛选
    * @return: java.util.List<java.lang.reflect.Field> 字段列表
    */
-  public static List<Field> findAllFields(Object target, boolean accessible,
-      boolean ignoreOverrideField, Predicate<Field> predicate) {
+  public static List<Field> findAllFields(Object target, boolean accessible, boolean ignoreOverrideField, Predicate<Field> predicate) {
     if (null == target) {
       return null;
     }

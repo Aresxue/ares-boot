@@ -7,10 +7,11 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-base</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1.1-RC</version>
   </parent>
 
   <artifactId>ares-boot-base-config-adapter</artifactId>
+  <name>Ares Boot Base Config Adapter</name>
   <packaging>pom</packaging>
   <description>
     基础配置模块，数据库连接信息、rpc框架注册中心和中间件连接信息等都在其中维护，让业务开发人员无需关心
@@ -18,6 +19,34 @@
     and middleware connection information are all maintained in it,
     so that business developers do not need to care
   </description>
+  <url>https://github.com/Aresxue/ares-parent</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git@github.com:Aresxue/ares-parent.git</connection>
+    <developerConnection>scm:git@github.com:Aresxue/ares-parent.git</developerConnection>
+    <url>https://github.com/Aresxue/ares-parent</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ares</id>
+      <name>Ares Xue</name>
+      <email>ares320635@gmail.com</email>
+      <organization>https://github.com/Aresxue</organization>
+      <roles>
+        <role>Java Development Engineer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
+
 
   <modules>
     <module>ares-boot-base-config-abstract</module>

@@ -7,10 +7,42 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-starter-mq-related</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1.1-RC</version>
   </parent>
 
   <artifactId>ares-boot-starter-mq-api</artifactId>
+  <name>Ares Boot Starter Mq Api</name>
+  <description>
+    消息队列API模块，定义消息队列的标准接口和注解
+    Message queue API module, defines standard interfaces and annotations for message queue
+  </description>
+  <url>https://github.com/Aresxue/ares-parent</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git@github.com:Aresxue/ares-parent.git</connection>
+    <developerConnection>scm:git@github.com:Aresxue/ares-parent.git</developerConnection>
+    <url>https://github.com/Aresxue/ares-parent</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ares</id>
+      <name>Ares Xue</name>
+      <email>ares320635@gmail.com</email>
+      <organization>https://github.com/Aresxue</organization>
+      <roles>
+        <role>Java Development Engineer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
 
 
 </project>

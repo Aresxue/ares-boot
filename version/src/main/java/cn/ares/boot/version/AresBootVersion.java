@@ -16,7 +16,7 @@ public class AresBootVersion {
   /**
    * 版本值 Version value
    */
-  private static final String VERSION_VALUE = "1.0.3-SNAPSHOT";
+  private static final String VERSION_VALUE = "1.1.1-RC";
 
   public static String getVersion() {
     return VERSION_VALUE;

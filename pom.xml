@@ -7,12 +7,12 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency-management</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1.1-RC</version>
     <relativePath>dependency/ares-boot-dependency-management/pom.xml</relativePath>
   </parent>
 
   <artifactId>ares-boot</artifactId>
-  <name>Ares Boot ${project.version}</name>
+  <name>Ares Boot</name>
   <packaging>pom</packaging>
   <description>
     制定Java后端的统一标准，致力于优化Java开发者的编程体验，减少重复基础功能开发，屏蔽与业务无关的事项
@@ -20,6 +20,34 @@
     experience of Java developers, reduce repetitive development of basic functions,
     and shield matters not related to business
   </description>
+
+  <url>https://github.com/Aresxue/ares-parent</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git@github.com:Aresxue/ares-parent.git</connection>
+    <developerConnection>scm:git@github.com:Aresxue/ares-parent.git</developerConnection>
+    <url>https://github.com/Aresxue/ares-parent</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ares</id>
+      <name>Ares Xue</name>
+      <email>ares320635@gmail.com</email>
+      <organization>https://github.com/Aresxue</organization>
+      <roles>
+        <role>Java Development Engineer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
 
   <modules>
     <module>base</module>

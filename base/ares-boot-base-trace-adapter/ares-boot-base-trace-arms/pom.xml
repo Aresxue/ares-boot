@@ -7,14 +7,43 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-base-trace-adapter</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1.1-RC</version>
   </parent>
 
   <artifactId>ares-boot-base-trace-arms</artifactId>
+  <name>Ares Boot Base Trace Arms</name>
   <description>
     arms的实现
     Implementation of arms
   </description>
+  <url>https://github.com/Aresxue/ares-parent</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git@github.com:Aresxue/ares-parent.git</connection>
+    <developerConnection>scm:git@github.com:Aresxue/ares-parent.git</developerConnection>
+    <url>https://github.com/Aresxue/ares-parent</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ares</id>
+      <name>Ares Xue</name>
+      <email>ares320635@gmail.com</email>
+      <organization>https://github.com/Aresxue</organization>
+      <roles>
+        <role>Java Development Engineer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
+
 
   <dependencies>
     <dependency>

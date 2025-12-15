@@ -3,11 +3,9 @@ package cn.ares.boot.util.common.structure;
 import cn.ares.boot.util.common.MapUtil;
 import java.io.Serializable;
 import java.util.AbstractSet;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author: Ares
@@ -20,16 +18,14 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
 
   private static final long serialVersionUID = -542378766450203496L;
 
-  private static final Object PRESENT = new Object();
-
-  private final ConcurrentMap<E, Object> map;
+  private final Set<E> keySet;
 
   public ConcurrentHashSet() {
-    map = new ConcurrentHashMap<>();
+    keySet = ConcurrentHashMap.newKeySet();
   }
 
   public ConcurrentHashSet(int initialCapacity) {
-    map = new ConcurrentHashMap<>(MapUtil.capacity(initialCapacity));
+    keySet = ConcurrentHashMap.newKeySet(MapUtil.capacity(initialCapacity));
   }
 
   /**
@@ -37,11 +33,10 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
    * order.
    *
    * @return an Iterator over the elements in this set
-   * @see ConcurrentModificationException
    */
   @Override
   public Iterator<E> iterator() {
-    return map.keySet().iterator();
+    return keySet.iterator();
   }
 
   /**
@@ -51,7 +46,7 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
    */
   @Override
   public int size() {
-    return map.size();
+    return keySet.size();
   }
 
   /**
@@ -61,7 +56,7 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
    */
   @Override
   public boolean isEmpty() {
-    return map.isEmpty();
+    return keySet.isEmpty();
   }
 
   /**
@@ -74,7 +69,7 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
    */
   @Override
   public boolean contains(Object o) {
-    return map.containsKey(o);
+    return keySet.contains(o);
   }
 
   /**
@@ -90,7 +85,7 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
    */
   @Override
   public boolean add(E e) {
-    return map.put(e, PRESENT) == null;
+    return keySet.add(e);
   }
 
   /**
@@ -107,7 +102,7 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
    */
   @Override
   public boolean remove(Object o) {
-    return map.remove(o) == PRESENT;
+    return keySet.remove(o);
   }
 
   /**
@@ -115,7 +110,7 @@ public class ConcurrentHashSet<E> extends AbstractSet<E> implements Set<E>, Seri
    */
   @Override
   public void clear() {
-    map.clear();
+    keySet.clear();
   }
 
 }

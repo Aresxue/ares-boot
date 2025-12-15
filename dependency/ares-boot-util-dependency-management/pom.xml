@@ -7,15 +7,44 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-dependency</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1.1-RC</version>
   </parent>
 
   <artifactId>ares-boot-util-dependency-management</artifactId>
+  <name>Ares Boot Util Dependency Management</name>
   <packaging>pom</packaging>
   <description>
     管理所有util模块的依赖
     Manage dependencies of all ares-boot-util modules
   </description>
+  <url>https://github.com/Aresxue/ares-parent</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git@github.com:Aresxue/ares-parent.git</connection>
+    <developerConnection>scm:git@github.com:Aresxue/ares-parent.git</developerConnection>
+    <url>https://github.com/Aresxue/ares-parent</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ares</id>
+      <name>Ares Xue</name>
+      <email>ares320635@gmail.com</email>
+      <organization>https://github.com/Aresxue</organization>
+      <roles>
+        <role>Java Development Engineer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
+
 
   <dependencyManagement>
     <dependencies>

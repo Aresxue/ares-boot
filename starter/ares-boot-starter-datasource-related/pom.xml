@@ -7,10 +7,11 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-starter</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1.1-RC</version>
   </parent>
 
   <artifactId>ares-boot-starter-datasource-related</artifactId>
+  <name>Ares Boot Starter Datasource Related</name>
   <packaging>pom</packaging>
   <description>
     数据库相关，底层为mybatis plus，可自动从配置中心获取数据库连接信息，同时封装基础DO和通用字段
@@ -21,6 +22,34 @@
     (automatic injection of distributed id), business no concern, and optional client sub-database sub-table
     and dynamic data source solutions
   </description>
+  <url>https://github.com/Aresxue/ares-parent</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git@github.com:Aresxue/ares-parent.git</connection>
+    <developerConnection>scm:git@github.com:Aresxue/ares-parent.git</developerConnection>
+    <url>https://github.com/Aresxue/ares-parent</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ares</id>
+      <name>Ares Xue</name>
+      <email>ares320635@gmail.com</email>
+      <organization>https://github.com/Aresxue</organization>
+      <roles>
+        <role>Java Development Engineer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
+
 
   <modules>
     <module>ares-boot-starter-datasource</module>

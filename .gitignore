@@ -214,3 +214,7 @@ nbdist/
 
 # flatten-maven-plugin
 .flattened-pom.xml
+
+# macOS Files
+.DS_Store
+*/.DS_Store

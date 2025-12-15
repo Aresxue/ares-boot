@@ -7,10 +7,11 @@
   <parent>
     <groupId>io.github.aresxue.boot</groupId>
     <artifactId>ares-boot-base</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.1.1-RC</version>
   </parent>
 
   <artifactId>ares-boot-base-trace-adapter</artifactId>
+  <name>Ares Boot Base Trace Adapter</name>
   <packaging>pom</packaging>
   <description>
     链路追踪模块，负责全链路相关操作包括代码染色, 指令搜集等，提供全链路信息（包括tid）跨进程的能力，目前支持skywalking和arms两种实现的适配
@@ -18,6 +19,34 @@
     instruction collection, etc., and provides cross-process capability of the whole link information (including tid).
     Currently, it supports the adaptation of skywalking and arms
   </description>
+  <url>https://github.com/Aresxue/ares-parent</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git@github.com:Aresxue/ares-parent.git</connection>
+    <developerConnection>scm:git@github.com:Aresxue/ares-parent.git</developerConnection>
+    <url>https://github.com/Aresxue/ares-parent</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>ares</id>
+      <name>Ares Xue</name>
+      <email>ares320635@gmail.com</email>
+      <organization>https://github.com/Aresxue</organization>
+      <roles>
+        <role>Java Development Engineer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
+
 
   <modules>
     <module>ares-boot-base-trace-abstract</module>
